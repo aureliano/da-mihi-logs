@@ -1,13 +1,13 @@
-package com.github.aureliano.defero.config;
+package com.github.aureliano.defero.config.input;
 
 import java.io.File;
 
-public class InputConfig {
+public class InputFileConfig implements IConfigInput {
 
 	private File file;
 	private int startPosition;
 
-	public InputConfig() {
+	public InputFileConfig() {
 		this.startPosition = 0;
 	}
 
@@ -15,12 +15,12 @@ public class InputConfig {
 		return file;
 	}
 
-	public InputConfig withFile(File file) {
+	public InputFileConfig withFile(File file) {
 		this.file = file;
 		return this;
 	}
 
-	public InputConfig withFile(String path) {
+	public InputFileConfig withFile(String path) {
 		this.file = new File(path);
 		return this;
 	}
@@ -29,7 +29,7 @@ public class InputConfig {
 		return startPosition;
 	}
 	
-	public InputConfig withStartPosition(int startPosition) {
+	public InputFileConfig withStartPosition(int startPosition) {
 		this.startPosition = startPosition;
 		return this;
 	}
