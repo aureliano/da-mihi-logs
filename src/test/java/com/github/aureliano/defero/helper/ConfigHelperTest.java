@@ -18,7 +18,10 @@ public class ConfigHelperTest {
 		} catch (DeferoException ex) {
 			Assert.assertEquals("Input configuration must be provided.", ex.getMessage());
 		}
-		
+	}
+	
+	@Test
+	public void testInputConfigValidationFile() {
 		try {
 			ConfigHelper.inputConfigValidation(new InputConfig());
 		} catch (DeferoException ex) {
@@ -39,5 +42,16 @@ public class ConfigHelperTest {
 		
 		ConfigHelper.inputConfigValidation(new InputConfig().withFile(new File("src/test/resources/empty-file.log")));
 		ConfigHelper.inputConfigValidation(new InputConfig().withFile("src/test/resources/empty-file.log"));
+	}
+	
+	@Test
+	public void testInputConfigValidationStartPosition() {
+		try {
+			ConfigHelper.inputConfigValidation(new InputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
+		}
+		
+		ConfigHelper.inputConfigValidation(new InputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
 	}
 }

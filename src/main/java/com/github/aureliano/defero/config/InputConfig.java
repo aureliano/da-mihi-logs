@@ -5,9 +5,10 @@ import java.io.File;
 public class InputConfig {
 
 	private File file;
+	private int startPosition;
 
 	public InputConfig() {
-		super();
+		this.startPosition = 0;
 	}
 
 	public File getFile() {
@@ -21,6 +22,15 @@ public class InputConfig {
 
 	public InputConfig withFile(String path) {
 		this.file = new File(path);
+		return this;
+	}
+	
+	public int getStartPosition() {
+		return startPosition;
+	}
+	
+	public InputConfig withStartPosition(int startPosition) {
+		this.startPosition = startPosition;
 		return this;
 	}
 }
