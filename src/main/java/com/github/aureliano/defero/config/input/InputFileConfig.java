@@ -6,9 +6,11 @@ public class InputFileConfig implements IConfigInput {
 
 	private File file;
 	private int startPosition;
+	private String encoding;
 
 	public InputFileConfig() {
 		this.startPosition = 0;
+		this.encoding = "UTF-8";
 	}
 
 	public File getFile() {
@@ -31,6 +33,15 @@ public class InputFileConfig implements IConfigInput {
 	
 	public InputFileConfig withStartPosition(int startPosition) {
 		this.startPosition = startPosition;
+		return this;
+	}
+	
+	public String getEncoding() {
+		return encoding;
+	}
+	
+	public InputFileConfig withEncoding(String encoding) {
+		this.encoding = encoding;
 		return this;
 	}
 }
