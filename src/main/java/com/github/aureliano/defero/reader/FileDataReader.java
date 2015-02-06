@@ -49,7 +49,23 @@ public class FileDataReader implements IDataReader {
 			lineCounter++;
 		}
 		
-		return this.parser.parse(this.lineIterator.nextLine());
+		return this.parseData();
+	}
+	
+	private String parseData() {
+		int maxParseTries = 10000;
+		int counter = 0;
+		StringBuilder buffer = new StringBuilder(this.lineIterator.nextLine());
+		
+		while (!this.parser.accept(buffer.toString())) {
+			if (maxParseTries >= ++counter) {
+				throw new DeferoException("Max parse tries overflow.");
+			}
+			
+			buffer.append("\n").append(this.lineIterator.nextLine());
+		}
+		
+		return buffer.toString();
 	}
 	
 	private void initialize() {
