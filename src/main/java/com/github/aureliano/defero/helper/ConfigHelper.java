@@ -1,5 +1,6 @@
 package com.github.aureliano.defero.helper;
 
+import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.exception.DeferoException;
 
@@ -9,16 +10,24 @@ public final class ConfigHelper {
 		super();
 	}
 	
-	public static void inputConfigValidation(InputFileConfig config) {
+	public static void inputConfigValidation(IConfigInput config) {
 		if (config == null) {
 			throw new DeferoException("Input configuration must be provided.");
 		}
 		
-		inputConfigFileValidation(config);
-		inputConfigStartPositionValidation(config);
+		if (config instanceof InputFileConfig) {
+			inputFileConfigValidation((InputFileConfig) config);
+		} else {
+			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
+		}
 	}
 	
-	protected static void inputConfigFileValidation(InputFileConfig config) {
+	protected static void inputFileConfigValidation(InputFileConfig config) {
+		inputFileConfigFileValidation(config);
+		inputFileConfigStartPositionValidation(config);
+	}
+	
+	protected static void inputFileConfigFileValidation(InputFileConfig config) {
 		if (config.getFile() == null) {
 			throw new DeferoException("Input file not provided.");
 		} else if (!config.getFile().exists()) {
@@ -28,7 +37,7 @@ public final class ConfigHelper {
 		}
 	}
 	
-	protected static void inputConfigStartPositionValidation(InputFileConfig config) {
+	protected static void inputFileConfigStartPositionValidation(InputFileConfig config) {
 		if (config.getStartPosition() < 0) {
 			throw new DeferoException("Start position must be greater or equal to zero (>= 0).");
 		}

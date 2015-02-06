@@ -10,4 +10,6 @@ public interface IDataReader {
 	public abstract IDataReader withParser(IParser parser);
 	
 	public abstract Object nextData();
+	
+	public abstract long lastLine();
 }

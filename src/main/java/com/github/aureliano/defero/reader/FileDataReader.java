@@ -15,7 +15,7 @@ public class FileDataReader implements IDataReader {
 	private InputFileConfig inputConfiguration;
 	private IParser parser;
 	private LineIterator lineIterator;
-	private int lineCounter;
+	private long lineCounter;
 	
 	public FileDataReader() {
 		this.lineCounter = 0;
@@ -42,14 +42,19 @@ public class FileDataReader implements IDataReader {
 			return null;
 		}
 		
-		lineCounter++;
+		this.lineCounter++;
 		
-		while (this.inputConfiguration.getStartPosition() < lineCounter) {
+		while (this.inputConfiguration.getStartPosition() > this.lineCounter) {
 			this.lineIterator.nextLine();
-			lineCounter++;
+			this.lineCounter++;
 		}
 		
 		return this.parseData();
+	}
+	
+	@Override
+	public long lastLine() {
+		return this.lineCounter;
 	}
 	
 	private String parseData() {

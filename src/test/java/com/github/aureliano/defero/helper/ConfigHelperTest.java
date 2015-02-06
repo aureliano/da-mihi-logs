@@ -21,37 +21,37 @@ public class ConfigHelperTest {
 	}
 	
 	@Test
-	public void testInputConfigValidationFile() {
+	public void testInputFileConfigValidationFile() {
 		try {
-			ConfigHelper.inputConfigValidation(new InputFileConfig());
+			ConfigHelper.inputFileConfigValidation(new InputFileConfig());
 		} catch (DeferoException ex) {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
 		try {
-			ConfigHelper.inputConfigValidation(new InputFileConfig().withFile(new File("/non/existent/file")));
+			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("/non/existent/file")));
 		} catch (DeferoException ex) {
 			Assert.assertEquals("Input file '/non/existent/file' does not exist.", ex.getMessage());
 		}
 		
 		try {
-			ConfigHelper.inputConfigValidation(new InputFileConfig().withFile(new File("src/test/resources")));
+			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources")));
 		} catch (DeferoException ex) {
 			Assert.assertEquals("Input resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
 		
-		ConfigHelper.inputConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")));
-		ConfigHelper.inputConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log"));
+		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")));
+		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log"));
 	}
 	
 	@Test
-	public void testInputConfigValidationStartPosition() {
+	public void testInputFileConfigValidationStartPosition() {
 		try {
-			ConfigHelper.inputConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
+			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
 		} catch (DeferoException ex) {
 			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
 		}
 		
-		ConfigHelper.inputConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
+		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
 	}
 }

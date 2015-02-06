@@ -1,0 +1,23 @@
+{"dataHora": "2015-01-23 00:00:01.270", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 404, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:01.841", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 405, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:07.080", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 406, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:07.961", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 407, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:10.465", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 408, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:12.145", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 409, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:16.274", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 409, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:16.286", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 408, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:16.299", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 407, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:16.308", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 406, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:16.318", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 405, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:20.220", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 405, "loadAverage": 0.01}
+{"dataHora": "2015-01-23 00:00:27.487", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 406, "loadAverage": 0.02}
+{"dataHora": "2015-01-23 00:00:32.243", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 407, "loadAverage": 0.05}
+{"dataHora": "2015-01-23 00:00:40.973", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 408, "loadAverage": 0.05}
+{"dataHora": "2015-01-23 00:00:44.062", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 409, "loadAverage": 0.05}
+{"dataHora": "2015-01-23 00:00:47.435", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 410, "loadAverage": 0.05}
+{"dataHora": "2015-01-23 00:00:55.891", "tipoLog": "MemoriaServidor", "allocatedMem": 5091.00, "maxMem": 5461.38, "webSessions": 411, "loadAverage": 0.06}
+{"dataHora": "2015-01-23 00:01:07.954", "tipoLog": "MemoriaServidor", "allocatedMem": 5206.81, "maxMem": 5461.38, "webSessions": 412, "loadAverage": 0.07}
+{"dataHora": "2015-01-23 00:01:08.367", "tipoLog": "MemoriaServidor", "allocatedMem": 5206.81, "maxMem": 5461.38, "webSessions": 413, "loadAverage": 0.07}
+{"dataHora": "2015-01-23 16:02:34.344", "tipoLog": "AutorizacaoMovimentacaoFinanceira", "movimentacao": 2776173, "tipo": "Pagamento a Favorecido com OBTV", "valor": 368.85, "convenio": "776682/2012", "codigoOrgao": "36000", "nomeOrgao": "MINISTERIO DA SAUDE", "ugEmitente": "257001", "numeroUgtv": "453922", "usuario": "36204463420"}
+{"dataHora": "2015-01-23 16:02:59.969", "tipoLog": "AutorizacaoMovimentacaoFinanceira", "movimentacao": 2776175, "tipo": "Pagamento a Favorecido com OBTV", "valor": 368.85, "convenio": "776682/2012", "codigoOrgao": "36000", "nomeOrgao": "MINISTERIO DA SAUDE", "ugEmitente": "257001", "numeroUgtv": "453922", "usuario": "36204463420"}
+{"dataHora": "2015-01-23 16:03:36.527", "tipoLog": "AutorizacaoMovimentacaoFinanceira", "movimentacao": 2776177, "tipo": "Pagamento a Favorecido com OBTV", "valor": 368.85, "convenio": "776682/2012", "codigoOrgao": "36000", "nomeOrgao": "MINISTERIO DA SAUDE", "ugEmitente": "257001", "numeroUgtv": "453922", "usuario": "36204463420"}
