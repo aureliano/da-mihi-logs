@@ -69,13 +69,15 @@ public class FileDataReader implements IDataReader {
 	}
 	
 	private void initialize() {
-		if (this.lineIterator == null) {
-			try {
-				this.lineIterator = FileUtils.lineIterator(
-						this.inputConfiguration.getFile(), this.inputConfiguration.getEncoding());
-			} catch (IOException ex) {
-				throw new DeferoException(ex);
-			}
+		if (this.lineIterator != null) {
+			return;
+		}
+		
+		try {
+			this.lineIterator = FileUtils.lineIterator(
+					this.inputConfiguration.getFile(), this.inputConfiguration.getEncoding());
+		} catch (IOException ex) {
+			throw new DeferoException(ex);
 		}
 	}
 }
