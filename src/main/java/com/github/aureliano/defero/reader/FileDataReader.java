@@ -20,11 +20,21 @@ public class FileDataReader implements IDataReader {
 	public FileDataReader() {
 		this.lineCounter = 0;
 	}
+	
+	@Override
+	public IConfigInput getInputConfiguration() {
+		return inputConfiguration;
+	}
 
 	@Override
 	public IDataReader withInputConfiguration(IConfigInput config) {
 		this.inputConfiguration = (InputFileConfig) config;
 		return this;
+	}
+	
+	@Override
+	public IParser<?> getParser() {
+		return parser;
 	}
 
 	@Override

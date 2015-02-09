@@ -5,7 +5,11 @@ import com.github.aureliano.defero.parser.IParser;
 
 public interface IDataReader {
 
+	public abstract IConfigInput getInputConfiguration();
+	
 	public abstract IDataReader withInputConfiguration(IConfigInput config);
+	
+	public abstract IParser<?> getParser();
 	
 	public abstract IDataReader withParser(IParser<?> parser);
 	
