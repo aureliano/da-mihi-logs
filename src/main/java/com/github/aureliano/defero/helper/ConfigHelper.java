@@ -2,6 +2,8 @@ package com.github.aureliano.defero.helper;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.defero.config.output.IConfigOutput;
+import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.exception.DeferoException;
 
 public final class ConfigHelper {
@@ -22,6 +24,22 @@ public final class ConfigHelper {
 		}
 	}
 	
+	public static void outputConfigValidation(IConfigOutput config) {
+		if (config == null) {
+			throw new DeferoException("Output configuration must be provided.");
+		}
+		
+		if (config instanceof StandardOutputConfig) {
+			standardOutputConfigValidation((StandardOutputConfig) config);
+		} else {
+			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
+		}
+	}
+	
+	protected static void standardOutputConfigValidation(StandardOutputConfig config) {
+		// Do nothing. Uses of standard system output.
+	}
+
 	protected static void inputFileConfigValidation(InputFileConfig config) {
 		inputFileConfigFileValidation(config);
 		inputFileConfigStartPositionValidation(config);

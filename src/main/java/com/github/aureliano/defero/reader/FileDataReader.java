@@ -13,7 +13,7 @@ import com.github.aureliano.defero.parser.IParser;
 public class FileDataReader implements IDataReader {
 
 	private InputFileConfig inputConfiguration;
-	private IParser parser;
+	private IParser<?> parser;
 	private LineIterator lineIterator;
 	private long lineCounter;
 	
@@ -28,7 +28,7 @@ public class FileDataReader implements IDataReader {
 	}
 
 	@Override
-	public IDataReader withParser(IParser parser) {
+	public IDataReader withParser(IParser<?> parser) {
 		this.parser = parser;
 		return this;
 	}

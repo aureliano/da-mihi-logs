@@ -7,7 +7,7 @@ public interface IDataReader {
 
 	public abstract IDataReader withInputConfiguration(IConfigInput config);
 	
-	public abstract IDataReader withParser(IParser parser);
+	public abstract IDataReader withParser(IParser<?> parser);
 	
 	public abstract Object nextData();
 	

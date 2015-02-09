@@ -10,6 +10,8 @@ import com.github.aureliano.defero.helper.LoggerHelper;
 import com.github.aureliano.defero.profile.Profiler;
 import com.github.aureliano.defero.reader.DataReaderFactory;
 import com.github.aureliano.defero.reader.IDataReader;
+import com.github.aureliano.defero.writer.DataWriterFactory;
+import com.github.aureliano.defero.writer.IDataWriter;
 
 public class AppEventsCollector {
 
@@ -21,24 +23,35 @@ public class AppEventsCollector {
 		super();
 	}
 	
-	public void execute() {
-		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
-		
+	public void execute() {		
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
 		ConfigHelper.inputConfigValidation(this.configuration.getInputConfig());
+		ConfigHelper.outputConfigValidation(this.configuration.getOutputConfig());
+		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
+				
+		long lastLine = this.dataIteration();
+		this.printLogToOutput(profiler, lastLine);
+	}
+	
+	private long dataIteration() {
 		IDataReader dataReader = DataReaderFactory.createDataReader(
 				this.configuration.getInputConfig()).withParser(this.configuration.getParser());
+		IDataWriter dataWriter = DataWriterFactory.createDataWriter(this.configuration.getOutputConfig());
 		
 		Object data = null;
 		while ((data = dataReader.nextData()) != null) {
-			System.out.println(data);
+			dataWriter.write(data);
 		}
 		
+		return dataReader.lastLine();
+	}
+	
+	private void printLogToOutput(Profiler profiler, long lastLine) {
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
 		properties.put("input.type", this.configuration.getInputConfig().inputType());
-		properties.put("input.last.line", String.valueOf(dataReader.lastLine()));
+		properties.put("input.last.line", String.valueOf(lastLine));
 		
 		File log = LoggerHelper.saveExecutionLog(properties);
 		logger.info("Execution log output saved at " + log.getPath());		

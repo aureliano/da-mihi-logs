@@ -21,6 +21,15 @@ public class ConfigHelperTest {
 	}
 	
 	@Test
+	public void testOutputConfigValidation() {
+		try {
+			ConfigHelper.outputConfigValidation(null);
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Output configuration must be provided.", ex.getMessage());
+		}
+	}
+	
+	@Test
 	public void testInputFileConfigValidationFile() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig());
