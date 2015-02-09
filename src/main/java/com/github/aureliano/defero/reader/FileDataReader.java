@@ -49,11 +49,21 @@ public class FileDataReader implements IDataReader {
 		this.parser = parser;
 		return this;
 	}
+	
+	@Override
+	public List<DataReadingListener> getListeners() {
+		return listeners;
+	}
+	
+	@Override
+	public IDataReader withListeners(List<DataReadingListener> listeners) {
+		this.listeners = listeners;
+		return this;
+	}
 
 	@Override
-	public Object nextData(List<DataReadingListener> listeners) {
+	public Object nextData() {
 		this.initialize();
-		this.listeners = listeners;
 		
 		if (!this.lineIterator.hasNext()) {
 			LineIterator.closeQuietly(this.lineIterator);

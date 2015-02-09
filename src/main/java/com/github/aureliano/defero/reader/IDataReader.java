@@ -16,7 +16,11 @@ public interface IDataReader {
 	
 	public abstract IDataReader withParser(IParser<?> parser);
 	
-	public abstract Object nextData(List<DataReadingListener> listeners);
+	public abstract List<DataReadingListener> getListeners();
+	
+	public abstract IDataReader withListeners(List<DataReadingListener> listeners);
+	
+	public abstract Object nextData();
 	
 	public abstract long lastLine();
 	

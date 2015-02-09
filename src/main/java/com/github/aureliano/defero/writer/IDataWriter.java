@@ -11,5 +11,9 @@ public interface IDataWriter {
 
 	public abstract IDataWriter withOutputConfiguration(IConfigOutput config);
 	
-	public abstract void write(Object data, List<DataWritingListener> listeners);
+	public abstract List<DataWritingListener> getListeners();
+	
+	public abstract IDataWriter withListeners(List<DataWritingListener> listeners);
+	
+	public abstract void write(Object data);
 }

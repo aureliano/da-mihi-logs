@@ -36,13 +36,17 @@ public class AppEventsCollector {
 	}
 	
 	private long dataIteration() {
-		IDataReader dataReader = DataReaderFactory.createDataReader(
-				this.configuration.getInputConfig()).withParser(this.configuration.getParser());
-		IDataWriter dataWriter = DataWriterFactory.createDataWriter(this.configuration.getOutputConfig());
+		IDataReader dataReader = DataReaderFactory
+			.createDataReader(this.configuration.getInputConfig())
+				.withParser(this.configuration.getParser())
+				.withListeners(this.configuration.getDataReadingListeners());
+		IDataWriter dataWriter = DataWriterFactory
+			.createDataWriter(this.configuration.getOutputConfig())
+				.withListeners(this.configuration.getDataWritingListeners());
 		
 		Object data = null;
-		while ((data = dataReader.nextData(this.configuration.getDataReadingListeners())) != null) {
-			dataWriter.write(data, this.configuration.getDataWritingListeners());
+		while ((data = dataReader.nextData()) != null) {
+			dataWriter.write(data);
 		}
 		
 		return dataReader.lastLine();

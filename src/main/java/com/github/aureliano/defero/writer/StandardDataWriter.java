@@ -27,10 +27,20 @@ public class StandardDataWriter implements IDataWriter {
 		this.outputConfiguration = (StandardOutputConfig) config;
 		return this;
 	}
+	
+	@Override
+	public List<DataWritingListener> getListeners() {
+		return listeners;
+	}
+	
+	@Override
+	public IDataWriter withListeners(List<DataWritingListener> listeners) {
+		this.listeners = listeners;
+		return this;
+	}
 
 	@Override
-	public void write(Object data, List<DataWritingListener> listeners) {
-		this.listeners = listeners;
+	public void write(Object data) {
 		this.executeBeforeWritingMethodListeners(data);
 		System.out.println(data);
 		this.executeAfterWritingMethodListeners(data);
