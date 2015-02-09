@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.listener.DataReadingListener;
+import com.github.aureliano.defero.listener.DataWritingListener;
 import com.github.aureliano.defero.parser.IParser;
 
 public class EventCollectorConfiguration {
@@ -14,9 +15,11 @@ public class EventCollectorConfiguration {
 	private IConfigOutput outputConfig;
 	private IParser<?> parser;
 	private List<DataReadingListener> dataReadingListeners;
+	private List<DataWritingListener> dataWritingListeners;
 	
 	public EventCollectorConfiguration() {
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 	}
 
 	public IConfigInput getInputConfig() {
@@ -57,6 +60,20 @@ public class EventCollectorConfiguration {
 	
 	public EventCollectorConfiguration addDataReadingListeners(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
+		return this;
+	}
+	
+	public List<DataWritingListener> getDataWritingListeners() {
+		return dataWritingListeners;
+	}
+	
+	public EventCollectorConfiguration withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
+		this.dataWritingListeners = dataWritingListeners;
+		return this;
+	}
+	
+	public EventCollectorConfiguration addDataWritingListeners(DataWritingListener listener) {
+		this.dataWritingListeners.add(listener);
 		return this;
 	}
 }

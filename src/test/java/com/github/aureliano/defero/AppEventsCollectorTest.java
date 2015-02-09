@@ -8,9 +8,12 @@ import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.output.OutputConfigFactory;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.event.AfterReadingEvent;
+import com.github.aureliano.defero.event.AfterWritingEvent;
 import com.github.aureliano.defero.event.BeforeReadingEvent;
+import com.github.aureliano.defero.event.BeforeWritingEvent;
 import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.listener.DataReadingListener;
+import com.github.aureliano.defero.listener.DataWritingListener;
 import com.github.aureliano.defero.parser.PlainText;
 
 public class AppEventsCollectorTest {
@@ -46,6 +49,21 @@ public class AppEventsCollectorTest {
 					public void afterDataReading(AfterReadingEvent event) {
 						System.out.println(" >>> AFTER READING");
 						System.out.println(event.getLineCounter());
+						System.out.println(event.getData());
+					}
+				}).addDataWritingListeners(new DataWritingListener() {
+					
+					@Override
+					public void beforeDataWriting(BeforeWritingEvent event) {
+						System.out.println(" >>> BEFORE WRITING");
+						System.out.println(event.getOutputConfiguration().outputType());
+						System.out.println(event.getData());
+					}
+					
+					@Override
+					public void afterDataWriting(AfterWritingEvent event) {
+						System.out.println(" >>> AFTER WRITING");
+						System.out.println(event.getOutputConfiguration().outputType());
 						System.out.println(event.getData());
 					}
 				}))

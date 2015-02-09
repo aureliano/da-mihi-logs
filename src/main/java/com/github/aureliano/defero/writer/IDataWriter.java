@@ -1,6 +1,9 @@
 package com.github.aureliano.defero.writer;
 
+import java.util.List;
+
 import com.github.aureliano.defero.config.output.IConfigOutput;
+import com.github.aureliano.defero.listener.DataWritingListener;
 
 public interface IDataWriter {
 	
@@ -8,5 +11,5 @@ public interface IDataWriter {
 
 	public abstract IDataWriter withOutputConfiguration(IConfigOutput config);
 	
-	public abstract void write(Object data);
+	public abstract void write(Object data, List<DataWritingListener> listeners);
 }

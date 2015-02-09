@@ -42,7 +42,7 @@ public class AppEventsCollector {
 		
 		Object data = null;
 		while ((data = dataReader.nextData(this.configuration.getDataReadingListeners())) != null) {
-			dataWriter.write(data);
+			dataWriter.write(data, this.configuration.getDataWritingListeners());
 		}
 		
 		return dataReader.lastLine();

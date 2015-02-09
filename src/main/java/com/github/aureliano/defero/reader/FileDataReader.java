@@ -62,7 +62,7 @@ public class FileDataReader implements IDataReader {
 		
 		this.prepareReading();
 		
-		this.executeBeforeReadingMethodListeners();		
+		this.executeBeforeReadingMethodListeners();
 		Object data = this.parseData();
 		this.executeAfterReadingMethodListeners(data);
 		
