@@ -1,5 +1,6 @@
 *.class
 target
+log
 
 # Package files #
 *.jar
