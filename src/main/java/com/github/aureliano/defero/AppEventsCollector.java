@@ -1,10 +1,12 @@
 package com.github.aureliano.defero;
 
+import java.io.File;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
 import com.github.aureliano.defero.helper.ConfigHelper;
+import com.github.aureliano.defero.helper.LoggerHelper;
 import com.github.aureliano.defero.profile.Profiler;
 import com.github.aureliano.defero.reader.DataReaderFactory;
 import com.github.aureliano.defero.reader.IDataReader;
@@ -33,13 +35,8 @@ public class AppEventsCollector {
 		}
 		
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
-		
-		logger.info("Time elapsed: " + properties.getProperty("profile.time.elapsed"));
-		logger.info("Available processors: " + properties.getProperty("profile.processor.available"));
-		logger.info("Free memory: " + properties.getProperty("profile.memory.free"));
-		logger.info("Max memory: " + properties.getProperty("profile.memory.max"));
-		logger.info("Total memory: " + properties.getProperty("profile.memomry.total"));
-		
+		File log = LoggerHelper.saveExecutionLog(properties);
+		logger.info("Execution log output saved at " + log.getPath());		
 		logger.info("Execution successful!");
 	}
 	
