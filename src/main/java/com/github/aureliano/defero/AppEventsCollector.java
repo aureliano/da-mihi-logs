@@ -38,6 +38,7 @@ public class AppEventsCollector {
 		
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
 		properties.put("input.type", this.configuration.getInputConfig().inputType());
+		properties.put("input.last.line", String.valueOf(dataReader.lastLine()));
 		
 		File log = LoggerHelper.saveExecutionLog(properties);
 		logger.info("Execution log output saved at " + log.getPath());		
