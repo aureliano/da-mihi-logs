@@ -1,13 +1,18 @@
 package com.github.aureliano.defero.reader;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.defero.event.AfterReadingEvent;
+import com.github.aureliano.defero.event.BeforeReadingEvent;
+import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.parser.IParser;
 
 public class FileDataReader implements IDataReader {
@@ -16,6 +21,8 @@ public class FileDataReader implements IDataReader {
 	private IParser<?> parser;
 	private LineIterator lineIterator;
 	private long lineCounter;
+	
+	private List<DataReadingListener> listeners;
 	
 	public FileDataReader() {
 		this.lineCounter = 0;
@@ -44,22 +51,22 @@ public class FileDataReader implements IDataReader {
 	}
 
 	@Override
-	public Object nextData() {
+	public Object nextData(List<DataReadingListener> listeners) {
 		this.initialize();
+		this.listeners = listeners;
 		
 		if (!this.lineIterator.hasNext()) {
 			LineIterator.closeQuietly(this.lineIterator);
 			return null;
 		}
 		
-		this.lineCounter++;
+		this.prepareReading();
 		
-		while (this.inputConfiguration.getStartPosition() > this.lineCounter) {
-			this.lineIterator.nextLine();
-			this.lineCounter++;
-		}
+		this.executeBeforeReadingMethodListeners();		
+		Object data = this.parseData();
+		this.executeAfterReadingMethodListeners(data);
 		
-		return this.parseData();
+		return data;
 	}
 	
 	@Override
@@ -67,17 +74,45 @@ public class FileDataReader implements IDataReader {
 		return this.lineCounter;
 	}
 	
-	private String parseData() {
-		int maxParseTries = 10000;
-		int counter = 0;
-		StringBuilder buffer = new StringBuilder(this.lineIterator.nextLine());
+	private void executeBeforeReadingMethodListeners() {
+		for (DataReadingListener listener : this.listeners) {
+			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter, MAX_PARSE_ATTEMPTS));
+		}
+	}
+	
+	private void executeAfterReadingMethodListeners(Object data) {
+		for (DataReadingListener listener : this.listeners) {
+			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
+		}
+	}
+	
+	private void prepareReading() {		
+		this.lineCounter++;
 		
-		while (!this.parser.accept(buffer.toString())) {
-			if (maxParseTries >= ++counter) {
-				throw new DeferoException("Max parse tries overflow.");
+		while (this.inputConfiguration.getStartPosition() > this.lineCounter) {
+			this.lineIterator.nextLine();
+			this.lineCounter++;
+		}
+	}
+	
+	private String parseData() {
+		int counter = 0;
+		String line = this.lineIterator.nextLine();
+		StringBuilder buffer = new StringBuilder(line);
+		
+		for (DataReadingListener listener : this.listeners) {
+			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
+		}
+		
+		while (!this.parser.accept(line)) {
+			if (MAX_PARSE_ATTEMPTS >= ++counter) {
+				throw new DeferoException("Max parse attempts overflow.");
 			}
 			
-			buffer.append("\n").append(this.lineIterator.nextLine());
+			buffer.append("\n").append(this.lineIterator.nextLine());			
+			for (DataReadingListener listener : this.listeners) {
+				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
+			}
 		}
 		
 		return buffer.toString();

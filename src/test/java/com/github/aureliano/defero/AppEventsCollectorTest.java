@@ -7,6 +7,10 @@ import com.github.aureliano.defero.config.input.InputConfigFactory;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.output.OutputConfigFactory;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
+import com.github.aureliano.defero.event.AfterReadingEvent;
+import com.github.aureliano.defero.event.BeforeReadingEvent;
+import com.github.aureliano.defero.event.StepParseEvent;
+import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.parser.PlainText;
 
 public class AppEventsCollectorTest {
@@ -19,7 +23,32 @@ public class AppEventsCollectorTest {
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(20))
 				.withOutputConfig(OutputConfigFactory.createOutputConfig(StandardOutputConfig.class))
-				.withParser(new PlainText()))
+				.withParser(new PlainText())
+				.addDataReadingListeners(new DataReadingListener() {
+					
+					@Override
+					public void stepLineParse(StepParseEvent event) {
+						System.out.println(" >>> STEP PARSE");
+						System.out.println(event.getParseAttempts());
+						System.out.println(event.getLine());
+						System.out.println(event.getCurrentData());
+					}
+					
+					@Override
+					public void beforeDataReading(BeforeReadingEvent event) {
+						System.out.println(" >>> BEFORE READING");
+						System.out.println(event.getInputConfiguration().inputType());
+						System.out.println(event.getLineCounter());
+						System.out.println(event.getMaxParseAttempts());
+					}
+					
+					@Override
+					public void afterDataReading(AfterReadingEvent event) {
+						System.out.println(" >>> AFTER READING");
+						System.out.println(event.getLineCounter());
+						System.out.println(event.getData());
+					}
+				}))
 			.execute();
 	}
 }

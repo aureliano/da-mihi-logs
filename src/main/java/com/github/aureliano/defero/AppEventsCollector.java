@@ -41,7 +41,7 @@ public class AppEventsCollector {
 		IDataWriter dataWriter = DataWriterFactory.createDataWriter(this.configuration.getOutputConfig());
 		
 		Object data = null;
-		while ((data = dataReader.nextData()) != null) {
+		while ((data = dataReader.nextData(this.configuration.getDataReadingListeners())) != null) {
 			dataWriter.write(data);
 		}
 		
