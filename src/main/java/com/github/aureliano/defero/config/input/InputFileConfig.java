@@ -12,6 +12,11 @@ public class InputFileConfig implements IConfigInput {
 		this.startPosition = 0;
 		this.encoding = "UTF-8";
 	}
+	
+	@Override
+	public String inputType() {
+		return "FILE";
+	}
 
 	public File getFile() {
 		return file;

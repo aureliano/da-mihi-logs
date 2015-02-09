@@ -22,6 +22,8 @@ public class AppEventsCollector {
 	}
 	
 	public void execute() {
+		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
+		
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
@@ -35,6 +37,8 @@ public class AppEventsCollector {
 		}
 		
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
+		properties.put("input.type", this.configuration.getInputConfig().inputType());
+		
 		File log = LoggerHelper.saveExecutionLog(properties);
 		logger.info("Execution log output saved at " + log.getPath());		
 		logger.info("Execution successful!");
