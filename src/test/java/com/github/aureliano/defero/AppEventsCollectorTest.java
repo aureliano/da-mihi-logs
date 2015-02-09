@@ -10,7 +10,7 @@ import com.github.aureliano.defero.parser.PlainText;
 public class AppEventsCollectorTest {
 
 	@Test
-	public void testExecute() {
+	public void testExecute() {		
 		new AppEventsCollector()
 			.withConfiguration(new EventCollectorConfiguration()
 				.withInputConfig(InputConfigFactory.createInputConfig(InputFileConfig.class)
