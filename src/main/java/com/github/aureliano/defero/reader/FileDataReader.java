@@ -105,7 +105,9 @@ public class FileDataReader implements IDataReader {
 	
 	@Override
 	public void endResources() {
-		this.lineIterator.close();
+		if (this.lineIterator != null) {
+			this.lineIterator.close();
+		}
 	}
 	
 	private void executeBeforeReadingMethodListeners() {

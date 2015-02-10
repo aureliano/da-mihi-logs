@@ -67,6 +67,10 @@ public class FileDataWriter implements IDataWriter {
 	
 	@Override
 	public void endResources() {
+		if (this.writer == null) {
+			return;
+		}
+		
 		try {
 			this.writer.flush();
 			this.writer.close();
