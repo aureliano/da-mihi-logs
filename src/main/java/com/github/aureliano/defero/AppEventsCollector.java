@@ -43,6 +43,7 @@ public class AppEventsCollector {
 				.withListeners(this.configuration.getDataReadingListeners());
 		IDataWriter dataWriter = DataWriterFactory
 			.createDataWriter(this.configuration.getOutputConfig())
+				.withOutputFormatter(this.configuration.getOutputFormatter())
 				.withListeners(this.configuration.getDataWritingListeners());
 		
 		Object data = null;

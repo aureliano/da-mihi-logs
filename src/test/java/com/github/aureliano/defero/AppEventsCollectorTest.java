@@ -15,6 +15,7 @@ import com.github.aureliano.defero.event.BeforeReadingEvent;
 import com.github.aureliano.defero.event.BeforeWritingEvent;
 import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.filter.IEventFielter;
+import com.github.aureliano.defero.formatter.JsonFormatter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
 import com.github.aureliano.defero.parser.JsonEventParser;
@@ -32,6 +33,7 @@ public class AppEventsCollectorTest {
 				.withParser(new JsonEventParser())
 				.addDataReadingListeners(this.getDataReadingListener())
 				.addDataWritingListeners(this.getDataWriteListener())
+				.withOutputFormatter(new JsonFormatter())
 				.withFilter(new IEventFielter() {
 					
 					@Override

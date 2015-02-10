@@ -6,11 +6,14 @@ import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.event.AfterWritingEvent;
 import com.github.aureliano.defero.event.BeforeWritingEvent;
+import com.github.aureliano.defero.formatter.IOutputFormatter;
+import com.github.aureliano.defero.formatter.PlainTextFormatter;
 import com.github.aureliano.defero.listener.DataWritingListener;
 
 public class StandardDataWriter implements IDataWriter {
 
 	private StandardOutputConfig outputConfiguration;
+	private IOutputFormatter outputFormatter;
 	private List<DataWritingListener> listeners;
 	
 	public StandardDataWriter() {
@@ -38,15 +41,30 @@ public class StandardDataWriter implements IDataWriter {
 		this.listeners = listeners;
 		return this;
 	}
+	
+	@Override
+	public IOutputFormatter getOutputFormatter() {
+		return this.outputFormatter;
+	}
+	
+	@Override
+	public IDataWriter withOutputFormatter(IOutputFormatter outputFormatter) {
+		this.outputFormatter = outputFormatter;
+		return this;
+	}
 
 	@Override
 	public void write(Object data) {
+		if (this.outputFormatter == null) {
+			this.outputFormatter = new PlainTextFormatter();
+		}
+		
 		if (data == null) {
 			return;
 		}
 		
 		this.executeBeforeWritingMethodListeners(data);
-		System.out.println(data);
+		System.out.println(this.outputFormatter.format(data));
 		this.executeAfterWritingMethodListeners(data);
 	}
 	
