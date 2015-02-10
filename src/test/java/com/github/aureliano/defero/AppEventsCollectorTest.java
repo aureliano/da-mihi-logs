@@ -1,5 +1,7 @@
 package com.github.aureliano.defero;
 
+import java.util.Map;
+
 import org.junit.Test;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
@@ -15,7 +17,7 @@ import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
-import com.github.aureliano.defero.parser.PlainTextParser;
+import com.github.aureliano.defero.parser.JsonEventParser;
 
 public class AppEventsCollectorTest {
 
@@ -25,16 +27,17 @@ public class AppEventsCollectorTest {
 			.withConfiguration(new EventCollectorConfiguration()
 				.withInputConfig(InputConfigFactory.createInputConfig(InputFileConfig.class)
 					.withFile("src/test/resources/datalog.log")
-					.withStartPosition(20))
+					.withStartPosition(10))
 				.withOutputConfig(OutputConfigFactory.createOutputConfig(StandardOutputConfig.class))
-				.withParser(new PlainTextParser())
-				//.addDataReadingListeners(this.getDataReadingListener())
-				//.addDataWritingListeners(this.getDataWriteListener())
+				.withParser(new JsonEventParser())
+				.addDataReadingListeners(this.getDataReadingListener())
+				.addDataWritingListeners(this.getDataWriteListener())
 				.withFilter(new IEventFielter() {
 					
 					@Override
 					public boolean accept(Object data) {
-						return false;
+						Map<String, Object> map = (Map<String, Object>) data;
+						return map.get("tipoLog").equals("MemoriaServidor");
 					}
 				}))
 			.execute();
@@ -44,26 +47,15 @@ public class AppEventsCollectorTest {
 		return new DataReadingListener() {
 			
 			@Override
-			public void stepLineParse(StepParseEvent event) {
-				System.out.println(" >>> STEP PARSE");
-				System.out.println(event.getParseAttempts());
-				System.out.println(event.getLine());
-				System.out.println(event.getCurrentData());
-			}
+			public void stepLineParse(StepParseEvent event) { }
 			
 			@Override
-			public void beforeDataReading(BeforeReadingEvent event) {
-				System.out.println(" >>> BEFORE READING");
-				System.out.println(event.getInputConfiguration().inputType());
-				System.out.println(event.getLineCounter());
-				System.out.println(event.getMaxParseAttempts());
-			}
+			public void beforeDataReading(BeforeReadingEvent event) { }
 			
 			@Override
 			public void afterDataReading(AfterReadingEvent event) {
-				System.out.println(" >>> AFTER READING");
-				System.out.println(event.getLineCounter());
-				System.out.println(event.getData());
+				Map<String, Object> map = (Map<String, Object>) event.getData();
+				map.put("newOne", "Added!");
 			}
 		};
 	}
@@ -72,18 +64,10 @@ public class AppEventsCollectorTest {
 		return new DataWritingListener() {
 			
 			@Override
-			public void beforeDataWriting(BeforeWritingEvent event) {
-				System.out.println(" >>> BEFORE WRITING");
-				System.out.println(event.getOutputConfiguration().outputType());
-				System.out.println(event.getData());
-			}
+			public void beforeDataWriting(BeforeWritingEvent event) { }
 			
 			@Override
-			public void afterDataWriting(AfterWritingEvent event) {
-				System.out.println(" >>> AFTER WRITING");
-				System.out.println(event.getOutputConfiguration().outputType());
-				System.out.println(event.getData());
-			}
+			public void afterDataWriting(AfterWritingEvent event) { }
 		};
 	}
 }
