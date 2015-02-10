@@ -12,6 +12,8 @@ import com.github.aureliano.defero.event.AfterReadingEvent;
 import com.github.aureliano.defero.event.BeforeReadingEvent;
 import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.defero.filter.DefaultEmptyFilter;
+import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.parser.IParser;
 
@@ -23,6 +25,7 @@ public class FileDataReader implements IDataReader {
 	private long lineCounter;
 	
 	private List<DataReadingListener> listeners;
+	private IEventFielter filter;
 	
 	public FileDataReader() {
 		this.lineCounter = 0;
@@ -71,17 +74,33 @@ public class FileDataReader implements IDataReader {
 		}
 		
 		this.prepareReading();
+		Object data = null;
+		boolean accepted = false;
 		
-		this.executeBeforeReadingMethodListeners();
-		Object data = this.parseData();
-		this.executeAfterReadingMethodListeners(data);
+		do {
+			this.executeBeforeReadingMethodListeners();
+			data = this.parseData();
+			accepted = this.filter.accept(data);
+			this.executeAfterReadingMethodListeners(data, accepted);
+		} while (!accepted && this.lineIterator.hasNext());
 		
-		return data;
+		return (accepted) ? data : null;
 	}
 	
 	@Override
 	public long lastLine() {
 		return this.lineCounter;
+	}
+	
+	@Override
+	public IEventFielter getFilter() {
+		return filter;
+	}
+	
+	@Override
+	public IDataReader withFilter(IEventFielter filter) {
+		this.filter = filter;
+		return this;
 	}
 	
 	private void executeBeforeReadingMethodListeners() {
@@ -90,9 +109,9 @@ public class FileDataReader implements IDataReader {
 		}
 	}
 	
-	private void executeAfterReadingMethodListeners(Object data) {
+	private void executeAfterReadingMethodListeners(Object data, boolean accepted) {
 		for (DataReadingListener listener : this.listeners) {
-			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
+			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, accepted, data));
 		}
 	}
 	
@@ -131,6 +150,10 @@ public class FileDataReader implements IDataReader {
 	private void initialize() {
 		if (this.lineIterator != null) {
 			return;
+		}
+		
+		if (this.filter == null) {
+			this.filter = new DefaultEmptyFilter();
 		}
 		
 		try {

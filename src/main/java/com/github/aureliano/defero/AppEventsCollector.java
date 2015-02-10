@@ -39,6 +39,7 @@ public class AppEventsCollector {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(this.configuration.getInputConfig())
 				.withParser(this.configuration.getParser())
+				.withFilter(this.configuration.getFilter())
 				.withListeners(this.configuration.getDataReadingListeners());
 		IDataWriter dataWriter = DataWriterFactory
 			.createDataWriter(this.configuration.getOutputConfig())

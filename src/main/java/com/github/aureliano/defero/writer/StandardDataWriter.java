@@ -41,6 +41,10 @@ public class StandardDataWriter implements IDataWriter {
 
 	@Override
 	public void write(Object data) {
+		if (data == null) {
+			return;
+		}
+		
 		this.executeBeforeWritingMethodListeners(data);
 		System.out.println(data);
 		this.executeAfterWritingMethodListeners(data);
