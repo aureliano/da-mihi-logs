@@ -12,6 +12,8 @@ public final class OutputConfigFactory {
 	public static <T> T createOutputConfig(Class<T> type) {
 		if (StandardOutputConfig.class.equals(type)) {
 			return (T) new StandardOutputConfig();
+		} else if (FileOutputConfig.class.equals(type)) {
+			return (T) new FileOutputConfig();
 		} else {
 			throw new DeferoException("No such input config for type " + type);
 		}

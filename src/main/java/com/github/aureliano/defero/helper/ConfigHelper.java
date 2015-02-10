@@ -2,6 +2,7 @@ package com.github.aureliano.defero.helper;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.exception.DeferoException;
@@ -31,13 +32,19 @@ public final class ConfigHelper {
 		
 		if (config instanceof StandardOutputConfig) {
 			standardOutputConfigValidation((StandardOutputConfig) config);
+		} else if (config instanceof FileOutputConfig) {
+			fileOutputConfigValidation((FileOutputConfig) config);
 		} else {
 			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
 	}
-	
+
 	protected static void standardOutputConfigValidation(StandardOutputConfig config) {
 		// Do nothing. Uses of standard system output.
+	}
+	
+	protected static void fileOutputConfigValidation(FileOutputConfig config) {
+		outputFileConfigFileValidation(config);
 	}
 
 	protected static void inputFileConfigValidation(InputFileConfig config) {
@@ -52,6 +59,12 @@ public final class ConfigHelper {
 			throw new DeferoException("Input file '" + config.getFile().getPath() + "' does not exist.");
 		} else if (!config.getFile().isFile()) {
 			throw new DeferoException("Input resource '" + config.getFile().getPath() + "' is not a file.");
+		}
+	}
+	
+	protected static void outputFileConfigFileValidation(FileOutputConfig config) {
+		if (config.getFile() == null) {
+			throw new DeferoException("Output file not provided.");
 		}
 	}
 	

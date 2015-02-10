@@ -16,4 +16,6 @@ public interface IDataWriter {
 	public abstract IDataWriter withListeners(List<DataWritingListener> listeners);
 	
 	public abstract void write(Object data);
+	
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 }
