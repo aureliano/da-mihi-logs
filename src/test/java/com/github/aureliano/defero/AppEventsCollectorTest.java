@@ -15,7 +15,7 @@ import com.github.aureliano.defero.event.StepParseEvent;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
-import com.github.aureliano.defero.parser.PlainText;
+import com.github.aureliano.defero.parser.PlainTextParser;
 
 public class AppEventsCollectorTest {
 
@@ -27,7 +27,7 @@ public class AppEventsCollectorTest {
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(20))
 				.withOutputConfig(OutputConfigFactory.createOutputConfig(StandardOutputConfig.class))
-				.withParser(new PlainText())
+				.withParser(new PlainTextParser())
 				//.addDataReadingListeners(this.getDataReadingListener())
 				//.addDataWritingListeners(this.getDataWriteListener())
 				.withFilter(new IEventFielter() {

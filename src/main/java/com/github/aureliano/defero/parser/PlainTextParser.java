@@ -3,9 +3,9 @@ package com.github.aureliano.defero.parser;
 /**
  * Line by line text parser.
  */
-public class PlainText implements IParser<String> {
+public class PlainTextParser implements IParser<String> {
 
-	public PlainText() {
+	public PlainTextParser() {
 		super();
 	}
 
