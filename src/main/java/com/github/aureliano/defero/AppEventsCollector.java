@@ -5,6 +5,7 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
+import com.github.aureliano.defero.exception.DeferoException;
 import com.github.aureliano.defero.helper.ConfigHelper;
 import com.github.aureliano.defero.helper.LoggerHelper;
 import com.github.aureliano.defero.profile.Profiler;
@@ -27,8 +28,7 @@ public class AppEventsCollector {
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
-		ConfigHelper.inputConfigValidation(this.configuration.getInputConfig());
-		ConfigHelper.outputConfigValidation(this.configuration.getOutputConfig());
+		this.validation();
 		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
 				
 		long lastLine = this.dataIteration();
@@ -50,6 +50,15 @@ public class AppEventsCollector {
 		}
 		
 		return dataReader.lastLine();
+	}
+	
+	private void validation() {
+		ConfigHelper.inputConfigValidation(this.configuration.getInputConfig());
+		ConfigHelper.outputConfigValidation(this.configuration.getOutputConfig());
+		
+		if (this.configuration.getParser() == null) {
+			throw new DeferoException("Parser must pe provided.");
+		}
 	}
 	
 	private void printLogToOutput(Profiler profiler, long lastLine) {

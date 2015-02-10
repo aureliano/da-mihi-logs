@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class Profiler {
 
-	private static final double MEM_FACTOR = 1024.0 * 1024.0; // MB
+	private static final double MEM_FACTOR = 1024.0 * 1024.0; // MiB
 	private static final DecimalFormat DECIMAL_FORMAT;
 	
 	static {
@@ -67,9 +67,9 @@ public class Profiler {
 		
 		properties.put("profile.time.elapsed", formatTime(profiler.time));
 		properties.put("profile.processor.available", String.valueOf(profiler.availableProcessors));
-		properties.put("profile.memory.free", DECIMAL_FORMAT.format(profiler.freeMemory / MEM_FACTOR) + " MB");
-		properties.put("profile.memory.max", DECIMAL_FORMAT.format(profiler.maxMemory / MEM_FACTOR) + " MB");
-		properties.put("profile.memomry.total", DECIMAL_FORMAT.format(profiler.totalMemory / MEM_FACTOR) + " MB");
+		properties.put("profile.memory.free", DECIMAL_FORMAT.format(profiler.freeMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.memory.max", DECIMAL_FORMAT.format(profiler.maxMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.memomry.total", DECIMAL_FORMAT.format(profiler.totalMemory / MEM_FACTOR) + " MiB");
 		
 		return properties;
 	}
