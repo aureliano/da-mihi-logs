@@ -11,11 +11,14 @@ import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.event.AfterWritingEvent;
 import com.github.aureliano.defero.event.BeforeWritingEvent;
 import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.defero.formatter.IOutputFormatter;
+import com.github.aureliano.defero.formatter.PlainTextFormatter;
 import com.github.aureliano.defero.listener.DataWritingListener;
 
 public class FileDataWriter implements IDataWriter {
 
 	private FileOutputConfig outputConfiguration;
+	private IOutputFormatter outputFormatter;
 	private List<DataWritingListener> listeners;
 	private OutputStreamWriter writer;
 	
@@ -46,6 +49,17 @@ public class FileDataWriter implements IDataWriter {
 		this.listeners = listeners;
 		return this;
 	}
+	
+	@Override
+	public IOutputFormatter getOutputFormatter() {
+		return this.outputFormatter;
+	}
+	
+	@Override
+	public IDataWriter withOutputFormatter(IOutputFormatter outputFormatter) {
+		this.outputFormatter = outputFormatter;
+		return this;
+	}
 
 	@Override
 	public void write(Object data) {
@@ -56,7 +70,7 @@ public class FileDataWriter implements IDataWriter {
 		
 		this.executeBeforeWritingMethodListeners(data);
 		try {
-			String text = (this.lines == 0) ? data.toString() : (LINE_SEPARATOR + data);
+			String text = (this.lines == 0) ? this.outputFormatter.format(data) : (LINE_SEPARATOR + this.outputFormatter.format(data));
 			this.writer.write(text);
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
@@ -94,6 +108,10 @@ public class FileDataWriter implements IDataWriter {
 	private void initialize() {
 		if (this.writer != null) {
 			return;
+		}
+		
+		if (this.outputFormatter == null) {
+			this.outputFormatter = new PlainTextFormatter();
 		}
 		
 		try {
