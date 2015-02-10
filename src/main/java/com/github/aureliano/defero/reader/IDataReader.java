@@ -29,5 +29,7 @@ public interface IDataReader {
 	
 	public abstract IDataReader withFilter(IEventFielter filter);
 	
+	public abstract void endResources();
+	
 	public static final int MAX_PARSE_ATTEMPTS = 10000;
 }

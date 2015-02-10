@@ -64,6 +64,16 @@ public class FileDataWriter implements IDataWriter {
 		this.executeAfterWritingMethodListeners(data);
 		this.lines++;
 	}
+	
+	@Override
+	public void endResources() {
+		try {
+			this.writer.flush();
+			this.writer.close();
+		} catch (IOException ex) {
+			throw new DeferoException(ex);
+		}
+	}
 
 	private void executeBeforeWritingMethodListeners(Object data) {
 		for (DataWritingListener listener : this.listeners) {

@@ -49,6 +49,9 @@ public class StandardDataWriter implements IDataWriter {
 		System.out.println(data);
 		this.executeAfterWritingMethodListeners(data);
 	}
+	
+	@Override
+	public void endResources() { }
 
 	private void executeBeforeWritingMethodListeners(Object data) {
 		for (DataWritingListener listener : this.listeners) {

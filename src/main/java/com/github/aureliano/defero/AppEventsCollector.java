@@ -50,6 +50,9 @@ public class AppEventsCollector {
 			dataWriter.write(data);
 		}
 		
+		dataReader.endResources();
+		dataWriter.endResources();
+		
 		return dataReader.lastLine();
 	}
 	

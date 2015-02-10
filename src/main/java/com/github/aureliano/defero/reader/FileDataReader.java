@@ -103,6 +103,11 @@ public class FileDataReader implements IDataReader {
 		return this;
 	}
 	
+	@Override
+	public void endResources() {
+		this.lineIterator.close();
+	}
+	
 	private void executeBeforeReadingMethodListeners() {
 		for (DataReadingListener listener : this.listeners) {
 			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter, MAX_PARSE_ATTEMPTS));

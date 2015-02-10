@@ -17,5 +17,7 @@ public interface IDataWriter {
 	
 	public abstract void write(Object data);
 	
+	public abstract void endResources();
+	
 	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 }
