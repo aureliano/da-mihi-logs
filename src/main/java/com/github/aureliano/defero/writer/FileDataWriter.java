@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
@@ -23,6 +24,8 @@ public class FileDataWriter implements IDataWriter {
 	private OutputStreamWriter writer;
 	
 	private int lines;
+	
+	private static final Logger logger = Logger.getLogger(FileDataWriter.class.getName());
 	
 	public FileDataWriter() {
 		this.lines = 0;
@@ -85,6 +88,7 @@ public class FileDataWriter implements IDataWriter {
 			return;
 		}
 		
+		logger.info(" >>> Flushing and closing stream writer.");
 		try {
 			this.writer.flush();
 			this.writer.close();
@@ -94,12 +98,14 @@ public class FileDataWriter implements IDataWriter {
 	}
 
 	private void executeBeforeWritingMethodListeners(Object data) {
+		logger.fine("Execute beforeDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
 		}
 	}
 
 	private void executeAfterWritingMethodListeners(Object data) {
+		logger.fine("Execute afterDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, data));
 		}
@@ -113,6 +119,10 @@ public class FileDataWriter implements IDataWriter {
 		if (this.outputFormatter == null) {
 			this.outputFormatter = new PlainTextFormatter();
 		}
+		
+		logger.info("Outputing data to " + this.outputConfiguration.getFile().getPath());
+		logger.info("Data encondig: " + this.outputConfiguration.getEncoding());
+		logger.info("Append data to file? " + this.outputConfiguration.isAppend());
 		
 		try {
 			FileOutputStream stream = new FileOutputStream(this.outputConfiguration.getFile(), this.outputConfiguration.isAppend());

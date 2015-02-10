@@ -2,6 +2,7 @@ package com.github.aureliano.defero.reader;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
@@ -26,6 +27,8 @@ public class FileDataReader implements IDataReader {
 	
 	private List<DataReadingListener> listeners;
 	private IEventFielter filter;
+	
+	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
 	
 	public FileDataReader() {
 		this.lineCounter = 0;
@@ -105,18 +108,21 @@ public class FileDataReader implements IDataReader {
 	
 	@Override
 	public void endResources() {
+		logger.info(" >>> Flushing and closing stream reader.");
 		if (this.lineIterator != null) {
 			this.lineIterator.close();
 		}
 	}
 	
 	private void executeBeforeReadingMethodListeners() {
+		logger.fine("Execute beforeDataReading listeners.");
 		for (DataReadingListener listener : this.listeners) {
 			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter, MAX_PARSE_ATTEMPTS));
 		}
 	}
 	
 	private void executeAfterReadingMethodListeners(Object data, boolean accepted) {
+		logger.fine("Execute afterDataReading listeners.");
 		for (DataReadingListener listener : this.listeners) {
 			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, accepted, data));
 		}
@@ -162,6 +168,10 @@ public class FileDataReader implements IDataReader {
 		if (this.filter == null) {
 			this.filter = new DefaultEmptyFilter();
 		}
+		
+		logger.info("Reading data from " + this.inputConfiguration.getFile().getPath());
+		logger.info("Starting from line " + this.inputConfiguration.getStartPosition());
+		logger.info("Data encondig: " + this.inputConfiguration.getEncoding());
 		
 		try {
 			this.lineIterator = FileUtils.lineIterator(
