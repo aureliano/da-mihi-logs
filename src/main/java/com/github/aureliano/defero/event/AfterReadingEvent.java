@@ -1,5 +1,7 @@
 package com.github.aureliano.defero.event;
 
+import com.github.aureliano.defero.exception.DeferoException;
+
 public class AfterReadingEvent {
 
 	private long lineCounter;
@@ -22,5 +24,18 @@ public class AfterReadingEvent {
 
 	public Object getData() {
 		return data;
+	}
+	
+	public void setData(Object value) {
+		if ((this.data == null) && (value == null)) {
+			return;
+		} else if (((this.data == null) && (value != null)) || ((this.data != null) && (value == null))) {
+			this.data = value;
+			return;
+		}
+		
+		if (!this.data.getClass().equals(value.getClass())) {
+			throw new DeferoException("You cannot set " + value.getClass().getName() + " to " + this.data.getClass().getName());
+		}
 	}
 }

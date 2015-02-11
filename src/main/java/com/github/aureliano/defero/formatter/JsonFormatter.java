@@ -14,6 +14,10 @@ public class JsonFormatter implements IOutputFormatter {
 
 	@Override
 	public String format(Object data) {
+		if (data == null) {
+			return "";
+		}
+		
 		try {
 			return objectMapper.writeValueAsString(data);
 		} catch (JsonProcessingException ex) {
