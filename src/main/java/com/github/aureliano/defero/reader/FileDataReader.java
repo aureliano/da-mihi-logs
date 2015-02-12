@@ -1,11 +1,11 @@
 package com.github.aureliano.defero.reader;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.logging.Logger;
-
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.LineIterator;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
@@ -22,11 +22,10 @@ public class FileDataReader implements IDataReader {
 
 	private InputFileConfig inputConfiguration;
 	private IParser<?> parser;
-	private LineIterator lineIterator;
 	private long lineCounter;
-	
+	private BufferedReader bufferedReader;
+	private IEventFielter filter;	
 	private List<DataReadingListener> listeners;
-	private IEventFielter filter;
 	
 	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
 	
@@ -70,9 +69,9 @@ public class FileDataReader implements IDataReader {
 	@Override
 	public Object nextData() {
 		this.initialize();
+		String line = this.readNextLine();
 		
-		if (!this.lineIterator.hasNext()) {
-			LineIterator.closeQuietly(this.lineIterator);
+		if (line == null) {
 			return null;
 		}
 		
@@ -83,11 +82,11 @@ public class FileDataReader implements IDataReader {
 		do {
 			this.executeBeforeReadingMethodListeners();
 			
-			data = this.parser.parse(this.parseData());
+			data = this.parser.parse(this.parseData(line));
 			accepted = this.filter.accept(data);
 			
 			this.executeAfterReadingMethodListeners(data, accepted);
-		} while (!accepted && this.lineIterator.hasNext());
+		} while (!accepted && (line = this.readNextLine()) != null);
 		
 		return (accepted) ? data : null;
 	}
@@ -111,8 +110,13 @@ public class FileDataReader implements IDataReader {
 	@Override
 	public void endResources() {
 		logger.info(" >>> Flushing and closing stream reader.");
-		if (this.lineIterator != null) {
-			this.lineIterator.close();
+		if (this.bufferedReader != null) {
+			try {
+				this.bufferedReader.close();
+				this.bufferedReader = null;
+			} catch (IOException ex) {
+				throw new DeferoException(ex);
+			}
 		}
 	}
 	
@@ -131,17 +135,13 @@ public class FileDataReader implements IDataReader {
 	}
 	
 	private void prepareReading() {		
-		this.lineCounter++;
-		
 		while (this.inputConfiguration.getStartPosition() > this.lineCounter) {
-			this.lineIterator.nextLine();
-			this.lineCounter++;
+			this.readNextLine();			
 		}
 	}
 	
-	private String parseData() {
+	private String parseData(String line) {
 		int counter = 0;
-		String line = this.lineIterator.nextLine();
 		StringBuilder buffer = new StringBuilder(line);
 		
 		for (DataReadingListener listener : this.listeners) {
@@ -153,7 +153,7 @@ public class FileDataReader implements IDataReader {
 				throw new DeferoException("Max parse attempts overflow.");
 			}
 			
-			buffer.append("\n").append(this.lineIterator.nextLine());			
+			buffer.append("\n").append(this.readNextLine());			
 			for (DataReadingListener listener : this.listeners) {
 				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
 			}
@@ -163,7 +163,7 @@ public class FileDataReader implements IDataReader {
 	}
 	
 	private void initialize() {
-		if (this.lineIterator != null) {
+		if (this.bufferedReader != null) {
 			return;
 		}
 		
@@ -176,8 +176,22 @@ public class FileDataReader implements IDataReader {
 		logger.info("Data encondig: " + this.inputConfiguration.getEncoding());
 		
 		try {
-			this.lineIterator = FileUtils.lineIterator(
-					this.inputConfiguration.getFile(), this.inputConfiguration.getEncoding());
+			this.bufferedReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(
+					this.inputConfiguration.getFile()), this.inputConfiguration.getEncoding()));
+		} catch (IOException ex) {
+			throw new DeferoException(ex);
+		}
+	}
+	
+	private String readNextLine() {
+		try {
+			String line = this.bufferedReader.readLine();
+			if (line != null) {
+				this.lineCounter++;
+			}
+			
+			return line;
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}

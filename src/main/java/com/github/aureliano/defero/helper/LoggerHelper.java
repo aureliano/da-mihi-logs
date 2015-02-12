@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
-
 import com.github.aureliano.defero.exception.DeferoException;
 
 public final class LoggerHelper {
@@ -24,10 +22,12 @@ public final class LoggerHelper {
 		File dir = new File("log");
 		try {
 			if (!dir.exists()) {
-				FileUtils.forceMkdir(dir);
+				if (!dir.mkdir()) {
+					throw new DeferoException("Could not create log directory.");
+				}
 			}
 			
-			String fileName = "execution_" + new SimpleDateFormat("yyy-MM-dd").format(new Date()) + ".log";
+			String fileName = "execution_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".log";
 			File output = new File(dir.getPath() + File.separator + fileName);
 			logger.fine(properties.toString());
 			properties.store(new FileOutputStream(output), "Last execution information.");
