@@ -46,7 +46,7 @@ public class ElasticSearchClient {
 	}
 	
 	private void indexSource(Map<String, Object> data) {
-		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
+		IndexRequestBuilder indexRequestBuilder = this.client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
         indexRequestBuilder.setSource(data);
         
         IndexResponse response = indexRequestBuilder.get();
@@ -54,7 +54,7 @@ public class ElasticSearchClient {
 	}
 	
 	private void indexSource(String json) {
-		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
+		IndexRequestBuilder indexRequestBuilder = this.client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
         indexRequestBuilder.setSource(json);
         
         IndexResponse response = indexRequestBuilder.get();
@@ -77,6 +77,7 @@ public class ElasticSearchClient {
 		
 		this.client = this.configureNewClient();
 		this.indexer = new ElasticSearchIndexerImpl(this.client, this.configuration.getIndex());
+		this.indexer.createIndex();
 	}
 	
 	public void shutdown() {
