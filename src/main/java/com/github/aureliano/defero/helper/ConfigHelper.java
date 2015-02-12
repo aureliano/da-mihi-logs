@@ -2,6 +2,7 @@ package com.github.aureliano.defero.helper;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
@@ -34,9 +35,16 @@ public final class ConfigHelper {
 			standardOutputConfigValidation((StandardOutputConfig) config);
 		} else if (config instanceof FileOutputConfig) {
 			fileOutputConfigValidation((FileOutputConfig) config);
+		} else if (config instanceof ElasticSearchOutputConfig) {
+			elasticSearchConfigValidation((ElasticSearchOutputConfig) config);
 		} else {
 			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
+	}
+
+	protected static void elasticSearchConfigValidation(ElasticSearchOutputConfig config) {
+		elasticSearchConfigIndexValidation(config);
+		elasticSearchConfigMappingTypeValidation(config);
 	}
 
 	protected static void standardOutputConfigValidation(StandardOutputConfig config) {
@@ -71,6 +79,22 @@ public final class ConfigHelper {
 	protected static void inputFileConfigStartPositionValidation(InputFileConfig config) {
 		if (config.getStartPosition() < 0) {
 			throw new DeferoException("Start position must be greater or equal to zero (>= 0).");
+		}
+	}
+	
+	protected static void elasticSearchConfigIndexValidation(ElasticSearchOutputConfig config) {
+		if (config.getIndex() == null) {
+			throw new DeferoException("Index name not provided.");
+		} else if ("".equals(config.getIndex())) {
+			throw new DeferoException("Empty index name.");
+		}
+	}
+	
+	protected static void elasticSearchConfigMappingTypeValidation(ElasticSearchOutputConfig config) {
+		if (config.getMappingType() == null) {
+			throw new DeferoException("Mapping type not provided.");
+		} else if ("".equals(config.getMappingType())) {
+			throw new DeferoException("Empty mapping type.");
 		}
 	}
 }

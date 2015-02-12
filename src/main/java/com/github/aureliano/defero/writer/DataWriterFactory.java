@@ -1,5 +1,6 @@
 package com.github.aureliano.defero.writer;
 
+import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
@@ -16,6 +17,8 @@ public final class DataWriterFactory {
 			return new StandardDataWriter().withOutputConfiguration(outputConfig);
 		} else if (outputConfig instanceof FileOutputConfig) {
 			return new FileDataWriter().withOutputConfiguration(outputConfig);
+		} else if (outputConfig instanceof ElasticSearchOutputConfig) {
+			return new ElasticSearchDataWriter().withOutputConfiguration(outputConfig);
 		} else {
 			String clazz = (outputConfig == null) ? "null" : outputConfig.getClass().getName();
 			throw new DeferoException("Unsupported data writer for output config " + clazz);

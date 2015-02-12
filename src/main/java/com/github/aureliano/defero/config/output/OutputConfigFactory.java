@@ -14,6 +14,8 @@ public final class OutputConfigFactory {
 			return (T) new StandardOutputConfig();
 		} else if (FileOutputConfig.class.equals(type)) {
 			return (T) new FileOutputConfig();
+		} else if (ElasticSearchOutputConfig.class.equals(type)) {
+			return (T) new ElasticSearchOutputConfig();
 		} else {
 			throw new DeferoException("No such input config for type " + type);
 		}

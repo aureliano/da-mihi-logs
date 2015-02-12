@@ -23,12 +23,12 @@ public class FileDataWriter implements IDataWriter {
 	private List<DataWritingListener> listeners;
 	private OutputStreamWriter writer;
 	
-	private int lines;
+	private boolean initialized;
 	
 	private static final Logger logger = Logger.getLogger(FileDataWriter.class.getName());
 	
 	public FileDataWriter() {
-		this.lines = 0;
+		this.initialized = false;
 	}
 
 	@Override
@@ -73,13 +73,13 @@ public class FileDataWriter implements IDataWriter {
 		
 		this.executeBeforeWritingMethodListeners(data);
 		try {
-			String text = (this.lines == 0) ? this.outputFormatter.format(data) : (LINE_SEPARATOR + this.outputFormatter.format(data));
+			String text = (this.initialized) ? this.outputFormatter.format(data) : (LINE_SEPARATOR + this.outputFormatter.format(data));
 			this.writer.write(text);
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
 		this.executeAfterWritingMethodListeners(data);
-		this.lines++;
+		this.initialized = true;
 	}
 	
 	@Override
