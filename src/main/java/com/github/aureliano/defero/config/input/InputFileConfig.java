@@ -7,10 +7,16 @@ public class InputFileConfig implements IConfigInput {
 	private File file;
 	private int startPosition;
 	private String encoding;
+	private boolean tailFile;
+	private long tailDelay;
+	private long tailInterval;
 
 	public InputFileConfig() {
 		this.startPosition = 0;
 		this.encoding = "UTF-8";
+		this.tailFile = false;
+		this.tailDelay = 1000;
+		this.tailInterval = 0;
 	}
 	
 	@Override
@@ -47,6 +53,33 @@ public class InputFileConfig implements IConfigInput {
 	
 	public InputFileConfig withEncoding(String encoding) {
 		this.encoding = encoding;
+		return this;
+	}
+
+	public boolean isTailFile() {
+		return this.tailFile;
+	}
+	
+	public InputFileConfig withTailFile(boolean tailFile) {
+		this.tailFile = tailFile;
+		return this;
+	}
+	
+	public long getTailDelay() {
+		return tailDelay;
+	}
+	
+	public InputFileConfig withTailDelay(long tailDelay) {
+		this.tailDelay = tailDelay;
+		return this;
+	}
+	
+	public long getTailInterval() {
+		return tailInterval;
+	}
+	
+	public InputFileConfig withTailInterval(long tailInterval) {
+		this.tailInterval = tailInterval;
 		return this;
 	}
 }

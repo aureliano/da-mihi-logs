@@ -12,7 +12,8 @@ public final class DataReaderFactory {
 	
 	public static IDataReader createDataReader(IConfigInput inputConfig) {
 		if (inputConfig instanceof InputFileConfig) {
-			return new FileDataReader().withInputConfiguration(inputConfig);
+			boolean tailer = ((InputFileConfig) inputConfig).isTailFile();
+			return ((tailer) ? new FileTailerDataReader() : new FileDataReader()).withInputConfiguration(inputConfig);
 		} else {
 			String clazz = (inputConfig == null) ? "null" : inputConfig.getClass().getName();
 			throw new DeferoException("Unsupported data reader for input config " + clazz);

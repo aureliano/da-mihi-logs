@@ -11,6 +11,9 @@ public class InputFileConfigTest {
 		Assert.assertNull(c.getFile());
 		Assert.assertEquals("UTF-8", c.getEncoding());
 		Assert.assertEquals(0, c.getStartPosition());
+		Assert.assertFalse(c.isTailFile());
+		Assert.assertEquals(1000, c.getTailDelay());
+		Assert.assertEquals(0, c.getTailInterval());
 	}
 	
 	@Test
@@ -18,10 +21,16 @@ public class InputFileConfigTest {
 		InputFileConfig c = new InputFileConfig()
 			.withStartPosition(10)
 			.withEncoding("ISO-8859-1")
-			.withFile("/there/is/not/file");
+			.withFile("/there/is/not/file")
+			.withTailFile(true)
+			.withTailDelay(2000)
+			.withTailInterval(10000);
 		
 		Assert.assertEquals("/there/is/not/file", c.getFile().getPath());
 		Assert.assertEquals("ISO-8859-1", c.getEncoding());
 		Assert.assertEquals(10, c.getStartPosition());
+		Assert.assertTrue(c.isTailFile());
+		Assert.assertEquals(2000, c.getTailDelay());
+		Assert.assertEquals(10000, c.getTailInterval());
 	}
 }

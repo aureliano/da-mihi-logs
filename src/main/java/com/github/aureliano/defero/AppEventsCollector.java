@@ -46,9 +46,11 @@ public class AppEventsCollector {
 				.withOutputFormatter(this.configuration.getOutputFormatter())
 				.withListeners(this.configuration.getDataWritingListeners());
 		
-		Object data = null;
-		while ((data = dataReader.nextData()) != null) {
-			dataWriter.write(data);
+		while (dataReader.keepReading()) {
+			Object data = dataReader.nextData();
+			if (data != null) {
+				dataWriter.write(data);
+			}
 		}
 		
 		dataReader.endResources();

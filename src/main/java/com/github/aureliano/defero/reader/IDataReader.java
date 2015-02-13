@@ -31,5 +31,7 @@ public interface IDataReader {
 	
 	public abstract void endResources();
 	
+	public abstract boolean keepReading();
+	
 	public static final int MAX_PARSE_ATTEMPTS = 10000;
 }

@@ -29,8 +29,11 @@ public class FileDataReader implements IDataReader {
 	
 	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
 	
+	private boolean markedToStop;
+	
 	public FileDataReader() {
 		this.lineCounter = 0;
+		this.markedToStop = false;
 	}
 	
 	@Override
@@ -72,6 +75,7 @@ public class FileDataReader implements IDataReader {
 		String line = this.readNextLine();
 		
 		if (line == null) {
+			this.markedToStop = true;
 			return null;
 		}
 		
@@ -110,14 +114,21 @@ public class FileDataReader implements IDataReader {
 	@Override
 	public void endResources() {
 		logger.info(" >>> Flushing and closing stream reader.");
-		if (this.bufferedReader != null) {
-			try {
-				this.bufferedReader.close();
-				this.bufferedReader = null;
-			} catch (IOException ex) {
-				throw new DeferoException(ex);
-			}
+		if (this.bufferedReader == null) {
+			return;
 		}
+		
+		try {
+			this.bufferedReader.close();
+			this.bufferedReader = null;
+		} catch (IOException ex) {
+			throw new DeferoException(ex);
+		}
+	}
+	
+	@Override
+	public boolean keepReading() {
+		return !this.markedToStop;
 	}
 	
 	private void executeBeforeReadingMethodListeners() {
