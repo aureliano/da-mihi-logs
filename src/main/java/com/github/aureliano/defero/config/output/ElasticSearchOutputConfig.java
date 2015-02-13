@@ -1,5 +1,7 @@
 package com.github.aureliano.defero.config.output;
 
+import java.io.File;
+
 import com.github.aureliano.defero.es.IElasticSearchConfiguration;
 
 public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchConfiguration {
@@ -10,6 +12,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	private boolean printElasticSearchLog;
 	private String index;
 	private String type;
+	private File configProperties;
 	
 	public ElasticSearchOutputConfig() {
 		this.host = DEFAULT_ELASTIC_SEARCH_HOST;
@@ -81,6 +84,17 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	@Override
 	public ElasticSearchOutputConfig withPrintElasticSearchLog(boolean printElasticSearchLog) {
 		this.printElasticSearchLog = printElasticSearchLog;
+		return this;
+	}
+
+	@Override
+	public File getConfigProperties() {
+		return this.configProperties;
+	}
+
+	@Override
+	public IElasticSearchConfiguration withConfigProperties(File configProperties) {
+		this.configProperties = configProperties;
 		return this;
 	}
 

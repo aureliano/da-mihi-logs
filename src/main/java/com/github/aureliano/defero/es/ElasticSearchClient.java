@@ -1,12 +1,17 @@
 package com.github.aureliano.defero.es;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
 import com.github.aureliano.defero.exception.DeferoException;
@@ -103,11 +108,29 @@ public class ElasticSearchClient {
 		logger.info("Host: " + this.configuration.getHost());
 		logger.info("Transport client port: " + this.configuration.getTransportClientPort());
 		
-		return new TransportClient().addTransportAddress(
+		Settings settings = null;
+		if (this.configuration.getConfigProperties() != null) {
+			Properties properties = this.getConfigProperties();
+			settings = ImmutableSettings.settingsBuilder().put(properties).build();			
+		}
+		
+		TransportClient transportClient = (settings == null) ? new TransportClient() : new TransportClient(settings);
+		return transportClient.addTransportAddress(
 			new InetSocketTransportAddress(
 				this.configuration.getHost(),
 				this.configuration.getTransportClientPort()
 			)
 		);
+	}
+	
+	private Properties getConfigProperties() {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileInputStream(this.configuration.getConfigProperties()));
+		} catch (IOException ex) {
+			throw new DeferoException(ex);
+		}
+		
+		return properties;
 	}
 }

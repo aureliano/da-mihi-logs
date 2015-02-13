@@ -1,8 +1,10 @@
 package com.github.aureliano.defero.es;
 
+import java.io.File;
+
 public interface IElasticSearchConfiguration {
 	
-	public static final String DEFAULT_ELASTIC_SEARCH_HOST = "127.0.0.1";
+	public static final String DEFAULT_ELASTIC_SEARCH_HOST = "localhost";
 	public static final int DEFAULT_ELASTIC_SEARCH_PORT = 9200;
 	public static final int DEFAULT_TRANSPORT_CLIENT_PORT = 9300;
 	public static final boolean DEFAULT_PRINT_ELASTIC_SEARCH_LOG = false;
@@ -30,4 +32,8 @@ public interface IElasticSearchConfiguration {
 	public abstract boolean isPrintElasticSearchLog();
 	
 	public abstract IElasticSearchConfiguration withPrintElasticSearchLog(boolean printElasticSearchLog);
+	
+	public abstract File getConfigProperties();
+	
+	public abstract IElasticSearchConfiguration withConfigProperties(File configProperties);
 }
