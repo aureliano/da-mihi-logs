@@ -13,6 +13,7 @@ public class JsonEventParser implements IParser<Map<String, ?>> {
 		super();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Map<String, ?> parse(String text) {
 		try {
