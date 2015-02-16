@@ -19,11 +19,10 @@ import com.github.aureliano.defero.formatter.JsonFormatter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
 import com.github.aureliano.defero.parser.JsonEventParser;
-import com.github.aureliano.defero.parser.PlainTextParser;
 
 public class AppEventsCollectorTest {
 
-	//@Test
+	@Test
 	public void testExecute() {		
 		new AppEventsCollector()
 			.withConfiguration(new EventCollectorConfiguration()
@@ -45,12 +44,6 @@ public class AppEventsCollectorTest {
 					}
 				}))
 			.execute();
-	}
-	
-	@Test
-	public void testStandarInput() {
-		new AppEventsCollector()
-			.withConfiguration(new EventCollectorConfiguration()).execute();
 	}
 	
 	private DataReadingListener getDataReadingListener() {
