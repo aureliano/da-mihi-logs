@@ -21,5 +21,8 @@ public class InputConfigFactoryTest {
 	public void testCreateInputConfig() {
 		IConfigInput input = InputConfigFactory.createInputConfig(InputFileConfig.class);
 		Assert.assertTrue(input instanceof InputFileConfig);
+		
+		input = InputConfigFactory.createInputConfig(StandardInputConfig.class);
+		Assert.assertTrue(input instanceof StandardInputConfig);
 	}
 }

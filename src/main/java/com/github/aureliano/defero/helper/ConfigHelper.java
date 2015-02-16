@@ -2,6 +2,7 @@ package com.github.aureliano.defero.helper;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.defero.config.input.StandardInputConfig;
 import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
@@ -21,6 +22,8 @@ public final class ConfigHelper {
 		
 		if (config instanceof InputFileConfig) {
 			inputFileConfigValidation((InputFileConfig) config);
+		} else if (config instanceof StandardInputConfig) {
+			standardInputConfigValidation((StandardInputConfig) config);
 		} else {
 			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
@@ -45,6 +48,10 @@ public final class ConfigHelper {
 	protected static void elasticSearchConfigValidation(ElasticSearchOutputConfig config) {
 		elasticSearchConfigIndexValidation(config);
 		elasticSearchConfigMappingTypeValidation(config);
+	}
+
+	protected static void standardInputConfigValidation(StandardInputConfig config) {
+		// Do nothing. Uses of standard system input.
 	}
 
 	protected static void standardOutputConfigValidation(StandardOutputConfig config) {
