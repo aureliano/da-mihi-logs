@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
+import com.github.aureliano.defero.config.input.StandardInputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
+import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.formatter.IOutputFormatter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
 import com.github.aureliano.defero.parser.IParser;
+import com.github.aureliano.defero.parser.PlainTextParser;
 
 public class EventCollectorConfiguration {
 
@@ -22,6 +25,10 @@ public class EventCollectorConfiguration {
 	private List<DataWritingListener> dataWritingListeners;
 	
 	public EventCollectorConfiguration() {
+		this.inputConfig = new StandardInputConfig();
+		this.outputConfig = new StandardOutputConfig();
+		this.parser = new PlainTextParser();
+		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 	}
