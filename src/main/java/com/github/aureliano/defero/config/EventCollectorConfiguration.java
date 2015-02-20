@@ -11,6 +11,8 @@ import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.formatter.IOutputFormatter;
 import com.github.aureliano.defero.listener.DataReadingListener;
 import com.github.aureliano.defero.listener.DataWritingListener;
+import com.github.aureliano.defero.matcher.IMatcher;
+import com.github.aureliano.defero.matcher.SingleLineMatcher;
 import com.github.aureliano.defero.parser.IParser;
 import com.github.aureliano.defero.parser.PlainTextParser;
 
@@ -18,6 +20,7 @@ public class EventCollectorConfiguration {
 
 	private IConfigInput inputConfig;
 	private IConfigOutput outputConfig;
+	private IMatcher matcher;
 	private IParser<?> parser;
 	private IEventFielter filter;
 	private IOutputFormatter outputFormatter;
@@ -27,6 +30,7 @@ public class EventCollectorConfiguration {
 	public EventCollectorConfiguration() {
 		this.inputConfig = new StandardInputConfig();
 		this.outputConfig = new StandardOutputConfig();
+		this.matcher = new SingleLineMatcher();
 		this.parser = new PlainTextParser();
 		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
@@ -48,6 +52,15 @@ public class EventCollectorConfiguration {
 	
 	public EventCollectorConfiguration withOutputConfig(IConfigOutput outputConfig) {
 		this.outputConfig = outputConfig;
+		return this;
+	}
+	
+	public IMatcher getMatcher() {
+		return matcher;
+	}
+	
+	public EventCollectorConfiguration withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
 		return this;
 	}
 

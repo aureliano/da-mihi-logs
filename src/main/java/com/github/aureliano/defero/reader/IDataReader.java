@@ -5,6 +5,7 @@ import java.util.List;
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
+import com.github.aureliano.defero.matcher.IMatcher;
 import com.github.aureliano.defero.parser.IParser;
 
 public interface IDataReader {
@@ -12,6 +13,10 @@ public interface IDataReader {
 	public abstract IConfigInput getInputConfiguration();
 	
 	public abstract IDataReader withInputConfiguration(IConfigInput config);
+	
+	public abstract IMatcher getMatcher();
+	
+	public abstract IDataReader withMatcher(IMatcher matcher);
 	
 	public abstract IParser<?> getParser();
 	
@@ -32,6 +37,4 @@ public interface IDataReader {
 	public abstract void endResources();
 	
 	public abstract boolean keepReading();
-	
-	public static final int MAX_PARSE_ATTEMPTS = 10000;
 }

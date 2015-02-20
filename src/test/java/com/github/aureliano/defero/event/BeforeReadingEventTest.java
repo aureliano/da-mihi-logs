@@ -9,19 +9,14 @@ public class BeforeReadingEventTest {
 
 	@Test
 	public void testGetLineCounter() {
-		Assert.assertEquals(25, new BeforeReadingEvent(null, 25, 0).getLineCounter());
-	}
-
-	@Test
-	public void testGetMaxParseAttempts() {
-		Assert.assertEquals(17, new BeforeReadingEvent(null, 25, 17).getMaxParseAttempts());
+		Assert.assertEquals(25, new BeforeReadingEvent(null, 25).getLineCounter());
 	}
 
 	@Test
 	public void testGetInputConfiguration() {
-		Assert.assertNull(new BeforeReadingEvent(null, 0, 0).getInputConfiguration());
+		Assert.assertNull(new BeforeReadingEvent(null, 0).getInputConfiguration());
 		
-		BeforeReadingEvent event = new BeforeReadingEvent(new InputFileConfig().withEncoding("ISO-8859-1").withStartPosition(31).withFile("/there/is/not/file"), 0, 0);
+		BeforeReadingEvent event = new BeforeReadingEvent(new InputFileConfig().withEncoding("ISO-8859-1").withStartPosition(31).withFile("/there/is/not/file"), 0);
 		InputFileConfig cfg = (InputFileConfig) event.getInputConfiguration();
 		
 		Assert.assertEquals("ISO-8859-1", cfg.getEncoding());

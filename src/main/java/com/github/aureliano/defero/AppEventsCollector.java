@@ -24,7 +24,12 @@ public class AppEventsCollector {
 		super();
 	}
 	
-	public void execute() {		
+	public void execute() {
+		if (this.configuration == null) {
+			this.configuration = new EventCollectorConfiguration();
+			logger.info("Using default event collector configuration.");
+		}
+		
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
@@ -38,6 +43,7 @@ public class AppEventsCollector {
 	private long dataIteration() {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(this.configuration.getInputConfig())
+				.withMatcher(this.configuration.getMatcher())
 				.withParser(this.configuration.getParser())
 				.withFilter(this.configuration.getFilter())
 				.withListeners(this.configuration.getDataReadingListeners());

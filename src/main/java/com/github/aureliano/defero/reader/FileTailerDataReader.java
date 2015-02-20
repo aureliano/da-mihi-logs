@@ -15,11 +15,13 @@ import com.github.aureliano.defero.exception.DeferoException;
 import com.github.aureliano.defero.filter.DefaultEmptyFilter;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
+import com.github.aureliano.defero.matcher.IMatcher;
 import com.github.aureliano.defero.parser.IParser;
 
 public class FileTailerDataReader implements IDataReader {
 
 	private InputFileConfig inputConfiguration;
+	private IMatcher matcher;
 	private IParser<?> parser;
 	private IEventFielter filter;
 	
@@ -33,6 +35,7 @@ public class FileTailerDataReader implements IDataReader {
 	
 	private long initialTimeMillis;
 	private boolean markedToStop;
+	private String unprocessedLine;
 	
 	public FileTailerDataReader() {
 		this.fileLength = this.filePointer = this.lineCounter = this.initialTimeMillis = 0;
@@ -47,6 +50,17 @@ public class FileTailerDataReader implements IDataReader {
 	@Override
 	public IDataReader withInputConfiguration(IConfigInput config) {
 		this.inputConfiguration = (InputFileConfig) config;
+		return this;
+	}
+	
+	@Override
+	public IMatcher getMatcher() {
+		return this.matcher;
+	}
+	
+	@Override
+	public IDataReader withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
 		return this;
 	}
 
@@ -119,7 +133,10 @@ public class FileTailerDataReader implements IDataReader {
 			do {
 				this.executeBeforeReadingMethodListeners();
 				
-				data = this.parser.parse(this.parseData(line));
+				data = this.parser.parse(this.prepareLogEvent(line));
+				if (data == null) {
+					continue;
+				}
 				accepted = this.filter.accept(data);
 				
 				this.executeAfterReadingMethodListeners(data, accepted);				
@@ -142,7 +159,7 @@ public class FileTailerDataReader implements IDataReader {
 	private void executeBeforeReadingMethodListeners() {
 		logger.fine("Execute beforeDataReading listeners.");
 		for (DataReadingListener listener : this.listeners) {
-			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter, MAX_PARSE_ATTEMPTS));
+			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter));
 		}
 	}
 	
@@ -153,7 +170,7 @@ public class FileTailerDataReader implements IDataReader {
 		}
 	}
 	
-	private String parseData(String line) {
+	private String prepareLogEvent(String line) {
 		int counter = 0;
 		StringBuilder buffer = new StringBuilder(line);
 		
@@ -161,18 +178,28 @@ public class FileTailerDataReader implements IDataReader {
 			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
 		}
 		
-		while (!this.parser.accept(line)) {
-			if (MAX_PARSE_ATTEMPTS >= ++counter) {
-				throw new DeferoException("Max parse attempts overflow.");
-			}
+		String logEvent = this.matcher.endMatch(buffer.toString());
+		if (!this.matcher.isMultiLine()) {
+			return logEvent;
+		}
+		
+		if (!this.matcher.matches(buffer.toString())) {
+			return null;
+		}
+		
+		while (logEvent == null) {
+			line = this.readNextLine();
+			buffer.append("\n").append(line);
 			
-			buffer.append("\n").append(this.readNextLine());			
 			for (DataReadingListener listener : this.listeners) {
 				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
 			}
+			
+			logEvent = this.matcher.endMatch(buffer.toString());
 		}
 		
-		return buffer.toString();
+		this.unprocessedLine = line;
+		return logEvent;
 	}
 
 	@Override
@@ -251,15 +278,18 @@ public class FileTailerDataReader implements IDataReader {
 		}
 	}
 	
-	private String readNextLine() {
+	private String readNextLine() {		
 		try {
-			String line = this.randomAccessFile.readLine();
-			if (line != null) {
-				line = new String(line.getBytes(), this.inputConfiguration.getEncoding());
-			}
-			
-			if (line != null) {
-				this.lineCounter++;
+			String line = null;
+			if (this.unprocessedLine != null) {
+				line = this.unprocessedLine;
+				this.unprocessedLine = null;
+			} else {
+				line = this.randomAccessFile.readLine();
+				if (line != null) {
+					line = new String(line.getBytes(), this.inputConfiguration.getEncoding());
+					this.lineCounter++;
+				}
 			}
 			
 			return line;

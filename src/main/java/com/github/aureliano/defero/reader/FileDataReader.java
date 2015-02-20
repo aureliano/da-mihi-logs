@@ -16,11 +16,13 @@ import com.github.aureliano.defero.exception.DeferoException;
 import com.github.aureliano.defero.filter.DefaultEmptyFilter;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.listener.DataReadingListener;
+import com.github.aureliano.defero.matcher.IMatcher;
 import com.github.aureliano.defero.parser.IParser;
 
 public class FileDataReader implements IDataReader {
 
 	private InputFileConfig inputConfiguration;
+	private IMatcher matcher;
 	private IParser<?> parser;
 	private long lineCounter;
 	private BufferedReader bufferedReader;
@@ -30,6 +32,7 @@ public class FileDataReader implements IDataReader {
 	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
 	
 	private boolean markedToStop;
+	private String unprocessedLine;
 	
 	public FileDataReader() {
 		this.lineCounter = 0;
@@ -44,6 +47,17 @@ public class FileDataReader implements IDataReader {
 	@Override
 	public IDataReader withInputConfiguration(IConfigInput config) {
 		this.inputConfiguration = (InputFileConfig) config;
+		return this;
+	}
+	
+	@Override
+	public IMatcher getMatcher() {
+		return this.matcher;
+	}
+	
+	@Override
+	public IDataReader withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
 		return this;
 	}
 	
@@ -86,7 +100,10 @@ public class FileDataReader implements IDataReader {
 		do {
 			this.executeBeforeReadingMethodListeners();
 			
-			data = this.parser.parse(this.parseData(line));
+			data = this.parser.parse(this.prepareLogEvent(line));
+			if (data == null) {
+				continue;
+			}
 			accepted = this.filter.accept(data);
 			
 			this.executeAfterReadingMethodListeners(data, accepted);
@@ -134,7 +151,7 @@ public class FileDataReader implements IDataReader {
 	private void executeBeforeReadingMethodListeners() {
 		logger.fine("Execute beforeDataReading listeners.");
 		for (DataReadingListener listener : this.listeners) {
-			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter, MAX_PARSE_ATTEMPTS));
+			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter));
 		}
 	}
 	
@@ -151,7 +168,7 @@ public class FileDataReader implements IDataReader {
 		}
 	}
 	
-	private String parseData(String line) {
+	private String prepareLogEvent(String line) {
 		int counter = 0;
 		StringBuilder buffer = new StringBuilder(line);
 		
@@ -159,18 +176,28 @@ public class FileDataReader implements IDataReader {
 			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
 		}
 		
-		while (!this.parser.accept(line)) {
-			if (MAX_PARSE_ATTEMPTS >= ++counter) {
-				throw new DeferoException("Max parse attempts overflow.");
-			}
+		String logEvent = this.matcher.endMatch(buffer.toString());
+		if (!this.matcher.isMultiLine()) {
+			return logEvent;
+		}
+		
+		if (!this.matcher.matches(buffer.toString())) {
+			return null;
+		}
+		
+		while (logEvent == null) {
+			line = this.readNextLine();
+			buffer.append("\n").append(line);
 			
-			buffer.append("\n").append(this.readNextLine());			
 			for (DataReadingListener listener : this.listeners) {
 				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
 			}
+			
+			logEvent = this.matcher.endMatch(buffer.toString());
 		}
 		
-		return buffer.toString();
+		this.unprocessedLine = line;
+		return logEvent;
 	}
 	
 	private void initialize() {
@@ -197,9 +224,15 @@ public class FileDataReader implements IDataReader {
 	
 	private String readNextLine() {
 		try {
-			String line = this.bufferedReader.readLine();
-			if (line != null) {
-				this.lineCounter++;
+			String line = null;
+			if (this.unprocessedLine != null) {
+				line = this.unprocessedLine;
+				this.unprocessedLine = null;
+			} else {
+				line = this.bufferedReader.readLine();
+				if (line != null) {
+					this.lineCounter++;
+				}
 			}
 			
 			return line;

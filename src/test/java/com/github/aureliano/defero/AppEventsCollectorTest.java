@@ -36,7 +36,6 @@ public class AppEventsCollectorTest {
 				.withOutputFormatter(new JsonFormatter())
 				.withFilter(new IEventFielter() {
 					
-					@SuppressWarnings("unchecked")
 					@Override
 					public boolean accept(Object data) {
 						Map<String, Object> map = (Map<String, Object>) data;
@@ -55,7 +54,6 @@ public class AppEventsCollectorTest {
 			@Override
 			public void beforeDataReading(BeforeReadingEvent event) { }
 			
-			@SuppressWarnings("unchecked")
 			@Override
 			public void afterDataReading(AfterReadingEvent event) {
 				Map<String, Object> map = (Map<String, Object>) event.getData();

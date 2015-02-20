@@ -6,20 +6,14 @@ public class BeforeReadingEvent {
 
 	private IConfigInput inputConfiguration;
 	private long lineCounter;
-	private int maxParseAttempts;
 	
-	public BeforeReadingEvent(IConfigInput inputConfiguration, long lineCounter, int maxParseAttempts) {
+	public BeforeReadingEvent(IConfigInput inputConfiguration, long lineCounter) {
 		this.inputConfiguration = inputConfiguration;
 		this.lineCounter = lineCounter;
-		this.maxParseAttempts = maxParseAttempts;
 	}
 
 	public long getLineCounter() {
 		return lineCounter;
-	}
-
-	public int getMaxParseAttempts() {
-		return maxParseAttempts;
 	}
 
 	public IConfigInput getInputConfiguration() {
