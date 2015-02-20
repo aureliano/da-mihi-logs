@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -21,14 +22,12 @@ public class FileDataWriter implements IDataWriter {
 	private FileOutputConfig outputConfiguration;
 	private IOutputFormatter outputFormatter;
 	private List<DataWritingListener> listeners;
-	private OutputStreamWriter writer;
-	
-	private boolean initialized;
+	private PrintWriter writer;
 	
 	private static final Logger logger = Logger.getLogger(FileDataWriter.class.getName());
 	
 	public FileDataWriter() {
-		this.initialized = false;
+		super();
 	}
 
 	@Override
@@ -72,14 +71,11 @@ public class FileDataWriter implements IDataWriter {
 		}
 		
 		this.executeBeforeWritingMethodListeners(data);
-		try {
-			String text = (this.initialized) ? this.outputFormatter.format(data) : (LINE_SEPARATOR + this.outputFormatter.format(data));
-			this.writer.write(text);
-		} catch (IOException ex) {
-			throw new DeferoException(ex);
-		}
+		
+		String text = this.outputFormatter.format(data);
+		this.writer.println(text);
+		
 		this.executeAfterWritingMethodListeners(data);
-		this.initialized = true;
 	}
 	
 	@Override
@@ -89,12 +85,9 @@ public class FileDataWriter implements IDataWriter {
 		}
 		
 		logger.info(" >>> Flushing and closing stream writer.");
-		try {
-			this.writer.flush();
-			this.writer.close();
-		} catch (IOException ex) {
-			throw new DeferoException(ex);
-		}
+		
+		this.writer.flush();
+		this.writer.close();		
 	}
 
 	private void executeBeforeWritingMethodListeners(Object data) {
@@ -127,7 +120,8 @@ public class FileDataWriter implements IDataWriter {
 		try {
 			FileOutputStream stream = new FileOutputStream(this.outputConfiguration.getFile(), this.outputConfiguration.isAppend());
 			BufferedOutputStream buffer = new BufferedOutputStream(stream);
-			this.writer = new OutputStreamWriter(buffer, this.outputConfiguration.getEncoding());
+			OutputStreamWriter osw = new OutputStreamWriter(buffer, this.outputConfiguration.getEncoding());
+			this.writer = new PrintWriter(osw);
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}

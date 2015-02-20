@@ -37,7 +37,7 @@ public class MultiLineMatcher implements IMatcher {
 		}
 		
 		this.suffixRegex = String.format("([\\W\\w\\d](?!%s))+", this.prefixRegex);
-		this.pattern = Pattern.compile(this.prefixRegex);
+		this.pattern = Pattern.compile(this.prefixRegex + this.partialRegex);
 		this.matchAttemptsCounter = 0;
 		this.maxMatchAttempts = maxMatchAttempts;
 	}
@@ -54,7 +54,12 @@ public class MultiLineMatcher implements IMatcher {
 
 	@Override
 	public boolean matches(String text) {
-		return text.matches(this.prefixRegex + this.suffixRegex);
+		boolean matches = text.matches(this.prefixRegex + this.partialRegex + this.suffixRegex);
+		if (!matches) {
+			this.matchAttemptsCounter = 0;
+		}
+		
+		return matches;
 	}
 
 	@Override
@@ -63,6 +68,7 @@ public class MultiLineMatcher implements IMatcher {
 		boolean match = this.matches(text);
 		
 		if (partialMatch && !match) {
+			this.matchAttemptsCounter = 0;
 			return oldEntry;
 		} else {
 			this.oldEntry = text;
