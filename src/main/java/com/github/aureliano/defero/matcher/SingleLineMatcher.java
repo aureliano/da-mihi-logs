@@ -14,10 +14,6 @@ public class SingleLineMatcher implements IMatcher {
 	}
 	
 	public SingleLineMatcher(String prefixRegex) {
-		this(prefixRegex, DEFAULT_MAX_MATCH_ATTEMPTS);
-	}
-	
-	public SingleLineMatcher(String prefixRegex, int maxMatchAttempts) {
 		this.prefixRegex = prefixRegex;
 		this.suffixRegex = ".+$";
 		
