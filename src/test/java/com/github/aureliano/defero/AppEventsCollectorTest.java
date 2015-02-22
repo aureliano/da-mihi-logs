@@ -5,9 +5,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
-import com.github.aureliano.defero.config.input.InputConfigFactory;
 import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.output.OutputConfigFactory;
 import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.event.AfterReadingEvent;
 import com.github.aureliano.defero.event.AfterWritingEvent;
@@ -26,10 +24,10 @@ public class AppEventsCollectorTest {
 	public void testExecute() {		
 		new AppEventsCollector()
 			.withConfiguration(new EventCollectorConfiguration()
-				.withInputConfig(InputConfigFactory.createInputConfig(InputFileConfig.class)
+				.withInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10))
-				.withOutputConfig(OutputConfigFactory.createOutputConfig(StandardOutputConfig.class))
+				.withOutputConfig(new StandardOutputConfig())
 				.withParser(new JsonEventParser())
 				.addDataReadingListeners(this.getDataReadingListener())
 				.addDataWritingListeners(this.getDataWriteListener())
