@@ -1,8 +1,11 @@
 package com.github.aureliano.defero.helper;
 
+import java.util.Map;
+
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.StandardInputConfig;
+import com.github.aureliano.defero.config.input.UrlInputConfig;
 import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
@@ -13,6 +16,42 @@ public final class ConfigHelper {
 
 	private ConfigHelper() {
 		super();
+	}
+	
+	public static String buildUrl(UrlInputConfig config) {
+		StringBuilder builder = new StringBuilder();
+		
+		builder
+			.append(config.getConnectionSchema().name().toLowerCase())
+			.append("://");
+		
+		String host = config.getHost();
+		if (host.endsWith("/")) {
+			host = host.replaceFirst("/$", "");
+		}
+		
+		builder.append(host);
+		
+		if (config.getPort() >= 0) {
+			builder.append(":").append(config.getPort());
+		}
+		
+		String path = config.getPath();
+		if (path != null) {
+			if (path.startsWith("/")) {
+				path = path.replaceFirst("^/", "");
+			}
+			builder.append("/").append(path);
+		}
+		
+		Map<String, String> parameters = config.getParameters();
+		if (!parameters.isEmpty()) {
+			builder.append("?");
+		}
+		
+		builder.append(UrlEncodeHelper.formatParameters(parameters));
+		
+		return builder.toString();
 	}
 	
 	public static void inputConfigValidation(IConfigInput config) {
