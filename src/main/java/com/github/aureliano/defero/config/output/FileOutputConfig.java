@@ -49,4 +49,12 @@ public class FileOutputConfig implements IConfigOutput {
 		this.encoding = encoding;
 		return this;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public FileOutputConfig clone() {
+		return new FileOutputConfig()
+			.withAppend(this.append)
+			.withEncoding(this.encoding)
+			.withFile(this.file);
+	}
 }

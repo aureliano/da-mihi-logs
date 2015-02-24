@@ -1,6 +1,8 @@
 package com.github.aureliano.defero.config.output;
 
-public interface IConfigOutput {
+import com.github.aureliano.defero.config.IConfiguration;
+
+public interface IConfigOutput extends IConfiguration {
 
 	public abstract String outputType();
 }

@@ -102,4 +102,16 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	public String outputType() {
 		return "ELASTIC_SEARCH";
 	}
+	
+	@SuppressWarnings("unchecked")
+	public ElasticSearchOutputConfig clone() {
+		return (ElasticSearchOutputConfig) new ElasticSearchOutputConfig()
+			.withHost(this.host)
+			.withIndex(this.index)
+			.withMappingType(this.type)
+			.withPort(this.port)
+			.withPrintElasticSearchLog(this.printElasticSearchLog)
+			.withTransportClientPort(this.transportClientPort)
+			.withConfigProperties(this.configProperties);
+	}
 }

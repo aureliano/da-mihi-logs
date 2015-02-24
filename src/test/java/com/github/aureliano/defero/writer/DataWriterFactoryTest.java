@@ -22,6 +22,11 @@ public class DataWriterFactoryTest {
 			public String outputType() {
 				return null;
 			}
+			
+			@SuppressWarnings("unchecked")
+			public Object clone() {
+				return null;
+			}
 		});
 	}
 	

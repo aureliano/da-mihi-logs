@@ -10,4 +10,9 @@ public class StandardOutputConfig implements IConfigOutput {
 	public String outputType() {
 		return "STANDARD";
 	}
+	
+	@SuppressWarnings("unchecked")
+	public StandardOutputConfig clone() {
+		return new StandardOutputConfig();
+	}
 }
