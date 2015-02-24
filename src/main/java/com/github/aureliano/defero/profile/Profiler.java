@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 public class Profiler {
 
@@ -74,14 +75,12 @@ public class Profiler {
 		return properties;
 	}
 	
-	private static String formatTime(long t) {
-		if (t < 1000) {
-			return t + " ms";
-		} else if (t > 1000 && t < 60000) {
-			return t / 1000 + " sec";
-		} else {
-			return t / 1000 / 60 + " min";
-		}
+	private static String formatTime(long millis) {
+		return String.format("%d min, %d sec", 
+			TimeUnit.MILLISECONDS.toMinutes(millis),
+			TimeUnit.MILLISECONDS.toSeconds(millis) - 
+			TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+		);
 	}
 
 	public long getTime() {
