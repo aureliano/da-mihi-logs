@@ -21,6 +21,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.elasticsearch.common.Base64;
+
 import com.github.aureliano.defero.config.input.ConnectionSchema;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.UrlInputConfig;
@@ -144,7 +146,6 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 	}
 
-	@SuppressWarnings("restriction")
 	private URLConnection createUrlConnection() throws IOException {
 		if (ConnectionSchema.HTTP.equals(this.urlInputConfiguration.getConnectionSchema())) {
 			return new URL(this.url).openConnection();
@@ -153,7 +154,7 @@ public class UrlDataReader extends AbstractDataReader {
 			
 			if (this.urlInputConfiguration.getUser() != null) {
 				String userPassword = "usrpsiconv:45sicX32";
-				String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
+				String encoding = Base64.encodeBytes(userPassword.getBytes());
 				conn.setRequestProperty("Authorization", "Basic " + encoding);
 			}
 			
