@@ -12,7 +12,7 @@ import com.github.aureliano.defero.filter.DefaultEmptyFilter;
 
 public class FileDataReader extends AbstractDataReader {
 
-	private InputFileConfig _inputConfiguration;
+	private InputFileConfig fileInputConfiguration;
 	private BufferedReader bufferedReader;
 	
 	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
@@ -66,7 +66,7 @@ public class FileDataReader extends AbstractDataReader {
 	}
 	
 	private void prepareReading() {		
-		while (this._inputConfiguration.getStartPosition() > super.lineCounter) {
+		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter) {
 			this.readNextLine();			
 		}
 	}
@@ -80,16 +80,16 @@ public class FileDataReader extends AbstractDataReader {
 			super.filter = new DefaultEmptyFilter();
 		}
 		
-		this._inputConfiguration = (InputFileConfig) super.inputConfiguration;
+		this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
 		
-		logger.info("Reading data from " + this._inputConfiguration.getFile().getPath());
-		logger.info("Starting from line " + this._inputConfiguration.getStartPosition());
-		logger.info("Data encondig: " + this._inputConfiguration.getEncoding());
+		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
+		logger.info("Starting from line " + this.fileInputConfiguration.getStartPosition());
+		logger.info("Data encondig: " + this.fileInputConfiguration.getEncoding());
 		
 		try {
 			this.bufferedReader = new BufferedReader(
 				new InputStreamReader(new FileInputStream(
-					this._inputConfiguration.getFile()), this._inputConfiguration.getEncoding()));
+					this.fileInputConfiguration.getFile()), this.fileInputConfiguration.getEncoding()));
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}

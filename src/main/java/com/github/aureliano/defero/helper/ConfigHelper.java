@@ -63,11 +63,21 @@ public final class ConfigHelper {
 			inputFileConfigValidation((InputFileConfig) config);
 		} else if (config instanceof StandardInputConfig) {
 			standardInputConfigValidation((StandardInputConfig) config);
+		} else if (config instanceof UrlInputConfig) {
+			urlInputConfigValidation((UrlInputConfig) config);
 		} else {
 			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
 	}
 	
+	private static void urlInputConfigValidation(UrlInputConfig config) {
+		if (config.getConnectionSchema() == null) {
+			throw new DeferoException("Connection schema not provided.");
+		} else if ((config.getHost() == null) || (config.getHost().equals(""))) {
+			throw new DeferoException("Host not provided.");
+		}
+	}
+
 	public static void outputConfigValidation(IConfigOutput config) {
 		if (config == null) {
 			throw new DeferoException("Output configuration must be provided.");
