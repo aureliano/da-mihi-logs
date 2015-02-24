@@ -27,6 +27,11 @@ public class DataReaderFactoryTest {
 			public IConfigInput withConfigurationId(String id) {
 				return null;
 			}
+			
+			@SuppressWarnings("unchecked")
+			public Object clone() {
+				return null;
+			}
 		});
 	}
 	

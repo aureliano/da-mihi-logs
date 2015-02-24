@@ -33,4 +33,26 @@ public class InputFileConfigTest {
 		Assert.assertEquals(2000, c.getTailDelay());
 		Assert.assertEquals(10000, c.getTailInterval());
 	}
+	
+	@Test
+	public void testClone() {
+		InputFileConfig c1 = (InputFileConfig) new InputFileConfig()
+			.withStartPosition(10)
+			.withEncoding("ISO-8859-1")
+			.withFile("/there/is/not/file")
+			.withTailFile(true)
+			.withTailDelay(2000)
+			.withTailInterval(10000)
+			.withConfigurationId("input.file.config");
+		
+		InputFileConfig c2 = c1.clone();
+		
+		Assert.assertEquals(c1.getConfigurationId(), c2.getConfigurationId());
+		Assert.assertEquals(c1.getEncoding(), c2.getEncoding());
+		Assert.assertEquals(c1.getTailDelay(), c2.getTailDelay());
+		Assert.assertEquals(c1.getTailInterval(), c2.getTailInterval());
+		Assert.assertEquals(c1.getFile(), c2.getFile());
+		Assert.assertEquals(c1.getStartPosition(), c2.getStartPosition());
+		Assert.assertEquals(c1.isTailFile(), c2.isTailFile());
+	}
 }

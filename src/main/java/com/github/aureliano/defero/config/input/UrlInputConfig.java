@@ -163,4 +163,22 @@ public class UrlInputConfig implements IConfigInput {
 		this.id = id;
 		return this;
 	}
+	
+	@Override
+	public UrlInputConfig clone() {
+		return (UrlInputConfig) new UrlInputConfig()
+			.withByteOffSet(this.byteOffSet)
+			.withConnectionSchema(this.connectionSchema)
+			.withFileStartPosition(this.fileStartPosition)
+			.withHost(this.host)
+			.withNoCheckCertificate(this.noCheckCertificate)
+			.withOutputFile(this.outputFile)
+			.withParameters(this.parameters)
+			.withPassword(this.password)
+			.withPath(this.path)
+			.withPort(this.port)
+			.withReadTimeout(this.readTimeout)
+			.withUser(this.user)
+			.withConfigurationId(this.id);
+	}
 }

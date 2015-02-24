@@ -89,4 +89,17 @@ public class InputFileConfig implements IConfigInput {
 		this.tailInterval = tailInterval;
 		return this;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public InputFileConfig clone() {
+		return (InputFileConfig) new InputFileConfig()
+			.withEncoding(this.encoding)
+			.withFile(this.file)
+			.withStartPosition(this.startPosition)
+			.withTailDelay(this.tailDelay)
+			.withTailFile(this.tailFile)
+			.withTailInterval(this.tailInterval)
+			.withConfigurationId(this.id);
+	}
 }

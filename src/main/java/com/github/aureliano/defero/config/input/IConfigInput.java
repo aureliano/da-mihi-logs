@@ -1,6 +1,8 @@
 package com.github.aureliano.defero.config.input;
 
-public interface IConfigInput {
+import com.github.aureliano.defero.config.IConfiguration;
+
+public interface IConfigInput extends IConfiguration {
 
 	public abstract String getConfigurationId();
 	

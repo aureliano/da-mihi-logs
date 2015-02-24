@@ -28,4 +28,11 @@ public class StandardInputConfig implements IConfigInput {
 		this.id = id;
 		return this;
 	}
+	
+	@Override
+	public StandardInputConfig clone() {
+		return (StandardInputConfig) new StandardInputConfig()
+			.withEncoding(this.encoding)
+			.withConfigurationId(this.id);
+	}
 }
