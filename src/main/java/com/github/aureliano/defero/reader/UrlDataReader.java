@@ -10,6 +10,8 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.net.ssl.HostnameVerifier;
@@ -142,6 +144,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 	}
 
+	@SuppressWarnings("restriction")
 	private URLConnection createUrlConnection() throws IOException {
 		if (ConnectionSchema.HTTP.equals(this.urlInputConfiguration.getConnectionSchema())) {
 			return new URL(this.url).openConnection();
@@ -150,10 +153,7 @@ public class UrlDataReader extends AbstractDataReader {
 			
 			if (this.urlInputConfiguration.getUser() != null) {
 				String userPassword = "usrpsiconv:45sicX32";
-				
-				@SuppressWarnings("restriction")
 				String encoding = new sun.misc.BASE64Encoder().encode(userPassword.getBytes());
-				
 				conn.setRequestProperty("Authorization", "Basic " + encoding);
 			}
 			
@@ -204,5 +204,19 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		logger.warning(contentType);
 		return "";
+	}
+	
+	@Override
+	public Map<String, Object> executionLog() {
+		Map<String, Object> log = new HashMap<String, Object>();
+		Map<String, Object> fileDataReaderLog = this.fileDataReader.executionLog();
+		
+		for (String key : fileDataReaderLog.keySet()) {
+			log.put(key, fileDataReaderLog.get(key));
+		}
+		
+		log.put("url.data.reader.downloaded.file", ((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+		
+		return log;
 	}
 }

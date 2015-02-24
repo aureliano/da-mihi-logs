@@ -1,6 +1,7 @@
 package com.github.aureliano.defero;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -36,11 +37,11 @@ public class AppEventsCollector {
 		this.validation();
 		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
 				
-		long lastLine = this.dataIteration();
-		this.printLogToOutput(profiler, lastLine);
+		Map<String, Object> executionLog = this.dataIteration();
+		this.printLogToOutput(profiler, executionLog);
 	}
 	
-	private long dataIteration() {
+	private Map<String, Object> dataIteration() {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(this.configuration.getInputConfig())
 				.withMatcher(this.configuration.getMatcher())
@@ -62,7 +63,7 @@ public class AppEventsCollector {
 		dataReader.endResources();
 		dataWriter.endResources();
 		
-		return dataReader.lastLine();
+		return dataReader.executionLog();
 	}
 	
 	private void validation() {
@@ -74,10 +75,13 @@ public class AppEventsCollector {
 		}
 	}
 	
-	private void printLogToOutput(Profiler profiler, long lastLine) {
+	private void printLogToOutput(Profiler profiler, Map<String, Object> executionLog) {
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
 		properties.put("input.type", this.configuration.getInputConfig().inputType());
-		properties.put("input.last.line", String.valueOf(lastLine));
+		
+		for (String key : executionLog.keySet()) {
+			properties.put(key, String.valueOf(executionLog.get(key)));
+		}
 		
 		File log = LoggerHelper.saveExecutionLog(properties);
 		logger.info("Execution log output saved at " + log.getPath());		

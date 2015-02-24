@@ -70,11 +70,6 @@ public abstract class AbstractDataReader implements IDataReader {
 		this.listeners = listeners;
 		return this;
 	}
-	
-	@Override
-	public long lastLine() {
-		return this.lineCounter;
-	}
 
 	@Override
 	public IEventFielter getFilter() {

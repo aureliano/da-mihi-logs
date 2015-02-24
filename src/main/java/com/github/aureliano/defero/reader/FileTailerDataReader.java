@@ -3,6 +3,8 @@ package com.github.aureliano.defero.reader;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import com.github.aureliano.defero.config.input.InputFileConfig;
@@ -169,5 +171,13 @@ public class FileTailerDataReader extends AbstractDataReader {
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
+	}
+
+	@Override
+	public Map<String, Object> executionLog() {
+		Map<String, Object> log = new HashMap<String, Object>();
+		log.put("file.data.reader.last.line", super.lineCounter);
+		
+		return log;
 	}
 }

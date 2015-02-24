@@ -1,6 +1,7 @@
 package com.github.aureliano.defero.reader;
 
 import java.util.List;
+import java.util.Map;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.filter.IEventFielter;
@@ -28,7 +29,7 @@ public interface IDataReader {
 	
 	public abstract Object nextData();
 	
-	public abstract long lastLine();
+	public abstract Map<String, Object> executionLog();
 	
 	public abstract IEventFielter getFilter();
 	
