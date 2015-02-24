@@ -54,6 +54,10 @@ public class AppEventsCollector {
 			throw new DeferoException("Parser must pe provided.");
 		}
 		
+		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
+			ConfigHelper.outputConfigValidation(outputConfig);
+		}
+		
 		List<Map<String, Object>> executionLogs = new ArrayList<Map<String,Object>>();
 		
 		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
@@ -65,11 +69,7 @@ public class AppEventsCollector {
 			}
 			
 			logger.info("Start execution for input " + inputConfig.getConfigurationId());
-			
-			for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
-				ConfigHelper.outputConfigValidation(outputConfig);
-				executionLogs.add(this.dataIteration(inputConfig, outputConfig));
-			}
+			executionLogs.add(this.dataIteration(inputConfig));
 			
 			System.out.println();
 		}
@@ -77,29 +77,52 @@ public class AppEventsCollector {
 		return executionLogs;
 	}
 	
-	private Map<String, Object> dataIteration(IConfigInput inputConfig, IConfigOutput outputConfig) {
+	private Map<String, Object> dataIteration(IConfigInput inputConfig) {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(inputConfig)
 				.withMatcher(this.configuration.getMatcher())
 				.withParser(this.configuration.getParser())
 				.withFilter(this.configuration.getFilter())
-				.withListeners(this.configuration.getDataReadingListeners());
-		IDataWriter dataWriter = DataWriterFactory
-			.createDataWriter(outputConfig)
-				.withOutputFormatter(this.configuration.getOutputFormatter())
-				.withListeners(this.configuration.getDataWritingListeners());
+				.withListeners(this.configuration.getDataReadingListeners());		
+		List<IDataWriter> dataWriters = this.createDataWriters();
 		
 		while (dataReader.keepReading()) {
 			Object data = dataReader.nextData();
 			if (data != null) {
-				dataWriter.write(data);
+				this.write(dataWriters, data);
 			}
 		}
 		
 		dataReader.endResources();
-		dataWriter.endResources();
+		this.endResources(dataWriters);
 		
 		return dataReader.executionLog();
+	}
+	
+	private List<IDataWriter> createDataWriters() {
+		List<IDataWriter> dataWriters = new ArrayList<IDataWriter>();
+		
+		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
+			IDataWriter dataWriter = DataWriterFactory
+					.createDataWriter(outputConfig)
+						.withOutputFormatter(this.configuration.getOutputFormatter())
+						.withListeners(this.configuration.getDataWritingListeners());
+			dataWriters.add(dataWriter);
+		}
+		
+		return dataWriters;
+	}
+	
+	private void write(List<IDataWriter> dataWriters, Object data) {
+		for (IDataWriter dataWriter : dataWriters) {
+			dataWriter.write(data);
+		}
+	}
+	
+	private void endResources(List<IDataWriter> dataWriters) {
+		for (IDataWriter dataWriter : dataWriters) {
+			dataWriter.endResources();
+		}
 	}
 	
 	private void printLogToOutput(Profiler profiler, List<Map<String, Object>> executionLogs) {
