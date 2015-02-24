@@ -1,7 +1,6 @@
 package com.github.aureliano.defero.reader;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
@@ -37,6 +36,7 @@ public class UrlDataReader extends AbstractDataReader {
 	private String url;
 
 	private URLConnection connection;
+	private int bytesRead;
 	
 	private static final Logger logger = Logger.getLogger(UrlDataReader.class.getName());
 	private static final int BUFFER_SIZE = 4096;
@@ -80,37 +80,43 @@ public class UrlDataReader extends AbstractDataReader {
 		
 		if (this.urlInputConfiguration.getUser() != null) {
 			logger.info("Using basic authentication for " + this.urlInputConfiguration.getUser());
-			logger.info("Check certificate? " + this.urlInputConfiguration.isNoCheckCertificate());
+			logger.info("Check certificate? " + !this.urlInputConfiguration.isNoCheckCertificate());
 		}
 		
+		this.bytesRead = this.urlInputConfiguration.getByteOffSet();
 		this.prepareDownload();
-		File file = this.download();
+		this.download();
 		
 		this.fileDataReader = (FileDataReader) new FileDataReader()
-			.withInputConfiguration(new InputFileConfig().withFile(file))
+			.withInputConfiguration(
+				new InputFileConfig()
+					.withFile(this.urlInputConfiguration.getOutputFile())
+					.withStartPosition(this.urlInputConfiguration.getFileStartPosition()))
 			.withMatcher(super.matcher)
 			.withParser(super.parser)
 			.withFilter(super.filter)
 			.withListeners(super.listeners);
 	}
 
-	private File download() {
-		String fileName = new StringBuilder()
-			.append(this.urlInputConfiguration.getHost().replaceAll("\\.", "_"))
-			.append("_")
-			.append(System.currentTimeMillis())
-			.append(this.fileExtension(this.connection.getContentType()))
-			.toString();
-		File file = new File("tmp" + File.separator + fileName);
+	private void download() {
+		if (this.markedToStop) {
+			return;
+		}
 		
 		try {
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(this.connection.getInputStream());
-			RandomAccessFile raf = new RandomAccessFile(file, "rw");
+			RandomAccessFile raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
+			
+			if (this.urlInputConfiguration.getOutputFile().exists()) {
+				raf.seek(this.urlInputConfiguration.getOutputFile().length());
+			}
+			
 			byte data[] = new byte[BUFFER_SIZE];
 			int numRead;
 			
-			while((numRead = bufferedInputStream.read(data,0,BUFFER_SIZE)) != -1) {
+			while((numRead = bufferedInputStream.read(data, 0, BUFFER_SIZE)) != -1) {
 				raf.write(data, 0, numRead);
+				this.bytesRead += numRead;
 			}
 			
 			bufferedInputStream.close();
@@ -118,16 +124,9 @@ public class UrlDataReader extends AbstractDataReader {
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
-		
-		return file;
 	}
 
-	private void prepareDownload() {
-		File tmpDir = new File("tmp");
-		if (!tmpDir.exists()) {
-			tmpDir.mkdir();
-		}
-		
+	private void prepareDownload() {		
 		if (this.urlInputConfiguration.isNoCheckCertificate()) {
 			this.ignoreSslVerification();
 		}
@@ -135,7 +134,23 @@ public class UrlDataReader extends AbstractDataReader {
 		int responseCode = -1;
 		try {
 			this.connection = this.createUrlConnection();
-			this.connection.connect();		
+			
+			if (this.urlInputConfiguration.getByteOffSet() > 0) {
+				int contentLength = this.connection.getContentLength();
+				if (contentLength == this.urlInputConfiguration.getByteOffSet()) {
+					this.markedToStop = true;
+					return;
+				}
+				
+				String byteRange = this.urlInputConfiguration.getByteOffSet() + "-" + this.connection.getContentLength();
+				((HttpURLConnection) this.connection).disconnect();
+				
+				this.connection = this.createUrlConnection();
+				logger.info("Download byte range: " + byteRange);
+				this.connection.addRequestProperty("Range", "bytes=" + byteRange);
+			}
+
+			this.connection.connect();
 			responseCode = ((HttpURLConnection) this.connection).getResponseCode();
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
@@ -155,7 +170,7 @@ public class UrlDataReader extends AbstractDataReader {
 			if (this.urlInputConfiguration.getUser() != null) {
 				String userPassword = "usrpsiconv:45sicX32";
 				String encoding = Base64.encodeBytes(userPassword.getBytes());
-				conn.setRequestProperty("Authorization", "Basic " + encoding);
+				conn.addRequestProperty("Authorization", "Basic " + encoding);
 			}
 			
 			return conn;
@@ -197,16 +212,6 @@ public class UrlDataReader extends AbstractDataReader {
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 	}
 	
-	private String fileExtension(String contentType) {
-		if ((contentType == null) || contentType.equals("")) {
-			return "";
-		} else if (contentType.contains("text/html")) {
-			return ".html";
-		}
-		logger.warning(contentType);
-		return "";
-	}
-	
 	@Override
 	public Map<String, Object> executionLog() {
 		Map<String, Object> log = new HashMap<String, Object>();
@@ -217,6 +222,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		log.put("url.data.reader.downloaded.file", ((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+		log.put("url.data.reader.bytes.read", this.bytesRead);
 		
 		return log;
 	}

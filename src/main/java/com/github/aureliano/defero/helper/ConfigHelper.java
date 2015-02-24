@@ -70,11 +70,15 @@ public final class ConfigHelper {
 		}
 	}
 	
-	private static void urlInputConfigValidation(UrlInputConfig config) {
+	protected static void urlInputConfigValidation(UrlInputConfig config) {
 		if (config.getConnectionSchema() == null) {
 			throw new DeferoException("Connection schema not provided.");
 		} else if ((config.getHost() == null) || (config.getHost().equals(""))) {
 			throw new DeferoException("Host not provided.");
+		} else if (config.getOutputFile() == null) {
+			throw new DeferoException("Output file not provided.");
+		} else if (config.getOutputFile().isDirectory()) {
+			throw new DeferoException("Output file '" + config.getOutputFile().getPath() + "' is a directory.");
 		}
 	}
 

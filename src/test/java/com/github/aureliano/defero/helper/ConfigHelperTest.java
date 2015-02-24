@@ -110,4 +110,38 @@ public class ConfigHelperTest {
 		ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("src/test/resources/empty-file.log")));
 		ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile("src/test/resources/empty-file.log"));
 	}
+	
+	@Test
+	public void testUrlInputConfigValidation() {
+		try {
+			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(null));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Connection schema not provided.", ex.getMessage());
+		}
+		
+		try {
+			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(ConnectionSchema.HTTP));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Host not provided.", ex.getMessage());
+		}
+		
+		try {
+			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
+				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost"));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Output file not provided.", ex.getMessage());
+		}
+		
+		try {
+			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
+				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
+				.withOutputFile("src/test/resources"));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Output file 'src/test/resources' is a directory.", ex.getMessage());
+		}
+		
+		ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
+			.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
+			.withOutputFile("src/test/resources/empty-file.log"));
+	}
 }

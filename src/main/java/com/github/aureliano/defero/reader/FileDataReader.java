@@ -26,14 +26,14 @@ public class FileDataReader extends AbstractDataReader {
 	@Override
 	public Object nextData() {
 		this.initialize();
+		
+		this.prepareReading();
 		String line = this.readNextLine();
 		
 		if (line == null) {
 			super.markedToStop = true;
 			return null;
 		}
-		
-		this.prepareReading();
 		Object data = null;
 		boolean accepted = false;
 		
@@ -68,8 +68,11 @@ public class FileDataReader extends AbstractDataReader {
 	}
 	
 	private void prepareReading() {		
-		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter) {
-			this.readNextLine();			
+		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter + 1) {
+			String line = this.readNextLine();
+			if (line == null) {
+				return;
+			}
 		}
 	}
 	

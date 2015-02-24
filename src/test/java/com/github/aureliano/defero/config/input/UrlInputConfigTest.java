@@ -13,6 +13,8 @@ public class UrlInputConfigTest {
 		Assert.assertNotNull(c.getParameters());
 		Assert.assertTrue(c.getParameters().isEmpty());
 		Assert.assertEquals(UrlInputConfig.DEFAULT_READ_TIMEOUT, c.getReadTimeout());
+		Assert.assertEquals(0, c.getByteOffSet());
+		Assert.assertEquals(0, c.getFileStartPosition());
 		Assert.assertFalse(c.isNoCheckCertificate());
 	}
 	
@@ -25,6 +27,9 @@ public class UrlInputConfigTest {
 			.withPath("logs")
 			.addParameter("test", "Is it a test?")
 			.withReadTimeout(5 * 1000)
+			.withByteOffSet(199845)
+			.withOutputFile("output_file.log")
+			.withFileStartPosition(45)
 			.withUser("user_name")
 			.withPassword("my-password")
 			.withNoCheckCertificate(true);
@@ -37,6 +42,9 @@ public class UrlInputConfigTest {
 		Assert.assertTrue(c.getParameters().size() == 1);
 		Assert.assertEquals("Is it a test?", c.getParameters().get("test"));
 		Assert.assertEquals(5000, c.getReadTimeout());
+		Assert.assertEquals(199845, c.getByteOffSet());
+		Assert.assertEquals("output_file.log", c.getOutputFile().getPath());
+		Assert.assertEquals(45, c.getFileStartPosition());
 		Assert.assertEquals("user_name", c.getUser());
 		Assert.assertEquals("my-password", c.getPassword());
 		Assert.assertTrue(c.isNoCheckCertificate());

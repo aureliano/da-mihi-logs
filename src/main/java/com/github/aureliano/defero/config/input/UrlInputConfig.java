@@ -1,5 +1,6 @@
 package com.github.aureliano.defero.config.input;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,6 +14,10 @@ public class UrlInputConfig implements IConfigInput {
 	private String path;
 	private Map<String, String> parameters;
 	private long readTimeout;
+	private int byteOffSet;
+	
+	private File outputFile;
+	private int fileStartPosition;
 	
 	private String user;
 	private String password;
@@ -23,6 +28,8 @@ public class UrlInputConfig implements IConfigInput {
 		this.port = -1;
 		this.parameters = new LinkedHashMap<String, String>();
 		this.readTimeout = DEFAULT_READ_TIMEOUT;
+		this.byteOffSet = 0;
+		this.fileStartPosition = 0;
 		this.noCheckCertificate = false;
 	}
 
@@ -82,6 +89,38 @@ public class UrlInputConfig implements IConfigInput {
 
 	public UrlInputConfig withReadTimeout(long readTimeout) {
 		this.readTimeout = readTimeout;
+		return this;
+	}
+	
+	public int getByteOffSet() {
+		return byteOffSet;
+	}
+	
+	public UrlInputConfig withByteOffSet(int byteOffSet) {
+		this.byteOffSet = byteOffSet;
+		return this;
+	}
+	
+	public File getOutputFile() {
+		return outputFile;
+	}
+	
+	public UrlInputConfig withOutputFile(File outputFile) {
+		this.outputFile = outputFile;
+		return this;
+	}
+	
+	public UrlInputConfig withOutputFile(String outputFilePath) {
+		this.outputFile = new File(outputFilePath);
+		return this;
+	}
+	
+	public int getFileStartPosition() {
+		return fileStartPosition;
+	}
+	
+	public UrlInputConfig withFileStartPosition(int fileStartPosition) {
+		this.fileStartPosition = fileStartPosition;
 		return this;
 	}
 
