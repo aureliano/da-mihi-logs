@@ -36,6 +36,7 @@ public class AppEventsCollectorTest {
 					
 					@Override
 					public boolean accept(Object data) {
+						@SuppressWarnings("unchecked")
 						Map<String, Object> map = (Map<String, Object>) data;
 						return map.get("tipoLog").equals("MemoriaServidor");
 					}
