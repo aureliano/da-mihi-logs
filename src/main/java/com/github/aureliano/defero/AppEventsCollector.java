@@ -26,9 +26,10 @@ public class AppEventsCollector {
 	private static final Logger logger = Logger.getLogger(AppEventsCollector.class.getName());
 	
 	private EventCollectorConfiguration configuration;
+	private boolean persistExecutionLog;
 	
 	public AppEventsCollector() {
-		super();
+		this.persistExecutionLog = true;
 	}
 	
 	public void execute() {
@@ -43,7 +44,9 @@ public class AppEventsCollector {
 		this.prepareExecution();
 		List<Map<String, Object>> executionLogs = this.executeCollectors();
 		
-		this.printLogToOutput(profiler, executionLogs);
+		if (this.persistExecutionLog) {
+			this.printLogToOutput(profiler, executionLogs);
+		}
 	}
 	
 	private List<Map<String, Object>> executeCollectors() {
@@ -126,6 +129,15 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withConfiguration(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
+		return this;
+	}
+	
+	public boolean isPersistExecutionLog() {
+		return persistExecutionLog;
+	}
+	
+	public AppEventsCollector withPersistExecutionLog(boolean persistExecutionLog) {
+		this.persistExecutionLog = persistExecutionLog;
 		return this;
 	}
 }
