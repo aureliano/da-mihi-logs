@@ -13,7 +13,7 @@ import com.github.aureliano.defero.filter.DefaultEmptyFilter;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
-	private InputFileConfig _inputConfiguration;
+	private InputFileConfig fileTailerConfiguration;
 	
 	private RandomAccessFile randomAccessFile;
 	private long fileLength;
@@ -39,7 +39,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			long currentFileLength = this.currentFileLength();
 			while (this.fileLength == currentFileLength && this.shouldExecute()) {
 				try {
-					Thread.sleep(this._inputConfiguration.getTailDelay());
+					Thread.sleep(this.fileTailerConfiguration.getTailDelay());
 					currentFileLength = this.currentFileLength();
 				} catch (InterruptedException ex) {
 					throw new DeferoException(ex);
@@ -114,11 +114,11 @@ public class FileTailerDataReader extends AbstractDataReader {
 	
 	private boolean shouldExecute() {
 		long diff = System.currentTimeMillis() - this.initialTimeMillis;
-		return (diff < this._inputConfiguration.getTailInterval());
+		return (diff < this.fileTailerConfiguration.getTailInterval());
 	}
 	
 	private long currentFileLength() {
-		return new File(this._inputConfiguration.getFile().getPath()).length();
+		return new File(this.fileTailerConfiguration.getFile().getPath()).length();
 	}
 	
 	private void initialize() {
@@ -133,21 +133,21 @@ public class FileTailerDataReader extends AbstractDataReader {
 		}
 		
 		this.initializeRandomAccessFile();
-		this._inputConfiguration = (InputFileConfig) super.inputConfiguration;
+		this.fileTailerConfiguration = (InputFileConfig) super.inputConfiguration;
 		
-		logger.info("Reading data from " + this._inputConfiguration.getFile().getPath());
-		logger.info("Delay milliseconds: " + this._inputConfiguration.getTailDelay());
-		logger.info("Tail about " + this._inputConfiguration.getTailInterval() + " milliseconds.");
-		logger.info("Data encondig: " + this._inputConfiguration.getEncoding());
+		logger.info("Reading data from " + this.fileTailerConfiguration.getFile().getPath());
+		logger.info("Delay milliseconds: " + this.fileTailerConfiguration.getTailDelay());
+		logger.info("Tail about " + this.fileTailerConfiguration.getTailInterval() + " milliseconds.");
+		logger.info("Data encondig: " + this.fileTailerConfiguration.getEncoding());
 	}
 	
 	private void initializeRandomAccessFile() {
 		try {
-			this.randomAccessFile = new RandomAccessFile(this._inputConfiguration.getFile(), "r");
-			this.fileLength = this._inputConfiguration.getFile().length();
+			this.randomAccessFile = new RandomAccessFile(this.fileTailerConfiguration.getFile(), "r");
+			this.fileLength = this.fileTailerConfiguration.getFile().length();
 			this.randomAccessFile.seek(this.filePointer);
 			
-			this._inputConfiguration.withFile(new File(this._inputConfiguration.getFile().getPath()));
+			this.fileTailerConfiguration.withFile(new File(this.fileTailerConfiguration.getFile().getPath()));
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
@@ -162,7 +162,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			} else {
 				line = this.randomAccessFile.readLine();
 				if (line != null) {
-					line = new String(line.getBytes(), this._inputConfiguration.getEncoding());
+					line = new String(line.getBytes(), this.fileTailerConfiguration.getEncoding());
 					super.lineCounter++;
 				}
 			}
@@ -176,7 +176,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 	@Override
 	public Map<String, Object> executionLog() {
 		Map<String, Object> log = new HashMap<String, Object>();
-		log.put("file.data.reader.last.line", super.lineCounter);
+		log.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
 		return log;
 	}

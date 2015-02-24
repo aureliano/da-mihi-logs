@@ -24,10 +24,10 @@ public class AppEventsCollectorTest {
 	public void testExecute() {		
 		new AppEventsCollector()
 			.withConfiguration(new EventCollectorConfiguration()
-				.withInputConfig(new InputFileConfig()
+				.addInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10))
-				.withOutputConfig(new StandardOutputConfig())
+				.addOutputConfig(new StandardOutputConfig())
 				.withParser(new JsonEventParser())
 				.addDataReadingListeners(this.getDataReadingListener())
 				.addDataWritingListeners(this.getDataWriteListener())

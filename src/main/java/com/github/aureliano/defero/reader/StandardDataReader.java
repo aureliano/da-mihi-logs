@@ -104,7 +104,7 @@ public class StandardDataReader extends AbstractDataReader {
 	@Override
 	public Map<String, Object> executionLog() {
 		Map<String, Object> log = new HashMap<String, Object>();
-		log.put("file.data.reader.last.line", super.lineCounter);
+		log.put("input.config." + super.inputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
 		return log;
 	}

@@ -3,6 +3,7 @@ package com.github.aureliano.defero.config.input;
 public class StandardInputConfig implements IConfigInput {
 
 	private String encoding;
+	private String id;
 	
 	public StandardInputConfig() {
 		this.encoding = "UTF-8";
@@ -18,7 +19,13 @@ public class StandardInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String inputType() {
-		return "STANDARD";
+	public String getConfigurationId() {
+		return id;
+	}
+
+	@Override
+	public IConfigInput withConfigurationId(String id) {
+		this.id = id;
+		return this;
 	}
 }

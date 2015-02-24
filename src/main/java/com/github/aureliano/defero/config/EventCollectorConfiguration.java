@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.config.input.StandardInputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.filter.IEventFielter;
 import com.github.aureliano.defero.formatter.IOutputFormatter;
 import com.github.aureliano.defero.listener.DataReadingListener;
@@ -18,8 +16,8 @@ import com.github.aureliano.defero.parser.PlainTextParser;
 
 public class EventCollectorConfiguration {
 
-	private IConfigInput inputConfig;
-	private IConfigOutput outputConfig;
+	private List<IConfigInput> inputConfigs;
+	private List<IConfigOutput> outputConfigs;
 	private IMatcher matcher;
 	private IParser<?> parser;
 	private IEventFielter filter;
@@ -28,8 +26,9 @@ public class EventCollectorConfiguration {
 	private List<DataWritingListener> dataWritingListeners;
 	
 	public EventCollectorConfiguration() {
-		this.inputConfig = new StandardInputConfig();
-		this.outputConfig = new StandardOutputConfig();
+		this.inputConfigs = new ArrayList<IConfigInput>();
+		this.outputConfigs = new ArrayList<IConfigOutput>();
+		
 		this.matcher = new SingleLineMatcher();
 		this.parser = new PlainTextParser();
 		
@@ -37,21 +36,21 @@ public class EventCollectorConfiguration {
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 	}
 
-	public IConfigInput getInputConfig() {
-		return inputConfig;
+	public List<IConfigInput> getInputConfigs() {
+		return inputConfigs;
 	}
 
-	public EventCollectorConfiguration withInputConfig(IConfigInput inputConfig) {
-		this.inputConfig = inputConfig;
+	public EventCollectorConfiguration addInputConfig(IConfigInput inputConfig) {
+		this.inputConfigs.add(inputConfig);
 		return this;
 	}
 	
-	public IConfigOutput getOutputConfig() {
-		return outputConfig;
+	public List<IConfigOutput> getOutputConfigs() {
+		return outputConfigs;
 	}
 	
-	public EventCollectorConfiguration withOutputConfig(IConfigOutput outputConfig) {
-		this.outputConfig = outputConfig;
+	public EventCollectorConfiguration addOutputConfig(IConfigOutput outputConfig) {
+		this.outputConfigs.add(outputConfig);
 		return this;
 	}
 	

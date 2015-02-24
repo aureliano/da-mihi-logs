@@ -20,7 +20,11 @@ public class DataReaderFactoryTest {
 	@Test(expected = DeferoException.class)
 	public void testCreateDataReaderUnsupported() {
 		DataReaderFactory.createDataReader(new IConfigInput() {
-			public String inputType() {
+			public String getConfigurationId() {
+				return null;
+			}
+
+			public IConfigInput withConfigurationId(String id) {
 				return null;
 			}
 		});

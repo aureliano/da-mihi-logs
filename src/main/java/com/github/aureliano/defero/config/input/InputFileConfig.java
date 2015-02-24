@@ -10,6 +10,7 @@ public class InputFileConfig implements IConfigInput {
 	private boolean tailFile;
 	private long tailDelay;
 	private long tailInterval;
+	private String id;
 
 	public InputFileConfig() {
 		this.startPosition = 0;
@@ -20,8 +21,14 @@ public class InputFileConfig implements IConfigInput {
 	}
 	
 	@Override
-	public String inputType() {
-		return "FILE";
+	public String getConfigurationId() {
+		return id;
+	}
+	
+	@Override
+	public IConfigInput withConfigurationId(String id) {
+		this.id = id;
+		return this;
 	}
 
 	public File getFile() {

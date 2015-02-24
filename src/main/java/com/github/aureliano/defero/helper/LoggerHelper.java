@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 
 import com.github.aureliano.defero.exception.DeferoException;
@@ -16,6 +19,29 @@ public final class LoggerHelper {
 
 	private LoggerHelper() {
 		super();
+	}
+	
+	public static File saveExecutionLog(Properties p, boolean ordered) {
+		Properties properties;
+		if (ordered) {
+			properties = new Properties() {
+			    
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public synchronized Enumeration<Object> keys() {
+					return Collections.enumeration(new TreeSet<Object>(super.keySet()));
+				}
+			};
+		} else {
+			properties = new Properties();
+		}
+		
+		for (Object key : p.keySet()) {
+			properties.put(key, p.get(key));
+		}
+		
+		return saveExecutionLog(properties);
 	}
 	
 	public static File saveExecutionLog(Properties properties) {

@@ -1,11 +1,17 @@
 package com.github.aureliano.defero;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
+import com.github.aureliano.defero.config.input.IConfigInput;
+import com.github.aureliano.defero.config.input.StandardInputConfig;
+import com.github.aureliano.defero.config.output.IConfigOutput;
+import com.github.aureliano.defero.config.output.StandardOutputConfig;
 import com.github.aureliano.defero.exception.DeferoException;
 import com.github.aureliano.defero.helper.ConfigHelper;
 import com.github.aureliano.defero.helper.LoggerHelper;
@@ -34,22 +40,46 @@ public class AppEventsCollector {
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
-		this.validation();
-		logger.info("Start execution for input type " + this.configuration.getInputConfig().inputType());
-				
-		Map<String, Object> executionLog = this.dataIteration();
-		this.printLogToOutput(profiler, executionLog);
+		this.prepareExecution();
+		List<Map<String, Object>> executionLogs = this.executeCollectors();
+		
+		this.printLogToOutput(profiler, executionLogs);
 	}
 	
-	private Map<String, Object> dataIteration() {
+	private List<Map<String, Object>> executeCollectors() {
+		if (this.configuration.getParser() == null) {
+			throw new DeferoException("Parser must pe provided.");
+		}
+		
+		List<Map<String, Object>> executionLogs = new ArrayList<Map<String,Object>>();
+		
+		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
+			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
+			logger.info("Start execution for input " + inputConfig.getConfigurationId());
+			ConfigHelper.inputConfigValidation(inputConfig);
+			
+			if (inputConfig.getConfigurationId() == null) {
+				inputConfig.withConfigurationId("configuration_id_" + (i + 1));
+			}
+			
+			for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
+				ConfigHelper.outputConfigValidation(outputConfig);
+				executionLogs.add(this.dataIteration(inputConfig, outputConfig));
+			}
+		}
+		
+		return executionLogs;
+	}
+	
+	private Map<String, Object> dataIteration(IConfigInput inputConfig, IConfigOutput outputConfig) {
 		IDataReader dataReader = DataReaderFactory
-			.createDataReader(this.configuration.getInputConfig())
+			.createDataReader(inputConfig)
 				.withMatcher(this.configuration.getMatcher())
 				.withParser(this.configuration.getParser())
 				.withFilter(this.configuration.getFilter())
 				.withListeners(this.configuration.getDataReadingListeners());
 		IDataWriter dataWriter = DataWriterFactory
-			.createDataWriter(this.configuration.getOutputConfig())
+			.createDataWriter(outputConfig)
 				.withOutputFormatter(this.configuration.getOutputFormatter())
 				.withListeners(this.configuration.getDataWritingListeners());
 		
@@ -66,26 +96,28 @@ public class AppEventsCollector {
 		return dataReader.executionLog();
 	}
 	
-	private void validation() {
-		ConfigHelper.inputConfigValidation(this.configuration.getInputConfig());
-		ConfigHelper.outputConfigValidation(this.configuration.getOutputConfig());
-		
-		if (this.configuration.getParser() == null) {
-			throw new DeferoException("Parser must pe provided.");
-		}
-	}
-	
-	private void printLogToOutput(Profiler profiler, Map<String, Object> executionLog) {
+	private void printLogToOutput(Profiler profiler, List<Map<String, Object>> executionLogs) {
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
-		properties.put("input.type", this.configuration.getInputConfig().inputType());
 		
-		for (String key : executionLog.keySet()) {
-			properties.put(key, String.valueOf(executionLog.get(key)));
+		for (Map<String, Object> executionLog : executionLogs) {
+			for (String key : executionLog.keySet()) {
+				properties.put(key, String.valueOf(executionLog.get(key)));
+			}
 		}
 		
-		File log = LoggerHelper.saveExecutionLog(properties);
+		File log = LoggerHelper.saveExecutionLog(properties, true);
 		logger.info("Execution log output saved at " + log.getPath());		
 		logger.info("Execution successful!");
+	}
+	
+	private void prepareExecution() {
+		if (this.configuration.getInputConfigs().isEmpty()) {
+			this.configuration.addInputConfig(new StandardInputConfig());
+		}
+		
+		if (this.configuration.getOutputConfigs().isEmpty()) {
+			this.configuration.addOutputConfig(new StandardOutputConfig());
+		}
 	}
 	
 	public EventCollectorConfiguration getConfiguration() {

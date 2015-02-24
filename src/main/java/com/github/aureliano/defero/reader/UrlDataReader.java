@@ -91,7 +91,8 @@ public class UrlDataReader extends AbstractDataReader {
 			.withInputConfiguration(
 				new InputFileConfig()
 					.withFile(this.urlInputConfiguration.getOutputFile())
-					.withStartPosition(this.urlInputConfiguration.getFileStartPosition()))
+					.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
+					.withConfigurationId(this.urlInputConfiguration.getConfigurationId()))
 			.withMatcher(super.matcher)
 			.withParser(super.parser)
 			.withFilter(super.filter)
@@ -108,6 +109,7 @@ public class UrlDataReader extends AbstractDataReader {
 			RandomAccessFile raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
 			
 			if (this.urlInputConfiguration.getOutputFile().exists()) {
+				logger.fine("Appending data to " + this.urlInputConfiguration.getOutputFile().getPath());
 				raf.seek(this.urlInputConfiguration.getOutputFile().length());
 			}
 			
@@ -146,6 +148,7 @@ public class UrlDataReader extends AbstractDataReader {
 				((HttpURLConnection) this.connection).disconnect();
 				
 				this.connection = this.createUrlConnection();
+				logger.info("Download size: " + (contentLength / 1024) + " Kib");
 				logger.info("Download byte range: " + byteRange);
 				this.connection.addRequestProperty("Range", "bytes=" + byteRange);
 			}
@@ -221,8 +224,9 @@ public class UrlDataReader extends AbstractDataReader {
 			log.put(key, fileDataReaderLog.get(key));
 		}
 		
-		log.put("url.data.reader.downloaded.file", ((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
-		log.put("url.data.reader.bytes.read", this.bytesRead);
+		log.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
+				((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+		log.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
 		return log;
 	}

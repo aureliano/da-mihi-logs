@@ -22,6 +22,8 @@ public class UrlInputConfig implements IConfigInput {
 	private String user;
 	private String password;
 	private boolean noCheckCertificate;
+
+	private String id;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -152,7 +154,13 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String inputType() {
-		return "URL";
+	public String getConfigurationId() {
+		return id;
+	}
+	
+	@Override
+	public IConfigInput withConfigurationId(String id) {
+		this.id = id;
+		return this;
 	}
 }
