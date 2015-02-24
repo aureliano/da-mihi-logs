@@ -58,12 +58,13 @@ public class AppEventsCollector {
 		
 		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
 			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
-			logger.info("Start execution for input " + inputConfig.getConfigurationId());
 			ConfigHelper.inputConfigValidation(inputConfig);
 			
 			if (inputConfig.getConfigurationId() == null) {
 				inputConfig.withConfigurationId("configuration_id_" + (i + 1));
 			}
+			
+			logger.info("Start execution for input " + inputConfig.getConfigurationId());
 			
 			for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
 				ConfigHelper.outputConfigValidation(outputConfig);
