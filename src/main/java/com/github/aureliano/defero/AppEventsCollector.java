@@ -70,6 +70,8 @@ public class AppEventsCollector {
 				ConfigHelper.outputConfigValidation(outputConfig);
 				executionLogs.add(this.dataIteration(inputConfig, outputConfig));
 			}
+			
+			System.out.println();
 		}
 		
 		return executionLogs;
