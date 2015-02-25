@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.exception.DeferoException;
@@ -17,7 +18,7 @@ public class FileDataReader extends AbstractDataReader {
 	private InputFileConfig fileInputConfiguration;
 	private BufferedReader bufferedReader;
 	
-	private static final Logger logger = Logger.getLogger(FileDataReader.class.getName());
+	private static final Logger logger = Logger.getLogger(FileDataReader.class);
 		
 	public FileDataReader() {
 		super();

@@ -3,7 +3,8 @@ package com.github.aureliano.defero.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
 import com.github.aureliano.defero.config.input.IConfigInput;
@@ -22,7 +23,7 @@ public class CollectEventsCommand {
 	private EventCollectorConfiguration configuration;
 	private static List<Map<String, Object>> logExecutions;
 	
-	private static final Logger logger = Logger.getLogger(CollectEventsCommand.class.getName());
+	private static final Logger logger = Logger.getLogger(CollectEventsCommand.class);
 	
 	public CollectEventsCommand(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
@@ -78,7 +79,7 @@ public class CollectEventsCommand {
 				return;
 			}
 			
-			logger.warning("Despite a multi-threading was requested it'll be ignored because there is only one input. Executing serially.");
+			logger.warn("Despite a multi-threading was requested it'll be ignored because there is only one input. Executing serially.");
 		}
 		
 		this.serialExecution(commands);

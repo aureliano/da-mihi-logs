@@ -1,7 +1,8 @@
 package com.github.aureliano.defero.writer;
 
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
@@ -19,7 +20,7 @@ public class ElasticSearchDataWriter implements IDataWriter {
 	
 	private ElasticSearchClient elasticSearchClient;
 	
-	private static final Logger logger = Logger.getLogger(FileDataWriter.class.getName());
+	private static final Logger logger = Logger.getLogger(FileDataWriter.class);
 	
 	public ElasticSearchDataWriter() {
 		super();
@@ -84,14 +85,14 @@ public class ElasticSearchDataWriter implements IDataWriter {
 	}
 
 	private void executeBeforeWritingMethodListeners(Object data) {
-		logger.fine("Execute beforeDataWriting listeners.");
+		logger.debug("Execute beforeDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
 		}
 	}
 
 	private void executeAfterWritingMethodListeners(Object data) {
-		logger.fine("Execute afterDataWriting listeners.");
+		logger.debug("Execute afterDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, data));
 		}

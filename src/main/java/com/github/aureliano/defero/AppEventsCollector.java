@@ -3,7 +3,8 @@ package com.github.aureliano.defero;
 import java.io.File;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.command.CollectEventsCommand;
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
@@ -12,7 +13,7 @@ import com.github.aureliano.defero.profile.Profiler;
 
 public class AppEventsCollector {
 
-	private static final Logger logger = Logger.getLogger(AppEventsCollector.class.getName());
+	private static final Logger logger = Logger.getLogger(AppEventsCollector.class);
 	
 	private EventCollectorConfiguration configuration;
 	private CollectEventsCommand commandExecutor;

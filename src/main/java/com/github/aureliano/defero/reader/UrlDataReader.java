@@ -11,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -20,6 +19,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.common.Base64;
 
 import com.github.aureliano.defero.config.input.ConnectionSchema;
@@ -38,7 +38,7 @@ public class UrlDataReader extends AbstractDataReader {
 	private URLConnection connection;
 	private int bytesRead;
 	
-	private static final Logger logger = Logger.getLogger(UrlDataReader.class.getName());
+	private static final Logger logger = Logger.getLogger(UrlDataReader.class);
 	private static final int BUFFER_SIZE = 4096;
 	
 	public UrlDataReader() {

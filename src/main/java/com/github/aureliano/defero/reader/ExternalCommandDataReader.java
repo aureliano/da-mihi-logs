@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.config.input.ExternalCommandInput;
 import com.github.aureliano.defero.exception.DeferoException;
@@ -19,7 +20,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	private BufferedReader bufferedReader;
 	private ExternalCommandInput externalCommandInput;
 	
-	private static final Logger logger = Logger.getLogger(ExternalCommandInput.class.getName());
+	private static final Logger logger = Logger.getLogger(ExternalCommandInput.class);
 	
 	public ExternalCommandDataReader() {
 		super();
@@ -67,7 +68,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 
 		this.process.destroy();
 		if (this.process.exitValue() != 0) {
-			logger.warning("External command exited with no normal exit status.");
+			logger.warn("External command exited with no normal exit status.");
 		}
 		
 		try {

@@ -9,13 +9,14 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.TreeSet;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.exception.DeferoException;
 
 public final class LoggerHelper {
 	
-	private static final Logger logger = Logger.getLogger(LoggerHelper.class.getName());
+	private static final Logger logger = Logger.getLogger(LoggerHelper.class);
 
 	private LoggerHelper() {
 		super();
@@ -55,12 +56,12 @@ public final class LoggerHelper {
 			
 			String fileName = "execution_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".log";
 			File output = new File(dir.getPath() + File.separator + fileName);
-			logger.fine(properties.toString());
+			logger.debug(properties.toString());
 			properties.store(new FileOutputStream(output), "Last execution information.");
 			
 			return output;
 		} catch (IOException ex) {
-			logger.severe("Could not save execution log. " + ex.getMessage());
+			logger.error("Could not save execution log.", ex);
 			throw new DeferoException(ex);
 		}
 	}

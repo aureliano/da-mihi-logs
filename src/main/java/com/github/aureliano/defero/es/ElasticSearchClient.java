@@ -4,8 +4,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.Client;
@@ -24,7 +24,7 @@ public class ElasticSearchClient {
 	private IElasticSearchConfiguration configuration;
 	private ElasticSearchIndexerImpl indexer;
 	
-	private static final Logger logger = Logger.getLogger(ElasticSearchClient.class.getName());
+	private static final Logger logger = Logger.getLogger(ElasticSearchClient.class);
 	
 	public ElasticSearchClient() {
 		super();

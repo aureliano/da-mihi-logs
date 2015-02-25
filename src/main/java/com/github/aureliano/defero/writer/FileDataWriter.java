@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.github.aureliano.defero.config.output.FileOutputConfig;
 import com.github.aureliano.defero.config.output.IConfigOutput;
@@ -24,7 +25,7 @@ public class FileDataWriter implements IDataWriter {
 	private List<DataWritingListener> listeners;
 	private PrintWriter writer;
 	
-	private static final Logger logger = Logger.getLogger(FileDataWriter.class.getName());
+	private static final Logger logger = Logger.getLogger(FileDataWriter.class);
 	
 	public FileDataWriter() {
 		super();
@@ -91,14 +92,14 @@ public class FileDataWriter implements IDataWriter {
 	}
 
 	private void executeBeforeWritingMethodListeners(Object data) {
-		logger.fine("Execute beforeDataWriting listeners.");
+		logger.debug("Execute beforeDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
 		}
 	}
 
 	private void executeAfterWritingMethodListeners(Object data) {
-		logger.fine("Execute afterDataWriting listeners.");
+		logger.debug("Execute afterDataWriting listeners.");
 		for (DataWritingListener listener : this.listeners) {
 			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, data));
 		}
