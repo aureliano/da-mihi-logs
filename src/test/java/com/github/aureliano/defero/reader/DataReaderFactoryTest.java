@@ -4,6 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.github.aureliano.defero.config.input.ExternalCommandInput;
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.StandardInputConfig;
@@ -40,5 +41,6 @@ public class DataReaderFactoryTest {
 		Assert.assertTrue(DataReaderFactory.createDataReader(new InputFileConfig()) instanceof FileDataReader);
 		Assert.assertTrue(DataReaderFactory.createDataReader(new StandardInputConfig()) instanceof StandardDataReader);
 		Assert.assertTrue(DataReaderFactory.createDataReader(new UrlInputConfig()) instanceof UrlDataReader);
+		Assert.assertTrue(DataReaderFactory.createDataReader(new ExternalCommandInput()) instanceof ExternalCommandDataReader);
 	}
 }

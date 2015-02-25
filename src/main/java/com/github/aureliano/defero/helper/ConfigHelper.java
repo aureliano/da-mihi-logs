@@ -2,6 +2,7 @@ package com.github.aureliano.defero.helper;
 
 import java.util.Map;
 
+import com.github.aureliano.defero.config.input.ExternalCommandInput;
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.StandardInputConfig;
@@ -65,11 +66,13 @@ public final class ConfigHelper {
 			standardInputConfigValidation((StandardInputConfig) config);
 		} else if (config instanceof UrlInputConfig) {
 			urlInputConfigValidation((UrlInputConfig) config);
+		} else if (config instanceof ExternalCommandInput) {
+			externalCommandConfigValidation((ExternalCommandInput) config);
 		} else {
 			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
 	}
-	
+
 	protected static void urlInputConfigValidation(UrlInputConfig config) {
 		if (config.getConnectionSchema() == null) {
 			throw new DeferoException("Connection schema not provided.");
@@ -79,6 +82,12 @@ public final class ConfigHelper {
 			throw new DeferoException("Output file not provided.");
 		} else if (config.getOutputFile().isDirectory()) {
 			throw new DeferoException("Output file '" + config.getOutputFile().getPath() + "' is a directory.");
+		}
+	}
+	
+	protected static void externalCommandConfigValidation(ExternalCommandInput config) {
+		if ((config.getCommand() == null) || (config.getCommand().equals(""))) {
+			throw new DeferoException("Command not provided.");
 		}
 	}
 

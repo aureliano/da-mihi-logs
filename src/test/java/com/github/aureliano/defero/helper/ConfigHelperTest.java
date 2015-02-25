@@ -7,6 +7,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.defero.config.input.ConnectionSchema;
+import com.github.aureliano.defero.config.input.ExternalCommandInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.UrlInputConfig;
 import com.github.aureliano.defero.config.output.FileOutputConfig;
@@ -143,5 +144,22 @@ public class ConfigHelperTest {
 		ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
 			.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
 			.withOutputFile("src/test/resources/empty-file.log"));
+	}
+	
+	@Test
+	public void testExternalCommandConfigValidation() {
+		try {
+			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput());
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Command not provided.", ex.getMessage());
+		}
+		
+		try {
+			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand(""));
+		} catch (DeferoException ex) {
+			Assert.assertEquals("Command not provided.", ex.getMessage());
+		}
+		
+		ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand("ls -la"));
 	}
 }

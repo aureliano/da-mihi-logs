@@ -1,5 +1,6 @@
 package com.github.aureliano.defero.reader;
 
+import com.github.aureliano.defero.config.input.ExternalCommandInput;
 import com.github.aureliano.defero.config.input.IConfigInput;
 import com.github.aureliano.defero.config.input.InputFileConfig;
 import com.github.aureliano.defero.config.input.StandardInputConfig;
@@ -20,6 +21,8 @@ public final class DataReaderFactory {
 			return new StandardDataReader().withInputConfiguration(inputConfig);
 		} else if (inputConfig instanceof UrlInputConfig) {
 			return new UrlDataReader().withInputConfiguration(inputConfig);
+		} else if (inputConfig instanceof ExternalCommandInput) {
+			return new ExternalCommandDataReader().withInputConfiguration(inputConfig);
 		} else {
 			String clazz = (inputConfig == null) ? "null" : inputConfig.getClass().getName();
 			throw new DeferoException("Unsupported data reader for input config " + clazz);
