@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.helper;
+package com.github.aureliano.damihilogs.helper;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;

@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.exception;
+package com.github.aureliano.damihilogs.exception;
 
 public class DeferoException extends RuntimeException {
 

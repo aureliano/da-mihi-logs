@@ -1,15 +1,15 @@
-package com.github.aureliano.defero.reader;
+package com.github.aureliano.damihilogs.reader;
 
 import java.util.List;
 
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.event.AfterReadingEvent;
-import com.github.aureliano.defero.event.BeforeReadingEvent;
-import com.github.aureliano.defero.event.StepParseEvent;
-import com.github.aureliano.defero.filter.IEventFielter;
-import com.github.aureliano.defero.listener.DataReadingListener;
-import com.github.aureliano.defero.matcher.IMatcher;
-import com.github.aureliano.defero.parser.IParser;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.event.AfterReadingEvent;
+import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
+import com.github.aureliano.damihilogs.event.StepParseEvent;
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public abstract class AbstractDataReader implements IDataReader {
 

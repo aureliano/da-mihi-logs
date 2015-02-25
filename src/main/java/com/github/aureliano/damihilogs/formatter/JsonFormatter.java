@@ -1,8 +1,8 @@
-package com.github.aureliano.defero.formatter;
+package com.github.aureliano.damihilogs.formatter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public class JsonFormatter implements IOutputFormatter {
 

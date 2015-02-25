@@ -1,10 +1,10 @@
-package com.github.aureliano.defero.writer;
+package com.github.aureliano.damihilogs.writer;
 
-import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
-import com.github.aureliano.defero.config.output.FileOutputConfig;
-import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
+import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public final class DataWriterFactory {
 

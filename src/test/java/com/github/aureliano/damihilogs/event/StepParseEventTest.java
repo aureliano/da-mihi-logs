@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.event;
+package com.github.aureliano.damihilogs.event;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,17 +1,17 @@
-package com.github.aureliano.defero.helper;
+package com.github.aureliano.damihilogs.helper;
 
 import java.util.Map;
 
-import com.github.aureliano.defero.config.input.ExternalCommandInput;
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.input.StandardInputConfig;
-import com.github.aureliano.defero.config.input.UrlInputConfig;
-import com.github.aureliano.defero.config.output.ElasticSearchOutputConfig;
-import com.github.aureliano.defero.config.output.FileOutputConfig;
-import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
+import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
+import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
+import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public final class ConfigHelper {
 

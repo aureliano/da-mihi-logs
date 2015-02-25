@@ -1,9 +1,9 @@
-package com.github.aureliano.defero.event;
+package com.github.aureliano.damihilogs.event;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.defero.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 
 public class BeforeReadingEventTest {
 

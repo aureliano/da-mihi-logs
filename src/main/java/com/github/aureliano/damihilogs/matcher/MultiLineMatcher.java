@@ -1,8 +1,8 @@
-package com.github.aureliano.defero.matcher;
+package com.github.aureliano.damihilogs.matcher;
 
 import java.util.regex.Pattern;
 
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public class MultiLineMatcher implements IMatcher {
 

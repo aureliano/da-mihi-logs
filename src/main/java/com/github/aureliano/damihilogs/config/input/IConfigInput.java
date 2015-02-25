@@ -1,6 +1,6 @@
-package com.github.aureliano.defero.config.input;
+package com.github.aureliano.damihilogs.config.input;
 
-import com.github.aureliano.defero.config.IConfiguration;
+import com.github.aureliano.damihilogs.config.IConfiguration;
 
 public interface IConfigInput extends IConfiguration {
 

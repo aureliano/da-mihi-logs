@@ -1,6 +1,6 @@
-package com.github.aureliano.defero.event;
+package com.github.aureliano.damihilogs.event;
 
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public class AfterReadingEvent {
 

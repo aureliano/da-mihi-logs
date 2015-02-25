@@ -1,22 +1,22 @@
-package com.github.aureliano.defero;
+package com.github.aureliano.damihilogs;
 
 import java.util.Map;
 
 import org.junit.Test;
 
-import com.github.aureliano.defero.config.EventCollectorConfiguration;
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.event.AfterReadingEvent;
-import com.github.aureliano.defero.event.AfterWritingEvent;
-import com.github.aureliano.defero.event.BeforeReadingEvent;
-import com.github.aureliano.defero.event.BeforeWritingEvent;
-import com.github.aureliano.defero.event.StepParseEvent;
-import com.github.aureliano.defero.filter.IEventFielter;
-import com.github.aureliano.defero.formatter.JsonFormatter;
-import com.github.aureliano.defero.listener.DataReadingListener;
-import com.github.aureliano.defero.listener.DataWritingListener;
-import com.github.aureliano.defero.parser.JsonEventParser;
+import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.event.AfterReadingEvent;
+import com.github.aureliano.damihilogs.event.AfterWritingEvent;
+import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
+import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
+import com.github.aureliano.damihilogs.event.StepParseEvent;
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.formatter.JsonFormatter;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.parser.JsonEventParser;
 
 public class AppEventsCollectorTest {
 

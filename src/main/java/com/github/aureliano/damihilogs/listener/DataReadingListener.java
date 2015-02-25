@@ -1,8 +1,8 @@
-package com.github.aureliano.defero.listener;
+package com.github.aureliano.damihilogs.listener;
 
-import com.github.aureliano.defero.event.AfterReadingEvent;
-import com.github.aureliano.defero.event.BeforeReadingEvent;
-import com.github.aureliano.defero.event.StepParseEvent;
+import com.github.aureliano.damihilogs.event.AfterReadingEvent;
+import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
+import com.github.aureliano.damihilogs.event.StepParseEvent;
 
 public interface DataReadingListener {
 

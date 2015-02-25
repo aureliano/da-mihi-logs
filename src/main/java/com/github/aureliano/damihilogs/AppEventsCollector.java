@@ -1,4 +1,4 @@
-package com.github.aureliano.defero;
+package com.github.aureliano.damihilogs;
 
 import java.io.File;
 import java.util.Map;
@@ -6,10 +6,10 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.defero.command.CollectEventsCommand;
-import com.github.aureliano.defero.config.EventCollectorConfiguration;
-import com.github.aureliano.defero.helper.LoggerHelper;
-import com.github.aureliano.defero.profile.Profiler;
+import com.github.aureliano.damihilogs.command.CollectEventsCommand;
+import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.helper.LoggerHelper;
+import com.github.aureliano.damihilogs.profile.Profiler;
 
 public class AppEventsCollector {
 

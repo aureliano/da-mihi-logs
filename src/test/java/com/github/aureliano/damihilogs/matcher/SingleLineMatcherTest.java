@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.matcher;
+package com.github.aureliano.damihilogs.matcher;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

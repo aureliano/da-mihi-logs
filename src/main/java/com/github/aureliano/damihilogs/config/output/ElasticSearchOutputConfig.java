@@ -1,8 +1,8 @@
-package com.github.aureliano.defero.config.output;
+package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
 
-import com.github.aureliano.defero.es.IElasticSearchConfiguration;
+import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 
 public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchConfiguration {
 

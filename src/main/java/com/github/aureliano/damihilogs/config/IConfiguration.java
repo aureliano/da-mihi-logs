@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.config;
+package com.github.aureliano.damihilogs.config;
 
 public interface IConfiguration {
 

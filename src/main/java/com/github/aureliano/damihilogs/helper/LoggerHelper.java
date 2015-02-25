@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.helper;
+package com.github.aureliano.damihilogs.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +12,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public final class LoggerHelper {
 	

@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.config.input;
+package com.github.aureliano.damihilogs.config.input;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.command;
+package com.github.aureliano.damihilogs.command;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,17 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.defero.config.EventCollectorConfiguration;
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.config.input.StandardInputConfig;
-import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
-import com.github.aureliano.defero.helper.ConfigHelper;
-import com.github.aureliano.defero.reader.DataReaderFactory;
-import com.github.aureliano.defero.reader.IDataReader;
-import com.github.aureliano.defero.writer.DataWriterFactory;
-import com.github.aureliano.defero.writer.IDataWriter;
+import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
+import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.reader.DataReaderFactory;
+import com.github.aureliano.damihilogs.reader.IDataReader;
+import com.github.aureliano.damihilogs.writer.DataWriterFactory;
+import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class CollectEventsCommand {
 

@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.reader;
+package com.github.aureliano.damihilogs.reader;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.exception.DeferoException;
-import com.github.aureliano.defero.filter.DefaultEmptyFilter;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
 public class FileTailerDataReader extends AbstractDataReader {
 

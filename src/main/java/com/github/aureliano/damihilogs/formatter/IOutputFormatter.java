@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.formatter;
+package com.github.aureliano.damihilogs.formatter;
 
 public interface IOutputFormatter {
 

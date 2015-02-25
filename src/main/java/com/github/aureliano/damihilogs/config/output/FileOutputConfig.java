@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.config.output;
+package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
 

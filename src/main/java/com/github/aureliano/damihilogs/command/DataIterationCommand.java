@@ -1,10 +1,10 @@
-package com.github.aureliano.defero.command;
+package com.github.aureliano.damihilogs.command;
 
 import java.util.List;
 import java.util.Map;
 
-import com.github.aureliano.defero.reader.IDataReader;
-import com.github.aureliano.defero.writer.IDataWriter;
+import com.github.aureliano.damihilogs.reader.IDataReader;
+import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class DataIterationCommand implements Runnable {
 

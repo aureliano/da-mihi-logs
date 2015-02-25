@@ -1,13 +1,13 @@
-package com.github.aureliano.defero.reader;
+package com.github.aureliano.damihilogs.reader;
 
 import java.util.List;
 import java.util.Map;
 
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.filter.IEventFielter;
-import com.github.aureliano.defero.listener.DataReadingListener;
-import com.github.aureliano.defero.matcher.IMatcher;
-import com.github.aureliano.defero.parser.IParser;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public interface IDataReader {
 

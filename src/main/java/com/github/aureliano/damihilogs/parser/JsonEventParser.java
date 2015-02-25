@@ -1,9 +1,9 @@
-package com.github.aureliano.defero.parser;
+package com.github.aureliano.damihilogs.parser;
 
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public class JsonEventParser implements IParser<Map<String, ?>> {
 

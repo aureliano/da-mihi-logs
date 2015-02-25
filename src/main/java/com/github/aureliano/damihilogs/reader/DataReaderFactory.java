@@ -1,11 +1,11 @@
-package com.github.aureliano.defero.reader;
+package com.github.aureliano.damihilogs.reader;
 
-import com.github.aureliano.defero.config.input.ExternalCommandInput;
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.input.StandardInputConfig;
-import com.github.aureliano.defero.config.input.UrlInputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
+import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public final class DataReaderFactory {
 

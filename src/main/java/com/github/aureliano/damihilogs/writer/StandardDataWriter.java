@@ -1,14 +1,14 @@
-package com.github.aureliano.defero.writer;
+package com.github.aureliano.damihilogs.writer;
 
 import java.util.List;
 
-import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.event.AfterWritingEvent;
-import com.github.aureliano.defero.event.BeforeWritingEvent;
-import com.github.aureliano.defero.formatter.IOutputFormatter;
-import com.github.aureliano.defero.formatter.PlainTextFormatter;
-import com.github.aureliano.defero.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.event.AfterWritingEvent;
+import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
+import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
+import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
+import com.github.aureliano.damihilogs.listener.DataWritingListener;
 
 public class StandardDataWriter implements IDataWriter {
 

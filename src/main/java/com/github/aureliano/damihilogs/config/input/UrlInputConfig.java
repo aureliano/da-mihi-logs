@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.config.input;
+package com.github.aureliano.damihilogs.config.input;
 
 import java.io.File;
 import java.util.LinkedHashMap;

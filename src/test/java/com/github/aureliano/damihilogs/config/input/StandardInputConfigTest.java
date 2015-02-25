@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.config.input;
+package com.github.aureliano.damihilogs.config.input;
 
 import org.junit.Assert;
 import org.junit.Test;

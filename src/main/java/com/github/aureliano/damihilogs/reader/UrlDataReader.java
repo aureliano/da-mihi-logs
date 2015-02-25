@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.reader;
+package com.github.aureliano.damihilogs.reader;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -22,11 +22,11 @@ import javax.net.ssl.X509TrustManager;
 import org.apache.log4j.Logger;
 import org.elasticsearch.common.Base64;
 
-import com.github.aureliano.defero.config.input.ConnectionSchema;
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.input.UrlInputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
-import com.github.aureliano.defero.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class UrlDataReader extends AbstractDataReader {
 

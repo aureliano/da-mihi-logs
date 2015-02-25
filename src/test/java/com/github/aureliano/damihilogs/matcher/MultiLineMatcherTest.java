@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.matcher;
+package com.github.aureliano.damihilogs.matcher;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

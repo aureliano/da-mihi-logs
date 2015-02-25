@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.helper;
+package com.github.aureliano.damihilogs.helper;
 
 import java.io.File;
 import java.io.FileInputStream;

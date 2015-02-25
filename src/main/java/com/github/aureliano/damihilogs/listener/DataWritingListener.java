@@ -1,7 +1,7 @@
-package com.github.aureliano.defero.listener;
+package com.github.aureliano.damihilogs.listener;
 
-import com.github.aureliano.defero.event.AfterWritingEvent;
-import com.github.aureliano.defero.event.BeforeWritingEvent;
+import com.github.aureliano.damihilogs.event.AfterWritingEvent;
+import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 
 public interface DataWritingListener {
 

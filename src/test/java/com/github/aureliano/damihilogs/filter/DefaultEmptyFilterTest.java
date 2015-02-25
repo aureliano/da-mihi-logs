@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.filter;
+package com.github.aureliano.damihilogs.filter;
 
 import junit.framework.Assert;
 

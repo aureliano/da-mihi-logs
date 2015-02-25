@@ -1,6 +1,6 @@
-package com.github.aureliano.defero.config.output;
+package com.github.aureliano.damihilogs.config.output;
 
-import com.github.aureliano.defero.config.IConfiguration;
+import com.github.aureliano.damihilogs.config.IConfiguration;
 
 public interface IConfigOutput extends IConfiguration {
 

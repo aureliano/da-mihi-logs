@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.es;
+package com.github.aureliano.damihilogs.es;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 import com.github.kzwang.osem.annotations.Indexable;
 import com.github.kzwang.osem.impl.ElasticSearchIndexerImpl;
 

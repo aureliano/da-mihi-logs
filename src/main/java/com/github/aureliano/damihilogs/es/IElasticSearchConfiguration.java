@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.es;
+package com.github.aureliano.damihilogs.es;
 
 import java.io.File;
 

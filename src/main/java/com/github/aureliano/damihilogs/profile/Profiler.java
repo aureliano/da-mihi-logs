@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.profile;
+package com.github.aureliano.damihilogs.profile;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

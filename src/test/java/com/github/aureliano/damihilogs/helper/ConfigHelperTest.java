@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.helper;
+package com.github.aureliano.damihilogs.helper;
 
 import java.io.File;
 
@@ -6,12 +6,12 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.github.aureliano.defero.config.input.ConnectionSchema;
-import com.github.aureliano.defero.config.input.ExternalCommandInput;
-import com.github.aureliano.defero.config.input.InputFileConfig;
-import com.github.aureliano.defero.config.input.UrlInputConfig;
-import com.github.aureliano.defero.config.output.FileOutputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
+import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
+import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.exception.DeferoException;
 
 public class ConfigHelperTest {
 	

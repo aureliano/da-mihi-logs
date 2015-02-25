@@ -1,4 +1,4 @@
-package com.github.aureliano.defero.parser;
+package com.github.aureliano.damihilogs.parser;
 
 public interface IParser<T> {
 
