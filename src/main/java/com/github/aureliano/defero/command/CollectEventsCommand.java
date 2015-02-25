@@ -96,27 +96,15 @@ public class CollectEventsCommand {
 		for (DataIterationCommand command : commands) {
 			Thread t = new Thread(command);
 			t.start();
-		
 			threads.add(t);
 		}
 		
-		boolean anyThreadAlive = true;
-		while (anyThreadAlive) {
+		for (Thread thread : threads) {
 			try {
-				Thread.sleep(100);
+				thread.join();
 			} catch (InterruptedException ex) {
 				throw new DeferoException(ex);
 			}
-			
-			boolean alive = false;
-			for (Thread thread : threads) {
-				if (thread.isAlive()) {
-					alive = true;
-					break;
-				}
-			}
-			
-			anyThreadAlive = alive;
 		}
 	}
 	
