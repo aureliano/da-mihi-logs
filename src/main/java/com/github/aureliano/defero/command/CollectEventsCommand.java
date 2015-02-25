@@ -73,10 +73,15 @@ public class CollectEventsCommand {
 		}
 		
 		if (this.configuration.isMultiThreadingEnabled()) {
-			this.parallelExecution(commands);
-		} else {
-			this.serialExecution(commands);
+			if (commands.size() > 1) {
+				this.parallelExecution(commands);
+				return;
+			}
+			
+			logger.warning("Despite a multi-threading was requested it'll be ignored because there is only one input. Executing serially.");
 		}
+		
+		this.serialExecution(commands);
 	}
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
