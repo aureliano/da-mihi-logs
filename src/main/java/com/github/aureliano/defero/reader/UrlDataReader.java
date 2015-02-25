@@ -106,12 +106,7 @@ public class UrlDataReader extends AbstractDataReader {
 		
 		try {
 			BufferedInputStream bufferedInputStream = new BufferedInputStream(this.connection.getInputStream());
-			RandomAccessFile raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
-			
-			if (this.urlInputConfiguration.getOutputFile().exists()) {
-				logger.fine("Appending data to " + this.urlInputConfiguration.getOutputFile().getPath());
-				raf.seek(this.urlInputConfiguration.getOutputFile().length());
-			}
+			RandomAccessFile raf = this.prepareRandomAccessFile();
 			
 			byte data[] = new byte[BUFFER_SIZE];
 			int numRead;
@@ -126,6 +121,28 @@ public class UrlDataReader extends AbstractDataReader {
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
+	}
+	
+	private RandomAccessFile prepareRandomAccessFile() throws IOException {
+		RandomAccessFile raf = null;
+		
+		if (this.urlInputConfiguration.getOutputFile().exists()) {
+			if (this.urlInputConfiguration.isAppendIfOutputFileExist()) {
+				logger.info("Appending data to " + this.urlInputConfiguration.getOutputFile().getPath());
+				raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
+				raf.seek(this.urlInputConfiguration.getOutputFile().length());
+			} else {
+				logger.info("Erasing data from file: " + this.urlInputConfiguration.getOutputFile().getPath());
+				this.urlInputConfiguration.getOutputFile().delete();
+				this.urlInputConfiguration.withOutputFile(this.urlInputConfiguration.getOutputFile().getPath());
+			}
+		}
+		
+		if (raf == null) {
+			raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
+		}
+		
+		return raf;
 	}
 
 	private void prepareDownload() {		

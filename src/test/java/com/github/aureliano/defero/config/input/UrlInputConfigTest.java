@@ -14,6 +14,7 @@ public class UrlInputConfigTest {
 		Assert.assertTrue(c.getParameters().isEmpty());
 		Assert.assertEquals(UrlInputConfig.DEFAULT_READ_TIMEOUT, c.getReadTimeout());
 		Assert.assertEquals(0, c.getByteOffSet());
+		Assert.assertFalse(c.isAppendIfOutputFileExist());
 		Assert.assertEquals(0, c.getFileStartPosition());
 		Assert.assertFalse(c.isNoCheckCertificate());
 	}
@@ -29,6 +30,7 @@ public class UrlInputConfigTest {
 			.withReadTimeout(5 * 1000)
 			.withByteOffSet(199845)
 			.withOutputFile("output_file.log")
+			.withAppendIfOutputFileExist(true)
 			.withFileStartPosition(45)
 			.withUser("user_name")
 			.withPassword("my-password")
@@ -44,6 +46,7 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(5000, c.getReadTimeout());
 		Assert.assertEquals(199845, c.getByteOffSet());
 		Assert.assertEquals("output_file.log", c.getOutputFile().getPath());
+		Assert.assertTrue(c.isAppendIfOutputFileExist());
 		Assert.assertEquals(45, c.getFileStartPosition());
 		Assert.assertEquals("user_name", c.getUser());
 		Assert.assertEquals("my-password", c.getPassword());
@@ -61,6 +64,7 @@ public class UrlInputConfigTest {
 			.withReadTimeout(5 * 1000)
 			.withByteOffSet(199845)
 			.withOutputFile("output_file.log")
+			.withAppendIfOutputFileExist(true)
 			.withFileStartPosition(45)
 			.withUser("user_name")
 			.withPassword("my-password")
@@ -77,6 +81,7 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(c1.getUser(), c2.getUser());
 		Assert.assertEquals(c1.getByteOffSet(), c2.getByteOffSet());
 		Assert.assertEquals(c1.getConnectionSchema(), c2.getConnectionSchema());
+		Assert.assertEquals(c1.isAppendIfOutputFileExist(), c2.isAppendIfOutputFileExist());
 		Assert.assertEquals(c1.getFileStartPosition(), c2.getFileStartPosition());
 		Assert.assertEquals(c1.getOutputFile(), c2.getOutputFile());
 		Assert.assertEquals(c1.getParameters().size(), c2.getParameters().size());

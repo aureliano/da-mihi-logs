@@ -17,6 +17,7 @@ public class UrlInputConfig implements IConfigInput {
 	private int byteOffSet;
 	
 	private File outputFile;
+	private boolean appendIfOutputFileExist;
 	private int fileStartPosition;
 	
 	private String user;
@@ -31,6 +32,7 @@ public class UrlInputConfig implements IConfigInput {
 		this.parameters = new LinkedHashMap<String, String>();
 		this.readTimeout = DEFAULT_READ_TIMEOUT;
 		this.byteOffSet = 0;
+		this.appendIfOutputFileExist = false;
 		this.fileStartPosition = 0;
 		this.noCheckCertificate = false;
 	}
@@ -117,6 +119,15 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public boolean isAppendIfOutputFileExist() {
+		return appendIfOutputFileExist;
+	}
+	
+	public UrlInputConfig withAppendIfOutputFileExist(boolean appendIfOutputFileExist) {
+		this.appendIfOutputFileExist = appendIfOutputFileExist;
+		return this;
+	}
+	
 	public int getFileStartPosition() {
 		return fileStartPosition;
 	}
@@ -164,6 +175,7 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public UrlInputConfig clone() {
 		return (UrlInputConfig) new UrlInputConfig()
@@ -179,6 +191,7 @@ public class UrlInputConfig implements IConfigInput {
 			.withPort(this.port)
 			.withReadTimeout(this.readTimeout)
 			.withUser(this.user)
+			.withAppendIfOutputFileExist(this.appendIfOutputFileExist)
 			.withConfigurationId(this.id);
 	}
 }
