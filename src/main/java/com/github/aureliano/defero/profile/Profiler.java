@@ -76,10 +76,17 @@ public class Profiler {
 	}
 	
 	private static String formatTime(long millis) {
-		return String.format("%d min, %d sec", 
+		int sencondInMillis = 1000;
+		
+		if (millis < sencondInMillis) {
+			return millis + " milliseconds";
+		}
+		
+		return String.format("%d min, %d sec - (%s millis)", 
 			TimeUnit.MILLISECONDS.toMinutes(millis),
 			TimeUnit.MILLISECONDS.toSeconds(millis) - 
-			TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
+			TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)),
+			millis
 		);
 	}
 
