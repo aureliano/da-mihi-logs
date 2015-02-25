@@ -1,35 +1,24 @@
 package com.github.aureliano.defero;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+import com.github.aureliano.defero.command.CollectEventsCommand;
 import com.github.aureliano.defero.config.EventCollectorConfiguration;
-import com.github.aureliano.defero.config.input.IConfigInput;
-import com.github.aureliano.defero.config.input.StandardInputConfig;
-import com.github.aureliano.defero.config.output.IConfigOutput;
-import com.github.aureliano.defero.config.output.StandardOutputConfig;
-import com.github.aureliano.defero.exception.DeferoException;
-import com.github.aureliano.defero.helper.ConfigHelper;
 import com.github.aureliano.defero.helper.LoggerHelper;
 import com.github.aureliano.defero.profile.Profiler;
-import com.github.aureliano.defero.reader.DataReaderFactory;
-import com.github.aureliano.defero.reader.IDataReader;
-import com.github.aureliano.defero.writer.DataWriterFactory;
-import com.github.aureliano.defero.writer.IDataWriter;
 
 public class AppEventsCollector {
 
 	private static final Logger logger = Logger.getLogger(AppEventsCollector.class.getName());
 	
 	private EventCollectorConfiguration configuration;
-	private boolean persistExecutionLog;
+	private CollectEventsCommand commandExecutor;
 	
 	public AppEventsCollector() {
-		this.persistExecutionLog = true;
+		super();
 	}
 	
 	public void execute() {
@@ -41,94 +30,18 @@ public class AppEventsCollector {
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
-		this.prepareExecution();
-		List<Map<String, Object>> executionLogs = this.executeCollectors();
+		this.commandExecutor = new CollectEventsCommand(this.configuration);
+		this.commandExecutor.execute();
 		
-		if (this.persistExecutionLog) {
-			this.printLogToOutput(profiler, executionLogs);
+		if (this.configuration.isPersistExecutionLog()) {
+			this.printLogToOutput(profiler);
 		}
 	}
 	
-	private List<Map<String, Object>> executeCollectors() {
-		if (this.configuration.getParser() == null) {
-			throw new DeferoException("Parser must pe provided.");
-		}
-		
-		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
-			ConfigHelper.outputConfigValidation(outputConfig);
-		}
-		
-		List<Map<String, Object>> executionLogs = new ArrayList<Map<String,Object>>();
-		
-		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
-			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
-			ConfigHelper.inputConfigValidation(inputConfig);
-			
-			if (inputConfig.getConfigurationId() == null) {
-				inputConfig.withConfigurationId("configuration_id_" + (i + 1));
-			}
-			
-			logger.info("Start execution for input " + inputConfig.getConfigurationId());
-			executionLogs.add(this.dataIteration(inputConfig));
-			
-			System.out.println();
-		}
-		
-		return executionLogs;
-	}
-	
-	private Map<String, Object> dataIteration(IConfigInput inputConfig) {
-		IDataReader dataReader = DataReaderFactory
-			.createDataReader(inputConfig)
-				.withMatcher(this.configuration.getMatcher())
-				.withParser(this.configuration.getParser())
-				.withFilter(this.configuration.getFilter())
-				.withListeners(this.configuration.getDataReadingListeners());		
-		List<IDataWriter> dataWriters = this.createDataWriters();
-		
-		while (dataReader.keepReading()) {
-			Object data = dataReader.nextData();
-			if (data != null) {
-				this.write(dataWriters, data);
-			}
-		}
-		
-		dataReader.endResources();
-		this.endResources(dataWriters);
-		
-		return dataReader.executionLog();
-	}
-	
-	private List<IDataWriter> createDataWriters() {
-		List<IDataWriter> dataWriters = new ArrayList<IDataWriter>();
-		
-		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
-			IDataWriter dataWriter = DataWriterFactory
-					.createDataWriter(outputConfig)
-						.withOutputFormatter(this.configuration.getOutputFormatter())
-						.withListeners(this.configuration.getDataWritingListeners());
-			dataWriters.add(dataWriter);
-		}
-		
-		return dataWriters;
-	}
-	
-	private void write(List<IDataWriter> dataWriters, Object data) {
-		for (IDataWriter dataWriter : dataWriters) {
-			dataWriter.write(data);
-		}
-	}
-	
-	private void endResources(List<IDataWriter> dataWriters) {
-		for (IDataWriter dataWriter : dataWriters) {
-			dataWriter.endResources();
-		}
-	}
-	
-	private void printLogToOutput(Profiler profiler, List<Map<String, Object>> executionLogs) {
+	private void printLogToOutput(Profiler profiler) {
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
 		
-		for (Map<String, Object> executionLog : executionLogs) {
+		for (Map<String, Object> executionLog : this.commandExecutor.getLogExecutions()) {
 			for (String key : executionLog.keySet()) {
 				properties.put(key, String.valueOf(executionLog.get(key)));
 			}
@@ -139,31 +52,12 @@ public class AppEventsCollector {
 		logger.info("Execution successful!");
 	}
 	
-	private void prepareExecution() {
-		if (this.configuration.getInputConfigs().isEmpty()) {
-			this.configuration.addInputConfig(new StandardInputConfig());
-		}
-		
-		if (this.configuration.getOutputConfigs().isEmpty()) {
-			this.configuration.addOutputConfig(new StandardOutputConfig());
-		}
-	}
-	
 	public EventCollectorConfiguration getConfiguration() {
 		return configuration;
 	}
 	
 	public AppEventsCollector withConfiguration(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
-		return this;
-	}
-	
-	public boolean isPersistExecutionLog() {
-		return persistExecutionLog;
-	}
-	
-	public AppEventsCollector withPersistExecutionLog(boolean persistExecutionLog) {
-		this.persistExecutionLog = persistExecutionLog;
 		return this;
 	}
 }

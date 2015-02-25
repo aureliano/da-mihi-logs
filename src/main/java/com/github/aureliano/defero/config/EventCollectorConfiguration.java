@@ -24,6 +24,8 @@ public class EventCollectorConfiguration {
 	private IOutputFormatter outputFormatter;
 	private List<DataReadingListener> dataReadingListeners;
 	private List<DataWritingListener> dataWritingListeners;
+	private boolean persistExecutionLog;
+	private boolean multiThreadingEnabled;
 	
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
@@ -34,6 +36,9 @@ public class EventCollectorConfiguration {
 		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
+		
+		this.persistExecutionLog = true;
+		this.multiThreadingEnabled = false;
 	}
 
 	public List<IConfigInput> getInputConfigs() {
@@ -115,6 +120,24 @@ public class EventCollectorConfiguration {
 	
 	public EventCollectorConfiguration addDataWritingListeners(DataWritingListener listener) {
 		this.dataWritingListeners.add(listener);
+		return this;
+	}
+	
+	public boolean isPersistExecutionLog() {
+		return persistExecutionLog;
+	}
+	
+	public EventCollectorConfiguration withPersistExecutionLog(boolean persistExecutionLog) {
+		this.persistExecutionLog = persistExecutionLog;
+		return this;
+	}
+	
+	public boolean isMultiThreadingEnabled() {
+		return multiThreadingEnabled;
+	}
+	
+	public EventCollectorConfiguration withMultiThreadingEnabled(boolean multiThreadingEnabled) {
+		this.multiThreadingEnabled = multiThreadingEnabled;
 		return this;
 	}
 }
