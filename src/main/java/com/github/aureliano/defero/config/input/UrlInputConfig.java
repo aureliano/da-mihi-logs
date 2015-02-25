@@ -170,7 +170,7 @@ public class UrlInputConfig implements IConfigInput {
 	}
 	
 	@Override
-	public IConfigInput withConfigurationId(String id) {
+	public UrlInputConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
@@ -178,7 +178,7 @@ public class UrlInputConfig implements IConfigInput {
 	@SuppressWarnings("unchecked")
 	@Override
 	public UrlInputConfig clone() {
-		return (UrlInputConfig) new UrlInputConfig()
+		return new UrlInputConfig()
 			.withByteOffSet(this.byteOffSet)
 			.withConnectionSchema(this.connectionSchema)
 			.withFileStartPosition(this.fileStartPosition)

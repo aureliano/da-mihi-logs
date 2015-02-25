@@ -24,14 +24,15 @@ public class StandardInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public IConfigInput withConfigurationId(String id) {
+	public StandardInputConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public StandardInputConfig clone() {
-		return (StandardInputConfig) new StandardInputConfig()
+		return new StandardInputConfig()
 			.withEncoding(this.encoding)
 			.withConfigurationId(this.id);
 	}

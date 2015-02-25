@@ -26,7 +26,7 @@ public class InputFileConfig implements IConfigInput {
 	}
 	
 	@Override
-	public IConfigInput withConfigurationId(String id) {
+	public InputFileConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
@@ -93,7 +93,7 @@ public class InputFileConfig implements IConfigInput {
 	@SuppressWarnings("unchecked")
 	@Override
 	public InputFileConfig clone() {
-		return (InputFileConfig) new InputFileConfig()
+		return new InputFileConfig()
 			.withEncoding(this.encoding)
 			.withFile(this.file)
 			.withStartPosition(this.startPosition)
