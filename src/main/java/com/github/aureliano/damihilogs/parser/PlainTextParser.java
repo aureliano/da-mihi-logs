@@ -13,9 +13,4 @@ public class PlainTextParser implements IParser<String> {
 	public String parse(String text) {
 		return text;
 	}
-
-	@Override
-	public boolean accept(String text) {
-		return true;
-	}
 }

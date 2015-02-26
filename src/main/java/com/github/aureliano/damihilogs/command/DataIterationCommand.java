@@ -28,7 +28,7 @@ public class DataIterationCommand implements Runnable {
 	
 	private Map<String, Object> dataIteration() {		
 		while (this.dataReader.keepReading()) {
-			Object data = this.dataReader.nextData();
+			String data = this.dataReader.nextData();
 			if (data != null) {
 				this.write(this.dataWriters, data);
 			}
@@ -40,7 +40,7 @@ public class DataIterationCommand implements Runnable {
 		return this.dataReader.executionLog();
 	}
 	
-	private void write(List<IDataWriter> dataWriters, Object data) {
+	private void write(List<IDataWriter> dataWriters, String data) {
 		for (IDataWriter dataWriter : dataWriters) {
 			dataWriter.write(data);
 		}

@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.es.ElasticSearchClient;
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
 public class ElasticSearchDataWriter extends AbstractDataWriter {
 	
@@ -17,9 +16,10 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 	}
 
 	@Override
-	public void write(Object data) {
+	public void write(String content) {
 		this.initialize();
-		
+
+		Object data = super.getParser().parse(content);
 		this.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
 			return;
@@ -29,7 +29,7 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 			data = this.outputFormatter.format(data);
 		}
 		
-		boolean accept = super.filter.accept(data);
+		boolean accept = super.getFilter().accept(data);
 		if (accept) {
 			this.elasticSearchClient.index(data);
 		}
@@ -50,10 +50,6 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 	private void initialize() {
 		if (this.elasticSearchClient != null) {
 			return;
-		}
-		
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
 		}
 		
 		logger.info(" >>> Starting new ElasticSearch client instance.");

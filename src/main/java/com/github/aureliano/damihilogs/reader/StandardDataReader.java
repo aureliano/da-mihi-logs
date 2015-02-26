@@ -22,7 +22,7 @@ public class StandardDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public Object nextData() {
+	public String nextData() {
 		this.initialize();
 		String line = this.readNextLine();
 		
@@ -31,18 +31,11 @@ public class StandardDataReader extends AbstractDataReader {
 			return null;
 		}
 		
-		Object data = null;
+		String data = null;		
+		super.executeBeforeReadingMethodListeners();
 		
-		do {
-			super.executeBeforeReadingMethodListeners();
-			
-			data = super.parser.parse(super.prepareLogEvent(line));
-			if (data == null) {
-				continue;
-			}
-			
-			super.executeAfterReadingMethodListeners(data);
-		} while ((line = this.readNextLine()) != null);
+		data = super.prepareLogEvent(line);
+		super.executeAfterReadingMethodListeners(data);
 		
 		return data;
 	}

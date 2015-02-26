@@ -3,6 +3,8 @@ package com.github.aureliano.damihilogs.config.output;
 import java.io.File;
 
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchConfiguration {
 
@@ -13,6 +15,9 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	private String index;
 	private String type;
 	private File configProperties;
+	
+	private IParser<?> parser;
+	private IEventFielter filter;
 	
 	public ElasticSearchOutputConfig() {
 		this.host = DEFAULT_ELASTIC_SEARCH_HOST;
@@ -102,7 +107,29 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	public String outputType() {
 		return "ELASTIC_SEARCH";
 	}
-	
+
+
+	@Override
+	public IParser<?> getParser() {
+		return this.parser;
+	}
+
+	@Override
+	public IConfigOutput withParser(IParser<?> parser) {
+		this.parser = parser;
+		return this;
+	}
+
+	@Override
+	public IEventFielter getFilter() {
+		return this.filter;
+	}
+
+	@Override
+	public IConfigOutput withFilter(IEventFielter filter) {
+		this.filter = filter;
+		return this;
+	}
 	@SuppressWarnings("unchecked")
 	public ElasticSearchOutputConfig clone() {
 		return (ElasticSearchOutputConfig) new ElasticSearchOutputConfig()

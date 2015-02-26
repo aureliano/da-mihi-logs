@@ -1,6 +1,5 @@
 package com.github.aureliano.damihilogs.writer;
 
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 
 public class StandardDataWriter extends AbstractDataWriter {
@@ -10,21 +9,18 @@ public class StandardDataWriter extends AbstractDataWriter {
 	}
 
 	@Override
-	public void write(Object data) {
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
-		}
-		
+	public void write(String content) {
 		if (super.outputFormatter == null) {
 			super.outputFormatter = new PlainTextFormatter();
 		}
 		
+		Object data = super.getParser().parse(content);
 		super.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
 			return;
 		}
 		
-		boolean accept = super.filter.accept(data);
+		boolean accept = super.getFilter().accept(data);
 		if (accept) {
 			System.out.println(this.outputFormatter.format(data));
 		}

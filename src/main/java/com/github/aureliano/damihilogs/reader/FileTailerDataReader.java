@@ -28,9 +28,10 @@ public class FileTailerDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public Object nextData() {
+	public String nextData() {
 		this.initialize();
-		Object data = this.readNextData();
+		String data = this.readNextData();
+		
 		if (data != null) {
 			return data;
 		}
@@ -60,9 +61,9 @@ public class FileTailerDataReader extends AbstractDataReader {
 		return null;
 	}
 
-	private Object readNextData() {
+	private String readNextData() {
 		String line = null;
-		Object data = null;
+		String data = null;
 		
 		try {
 			line = this.readNextLine();
@@ -70,16 +71,10 @@ public class FileTailerDataReader extends AbstractDataReader {
 				return null;
 			}
 			
-			do {
-				super.executeBeforeReadingMethodListeners();
-				
-				data = super.parser.parse(super.prepareLogEvent(line));
-				if (data == null) {
-					continue;
-				}
-				
-				super.executeAfterReadingMethodListeners(data);				
-			} while ((line = this.readNextLine()) != null);
+			super.executeBeforeReadingMethodListeners();
+			
+			data = super.prepareLogEvent(line);
+			super.executeAfterReadingMethodListeners(data);
 			
 			this.filePointer = this.randomAccessFile.getFilePointer() + 1;
 			

@@ -8,13 +8,11 @@ import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
-import com.github.aureliano.damihilogs.parser.IParser;
 
 public abstract class AbstractDataReader implements IDataReader {
 
 	protected IConfigInput inputConfiguration;
 	protected IMatcher matcher;
-	protected IParser<?> parser;
 	protected long lineCounter;
 	protected List<DataReadingListener> listeners;
 	protected String unprocessedLine;
@@ -44,17 +42,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	@Override
 	public IDataReader withMatcher(IMatcher matcher) {
 		this.matcher = matcher;
-		return this;
-	}
-
-	@Override
-	public IParser<?> getParser() {
-		return this.parser;
-	}
-
-	@Override
-	public IDataReader withParser(IParser<?> parser) {
-		this.parser = parser;
 		return this;
 	}
 

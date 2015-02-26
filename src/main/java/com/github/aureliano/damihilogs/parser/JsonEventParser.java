@@ -21,9 +21,4 @@ public class JsonEventParser implements IParser<Map<String, ?>> {
 			throw new DeferoException(ex);
 		}
 	}
-
-	@Override
-	public boolean accept(String text) {
-		return (text.startsWith("{") && text.endsWith("}"));
-	}
 }

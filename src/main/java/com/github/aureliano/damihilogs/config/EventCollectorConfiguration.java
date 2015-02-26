@@ -5,22 +5,17 @@ import java.util.List;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
-import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
-import com.github.aureliano.damihilogs.parser.IParser;
-import com.github.aureliano.damihilogs.parser.PlainTextParser;
 
 public class EventCollectorConfiguration {
 
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
 	private IMatcher matcher;
-	private IParser<?> parser;
-	private IEventFielter filter;
 	private IOutputFormatter outputFormatter;
 	private List<DataReadingListener> dataReadingListeners;
 	private List<DataWritingListener> dataWritingListeners;
@@ -32,7 +27,6 @@ public class EventCollectorConfiguration {
 		this.outputConfigs = new ArrayList<IConfigOutput>();
 		
 		this.matcher = new SingleLineMatcher();
-		this.parser = new PlainTextParser();
 		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
@@ -65,24 +59,6 @@ public class EventCollectorConfiguration {
 	
 	public EventCollectorConfiguration withMatcher(IMatcher matcher) {
 		this.matcher = matcher;
-		return this;
-	}
-
-	public IParser<?> getParser() {
-		return parser;
-	}
-
-	public EventCollectorConfiguration withParser(IParser<?> parser) {
-		this.parser = parser;
-		return this;
-	}
-	
-	public IEventFielter getFilter() {
-		return filter;
-	}
-	
-	public EventCollectorConfiguration withFilter(IEventFielter filter) {
-		this.filter = filter;
 		return this;
 	}
 	

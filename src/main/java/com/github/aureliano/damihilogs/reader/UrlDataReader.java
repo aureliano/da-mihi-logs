@@ -53,10 +53,10 @@ public class UrlDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public Object nextData() {
+	public String nextData() {
 		this.initialize();
 		
-		Object data = this.fileDataReader.nextData();
+		String data = this.fileDataReader.nextData();
 		super.markedToStop = this.fileDataReader.markedToStop;
 		
 		return data;
@@ -94,7 +94,6 @@ public class UrlDataReader extends AbstractDataReader {
 					.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
 					.withConfigurationId(this.urlInputConfiguration.getConfigurationId()))
 			.withMatcher(super.matcher)
-			.withParser(super.parser)
 			.withListeners(super.listeners);
 	}
 

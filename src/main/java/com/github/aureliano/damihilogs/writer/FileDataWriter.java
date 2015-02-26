@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 
 public class FileDataWriter extends AbstractDataWriter {
@@ -24,15 +23,16 @@ public class FileDataWriter extends AbstractDataWriter {
 	}
 
 	@Override
-	public void write(Object data) {
+	public void write(String content) {
 		this.initialize();
-
+		
+		Object data = super.getParser().parse(content);
 		super.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
 			return;
 		}
 
-		boolean accept = super.filter.accept(data);
+		boolean accept = super.getFilter().accept(data);
 		if (accept) {
 			String text = super.outputFormatter.format(data);
 			this.writer.println(text);
@@ -60,10 +60,6 @@ public class FileDataWriter extends AbstractDataWriter {
 		
 		if (super.outputFormatter == null) {
 			super.outputFormatter = new PlainTextFormatter();
-		}
-		
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
 		}
 		
 		FileOutputConfig fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;

@@ -8,6 +8,8 @@ import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public class DataWriterFactoryTest {
 
@@ -25,6 +27,26 @@ public class DataWriterFactoryTest {
 			
 			@SuppressWarnings("unchecked")
 			public Object clone() {
+				return null;
+			}
+
+			@Override
+			public IParser<?> getParser() {
+				return null;
+			}
+
+			@Override
+			public IConfigOutput withParser(IParser<?> parser) {
+				return null;
+			}
+
+			@Override
+			public IEventFielter getFilter() {
+				return null;
+			}
+
+			@Override
+			public IConfigOutput withFilter(IEventFielter filter) {
 				return null;
 			}
 		});

@@ -27,20 +27,21 @@ public class AppEventsCollectorTest {
 				.addInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10))
-				.addOutputConfig(new StandardOutputConfig())
-				.withParser(new JsonEventParser())
+				.addOutputConfig(new StandardOutputConfig()
+					.withParser(new JsonEventParser())
+					.withFilter(new IEventFielter() {
+					
+						@Override
+						public boolean accept(Object data) {
+							@SuppressWarnings("unchecked")
+							Map<String, Object> map = (Map<String, Object>) data;
+							return map.get("tipoLog").equals("MemoriaServidor");
+						}
+					}))				
 				.addDataReadingListeners(this.getDataReadingListener())
 				.addDataWritingListeners(this.getDataWriteListener())
 				.withOutputFormatter(new JsonFormatter())
-				.withFilter(new IEventFielter() {
-					
-					@Override
-					public boolean accept(Object data) {
-						@SuppressWarnings("unchecked")
-						Map<String, Object> map = (Map<String, Object>) data;
-						return map.get("tipoLog").equals("MemoriaServidor");
-					}
-				}))
+				)
 			.execute();
 	}
 	
@@ -54,10 +55,7 @@ public class AppEventsCollectorTest {
 			public void beforeDataReading(BeforeReadingEvent event) { }
 			
 			@Override
-			public void afterDataReading(AfterReadingEvent event) {
-				Map<String, Object> map = (Map<String, Object>) event.getData();
-				map.put("newOne", "Added!");
-			}
+			public void afterDataReading(AfterReadingEvent event) { }
 		};
 	}
 	

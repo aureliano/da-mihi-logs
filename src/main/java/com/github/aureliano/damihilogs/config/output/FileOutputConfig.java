@@ -2,11 +2,16 @@ package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
 
+import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.parser.IParser;
+
 public class FileOutputConfig implements IConfigOutput {
 
 	private File file;
 	private boolean append;
 	private String encoding;
+	private IParser<?> parser;
+	private IEventFielter filter;
 	
 	public FileOutputConfig() {
 		this.append = false;
@@ -47,6 +52,28 @@ public class FileOutputConfig implements IConfigOutput {
 
 	public FileOutputConfig withEncoding(String encoding) {
 		this.encoding = encoding;
+		return this;
+	}
+
+	@Override
+	public IParser<?> getParser() {
+		return this.parser;
+	}
+
+	@Override
+	public IConfigOutput withParser(IParser<?> parser) {
+		this.parser = parser;
+		return this;
+	}
+
+	@Override
+	public IEventFielter getFilter() {
+		return this.filter;
+	}
+
+	@Override
+	public IConfigOutput withFilter(IEventFielter filter) {
+		this.filter = filter;
 		return this;
 	}
 	

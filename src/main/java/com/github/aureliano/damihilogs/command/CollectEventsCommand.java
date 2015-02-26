@@ -12,7 +12,9 @@ import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.DataReaderFactory;
 import com.github.aureliano.damihilogs.reader.IDataReader;
 import com.github.aureliano.damihilogs.writer.DataWriterFactory;
@@ -50,11 +52,7 @@ public class CollectEventsCommand {
 		}
 	}
 	
-	private void executeCollectors() {
-		if (this.configuration.getParser() == null) {
-			throw new DeferoException("Parser must pe provided.");
-		}
-		
+	private void executeCollectors() {		
 		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
 			ConfigHelper.outputConfigValidation(outputConfig);
 		}
@@ -113,7 +111,6 @@ public class CollectEventsCommand {
 		return DataReaderFactory
 			.createDataReader(inputConfig)
 				.withMatcher(this.configuration.getMatcher())
-				.withParser(this.configuration.getParser())
 				.withListeners(this.configuration.getDataReadingListeners());
 	}
 	
@@ -121,10 +118,17 @@ public class CollectEventsCommand {
 		List<IDataWriter> dataWriters = new ArrayList<IDataWriter>();
 		
 		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
+			if (outputConfig.getParser() == null) {
+				outputConfig.withParser(new PlainTextParser());
+			}
+			
+			if (outputConfig.getFilter() == null) {
+				outputConfig.withFilter(new DefaultEmptyFilter());
+			}
+			
 			IDataWriter dataWriter = DataWriterFactory
 					.createDataWriter(outputConfig)
 						.withOutputFormatter(this.configuration.getOutputFormatter())
-						.withFilter(this.configuration.getFilter())
 						.withListeners(this.configuration.getDataWritingListeners());
 			dataWriters.add(dataWriter);
 		}

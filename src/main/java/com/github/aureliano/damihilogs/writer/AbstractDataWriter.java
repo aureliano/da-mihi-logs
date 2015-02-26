@@ -8,13 +8,13 @@ import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public abstract class AbstractDataWriter implements IDataWriter {
 
 	protected IConfigOutput outputConfiguration;
 	protected IOutputFormatter outputFormatter;
 	protected List<DataWritingListener> listeners;
-	protected IEventFielter filter;
 	
 	public AbstractDataWriter() {
 		super();
@@ -29,6 +29,11 @@ public abstract class AbstractDataWriter implements IDataWriter {
 	public IDataWriter withOutputConfiguration(IConfigOutput config) {
 		this.outputConfiguration = config;
 		return this;
+	}
+
+	@Override
+	public IParser<?> getParser() {
+		return this.outputConfiguration.getParser();
 	}
 	
 	@Override
@@ -55,13 +60,7 @@ public abstract class AbstractDataWriter implements IDataWriter {
 	
 	@Override
 	public IEventFielter getFilter() {
-		return this.filter;
-	}
-	
-	@Override
-	public IDataWriter withFilter(IEventFielter filter) {
-		this.filter = filter;
-		return this;
+		return this.outputConfiguration.getFilter();
 	}
 
 	protected void executeBeforeWritingMethodListeners(Object data) {

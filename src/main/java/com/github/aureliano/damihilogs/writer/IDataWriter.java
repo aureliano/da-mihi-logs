@@ -6,6 +6,7 @@ import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.parser.IParser;
 
 public interface IDataWriter {
 	
@@ -13,11 +14,13 @@ public interface IDataWriter {
 
 	public abstract IDataWriter withOutputConfiguration(IConfigOutput config);
 	
+	public abstract IParser<?> getParser();
+	
 	public abstract List<DataWritingListener> getListeners();
 	
 	public abstract IDataWriter withListeners(List<DataWritingListener> listeners);
 	
-	public abstract void write(Object data);
+	public abstract void write(String content);
 	
 	public abstract void endResources();
 	
@@ -26,8 +29,6 @@ public interface IDataWriter {
 	public abstract IDataWriter withOutputFormatter(IOutputFormatter outputFormatter);
 	
 	public abstract IEventFielter getFilter();
-	
-	public abstract IDataWriter withFilter(IEventFielter filter);
 	
 	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 }

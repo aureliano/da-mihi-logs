@@ -24,7 +24,7 @@ public class FileDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public Object nextData() {
+	public String nextData() {
 		this.initialize();
 		
 		this.prepareReading();
@@ -34,18 +34,12 @@ public class FileDataReader extends AbstractDataReader {
 			super.markedToStop = true;
 			return null;
 		}
-		Object data = null;
 		
-		do {
-			super.executeBeforeReadingMethodListeners();
-			
-			data = super.parser.parse(super.prepareLogEvent(line));
-			if (data == null) {
-				continue;
-			}
-			
-			super.executeAfterReadingMethodListeners(data);
-		} while ((line = this.readNextLine()) != null);
+		String data = null;		
+		super.executeBeforeReadingMethodListeners();
+		
+		data = super.prepareLogEvent(line);
+		super.executeAfterReadingMethodListeners(data);
 		
 		return data;
 	}
