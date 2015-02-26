@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
 public class StandardDataReader extends AbstractDataReader {
 
@@ -33,7 +32,6 @@ public class StandardDataReader extends AbstractDataReader {
 		}
 		
 		Object data = null;
-		boolean accepted = false;
 		
 		do {
 			super.executeBeforeReadingMethodListeners();
@@ -42,12 +40,11 @@ public class StandardDataReader extends AbstractDataReader {
 			if (data == null) {
 				continue;
 			}
-			accepted = super.filter.accept(data);
 			
-			super.executeAfterReadingMethodListeners(data, accepted);
-		} while (!accepted && (line = this.readNextLine()) != null);
+			super.executeAfterReadingMethodListeners(data);
+		} while ((line = this.readNextLine()) != null);
 		
-		return (accepted) ? data : null;
+		return data;
 	}
 	
 	protected String readNextLine() {
@@ -73,10 +70,6 @@ public class StandardDataReader extends AbstractDataReader {
 	private void initialize() {
 		if (this.bufferedReader != null) {
 			return;
-		}
-		
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
 		}
 		
 		logger.info("Reading data from Standard Input.");

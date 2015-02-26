@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
@@ -64,7 +63,6 @@ public class FileTailerDataReader extends AbstractDataReader {
 	private Object readNextData() {
 		String line = null;
 		Object data = null;
-		boolean accepted = false;
 		
 		try {
 			line = this.readNextLine();
@@ -79,14 +77,13 @@ public class FileTailerDataReader extends AbstractDataReader {
 				if (data == null) {
 					continue;
 				}
-				accepted = super.filter.accept(data);
 				
-				super.executeAfterReadingMethodListeners(data, accepted);				
-			} while (!accepted && (line = this.readNextLine()) != null);
+				super.executeAfterReadingMethodListeners(data);				
+			} while ((line = this.readNextLine()) != null);
 			
 			this.filePointer = this.randomAccessFile.getFilePointer() + 1;
 			
-			return (accepted) ? data : null;
+			return data;
 		} catch (IOException ex) {
 			throw new DeferoException(ex);
 		}
@@ -128,10 +125,6 @@ public class FileTailerDataReader extends AbstractDataReader {
 		}
 		
 		this.initialTimeMillis = System.currentTimeMillis();
-		
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
-		}
 		
 		this.initializeRandomAccessFile();
 		this.fileTailerConfiguration = (InputFileConfig) super.inputConfiguration;

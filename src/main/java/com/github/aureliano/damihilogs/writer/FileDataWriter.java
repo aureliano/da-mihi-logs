@@ -5,24 +5,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
-import com.github.aureliano.damihilogs.config.output.IConfigOutput;
-import com.github.aureliano.damihilogs.event.AfterWritingEvent;
-import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 import com.github.aureliano.damihilogs.exception.DeferoException;
-import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
+import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
-import com.github.aureliano.damihilogs.listener.DataWritingListener;
 
-public class FileDataWriter implements IDataWriter {
-
-	private FileOutputConfig outputConfiguration;
-	private IOutputFormatter outputFormatter;
-	private List<DataWritingListener> listeners;
+public class FileDataWriter extends AbstractDataWriter {
+	
 	private PrintWriter writer;
 	
 	private static final Logger logger = Logger.getLogger(FileDataWriter.class);
@@ -32,51 +24,21 @@ public class FileDataWriter implements IDataWriter {
 	}
 
 	@Override
-	public IConfigOutput getOutputConfiguration() {
-		return this.outputConfiguration;
-	}
-
-	@Override
-	public IDataWriter withOutputConfiguration(IConfigOutput config) {
-		this.outputConfiguration = (FileOutputConfig) config;
-		return this;
-	}
-
-	@Override
-	public List<DataWritingListener> getListeners() {
-		return this.listeners;
-	}
-
-	@Override
-	public IDataWriter withListeners(List<DataWritingListener> listeners) {
-		this.listeners = listeners;
-		return this;
-	}
-	
-	@Override
-	public IOutputFormatter getOutputFormatter() {
-		return this.outputFormatter;
-	}
-	
-	@Override
-	public IDataWriter withOutputFormatter(IOutputFormatter outputFormatter) {
-		this.outputFormatter = outputFormatter;
-		return this;
-	}
-
-	@Override
 	public void write(Object data) {
 		this.initialize();
+
+		super.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
 			return;
 		}
+
+		boolean accept = super.filter.accept(data);
+		if (accept) {
+			String text = super.outputFormatter.format(data);
+			this.writer.println(text);
+		}
 		
-		this.executeBeforeWritingMethodListeners(data);
-		
-		String text = this.outputFormatter.format(data);
-		this.writer.println(text);
-		
-		this.executeAfterWritingMethodListeners(data);
+		super.executeAfterWritingMethodListeners(data, accept);
 	}
 	
 	@Override
@@ -90,38 +52,30 @@ public class FileDataWriter implements IDataWriter {
 		this.writer.flush();
 		this.writer.close();		
 	}
-
-	private void executeBeforeWritingMethodListeners(Object data) {
-		logger.debug("Execute beforeDataWriting listeners.");
-		for (DataWritingListener listener : this.listeners) {
-			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
-		}
-	}
-
-	private void executeAfterWritingMethodListeners(Object data) {
-		logger.debug("Execute afterDataWriting listeners.");
-		for (DataWritingListener listener : this.listeners) {
-			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, data));
-		}
-	}
 	
 	private void initialize() {
 		if (this.writer != null) {
 			return;
 		}
 		
-		if (this.outputFormatter == null) {
-			this.outputFormatter = new PlainTextFormatter();
+		if (super.outputFormatter == null) {
+			super.outputFormatter = new PlainTextFormatter();
 		}
 		
-		logger.info("Outputing data to " + this.outputConfiguration.getFile().getPath());
-		logger.info("Data encondig: " + this.outputConfiguration.getEncoding());
-		logger.info("Append data to file? " + this.outputConfiguration.isAppend());
+		if (super.filter == null) {
+			super.filter = new DefaultEmptyFilter();
+		}
+		
+		FileOutputConfig fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;
+		
+		logger.info("Outputing data to " + fileOutputConfiguration.getFile().getPath());
+		logger.info("Data encondig: " + fileOutputConfiguration.getEncoding());
+		logger.info("Append data to file? " + fileOutputConfiguration.isAppend());
 		
 		try {
-			FileOutputStream stream = new FileOutputStream(this.outputConfiguration.getFile(), this.outputConfiguration.isAppend());
+			FileOutputStream stream = new FileOutputStream(fileOutputConfiguration.getFile(), fileOutputConfiguration.isAppend());
 			BufferedOutputStream buffer = new BufferedOutputStream(stream);
-			OutputStreamWriter osw = new OutputStreamWriter(buffer, this.outputConfiguration.getEncoding());
+			OutputStreamWriter osw = new OutputStreamWriter(buffer, fileOutputConfiguration.getEncoding());
 			this.writer = new PrintWriter(osw);
 		} catch (IOException ex) {
 			throw new DeferoException(ex);

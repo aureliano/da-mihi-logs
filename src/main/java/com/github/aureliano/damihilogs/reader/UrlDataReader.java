@@ -95,7 +95,6 @@ public class UrlDataReader extends AbstractDataReader {
 					.withConfigurationId(this.urlInputConfiguration.getConfigurationId()))
 			.withMatcher(super.matcher)
 			.withParser(super.parser)
-			.withFilter(super.filter)
 			.withListeners(super.listeners);
 	}
 

@@ -6,7 +6,6 @@ import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.event.AfterReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
-import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.parser.IParser;
@@ -17,7 +16,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	protected IMatcher matcher;
 	protected IParser<?> parser;
 	protected long lineCounter;
-	protected IEventFielter filter;	
 	protected List<DataReadingListener> listeners;
 	protected String unprocessedLine;
 	protected boolean markedToStop;
@@ -72,17 +70,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	}
 
 	@Override
-	public IEventFielter getFilter() {
-		return this.filter;
-	}
-
-	@Override
-	public IDataReader withFilter(IEventFielter filter) {
-		this.filter = filter;
-		return this;
-	}
-
-	@Override
 	public boolean keepReading() {
 		return !this.markedToStop;
 	}
@@ -125,9 +112,9 @@ public abstract class AbstractDataReader implements IDataReader {
 		}
 	}
 	
-	protected void executeAfterReadingMethodListeners(Object data, boolean accepted) {
+	protected void executeAfterReadingMethodListeners(Object data) {
 		for (DataReadingListener listener : this.listeners) {
-			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, accepted, data));
+			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
 		}
 	}
 	

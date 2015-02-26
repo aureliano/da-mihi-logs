@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.exception.DeferoException;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
 public class ExternalCommandDataReader extends AbstractDataReader {
 
@@ -37,7 +36,6 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		}
 		
 		Object data = null;
-		boolean accepted = false;
 		
 		do {
 			super.executeBeforeReadingMethodListeners();
@@ -46,12 +44,11 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			if (data == null) {
 				continue;
 			}
-			accepted = super.filter.accept(data);
 			
-			super.executeAfterReadingMethodListeners(data, accepted);
-		} while (!accepted && (line = this.readNextLine()) != null);
+			super.executeAfterReadingMethodListeners(data);
+		} while ((line = this.readNextLine()) != null);
 		
-		return (accepted) ? data : null;
+		return data;
 	}
 
 	@Override
@@ -105,9 +102,6 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		}
 		
 		this.externalCommandInput = (ExternalCommandInput) super.inputConfiguration;
-		if (super.filter == null) {
-			super.filter = new DefaultEmptyFilter();
-		}
 		
 		logger.info("Execute command " + this.externalCommandInput.getCommand());
 		logger.info("With parameters: " + this.externalCommandInput.getParameters());

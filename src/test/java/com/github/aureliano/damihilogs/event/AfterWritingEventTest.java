@@ -9,9 +9,9 @@ public class AfterWritingEventTest {
 
 	@Test
 	public void testGetOutputConfiguration() {
-		Assert.assertNull(new AfterWritingEvent(null, null).getOutputConfiguration());
+		Assert.assertNull(new AfterWritingEvent(null, false, null).getOutputConfiguration());
 		
-		AfterWritingEvent event = new AfterWritingEvent(new FileOutputConfig().withEncoding("ISO-8859-1").withAppend(true).withFile("/there/is/not/file"), null);
+		AfterWritingEvent event = new AfterWritingEvent(new FileOutputConfig().withEncoding("ISO-8859-1").withAppend(true).withFile("/there/is/not/file"), false, null);
 		FileOutputConfig cfg = (FileOutputConfig) event.getOutputConfiguration();
 		
 		Assert.assertEquals("ISO-8859-1", cfg.getEncoding());
@@ -20,8 +20,14 @@ public class AfterWritingEventTest {
 	}
 	
 	@Test
+	public void testIsAccepted() {
+		Assert.assertTrue(new AfterWritingEvent(null, true, null).isAccepted());
+		Assert.assertFalse(new AfterWritingEvent(null, false, null).isAccepted());
+	}
+	
+	@Test
 	public void testGetData() {
-		Assert.assertNull(new AfterWritingEvent(null, null).getData());
-		Assert.assertEquals(new AfterWritingEvent(null, "test").getData(), "test");
+		Assert.assertNull(new AfterWritingEvent(null, false, null).getData());
+		Assert.assertEquals(new AfterWritingEvent(null, false, "test").getData(), "test");
 	}
 }

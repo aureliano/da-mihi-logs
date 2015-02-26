@@ -9,24 +9,18 @@ public class AfterReadingEventTest {
 
 	@Test
 	public void testGetLineCounter() {
-		Assert.assertEquals(25, new AfterReadingEvent(25, false, null).getLineCounter());
-	}
-	
-	@Test
-	public void testIsAccepted() {
-		Assert.assertTrue(new AfterReadingEvent(25, true, null).isAccepted());
-		Assert.assertFalse(new AfterReadingEvent(25, false, null).isAccepted());
+		Assert.assertEquals(25, new AfterReadingEvent(25, null).getLineCounter());
 	}
 	
 	@Test
 	public void testGetData() {
-		Assert.assertNull(new AfterReadingEvent(25, false, null).getData());
-		Assert.assertEquals("getData", new AfterReadingEvent(25, false, "getData").getData());
+		Assert.assertNull(new AfterReadingEvent(25, null).getData());
+		Assert.assertEquals("getData", new AfterReadingEvent(25, "getData").getData());
 	}
 	
 	@Test
 	public void testSetData() {
-		AfterReadingEvent event = new AfterReadingEvent(25, false, null);
+		AfterReadingEvent event = new AfterReadingEvent(25, null);
 		
 		event.setData(null);
 		Assert.assertNull(event.getData());

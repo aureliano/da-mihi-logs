@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.parser.IParser;
@@ -30,10 +29,6 @@ public interface IDataReader {
 	public abstract Object nextData();
 	
 	public abstract Map<String, Object> executionLog();
-	
-	public abstract IEventFielter getFilter();
-	
-	public abstract IDataReader withFilter(IEventFielter filter);
 	
 	public abstract void endResources();
 	

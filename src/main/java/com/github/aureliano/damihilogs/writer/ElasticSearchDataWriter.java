@@ -1,22 +1,12 @@
 package com.github.aureliano.damihilogs.writer;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
-import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.es.ElasticSearchClient;
-import com.github.aureliano.damihilogs.event.AfterWritingEvent;
-import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
-import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
-import com.github.aureliano.damihilogs.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
+import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 
-public class ElasticSearchDataWriter implements IDataWriter {
-
-	private ElasticSearchOutputConfig outputConfiguration;
-	private IOutputFormatter outputFormatter;
-	private List<DataWritingListener> listeners;
+public class ElasticSearchDataWriter extends AbstractDataWriter {
 	
 	private ElasticSearchClient elasticSearchClient;
 	
@@ -27,40 +17,24 @@ public class ElasticSearchDataWriter implements IDataWriter {
 	}
 
 	@Override
-	public IConfigOutput getOutputConfiguration() {
-		return this.outputConfiguration;
-	}
-
-	@Override
-	public IDataWriter withOutputConfiguration(IConfigOutput config) {
-		this.outputConfiguration = (ElasticSearchOutputConfig) config;
-		return this;
-	}
-
-	@Override
-	public List<DataWritingListener> getListeners() {
-		return this.listeners;
-	}
-
-	@Override
-	public IDataWriter withListeners(List<DataWritingListener> listeners) {
-		this.listeners = listeners;
-		return this;
-	}
-
-	@Override
 	public void write(Object data) {
 		this.initialize();
+		
+		this.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
 			return;
 		}
 		
-		this.executeBeforeWritingMethodListeners(data);
 		if (this.outputFormatter != null) {
 			data = this.outputFormatter.format(data);
 		}
-		this.elasticSearchClient.index(data);
-		this.executeAfterWritingMethodListeners(data);
+		
+		boolean accept = super.filter.accept(data);
+		if (accept) {
+			this.elasticSearchClient.index(data);
+		}
+		
+		this.executeAfterWritingMethodListeners(data, accept);
 	}
 
 	@Override
@@ -72,39 +46,18 @@ public class ElasticSearchDataWriter implements IDataWriter {
 		logger.info(" >>> Shutting ElasticSearch client instance down.");
 		this.elasticSearchClient.shutdown();
 	}
-
-	@Override
-	public IOutputFormatter getOutputFormatter() {
-		return this.outputFormatter;
-	}
-
-	@Override
-	public IDataWriter withOutputFormatter(IOutputFormatter outputFormatter) {
-		this.outputFormatter = outputFormatter;
-		return this;
-	}
-
-	private void executeBeforeWritingMethodListeners(Object data) {
-		logger.debug("Execute beforeDataWriting listeners.");
-		for (DataWritingListener listener : this.listeners) {
-			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
-		}
-	}
-
-	private void executeAfterWritingMethodListeners(Object data) {
-		logger.debug("Execute afterDataWriting listeners.");
-		for (DataWritingListener listener : this.listeners) {
-			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, data));
-		}
-	}
 	
 	private void initialize() {
 		if (this.elasticSearchClient != null) {
 			return;
 		}
 		
+		if (super.filter == null) {
+			super.filter = new DefaultEmptyFilter();
+		}
+		
 		logger.info(" >>> Starting new ElasticSearch client instance.");
-		this.elasticSearchClient = new ElasticSearchClient().withConfiguration(this.outputConfiguration);
+		this.elasticSearchClient = new ElasticSearchClient().withConfiguration((IElasticSearchConfiguration) this.outputConfiguration);
 		this.elasticSearchClient.start();
 	}
 }

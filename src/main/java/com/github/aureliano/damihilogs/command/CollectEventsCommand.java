@@ -114,7 +114,6 @@ public class CollectEventsCommand {
 			.createDataReader(inputConfig)
 				.withMatcher(this.configuration.getMatcher())
 				.withParser(this.configuration.getParser())
-				.withFilter(this.configuration.getFilter())
 				.withListeners(this.configuration.getDataReadingListeners());
 	}
 	
@@ -125,6 +124,7 @@ public class CollectEventsCommand {
 			IDataWriter dataWriter = DataWriterFactory
 					.createDataWriter(outputConfig)
 						.withOutputFormatter(this.configuration.getOutputFormatter())
+						.withFilter(this.configuration.getFilter())
 						.withListeners(this.configuration.getDataWritingListeners());
 			dataWriters.add(dataWriter);
 		}
