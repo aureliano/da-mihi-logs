@@ -11,6 +11,7 @@ public class InputFileConfig implements IConfigInput {
 	private long tailDelay;
 	private long tailInterval;
 	private String id;
+	private boolean useLastExecutionRecords;
 
 	public InputFileConfig() {
 		this.startPosition = 0;
@@ -87,6 +88,17 @@ public class InputFileConfig implements IConfigInput {
 	
 	public InputFileConfig withTailInterval(long tailInterval) {
 		this.tailInterval = tailInterval;
+		return this;
+	}
+	
+	@Override
+	public boolean isUseLastExecutionRecords() {
+		return this.useLastExecutionRecords;
+	}
+
+	@Override
+	public InputFileConfig withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
 	

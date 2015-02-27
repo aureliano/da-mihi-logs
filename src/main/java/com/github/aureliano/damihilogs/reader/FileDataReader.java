@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileDataReader extends AbstractDataReader {
 
@@ -73,7 +75,9 @@ public class FileDataReader extends AbstractDataReader {
 			return;
 		}
 		
-		this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
+		if (this.fileInputConfiguration == null) {
+			this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
+		}
 		
 		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
 		logger.info("Starting from line " + this.fileInputConfiguration.getStartPosition());
@@ -113,5 +117,21 @@ public class FileDataReader extends AbstractDataReader {
 		log.put("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
 		return log;
+	}
+
+	@Override
+	public void loadLastExecutionLog(Properties properties) {
+		this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
+		
+		if (!this.fileInputConfiguration.isUseLastExecutionRecords()) {
+			return;
+		}
+		
+		String value = properties.getProperty("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line");
+		if (value != null) {
+			this.fileInputConfiguration.withStartPosition(Integer.parseInt(value));
+		}
+		
+		ConfigHelper.inputConfigValidation(this.fileInputConfiguration);
 	}
 }

@@ -19,9 +19,11 @@ public class LoggerHelperTest {
 		p.put("profile.memory.max", "910.25 MB");
 		p.put("profile.memomry.total", "61.38 MB");
 		
-		File output = LoggerHelper.saveExecutionLog(p);
+		String colectorId = "blow-up";
+		File output = LoggerHelper.saveExecutionLog(colectorId, p);
 		Assert.assertNotNull(output);
 		Assert.assertTrue(output.exists() && output.isFile());
+		Assert.assertTrue(output.getName().startsWith("blow-up"));
 		
 		Properties p2 = this.loadProperties(output);
 		

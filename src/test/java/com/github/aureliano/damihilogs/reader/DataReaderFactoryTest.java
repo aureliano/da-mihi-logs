@@ -33,6 +33,14 @@ public class DataReaderFactoryTest {
 			public Object clone() {
 				return null;
 			}
+
+			public boolean isUseLastExecutionRecords() {
+				return false;
+			}
+
+			public IConfigInput withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+				return null;
+			}
 		});
 	}
 	

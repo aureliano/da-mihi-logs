@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -95,4 +96,7 @@ public class StandardDataReader extends AbstractDataReader {
 		
 		return log;
 	}
+
+	@Override
+	public void loadLastExecutionLog(Properties properties) { }
 }

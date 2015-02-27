@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
@@ -14,6 +15,7 @@ import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DeferoException;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.DataReaderFactory;
 import com.github.aureliano.damihilogs.reader.IDataReader;
@@ -24,6 +26,7 @@ public class CollectEventsCommand {
 
 	private EventCollectorConfiguration configuration;
 	private static List<Map<String, Object>> logExecutions;
+	private String collectorId;
 	
 	private static final Logger logger = Logger.getLogger(CollectEventsCommand.class);
 	
@@ -32,12 +35,13 @@ public class CollectEventsCommand {
 		CollectEventsCommand.logExecutions = new ArrayList<Map<String,Object>>();
 	}
 	
-	public void execute() {
+	public void execute(String collectorId) {
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
 			logger.info("Using default event collector configuration.");
 		}
 		
+		this.collectorId = collectorId;
 		this.prepareExecution();
 		this.executeCollectors();
 	}
@@ -108,10 +112,18 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		return DataReaderFactory
+		IDataReader dataReader = DataReaderFactory
 			.createDataReader(inputConfig)
 				.withMatcher(this.configuration.getMatcher())
 				.withListeners(this.configuration.getDataReadingListeners());
+		
+		if (inputConfig.isUseLastExecutionRecords()) {
+			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
+			if (properties != null) {
+				dataReader.loadLastExecutionLog(LoggerHelper.getLastExecutionLog(collectorId));
+			}
+		}
+		return dataReader;
 	}
 	
 	private List<IDataWriter> createDataWriters() {

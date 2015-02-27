@@ -16,6 +16,7 @@ public class AppEventsCollector {
 	private static final Logger logger = Logger.getLogger(AppEventsCollector.class);
 	
 	private EventCollectorConfiguration configuration;
+	private String collectorId;
 	private CollectEventsCommand commandExecutor;
 	
 	public AppEventsCollector() {
@@ -32,7 +33,7 @@ public class AppEventsCollector {
 		profiler.start();
 		
 		this.commandExecutor = new CollectEventsCommand(this.configuration);
-		this.commandExecutor.execute();
+		this.commandExecutor.execute(this.collectorId);
 		
 		if (this.configuration.isPersistExecutionLog()) {
 			this.printLogToOutput(profiler);
@@ -48,7 +49,7 @@ public class AppEventsCollector {
 			}
 		}
 		
-		File log = LoggerHelper.saveExecutionLog(properties, true);
+		File log = LoggerHelper.saveExecutionLog(this.collectorId, properties, true);
 		logger.info("Execution log output saved at " + log.getPath());		
 		logger.info("Execution successful!");
 	}
@@ -59,6 +60,15 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withConfiguration(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
+		return this;
+	}
+	
+	public String getCollectorId() {
+		return collectorId;
+	}
+	
+	public AppEventsCollector withCollectorId(String colectorId) {
+		this.collectorId = colectorId;
 		return this;
 	}
 }

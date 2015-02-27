@@ -25,6 +25,8 @@ public class UrlInputConfig implements IConfigInput {
 	private boolean noCheckCertificate;
 
 	private String id;
+
+	private boolean useLastExecutionRecords;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -172,6 +174,17 @@ public class UrlInputConfig implements IConfigInput {
 	@Override
 	public UrlInputConfig withConfigurationId(String id) {
 		this.id = id;
+		return this;
+	}
+	
+	@Override
+	public boolean isUseLastExecutionRecords() {
+		return this.useLastExecutionRecords;
+	}
+
+	@Override
+	public UrlInputConfig withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
 	

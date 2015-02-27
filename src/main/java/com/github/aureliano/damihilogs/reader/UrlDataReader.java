@@ -11,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -72,7 +73,9 @@ public class UrlDataReader extends AbstractDataReader {
 			return;
 		}
 		
-		this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
+		if (this.urlInputConfiguration == null) {
+			this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
+		}
 		
 		this.url = ConfigHelper.buildUrl(this.urlInputConfiguration);
 		logger.info("Fetching data from " + url);
@@ -244,5 +247,31 @@ public class UrlDataReader extends AbstractDataReader {
 		log.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
 		return log;
+	}
+
+	@Override
+	public void loadLastExecutionLog(Properties properties) {
+		this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
+		
+		if (!this.urlInputConfiguration.isUseLastExecutionRecords()) {
+			return;
+		}
+		
+		String value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line");
+		if (value != null) {
+			this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
+		}
+		
+		value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file");
+		if (value != null) {
+			this.urlInputConfiguration.withOutputFile(value);
+		}
+		
+		value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset");
+		if (value != null) {
+			this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
+		}
+		
+		ConfigHelper.inputConfigValidation(this.urlInputConfiguration);
 	}
 }
