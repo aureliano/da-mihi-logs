@@ -72,7 +72,8 @@ public class CollectEventsCommand {
 			}
 			
 			logger.info("Start execution for input " + inputConfig.getConfigurationId());
-			commands.add(new DataIterationCommand(this.createDataReader(inputConfig), this.createDataWriters()));
+			commands.add(new DataIterationCommand(
+				this.createDataReader(inputConfig), this.createDataWriters(), inputConfig.getConfigurationId()));
 		}
 		
 		if (this.configuration.isMultiThreadingEnabled()) {
@@ -97,7 +98,8 @@ public class CollectEventsCommand {
 		List<Thread> threads = new ArrayList<Thread>();
 		
 		for (DataIterationCommand command : commands) {
-			Thread t = new Thread(command);
+			Thread t = this.createThread(command);
+			
 			t.start();
 			threads.add(t);
 		}
@@ -111,6 +113,17 @@ public class CollectEventsCommand {
 		}
 	}
 	
+	private Thread createThread(DataIterationCommand command) {
+		Thread t = null;
+		if (command.getId() != null && !command.getId().equals("")) {
+			t = new Thread(command, "Thread-" + command.getId());
+		} else {
+			t = new Thread(command);
+		}
+		
+		return t;
+	}
+	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(inputConfig)
@@ -121,6 +134,7 @@ public class CollectEventsCommand {
 			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
 			if (properties != null) {
 				dataReader.loadLastExecutionLog(LoggerHelper.getLastExecutionLog(collectorId));
+				CollectEventsCommand.addLogExecution(dataReader.getReadingProperties());
 			}
 		}
 		return dataReader;

@@ -3,7 +3,6 @@ package com.github.aureliano.damihilogs.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -91,10 +90,9 @@ public class StandardDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		Map<String, Object> log = new HashMap<String, Object>();
-		log.put("input.config." + super.inputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		super.readingProperties.put("input.config." + super.inputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
-		return log;
+		return super.readingProperties;
 	}
 
 	@Override

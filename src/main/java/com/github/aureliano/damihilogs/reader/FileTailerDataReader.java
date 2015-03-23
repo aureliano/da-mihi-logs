@@ -3,7 +3,6 @@ package com.github.aureliano.damihilogs.reader;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -22,10 +21,9 @@ public class FileTailerDataReader extends AbstractDataReader {
 	private long filePointer;
 	private long initialTimeMillis;
 	
-	private static final Logger logger = Logger.getLogger(FileTailerDataReader.class);	
+	private static final Logger logger = Logger.getLogger(FileTailerDataReader.class);
 	
 	public FileTailerDataReader() {
-		super();
 		this.fileLength = this.filePointer = this.initialTimeMillis = 0;
 	}
 
@@ -168,23 +166,22 @@ public class FileTailerDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		Map<String, Object> log = new HashMap<String, Object>();
-		log.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		super.readingProperties.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
-		return log;
+		return super.readingProperties;
 	}
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
 		this.fileTailerConfiguration = (InputFileConfig) super.inputConfiguration;
 		
-		if (!this.fileTailerConfiguration.isUseLastExecutionRecords()) {
-			return;
-		}
-		
-		String value = properties.getProperty("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line");
+		String key = "input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line";
+		String value = properties.getProperty(key);
 		if (value != null) {
-			this.fileTailerConfiguration.withStartPosition(Integer.parseInt(value));
+			super.readingProperties.put(key, value);
+			if (this.fileTailerConfiguration.isUseLastExecutionRecords()) {
+				this.fileTailerConfiguration.withStartPosition(Integer.parseInt(value));
+			}
 		}
 		
 		ConfigHelper.inputConfigValidation(this.fileTailerConfiguration);

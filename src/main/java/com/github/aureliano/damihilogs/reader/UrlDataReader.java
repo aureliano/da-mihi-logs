@@ -9,7 +9,6 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -162,7 +161,7 @@ public class UrlDataReader extends AbstractDataReader {
 					return;
 				}
 				
-				String byteRange = this.urlInputConfiguration.getByteOffSet() + "-" + this.connection.getContentLength();
+				String byteRange = this.urlInputConfiguration.getByteOffSet() + "-";
 				((HttpURLConnection) this.connection).disconnect();
 				
 				this.connection = this.createUrlConnection();
@@ -235,41 +234,48 @@ public class UrlDataReader extends AbstractDataReader {
 	
 	@Override
 	public Map<String, Object> executionLog() {
-		Map<String, Object> log = new HashMap<String, Object>();
 		Map<String, Object> fileDataReaderLog = this.fileDataReader.executionLog();
 		
 		for (String key : fileDataReaderLog.keySet()) {
-			log.put(key, fileDataReaderLog.get(key));
+			super.readingProperties.put(key, fileDataReaderLog.get(key));
 		}
 		
-		log.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
+		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
 				((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
-		log.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
+		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
-		return log;
+		return super.readingProperties;
 	}
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
 		this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
 		
-		if (!this.urlInputConfiguration.isUseLastExecutionRecords()) {
-			return;
+		String key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line";
+		String value = properties.getProperty(key);
+		if (value != null) {
+			super.readingProperties.put(key, value);
+			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+				this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
+			}
 		}
 		
-		String value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line");
+		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file";
+		value = properties.getProperty(key);
 		if (value != null) {
-			this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
+			super.readingProperties.put(key, value);
+			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+				this.urlInputConfiguration.withOutputFile(value);
+			}
 		}
 		
-		value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file");
+		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset";
+		value = properties.getProperty(key);
 		if (value != null) {
-			this.urlInputConfiguration.withOutputFile(value);
-		}
-		
-		value = properties.getProperty("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset");
-		if (value != null) {
-			this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
+			super.readingProperties.put(key, value);
+			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+				this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
+			}
 		}
 		
 		ConfigHelper.inputConfigValidation(this.urlInputConfiguration);

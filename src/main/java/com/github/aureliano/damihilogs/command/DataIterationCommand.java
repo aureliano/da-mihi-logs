@@ -10,10 +10,16 @@ public class DataIterationCommand implements Runnable {
 
 	private IDataReader dataReader;
 	private List<IDataWriter> dataWriters;
+	private String id;
 	
 	public DataIterationCommand(IDataReader dataReader, List<IDataWriter> dataWriters) {
+		this(dataReader, dataWriters, null);
+	}
+	
+	public DataIterationCommand(IDataReader dataReader, List<IDataWriter> dataWriters, String id) {
 		this.dataReader = dataReader;
 		this.dataWriters = dataWriters;
+		this.id = id;
 	}
 
 	@Override
@@ -24,6 +30,14 @@ public class DataIterationCommand implements Runnable {
 	public void execute() {		
 		Map<String, Object> logExecution = this.dataIteration();
 		CollectEventsCommand.addLogExecution(logExecution);
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return this.id;
 	}
 	
 	private Map<String, Object> dataIteration() {		

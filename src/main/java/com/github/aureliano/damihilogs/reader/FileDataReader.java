@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -113,23 +112,22 @@ public class FileDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		Map<String, Object> log = new HashMap<String, Object>();
-		log.put("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		super.readingProperties.put("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
-		return log;
+		return super.readingProperties;
 	}
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
 		this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
 		
-		if (!this.fileInputConfiguration.isUseLastExecutionRecords()) {
-			return;
-		}
-		
-		String value = properties.getProperty("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line");
+		String key = "input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line";
+		String value = properties.getProperty(key);
 		if (value != null) {
-			this.fileInputConfiguration.withStartPosition(Integer.parseInt(value));
+			super.readingProperties.put(key, value);
+			if (this.fileInputConfiguration.isUseLastExecutionRecords()) {
+				this.fileInputConfiguration.withStartPosition(Integer.parseInt(value));
+			}
 		}
 		
 		ConfigHelper.inputConfigValidation(this.fileInputConfiguration);
