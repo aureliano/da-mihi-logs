@@ -10,7 +10,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileDataReader extends AbstractDataReader {
@@ -56,7 +56,7 @@ public class FileDataReader extends AbstractDataReader {
 			this.bufferedReader.close();
 			this.bufferedReader = null;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class FileDataReader extends AbstractDataReader {
 				new InputStreamReader(new FileInputStream(
 					this.fileInputConfiguration.getFile()), this.fileInputConfiguration.getEncoding()));
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -106,7 +106,7 @@ public class FileDataReader extends AbstractDataReader {
 			
 			return line;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 

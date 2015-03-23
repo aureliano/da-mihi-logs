@@ -7,18 +7,18 @@ import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class DataWriterFactoryTest {
 
-	@Test(expected = DeferoException.class)
+	@Test(expected = DaMihiLogsException.class)
 	public void testCreateDataWriterNull() {
 		DataWriterFactory.createDataWriter(null);
 	}
 	
-	@Test(expected = DeferoException.class)
+	@Test(expected = DaMihiLogsException.class)
 	public void testCreateDataWriterUnsupported() {
 		DataWriterFactory.createDataWriter(new IConfigOutput() {
 			public String outputType() {

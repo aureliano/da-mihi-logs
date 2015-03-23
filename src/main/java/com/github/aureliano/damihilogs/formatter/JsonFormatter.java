@@ -2,7 +2,7 @@ package com.github.aureliano.damihilogs.formatter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class JsonFormatter implements IOutputFormatter {
 
@@ -21,7 +21,7 @@ public class JsonFormatter implements IOutputFormatter {
 		try {
 			return objectMapper.writeValueAsString(data);
 		} catch (JsonProcessingException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 }

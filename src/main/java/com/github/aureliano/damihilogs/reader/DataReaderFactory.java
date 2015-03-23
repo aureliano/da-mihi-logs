@@ -5,7 +5,7 @@ import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class DataReaderFactory {
 
@@ -25,7 +25,7 @@ public final class DataReaderFactory {
 			return new ExternalCommandDataReader().withInputConfiguration(inputConfig);
 		} else {
 			String clazz = (inputConfig == null) ? "null" : inputConfig.getClass().getName();
-			throw new DeferoException("Unsupported data reader for input config " + clazz);
+			throw new DaMihiLogsException("Unsupported data reader for input config " + clazz);
 		}
 	}
 }

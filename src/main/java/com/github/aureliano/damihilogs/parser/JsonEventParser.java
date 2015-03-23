@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.parser;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class JsonEventParser implements IParser<Map<String, ?>> {
 
@@ -18,7 +18,7 @@ public class JsonEventParser implements IParser<Map<String, ?>> {
 		try {
 			return objectMapper.readValue(text, Map.class);
 		} catch (Exception ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 }

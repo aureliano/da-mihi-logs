@@ -2,7 +2,7 @@ package com.github.aureliano.damihilogs.matcher;
 
 import java.util.regex.Pattern;
 
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class MultiLineMatcher implements IMatcher {
 
@@ -33,7 +33,7 @@ public class MultiLineMatcher implements IMatcher {
 		}
 		
 		if ((this.prefixRegex == null) || (this.prefixRegex.equals(""))) {
-			throw new DeferoException("Regular expression must be passed to " + this.getClass().getSimpleName());
+			throw new DaMihiLogsException("Regular expression must be passed to " + this.getClass().getSimpleName());
 		}
 		
 		this.suffixRegex = String.format("([\\W\\w\\d](?!%s))+", this.prefixRegex);
@@ -45,7 +45,7 @@ public class MultiLineMatcher implements IMatcher {
 	@Override
 	public boolean partialMatch(String text) {
 		if (this.matchAttemptsCounter >= this.maxMatchAttempts) {
-			throw new DeferoException("Max parse attempts overflow (" + this.matchAttemptsCounter + " >= " + this.maxMatchAttempts + ").");
+			throw new DaMihiLogsException("Max parse attempts overflow (" + this.matchAttemptsCounter + " >= " + this.maxMatchAttempts + ").");
 		}
 		
 		this.matchAttemptsCounter++;

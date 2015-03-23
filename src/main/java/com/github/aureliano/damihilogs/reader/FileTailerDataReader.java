@@ -9,7 +9,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileTailerDataReader extends AbstractDataReader {
@@ -43,7 +43,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 					Thread.sleep(this.fileTailerConfiguration.getTailDelay());
 					currentFileLength = this.currentFileLength();
 				} catch (InterruptedException ex) {
-					throw new DeferoException(ex);
+					throw new DaMihiLogsException(ex);
 				}
 			}
 			
@@ -80,7 +80,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			
 			return data;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			this.randomAccessFile.close();
 			this.randomAccessFile = null;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -140,7 +140,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			
 			this.fileTailerConfiguration.withFile(new File(this.fileTailerConfiguration.getFile().getPath()));
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -160,7 +160,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			
 			return line;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 

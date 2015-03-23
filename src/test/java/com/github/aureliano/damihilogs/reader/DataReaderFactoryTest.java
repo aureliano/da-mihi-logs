@@ -9,16 +9,16 @@ import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class DataReaderFactoryTest {
 
-	@Test(expected = DeferoException.class)
+	@Test(expected = DaMihiLogsException.class)
 	public void testCreateDataReaderNull() {
 		DataReaderFactory.createDataReader(null);
 	}
 	
-	@Test(expected = DeferoException.class)
+	@Test(expected = DaMihiLogsException.class)
 	public void testCreateDataReaderUnsupported() {
 		DataReaderFactory.createDataReader(new IConfigInput() {
 			public String getConfigurationId() {

@@ -12,7 +12,7 @@ import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
@@ -108,7 +108,7 @@ public class CollectEventsCommand {
 			try {
 				thread.join();
 			} catch (InterruptedException ex) {
-				throw new DeferoException(ex);
+				throw new DaMihiLogsException(ex);
 			}
 		}
 	}

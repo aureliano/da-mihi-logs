@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 
 public class FileDataWriter extends AbstractDataWriter {
@@ -74,7 +74,7 @@ public class FileDataWriter extends AbstractDataWriter {
 			OutputStreamWriter osw = new OutputStreamWriter(buffer, fileOutputConfiguration.getEncoding());
 			this.writer = new PrintWriter(osw);
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 }

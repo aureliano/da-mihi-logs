@@ -11,7 +11,7 @@ import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class ConfigHelperTest {
 	
@@ -39,7 +39,7 @@ public class ConfigHelperTest {
 	public void testInputConfigValidation() {
 		try {
 			ConfigHelper.inputConfigValidation(null);
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input configuration must be provided.", ex.getMessage());
 		}
 	}
@@ -48,7 +48,7 @@ public class ConfigHelperTest {
 	public void testOutputConfigValidation() {
 		try {
 			ConfigHelper.outputConfigValidation(null);
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output configuration must be provided.", ex.getMessage());
 		}
 	}
@@ -57,19 +57,19 @@ public class ConfigHelperTest {
 	public void testInputFileConfigValidationFile() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig());
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("/non/existent/file")));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file '/non/existent/file' does not exist.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources")));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
 		
@@ -81,7 +81,7 @@ public class ConfigHelperTest {
 	public void testInputFileConfigValidationStartPosition() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
 		}
 		
@@ -92,19 +92,19 @@ public class ConfigHelperTest {
 	public void testOutputFileConfigValidationFile() {
 		try {
 			ConfigHelper.outputConfigValidation(new FileOutputConfig());
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("/non/existent/file")));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file '/non/existent/file' does not exist.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("src/test/resources")));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
 		
@@ -116,20 +116,20 @@ public class ConfigHelperTest {
 	public void testUrlInputConfigValidation() {
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(null));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Connection schema not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(ConnectionSchema.HTTP));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Host not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
 				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost"));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file not provided.", ex.getMessage());
 		}
 		
@@ -137,7 +137,7 @@ public class ConfigHelperTest {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
 				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
 				.withOutputFile("src/test/resources"));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file 'src/test/resources' is a directory.", ex.getMessage());
 		}
 		
@@ -150,13 +150,13 @@ public class ConfigHelperTest {
 	public void testExternalCommandConfigValidation() {
 		try {
 			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput());
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Command not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand(""));
-		} catch (DeferoException ex) {
+		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Command not provided.", ex.getMessage());
 		}
 		

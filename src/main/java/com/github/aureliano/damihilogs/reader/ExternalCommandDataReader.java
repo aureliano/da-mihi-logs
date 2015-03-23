@@ -12,7 +12,7 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class ExternalCommandDataReader extends AbstractDataReader {
 
@@ -66,7 +66,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			this.bufferedReader.close();
 			this.bufferedReader = null;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 
@@ -86,7 +86,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			
 			return line;
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -105,7 +105,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		try {
 			this.process = new ProcessBuilder(command).start();
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		InputStreamReader inputStreamReader = new InputStreamReader(this.process.getInputStream());

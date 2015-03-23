@@ -25,7 +25,7 @@ import org.elasticsearch.common.Base64;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class UrlDataReader extends AbstractDataReader {
@@ -119,7 +119,7 @@ public class UrlDataReader extends AbstractDataReader {
 			bufferedInputStream.close();
 			raf.close();
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 	
@@ -173,7 +173,7 @@ public class UrlDataReader extends AbstractDataReader {
 			this.connection.connect();
 			responseCode = ((HttpURLConnection) this.connection).getResponseCode();
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		if (responseCode / 100 != 2) {
@@ -218,9 +218,9 @@ public class UrlDataReader extends AbstractDataReader {
 			
 			HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 		} catch (KeyManagementException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		} catch (NoSuchAlgorithmException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		HostnameVerifier allHostsValid = new HostnameVerifier() {

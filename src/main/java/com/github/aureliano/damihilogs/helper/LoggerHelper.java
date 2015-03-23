@@ -15,7 +15,7 @@ import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class LoggerHelper {
 	
@@ -38,7 +38,7 @@ public final class LoggerHelper {
 		try {
 			properties.load(new FileInputStream(file));
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		return properties;
@@ -86,7 +86,7 @@ public final class LoggerHelper {
 		try {
 			if (!dir.exists()) {
 				if (!dir.mkdir()) {
-					throw new DeferoException("Could not create log directory.");
+					throw new DaMihiLogsException("Could not create log directory.");
 				}
 			}
 			
@@ -102,7 +102,7 @@ public final class LoggerHelper {
 			return output;
 		} catch (IOException ex) {
 			logger.error("Could not save execution log.", ex);
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 	}
 }

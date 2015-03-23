@@ -14,7 +14,7 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.kzwang.osem.annotations.Indexable;
 import com.github.kzwang.osem.impl.ElasticSearchIndexerImpl;
 
@@ -39,7 +39,7 @@ public class ElasticSearchClient {
 		} else {
 			Indexable indexable = data.getClass().getAnnotation(Indexable.class);
 			if (indexable == null) {
-				throw new DeferoException("Don't know how to index object. Expected [java.util.Map, java.lang.String, com.github.kzwang.osem.annotations.@Indexable] but found " + data.getClass().getName());
+				throw new DaMihiLogsException("Don't know how to index object. Expected [java.util.Map, java.lang.String, com.github.kzwang.osem.annotations.@Indexable] but found " + data.getClass().getName());
 			}
 			this.indexIndexable(data);
 		}
@@ -101,7 +101,7 @@ public class ElasticSearchClient {
 	
 	private Client configureNewClient() {
 		if (this.configuration == null) {
-			throw new DeferoException("ElasticSearch configuration is null.");
+			throw new DaMihiLogsException("ElasticSearch configuration is null.");
 		}
 		
 		logger.info("Configure Inet Socket Transport Address.");
@@ -128,7 +128,7 @@ public class ElasticSearchClient {
 		try {
 			properties.load(new FileInputStream(this.configuration.getConfigProperties()));
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		return properties;

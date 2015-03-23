@@ -11,7 +11,7 @@ import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class ConfigHelper {
 
@@ -57,7 +57,7 @@ public final class ConfigHelper {
 	
 	public static void inputConfigValidation(IConfigInput config) {
 		if (config == null) {
-			throw new DeferoException("Input configuration must be provided.");
+			throw new DaMihiLogsException("Input configuration must be provided.");
 		}
 		
 		if (config instanceof InputFileConfig) {
@@ -69,31 +69,31 @@ public final class ConfigHelper {
 		} else if (config instanceof ExternalCommandInput) {
 			externalCommandConfigValidation((ExternalCommandInput) config);
 		} else {
-			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
+			throw new DaMihiLogsException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
 	}
 
 	protected static void urlInputConfigValidation(UrlInputConfig config) {
 		if (config.getConnectionSchema() == null) {
-			throw new DeferoException("Connection schema not provided.");
+			throw new DaMihiLogsException("Connection schema not provided.");
 		} else if ((config.getHost() == null) || (config.getHost().equals(""))) {
-			throw new DeferoException("Host not provided.");
+			throw new DaMihiLogsException("Host not provided.");
 		} else if (config.getOutputFile() == null) {
-			throw new DeferoException("Output file not provided.");
+			throw new DaMihiLogsException("Output file not provided.");
 		} else if (config.getOutputFile().isDirectory()) {
-			throw new DeferoException("Output file '" + config.getOutputFile().getPath() + "' is a directory.");
+			throw new DaMihiLogsException("Output file '" + config.getOutputFile().getPath() + "' is a directory.");
 		}
 	}
 	
 	protected static void externalCommandConfigValidation(ExternalCommandInput config) {
 		if ((config.getCommand() == null) || (config.getCommand().equals(""))) {
-			throw new DeferoException("Command not provided.");
+			throw new DaMihiLogsException("Command not provided.");
 		}
 	}
 
 	public static void outputConfigValidation(IConfigOutput config) {
 		if (config == null) {
-			throw new DeferoException("Output configuration must be provided.");
+			throw new DaMihiLogsException("Output configuration must be provided.");
 		}
 		
 		if (config instanceof StandardOutputConfig) {
@@ -103,7 +103,7 @@ public final class ConfigHelper {
 		} else if (config instanceof ElasticSearchOutputConfig) {
 			elasticSearchConfigValidation((ElasticSearchOutputConfig) config);
 		} else {
-			throw new DeferoException("Validation not implemented for " + config.getClass().getName() + " type");
+			throw new DaMihiLogsException("Validation not implemented for " + config.getClass().getName() + " type");
 		}
 	}
 
@@ -131,39 +131,39 @@ public final class ConfigHelper {
 	
 	protected static void inputFileConfigFileValidation(InputFileConfig config) {
 		if (config.getFile() == null) {
-			throw new DeferoException("Input file not provided.");
+			throw new DaMihiLogsException("Input file not provided.");
 		} else if (!config.getFile().exists()) {
-			throw new DeferoException("Input file '" + config.getFile().getPath() + "' does not exist.");
+			throw new DaMihiLogsException("Input file '" + config.getFile().getPath() + "' does not exist.");
 		} else if (!config.getFile().isFile()) {
-			throw new DeferoException("Input resource '" + config.getFile().getPath() + "' is not a file.");
+			throw new DaMihiLogsException("Input resource '" + config.getFile().getPath() + "' is not a file.");
 		}
 	}
 	
 	protected static void outputFileConfigFileValidation(FileOutputConfig config) {
 		if (config.getFile() == null) {
-			throw new DeferoException("Output file not provided.");
+			throw new DaMihiLogsException("Output file not provided.");
 		}
 	}
 	
 	protected static void inputFileConfigStartPositionValidation(InputFileConfig config) {
 		if (config.getStartPosition() < 0) {
-			throw new DeferoException("Start position must be greater or equal to zero (>= 0).");
+			throw new DaMihiLogsException("Start position must be greater or equal to zero (>= 0).");
 		}
 	}
 	
 	protected static void elasticSearchConfigIndexValidation(ElasticSearchOutputConfig config) {
 		if (config.getIndex() == null) {
-			throw new DeferoException("Index name not provided.");
+			throw new DaMihiLogsException("Index name not provided.");
 		} else if ("".equals(config.getIndex())) {
-			throw new DeferoException("Empty index name.");
+			throw new DaMihiLogsException("Empty index name.");
 		}
 	}
 	
 	protected static void elasticSearchConfigMappingTypeValidation(ElasticSearchOutputConfig config) {
 		if (config.getMappingType() == null) {
-			throw new DeferoException("Mapping type not provided.");
+			throw new DaMihiLogsException("Mapping type not provided.");
 		} else if ("".equals(config.getMappingType())) {
-			throw new DeferoException("Empty mapping type.");
+			throw new DaMihiLogsException("Empty mapping type.");
 		}
 	}
 }

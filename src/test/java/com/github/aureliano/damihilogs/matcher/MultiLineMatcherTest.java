@@ -10,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -71,13 +71,13 @@ public class MultiLineMatcherTest {
 			
 			try {
 				assertTrue(m.partialMatch(builder.toString()));
-			} catch (DeferoException ex) {
+			} catch (DaMihiLogsException ex) {
 				assertEquals(ex.getMessage(), "Max parse attempts overflow (" + 5 + " >= " + 5 + ").");
 				return;
 			}
 		}
 		
-		Assert.fail("Expected to throw a " + DeferoException.class.getName());
+		Assert.fail("Expected to throw a " + DaMihiLogsException.class.getName());
 	}
 	
 	private String stringfy(List<String> lines) {
@@ -105,7 +105,7 @@ public class MultiLineMatcherTest {
 				line = reader.readLine();
 			}
 		} catch (IOException ex) {
-			throw new DeferoException(ex);
+			throw new DaMihiLogsException(ex);
 		}
 		
 		return lines;

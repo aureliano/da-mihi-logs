@@ -4,7 +4,7 @@ import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
-import com.github.aureliano.damihilogs.exception.DeferoException;
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class DataWriterFactory {
 
@@ -21,7 +21,7 @@ public final class DataWriterFactory {
 			return new ElasticSearchDataWriter().withOutputConfiguration(outputConfig);
 		} else {
 			String clazz = (outputConfig == null) ? "null" : outputConfig.getClass().getName();
-			throw new DeferoException("Unsupported data writer for output config " + clazz);
+			throw new DaMihiLogsException("Unsupported data writer for output config " + clazz);
 		}
 	}
 }
