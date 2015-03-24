@@ -62,7 +62,7 @@ public final class LoggerHelper {
 			}
 		}
 		
-		return (fileName != null) ? new File(fileName) : null;
+		return (fileName != null) ? new File(LOG_DIR_PATH + File.separator + fileName) : null;
 	}
 	
 	public static File saveExecutionLog(String collectorId, Properties p, boolean ordered) {
