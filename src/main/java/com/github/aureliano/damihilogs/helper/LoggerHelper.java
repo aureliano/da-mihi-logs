@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -21,6 +20,7 @@ public final class LoggerHelper {
 	
 	private static final Logger logger = Logger.getLogger(LoggerHelper.class);
 	private static final String LOG_DIR_PATH = "log";
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
 	private LoggerHelper() {
 		super();
@@ -53,9 +53,16 @@ public final class LoggerHelper {
 			}
 		});
 		
-		Arrays.sort(files);
+		String fileName = null;
+		String expectedFileName = LoggerHelper.getLastExecutionLogFileName(collectorId);
+		for (String file : files) {
+			if (expectedFileName.equals(file)) {
+				fileName = file;
+				break;
+			}
+		}
 		
-		return (files.length > 0) ? new File(LOG_DIR_PATH + File.separator + files[0]) : null;
+		return (fileName != null) ? new File(fileName) : null;
 	}
 	
 	public static File saveExecutionLog(String collectorId, Properties p, boolean ordered) {
@@ -94,7 +101,7 @@ public final class LoggerHelper {
 				collectorId = "execution";
 			}
 			
-			String fileName = collectorId + "_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + ".log";
+			String fileName = LoggerHelper.getLastExecutionLogFileName(collectorId);
 			File output = new File(dir.getPath() + File.separator + fileName);
 			logger.debug(properties.toString());
 			properties.store(new FileOutputStream(output), "Last execution information.");
@@ -104,5 +111,9 @@ public final class LoggerHelper {
 			logger.error("Could not save execution log.", ex);
 			throw new DaMihiLogsException(ex);
 		}
+	}
+	
+	protected static String getLastExecutionLogFileName(final String collectorId) {
+		return collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
 	}
 }
