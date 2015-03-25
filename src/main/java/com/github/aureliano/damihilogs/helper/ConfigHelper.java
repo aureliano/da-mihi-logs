@@ -24,9 +24,7 @@ public final class ConfigHelper {
 	public static void copyMetadata(IConfiguration from, IConfiguration to) {
 		Set<Object> keys = from.getMetadata().keySet();
 		for (Object key : keys) {
-			if (to.getMetadata(key.toString()) == null) {
-				to.putMetadata(key.toString(), from.getMetadata(key.toString()));
-			}
+			to.putMetadata(key.toString(), from.getMetadata(key.toString()));
 		}
 	}
 	

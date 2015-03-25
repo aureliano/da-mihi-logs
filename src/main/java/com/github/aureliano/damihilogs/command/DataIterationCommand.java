@@ -3,6 +3,8 @@ package com.github.aureliano.damihilogs.command;
 import java.util.List;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.reader.IDataReader;
 import com.github.aureliano.damihilogs.writer.IDataWriter;
 
@@ -27,7 +29,12 @@ public class DataIterationCommand implements Runnable {
 		this.execute();
 	}
 	
-	public void execute() {		
+	public void execute() {
+		for (IDataWriter dw : this.dataWriters) {
+			IConfigOutput c = dw.getOutputConfiguration();
+			ConfigHelper.copyMetadata(this.dataReader.getInputConfiguration(), c);
+		}
+		
 		Map<String, Object> logExecution = this.dataIteration();
 		CollectEventsCommand.addLogExecution(logExecution);
 	}

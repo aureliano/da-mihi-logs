@@ -29,7 +29,7 @@ public class ConfigHelperTest {
 		
 		ConfigHelper.copyMetadata(c, s);
 		
-		Assert.assertEquals("coconut", s.getMetadata("fruit"));
+		Assert.assertEquals("orange", s.getMetadata("fruit"));
 		Assert.assertEquals("blue", s.getMetadata("collor"));
 		Assert.assertEquals("Portuguese", s.getMetadata("idiom"));
 	}
