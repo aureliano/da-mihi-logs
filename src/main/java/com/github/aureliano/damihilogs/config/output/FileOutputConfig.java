@@ -1,6 +1,7 @@
 package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
+import java.util.Properties;
 
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.parser.IParser;
@@ -12,10 +13,12 @@ public class FileOutputConfig implements IConfigOutput {
 	private String encoding;
 	private IParser<?> parser;
 	private IEventFielter filter;
+	private Properties metadata;
 	
 	public FileOutputConfig() {
 		this.append = false;
 		this.encoding = "UTF-8";
+		this.metadata = new Properties();
 	}
 
 	@Override
@@ -77,11 +80,32 @@ public class FileOutputConfig implements IConfigOutput {
 		return this;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public FileOutputConfig clone() {
 		return new FileOutputConfig()
 			.withAppend(this.append)
 			.withEncoding(this.encoding)
-			.withFile(this.file);
+			.withFile(this.file)
+			.withMetadata(this.metadata);
+	}
+	
+	@Override
+	public FileOutputConfig putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected FileOutputConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

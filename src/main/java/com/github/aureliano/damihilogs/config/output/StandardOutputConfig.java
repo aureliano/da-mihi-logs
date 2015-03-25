@@ -1,5 +1,7 @@
 package com.github.aureliano.damihilogs.config.output;
 
+import java.util.Properties;
+
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.parser.IParser;
 
@@ -7,9 +9,10 @@ public class StandardOutputConfig implements IConfigOutput {
 
 	private IParser<?> parser;
 	private IEventFielter filter;
+	private Properties metadata;
 	
 	public StandardOutputConfig() {
-		super();
+		this.metadata = new Properties();
 	}
 
 	@Override
@@ -39,8 +42,29 @@ public class StandardOutputConfig implements IConfigOutput {
 		return this;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public StandardOutputConfig clone() {
-		return new StandardOutputConfig();
+		return new StandardOutputConfig()
+			.withMetadata(this.metadata);
+	}
+	
+	@Override
+	public StandardOutputConfig putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected StandardOutputConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

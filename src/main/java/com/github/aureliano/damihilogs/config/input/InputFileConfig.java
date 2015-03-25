@@ -1,6 +1,7 @@
 package com.github.aureliano.damihilogs.config.input;
 
 import java.io.File;
+import java.util.Properties;
 
 public class InputFileConfig implements IConfigInput {
 
@@ -12,6 +13,7 @@ public class InputFileConfig implements IConfigInput {
 	private long tailInterval;
 	private String id;
 	private boolean useLastExecutionRecords;
+	private Properties metadata;
 
 	public InputFileConfig() {
 		this.startPosition = 0;
@@ -19,6 +21,7 @@ public class InputFileConfig implements IConfigInput {
 		this.tailFile = false;
 		this.tailDelay = 1000;
 		this.tailInterval = 0;
+		this.metadata = new Properties();
 	}
 	
 	@Override
@@ -102,7 +105,6 @@ public class InputFileConfig implements IConfigInput {
 		return this;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public InputFileConfig clone() {
 		return new InputFileConfig()
@@ -112,6 +114,28 @@ public class InputFileConfig implements IConfigInput {
 			.withTailDelay(this.tailDelay)
 			.withTailFile(this.tailFile)
 			.withTailInterval(this.tailInterval)
-			.withConfigurationId(this.id);
+			.withConfigurationId(this.id)
+			.withMetadata(this.metadata);
+	}
+	
+	@Override
+	public InputFileConfig putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected InputFileConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

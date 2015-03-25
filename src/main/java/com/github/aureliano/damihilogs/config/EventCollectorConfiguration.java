@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
@@ -11,7 +12,7 @@ import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
-public class EventCollectorConfiguration {
+public class EventCollectorConfiguration implements IConfiguration {
 
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
@@ -21,6 +22,7 @@ public class EventCollectorConfiguration {
 	private List<DataWritingListener> dataWritingListeners;
 	private boolean persistExecutionLog;
 	private boolean multiThreadingEnabled;
+	private Properties metadata;
 	
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
@@ -33,6 +35,8 @@ public class EventCollectorConfiguration {
 		
 		this.persistExecutionLog = true;
 		this.multiThreadingEnabled = false;
+		
+		this.metadata = new Properties();
 	}
 
 	public List<IConfigInput> getInputConfigs() {
@@ -115,5 +119,31 @@ public class EventCollectorConfiguration {
 	public EventCollectorConfiguration withMultiThreadingEnabled(boolean multiThreadingEnabled) {
 		this.multiThreadingEnabled = multiThreadingEnabled;
 		return this;
+	}
+	
+	public EventCollectorConfiguration withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+	
+	@Override
+	public EventCollectorConfiguration putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
+	}
+	
+	@Override
+	public EventCollectorConfiguration clone() {
+		throw new UnsupportedOperationException("Clone not supported.");
 	}
 }

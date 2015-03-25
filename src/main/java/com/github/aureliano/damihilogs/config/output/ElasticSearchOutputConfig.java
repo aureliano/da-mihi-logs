@@ -1,6 +1,7 @@
 package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
+import java.util.Properties;
 
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
@@ -18,12 +19,14 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	
 	private IParser<?> parser;
 	private IEventFielter filter;
+	private Properties metadata;
 	
 	public ElasticSearchOutputConfig() {
 		this.host = DEFAULT_ELASTIC_SEARCH_HOST;
 		this.port = DEFAULT_ELASTIC_SEARCH_PORT;
 		this.transportClientPort = DEFAULT_TRANSPORT_CLIENT_PORT;
 		this.printElasticSearchLog = DEFAULT_PRINT_ELASTIC_SEARCH_LOG;
+		this.metadata = new Properties();
 	}
 
 	@Override
@@ -130,7 +133,8 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		this.filter = filter;
 		return this;
 	}
-	@SuppressWarnings("unchecked")
+	
+	@Override
 	public ElasticSearchOutputConfig clone() {
 		return (ElasticSearchOutputConfig) new ElasticSearchOutputConfig()
 			.withHost(this.host)
@@ -139,6 +143,28 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 			.withPort(this.port)
 			.withPrintElasticSearchLog(this.printElasticSearchLog)
 			.withTransportClientPort(this.transportClientPort)
+			.withMetadata(this.metadata)
 			.withConfigProperties(this.configProperties);
+	}
+	
+	@Override
+	public ElasticSearchOutputConfig putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected ElasticSearchOutputConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

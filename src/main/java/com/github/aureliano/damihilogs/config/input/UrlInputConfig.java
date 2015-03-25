@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.config.input;
 import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class UrlInputConfig implements IConfigInput {
 
@@ -27,6 +28,7 @@ public class UrlInputConfig implements IConfigInput {
 	private String id;
 
 	private boolean useLastExecutionRecords;
+	private Properties metadata;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -37,6 +39,7 @@ public class UrlInputConfig implements IConfigInput {
 		this.appendIfOutputFileExist = false;
 		this.fileStartPosition = 0;
 		this.noCheckCertificate = false;
+		this.metadata = new Properties();
 	}
 
 	public ConnectionSchema getConnectionSchema() {
@@ -188,7 +191,6 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public UrlInputConfig clone() {
 		return new UrlInputConfig()
@@ -205,6 +207,28 @@ public class UrlInputConfig implements IConfigInput {
 			.withReadTimeout(this.readTimeout)
 			.withUser(this.user)
 			.withAppendIfOutputFileExist(this.appendIfOutputFileExist)
-			.withConfigurationId(this.id);
+			.withConfigurationId(this.id)
+			.withMetadata(this.metadata);
+	}
+	
+	@Override
+	public UrlInputConfig putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected UrlInputConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

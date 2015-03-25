@@ -66,6 +66,7 @@ public class CollectEventsCommand {
 		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
 			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
 			ConfigHelper.inputConfigValidation(inputConfig);
+			ConfigHelper.copyMetadata(this.configuration, inputConfig);
 			
 			if (inputConfig.getConfigurationId() == null) {
 				inputConfig.withConfigurationId("configuration_id_" + (i + 1));
@@ -151,6 +152,8 @@ public class CollectEventsCommand {
 			if (outputConfig.getFilter() == null) {
 				outputConfig.withFilter(new DefaultEmptyFilter());
 			}
+			
+			ConfigHelper.copyMetadata(this.configuration, outputConfig);
 			
 			IDataWriter dataWriter = DataWriterFactory
 					.createDataWriter(outputConfig)

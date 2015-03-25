@@ -6,14 +6,33 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class ConfigHelperTest {
+	
+	@Test
+	public void testCopyMetadata() {
+		EventCollectorConfiguration c = new EventCollectorConfiguration();
+		c.putMetadata("fruit", "orange");
+		c.putMetadata("collor", "blue");
+		
+		StandardInputConfig s = new StandardInputConfig();
+		s.putMetadata("fruit", "coconut");
+		s.putMetadata("idiom", "Portuguese");
+		
+		ConfigHelper.copyMetadata(c, s);
+		
+		Assert.assertEquals("coconut", s.getMetadata("fruit"));
+		Assert.assertEquals("blue", s.getMetadata("collor"));
+		Assert.assertEquals("Portuguese", s.getMetadata("idiom"));
+	}
 	
 	@Test
 	public void testBuildUrl() {

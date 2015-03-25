@@ -1,9 +1,12 @@
 package com.github.aureliano.damihilogs.reader;
 
+import java.util.Properties;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
@@ -29,8 +32,7 @@ public class DataReaderFactoryTest {
 				return null;
 			}
 			
-			@SuppressWarnings("unchecked")
-			public Object clone() {
+			public IConfiguration clone() {
 				return null;
 			}
 
@@ -39,6 +41,18 @@ public class DataReaderFactoryTest {
 			}
 
 			public IConfigInput withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+				return null;
+			}
+
+			public IConfiguration putMetadata(String key, String value) {
+				return null;
+			}
+
+			public String getMetadata(String key) {
+				return null;
+			}
+			
+			public Properties getMetadata() {
 				return null;
 			}
 		});

@@ -1,8 +1,11 @@
 package com.github.aureliano.damihilogs.writer;
 
+import java.util.Properties;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
@@ -25,28 +28,35 @@ public class DataWriterFactoryTest {
 				return null;
 			}
 			
-			@SuppressWarnings("unchecked")
-			public Object clone() {
+			public IConfiguration clone() {
 				return null;
 			}
 
-			@Override
 			public IParser<?> getParser() {
 				return null;
 			}
 
-			@Override
 			public IConfigOutput withParser(IParser<?> parser) {
 				return null;
 			}
 
-			@Override
 			public IEventFielter getFilter() {
 				return null;
 			}
 
-			@Override
 			public IConfigOutput withFilter(IEventFielter filter) {
+				return null;
+			}
+
+			public IConfiguration putMetadata(String key, String value) {
+				return null;
+			}
+
+			public String getMetadata(String key) {
+				return null;
+			}
+			
+			public Properties getMetadata() {
 				return null;
 			}
 		});

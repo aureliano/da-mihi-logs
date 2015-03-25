@@ -32,12 +32,14 @@ public class ExternalCommandInputTest {
 		ExternalCommandInput c1 = new ExternalCommandInput()
 			.withConfigurationId("external-command-config")
 			.withCommand("ls")
-			.addParameter("-la");
+			.addParameter("-la")
+			.putMetadata("test", "my test");
 		
 		ExternalCommandInput c2 = c1.clone();
 		Assert.assertEquals(c1.getCommand(), c2.getCommand());
 		Assert.assertEquals(c1.getConfigurationId(), c2.getConfigurationId());
 		Assert.assertEquals(c1.getParameters().size(), c2.getParameters().size());
 		Assert.assertEquals(c1.getParameters().get(0), c2.getParameters().get(0));
+		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }

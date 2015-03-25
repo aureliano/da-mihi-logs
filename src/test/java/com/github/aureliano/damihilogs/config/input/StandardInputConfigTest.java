@@ -19,11 +19,13 @@ public class StandardInputConfigTest {
 	public void testClone() {
 		StandardInputConfig c1 = (StandardInputConfig) new StandardInputConfig()
 			.withEncoding("ISO-8859-1")
-			.withConfigurationId("standard.input.config");
+			.withConfigurationId("standard.input.config")
+			.putMetadata("test", "my test");
 		
 		StandardInputConfig c2 = c1.clone();
 		
 		Assert.assertEquals(c1.getEncoding(), c2.getEncoding());
 		Assert.assertEquals(c1.getConfigurationId(), c2.getConfigurationId());
+		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }

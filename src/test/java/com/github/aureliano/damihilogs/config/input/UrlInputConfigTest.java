@@ -69,7 +69,8 @@ public class UrlInputConfigTest {
 			.withUser("user_name")
 			.withPassword("my-password")
 			.withNoCheckCertificate(true)
-			.withConfigurationId("url.input.config");
+			.withConfigurationId("url.input.config")
+			.putMetadata("test", "my test");
 		
 		UrlInputConfig c2 = c1.clone();
 		
@@ -87,5 +88,6 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(c1.getParameters().size(), c2.getParameters().size());
 		Assert.assertEquals(c1.getPort(), c2.getPort());
 		Assert.assertEquals(c1.isNoCheckCertificate(), c2.isNoCheckCertificate());
+		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }

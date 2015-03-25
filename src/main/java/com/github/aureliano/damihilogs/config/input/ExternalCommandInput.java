@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.config.input;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class ExternalCommandInput implements IConfigInput {
 
@@ -9,9 +10,11 @@ public class ExternalCommandInput implements IConfigInput {
 	private String command;
 	private List<String> parameters;
 	private boolean useLastExecutionRecords;
+	private Properties metadata;
 	
 	public ExternalCommandInput() {
 		this.parameters = new ArrayList<String>();
+		this.metadata = new Properties();
 	}
 	
 	@Override
@@ -25,13 +28,13 @@ public class ExternalCommandInput implements IConfigInput {
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public ExternalCommandInput clone() {
 		return new ExternalCommandInput()
 			.withConfigurationId(this.id)
 			.withCommand(this.command)
-			.withParameters(this.parameters);
+			.withParameters(this.parameters)
+			.withMetadata(this.metadata);
 	}
 
 	@Override
@@ -66,5 +69,26 @@ public class ExternalCommandInput implements IConfigInput {
 	public ExternalCommandInput addParameter(String parameter) {
 		this.parameters.add(parameter);
 		return this;
+	}
+	
+	@Override
+	public ExternalCommandInput putMetadata(String key, String value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+	
+	@Override
+	public String getMetadata(String key) {
+		return this.metadata.getProperty(key);
+	}
+	
+	protected ExternalCommandInput withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+
+	@Override
+	public Properties getMetadata() {
+		return this.metadata;
 	}
 }

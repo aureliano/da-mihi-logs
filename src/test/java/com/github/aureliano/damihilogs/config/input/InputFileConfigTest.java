@@ -43,7 +43,8 @@ public class InputFileConfigTest {
 			.withTailFile(true)
 			.withTailDelay(2000)
 			.withTailInterval(10000)
-			.withConfigurationId("input.file.config");
+			.withConfigurationId("input.file.config")
+			.putMetadata("test", "my test");
 		
 		InputFileConfig c2 = c1.clone();
 		
@@ -54,5 +55,6 @@ public class InputFileConfigTest {
 		Assert.assertEquals(c1.getFile(), c2.getFile());
 		Assert.assertEquals(c1.getStartPosition(), c2.getStartPosition());
 		Assert.assertEquals(c1.isTailFile(), c2.isTailFile());
+		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }

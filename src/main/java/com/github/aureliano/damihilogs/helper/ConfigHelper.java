@@ -1,7 +1,9 @@
 package com.github.aureliano.damihilogs.helper;
 
 import java.util.Map;
+import java.util.Set;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
@@ -17,6 +19,15 @@ public final class ConfigHelper {
 
 	private ConfigHelper() {
 		super();
+	}
+	
+	public static void copyMetadata(IConfiguration from, IConfiguration to) {
+		Set<Object> keys = from.getMetadata().keySet();
+		for (Object key : keys) {
+			if (to.getMetadata(key.toString()) == null) {
+				to.putMetadata(key.toString(), from.getMetadata(key.toString()));
+			}
+		}
 	}
 	
 	public static String buildUrl(UrlInputConfig config) {

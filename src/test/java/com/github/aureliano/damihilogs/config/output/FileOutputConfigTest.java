@@ -30,11 +30,13 @@ public class FileOutputConfigTest {
 		FileOutputConfig c1 = new FileOutputConfig()
 			.withAppend(true)
 			.withEncoding("ISO-8859-1")
-			.withFile("/there/is/not/file");
+			.withFile("/there/is/not/file")
+			.putMetadata("test", "my test");
 		
 		FileOutputConfig c2 = c1.clone();
 		Assert.assertEquals(c1.getFile(), c2.getFile());
 		Assert.assertEquals(c1.getEncoding(), c2.getEncoding());
 		Assert.assertEquals(c1.isAppend(), c2.isAppend());
+		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }
