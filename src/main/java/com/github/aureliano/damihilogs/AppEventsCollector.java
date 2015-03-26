@@ -10,6 +10,7 @@ import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.profile.Profiler;
+import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
 public class AppEventsCollector {
 
@@ -18,12 +19,28 @@ public class AppEventsCollector {
 	private EventCollectorConfiguration configuration;
 	private String collectorId;
 	private CollectEventsCommand commandExecutor;
+	private EventCollectionSchedule scheduler;
 	
 	public AppEventsCollector() {
 		super();
 	}
 	
 	public void execute() {
+		if (this.scheduler == null) {
+			this._execute();
+			return;
+		}
+		
+		this.scheduler.prepareSchedulingForExecution(new Runnable() {			
+			
+			@Override
+			public void run() {
+				_execute();
+			}
+		});
+	}
+	
+	private void _execute() {
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
 			logger.info("Using default event collector configuration.");
@@ -70,5 +87,14 @@ public class AppEventsCollector {
 	public AppEventsCollector withCollectorId(String colectorId) {
 		this.collectorId = colectorId;
 		return this;
+	}
+	
+	public AppEventsCollector withScheduler(EventCollectionSchedule scheduler) {
+		this.scheduler = scheduler;
+		return this;
+	}
+	
+	public EventCollectionSchedule getScheduler() {
+		return scheduler;
 	}
 }
