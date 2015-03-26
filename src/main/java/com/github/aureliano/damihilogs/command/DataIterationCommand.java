@@ -14,6 +14,8 @@ public class DataIterationCommand implements Runnable {
 	private List<IDataWriter> dataWriters;
 	private String id;
 	
+	private Map<String, Object> logExecution;
+	
 	public DataIterationCommand(IDataReader dataReader, List<IDataWriter> dataWriters) {
 		this(dataReader, dataWriters, null);
 	}
@@ -29,14 +31,13 @@ public class DataIterationCommand implements Runnable {
 		this.execute();
 	}
 	
-	public Map<String, Object> execute() {
+	public void execute() {
 		for (IDataWriter dw : this.dataWriters) {
 			IConfigOutput c = dw.getOutputConfiguration();
 			ConfigHelper.copyMetadata(this.dataReader.getInputConfiguration(), c);
 		}
 		
-		Map<String, Object> logExecution = this.dataIteration();
-		return logExecution;
+		this.logExecution = this.dataIteration();
 	}
 	
 	public void setId(String id) {
@@ -45,6 +46,10 @@ public class DataIterationCommand implements Runnable {
 	
 	public String getId() {
 		return this.id;
+	}
+	
+	public Map<String, Object> getLogExecution() {
+		return this.logExecution;
 	}
 	
 	private Map<String, Object> dataIteration() {		

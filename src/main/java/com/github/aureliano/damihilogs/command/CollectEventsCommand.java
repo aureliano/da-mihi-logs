@@ -87,12 +87,19 @@ public class CollectEventsCommand {
 		}
 		
 		this.serialExecution(commands);
+		this.copyLogExecutions(commands);
+	}
+	
+	private void copyLogExecutions(List<DataIterationCommand> commands) {
+		for (DataIterationCommand command : commands) {
+			Map<String, Object> logExecution = command.getLogExecution();
+			this.addLogExecution(logExecution);
+		}
 	}
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
 		for (DataIterationCommand command : commands) {
-			Map<String, Object> logExecution = command.execute();
-			this.addLogExecution(logExecution);
+			command.execute();
 		}
 	}
 	
