@@ -25,14 +25,14 @@ import com.github.aureliano.damihilogs.writer.IDataWriter;
 public class CollectEventsCommand {
 
 	private EventCollectorConfiguration configuration;
-	private static List<Map<String, Object>> logExecutions;
+	private List<Map<String, Object>> logExecutions;
 	private String collectorId;
 	
 	private static final Logger logger = Logger.getLogger(CollectEventsCommand.class);
 	
 	public CollectEventsCommand(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
-		CollectEventsCommand.logExecutions = new ArrayList<Map<String,Object>>();
+		this.logExecutions = new ArrayList<Map<String,Object>>();
 	}
 	
 	public void execute(String collectorId) {
@@ -91,7 +91,8 @@ public class CollectEventsCommand {
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
 		for (DataIterationCommand command : commands) {
-			command.execute();
+			Map<String, Object> logExecution = command.execute();
+			this.addLogExecution(logExecution);
 		}
 	}
 	
@@ -135,7 +136,7 @@ public class CollectEventsCommand {
 			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
 			if (properties != null) {
 				dataReader.loadLastExecutionLog(LoggerHelper.getLastExecutionLog(collectorId));
-				CollectEventsCommand.addLogExecution(dataReader.getReadingProperties());
+				this.addLogExecution(dataReader.getReadingProperties());
 			}
 		}
 		return dataReader;
@@ -165,11 +166,11 @@ public class CollectEventsCommand {
 		return dataWriters;
 	}
 	
-	public static final synchronized void addLogExecution(Map<String, Object> logExecution) {
-		CollectEventsCommand.logExecutions.add(logExecution);
+	public final synchronized void addLogExecution(Map<String, Object> logExecution) {
+		this.logExecutions.add(logExecution);
 	}
 	
 	public List<Map<String, Object>> getLogExecutions() {
-		return CollectEventsCommand.logExecutions;
+		return this.logExecutions;
 	}
 }

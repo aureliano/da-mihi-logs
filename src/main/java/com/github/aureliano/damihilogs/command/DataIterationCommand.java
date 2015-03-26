@@ -29,14 +29,14 @@ public class DataIterationCommand implements Runnable {
 		this.execute();
 	}
 	
-	public void execute() {
+	public Map<String, Object> execute() {
 		for (IDataWriter dw : this.dataWriters) {
 			IConfigOutput c = dw.getOutputConfiguration();
 			ConfigHelper.copyMetadata(this.dataReader.getInputConfiguration(), c);
 		}
 		
 		Map<String, Object> logExecution = this.dataIteration();
-		CollectEventsCommand.addLogExecution(logExecution);
+		return logExecution;
 	}
 	
 	public void setId(String id) {
