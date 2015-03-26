@@ -11,23 +11,24 @@ public class UrlInputConfig implements IConfigInput {
 	
 	private ConnectionSchema connectionSchema;
 	private String host;
-	private int port;
+	private Integer port;
 	private String path;
 	private Map<String, String> parameters;
-	private long readTimeout;
-	private int byteOffSet;
+	private Long readTimeout;
+	private Integer byteOffSet;
 	
 	private File outputFile;
-	private boolean appendIfOutputFileExist;
-	private int fileStartPosition;
+	private Boolean appendIfOutputFileExist;
+	private Boolean alwaysDownloadCompleteFile;
+	private Integer fileStartPosition;
 	
 	private String user;
 	private String password;
-	private boolean noCheckCertificate;
+	private Boolean noCheckCertificate;
 
 	private String id;
 
-	private boolean useLastExecutionRecords;
+	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	
 	public UrlInputConfig() {
@@ -37,8 +38,9 @@ public class UrlInputConfig implements IConfigInput {
 		this.readTimeout = DEFAULT_READ_TIMEOUT;
 		this.byteOffSet = 0;
 		this.appendIfOutputFileExist = false;
-		this.fileStartPosition = 0;
+		this.alwaysDownloadCompleteFile = false;
 		this.noCheckCertificate = false;
+		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 	}
 
@@ -64,7 +66,7 @@ public class UrlInputConfig implements IConfigInput {
 		return port;
 	}
 	
-	public UrlInputConfig withPort(int port) {
+	public UrlInputConfig withPort(Integer port) {
 		this.port = port;
 		return this;
 	}
@@ -92,20 +94,20 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
-	public long getReadTimeout() {
+	public Long getReadTimeout() {
 		return readTimeout;
 	}
 
-	public UrlInputConfig withReadTimeout(long readTimeout) {
+	public UrlInputConfig withReadTimeout(Long readTimeout) {
 		this.readTimeout = readTimeout;
 		return this;
 	}
 	
-	public int getByteOffSet() {
+	public Integer getByteOffSet() {
 		return byteOffSet;
 	}
 	
-	public UrlInputConfig withByteOffSet(int byteOffSet) {
+	public UrlInputConfig withByteOffSet(Integer byteOffSet) {
 		this.byteOffSet = byteOffSet;
 		return this;
 	}
@@ -124,20 +126,29 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	public boolean isAppendIfOutputFileExist() {
+	public Boolean isAppendIfOutputFileExist() {
 		return appendIfOutputFileExist;
 	}
 	
-	public UrlInputConfig withAppendIfOutputFileExist(boolean appendIfOutputFileExist) {
+	public UrlInputConfig withAppendIfOutputFileExist(Boolean appendIfOutputFileExist) {
 		this.appendIfOutputFileExist = appendIfOutputFileExist;
 		return this;
 	}
 	
-	public int getFileStartPosition() {
+	public UrlInputConfig withAlwaysDownloadCompleteFile(Boolean alwaysDownloadCompleteFile) {
+		this.alwaysDownloadCompleteFile = alwaysDownloadCompleteFile;
+		return this;
+	}
+	
+	public Boolean isAlwaysDownloadCompleteFile() {
+		return alwaysDownloadCompleteFile;
+	}
+	
+	public Integer getFileStartPosition() {
 		return fileStartPosition;
 	}
 	
-	public UrlInputConfig withFileStartPosition(int fileStartPosition) {
+	public UrlInputConfig withFileStartPosition(Integer fileStartPosition) {
 		this.fileStartPosition = fileStartPosition;
 		return this;
 	}
@@ -160,11 +171,11 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
-	public boolean isNoCheckCertificate() {
+	public Boolean isNoCheckCertificate() {
 		return noCheckCertificate;
 	}
 
-	public UrlInputConfig withNoCheckCertificate(boolean noCheckCertificate) {
+	public UrlInputConfig withNoCheckCertificate(Boolean noCheckCertificate) {
 		this.noCheckCertificate = noCheckCertificate;
 		return this;
 	}
@@ -181,12 +192,12 @@ public class UrlInputConfig implements IConfigInput {
 	}
 	
 	@Override
-	public boolean isUseLastExecutionRecords() {
+	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
 
 	@Override
-	public UrlInputConfig withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+	public UrlInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}

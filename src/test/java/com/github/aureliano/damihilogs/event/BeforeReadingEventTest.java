@@ -20,7 +20,7 @@ public class BeforeReadingEventTest {
 		InputFileConfig cfg = (InputFileConfig) event.getInputConfiguration();
 		
 		Assert.assertEquals("ISO-8859-1", cfg.getEncoding());
-		Assert.assertEquals(31, cfg.getStartPosition());
+		Assert.assertEquals(new Integer(31), cfg.getStartPosition());
 		Assert.assertEquals(cfg.getFile().getPath(), "/there/is/not/file");
 	}
 }

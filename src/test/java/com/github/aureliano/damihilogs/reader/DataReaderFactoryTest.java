@@ -36,11 +36,11 @@ public class DataReaderFactoryTest {
 				return null;
 			}
 
-			public boolean isUseLastExecutionRecords() {
+			public Boolean isUseLastExecutionRecords() {
 				return false;
 			}
 
-			public IConfigInput withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+			public IConfigInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 				return null;
 			}
 

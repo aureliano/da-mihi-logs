@@ -9,21 +9,22 @@ public class ExternalCommandInput implements IConfigInput {
 	private String id;
 	private String command;
 	private List<String> parameters;
-	private boolean useLastExecutionRecords;
+	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	
 	public ExternalCommandInput() {
+		this.useLastExecutionRecords = false;
 		this.parameters = new ArrayList<String>();
 		this.metadata = new Properties();
 	}
 	
 	@Override
-	public boolean isUseLastExecutionRecords() {
+	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
 
 	@Override
-	public ExternalCommandInput withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+	public ExternalCommandInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}

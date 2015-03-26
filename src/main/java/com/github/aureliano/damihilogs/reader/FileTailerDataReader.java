@@ -179,7 +179,8 @@ public class FileTailerDataReader extends AbstractDataReader {
 		String value = properties.getProperty(key);
 		if (value != null) {
 			super.readingProperties.put(key, value);
-			if (this.fileTailerConfiguration.isUseLastExecutionRecords()) {
+			if ((this.fileTailerConfiguration.isUseLastExecutionRecords()) &&
+					(this.fileTailerConfiguration.getStartPosition() == null)) {
 				this.fileTailerConfiguration.withStartPosition(Integer.parseInt(value));
 			}
 		}

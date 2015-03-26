@@ -78,6 +78,10 @@ public class FileDataReader extends AbstractDataReader {
 			this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
 		}
 		
+		if (this.fileInputConfiguration.getStartPosition() == null) {
+			this.fileInputConfiguration.withStartPosition(0);
+		}
+		
 		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
 		logger.info("Starting from line " + this.fileInputConfiguration.getStartPosition());
 		logger.info("Data encondig: " + this.fileInputConfiguration.getEncoding());
@@ -125,7 +129,8 @@ public class FileDataReader extends AbstractDataReader {
 		String value = properties.getProperty(key);
 		if (value != null) {
 			super.readingProperties.put(key, value);
-			if (this.fileInputConfiguration.isUseLastExecutionRecords()) {
+			if ((this.fileInputConfiguration.isUseLastExecutionRecords()) &&
+					(this.fileInputConfiguration.getStartPosition() == null)) {
 				this.fileInputConfiguration.withStartPosition(Integer.parseInt(value));
 			}
 		}

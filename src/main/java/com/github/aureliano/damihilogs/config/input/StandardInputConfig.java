@@ -6,11 +6,12 @@ public class StandardInputConfig implements IConfigInput {
 
 	private String encoding;
 	private String id;
-	private boolean useLastExecutionRecords;
+	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	
 	public StandardInputConfig() {
 		this.encoding = "UTF-8";
+		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 	}
 	
@@ -35,12 +36,12 @@ public class StandardInputConfig implements IConfigInput {
 	}
 	
 	@Override
-	public boolean isUseLastExecutionRecords() {
+	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
 
 	@Override
-	public StandardInputConfig withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+	public StandardInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}

@@ -89,6 +89,11 @@ public class UrlDataReader extends AbstractDataReader {
 		this.prepareDownload();
 		this.download();
 		
+		if (!this.urlInputConfiguration.isAlwaysDownloadCompleteFile() && !this.urlInputConfiguration.isAppendIfOutputFileExist()) {
+			logger.warn("ATENTION! Defining file start position to 0 because you have decided to download only piece of file and you haven't configured to append downloaded file.");
+			this.urlInputConfiguration.withFileStartPosition(0);
+		}
+		
 		this.fileDataReader = (FileDataReader) new FileDataReader()
 			.withInputConfiguration(
 				new InputFileConfig()
@@ -255,7 +260,8 @@ public class UrlDataReader extends AbstractDataReader {
 		String value = properties.getProperty(key);
 		if (value != null) {
 			super.readingProperties.put(key, value);
-			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) && 
+					(this.urlInputConfiguration.getFileStartPosition() == null)) {
 				this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
 			}
 		}
@@ -264,7 +270,8 @@ public class UrlDataReader extends AbstractDataReader {
 		value = properties.getProperty(key);
 		if (value != null) {
 			super.readingProperties.put(key, value);
-			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) &&
+					(this.urlInputConfiguration.getOutputFile() == null)) {
 				this.urlInputConfiguration.withOutputFile(value);
 			}
 		}

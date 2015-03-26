@@ -12,10 +12,10 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(-1, c.getPort());
 		Assert.assertNotNull(c.getParameters());
 		Assert.assertTrue(c.getParameters().isEmpty());
-		Assert.assertEquals(UrlInputConfig.DEFAULT_READ_TIMEOUT, c.getReadTimeout());
-		Assert.assertEquals(0, c.getByteOffSet());
+		Assert.assertEquals(new Long(UrlInputConfig.DEFAULT_READ_TIMEOUT), c.getReadTimeout());
+		Assert.assertEquals(new Integer(0), c.getByteOffSet());
 		Assert.assertFalse(c.isAppendIfOutputFileExist());
-		Assert.assertEquals(0, c.getFileStartPosition());
+		Assert.assertNull(c.getFileStartPosition());
 		Assert.assertFalse(c.isNoCheckCertificate());
 	}
 	
@@ -27,7 +27,7 @@ public class UrlInputConfigTest {
 			.withPort(8080)
 			.withPath("logs")
 			.addParameter("test", "Is it a test?")
-			.withReadTimeout(5 * 1000)
+			.withReadTimeout(new Long(5 * 1000))
 			.withByteOffSet(199845)
 			.withOutputFile("output_file.log")
 			.withAppendIfOutputFileExist(true)
@@ -43,11 +43,11 @@ public class UrlInputConfigTest {
 		Assert.assertEquals("logs", c.getPath());
 		Assert.assertTrue(c.getParameters().size() == 1);
 		Assert.assertEquals("Is it a test?", c.getParameters().get("test"));
-		Assert.assertEquals(5000, c.getReadTimeout());
-		Assert.assertEquals(199845, c.getByteOffSet());
+		Assert.assertEquals(new Long(5000), c.getReadTimeout());
+		Assert.assertEquals(new Integer(199845), c.getByteOffSet());
 		Assert.assertEquals("output_file.log", c.getOutputFile().getPath());
 		Assert.assertTrue(c.isAppendIfOutputFileExist());
-		Assert.assertEquals(45, c.getFileStartPosition());
+		Assert.assertEquals(new Integer(45), c.getFileStartPosition());
 		Assert.assertEquals("user_name", c.getUser());
 		Assert.assertEquals("my-password", c.getPassword());
 		Assert.assertTrue(c.isNoCheckCertificate());
@@ -61,7 +61,7 @@ public class UrlInputConfigTest {
 			.withPort(8080)
 			.withPath("logs")
 			.addParameter("test", "Is it a test?")
-			.withReadTimeout(5 * 1000)
+			.withReadTimeout(new Long(5 * 1000))
 			.withByteOffSet(199845)
 			.withOutputFile("output_file.log")
 			.withAppendIfOutputFileExist(true)

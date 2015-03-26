@@ -6,21 +6,21 @@ import java.util.Properties;
 public class InputFileConfig implements IConfigInput {
 
 	private File file;
-	private int startPosition;
+	private Integer startPosition;
 	private String encoding;
-	private boolean tailFile;
-	private long tailDelay;
-	private long tailInterval;
+	private Boolean tailFile;
+	private Long tailDelay;
+	private Long tailInterval;
 	private String id;
-	private boolean useLastExecutionRecords;
+	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 
 	public InputFileConfig() {
-		this.startPosition = 0;
 		this.encoding = "UTF-8";
 		this.tailFile = false;
-		this.tailDelay = 1000;
-		this.tailInterval = 0;
+		this.tailDelay = 1000L;
+		this.tailInterval = 0L;
+		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 	}
 	
@@ -49,11 +49,11 @@ public class InputFileConfig implements IConfigInput {
 		return this;
 	}
 	
-	public int getStartPosition() {
+	public Integer getStartPosition() {
 		return startPosition;
 	}
 	
-	public InputFileConfig withStartPosition(int startPosition) {
+	public InputFileConfig withStartPosition(Integer startPosition) {
 		this.startPosition = startPosition;
 		return this;
 	}
@@ -67,40 +67,40 @@ public class InputFileConfig implements IConfigInput {
 		return this;
 	}
 
-	public boolean isTailFile() {
+	public Boolean isTailFile() {
 		return this.tailFile;
 	}
 	
-	public InputFileConfig withTailFile(boolean tailFile) {
+	public InputFileConfig withTailFile(Boolean tailFile) {
 		this.tailFile = tailFile;
 		return this;
 	}
 	
-	public long getTailDelay() {
+	public Long getTailDelay() {
 		return tailDelay;
 	}
 	
-	public InputFileConfig withTailDelay(long tailDelay) {
+	public InputFileConfig withTailDelay(Long tailDelay) {
 		this.tailDelay = tailDelay;
 		return this;
 	}
 	
-	public long getTailInterval() {
+	public Long getTailInterval() {
 		return tailInterval;
 	}
 	
-	public InputFileConfig withTailInterval(long tailInterval) {
+	public InputFileConfig withTailInterval(Long tailInterval) {
 		this.tailInterval = tailInterval;
 		return this;
 	}
 	
 	@Override
-	public boolean isUseLastExecutionRecords() {
+	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
 
 	@Override
-	public InputFileConfig withUseLastExecutionRecords(boolean useLastExecutionRecords) {
+	public InputFileConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}

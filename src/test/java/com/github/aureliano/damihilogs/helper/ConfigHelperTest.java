@@ -92,8 +92,8 @@ public class ConfigHelperTest {
 			Assert.assertEquals("Input resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
 		
-		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")));
-		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log"));
+		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
+		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
 	}
 	
 	@Test

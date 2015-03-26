@@ -155,7 +155,7 @@ public final class ConfigHelper {
 	}
 	
 	protected static void inputFileConfigStartPositionValidation(InputFileConfig config) {
-		if (config.getStartPosition() < 0) {
+		if ((config.getStartPosition() == null) || (config.getStartPosition() < 0)) {
 			throw new DaMihiLogsException("Start position must be greater or equal to zero (>= 0).");
 		}
 	}

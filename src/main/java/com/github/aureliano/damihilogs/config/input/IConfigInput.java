@@ -8,7 +8,7 @@ public interface IConfigInput extends IConfiguration {
 	
 	public abstract IConfigInput withConfigurationId(String id);
 	
-	public abstract boolean isUseLastExecutionRecords();
+	public abstract Boolean isUseLastExecutionRecords();
 	
-	public abstract IConfigInput withUseLastExecutionRecords(boolean useLastExecutionRecords);
+	public abstract IConfigInput withUseLastExecutionRecords(Boolean useLastExecutionRecords);
 }
