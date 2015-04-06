@@ -25,7 +25,7 @@ public final class LoggerHelper {
 	private static final Logger logger = Logger.getLogger(LoggerHelper.class);
 	private static final String LOG_DIR_PATH = "log";
 	private static final String LOG_DATA_DIR_PATH = LOG_DIR_PATH + File.separator + "data";
-	private static final String LOG_EXEC_DIR_PATH = LOG_DIR_PATH + File.separator + "exec";
+	private static final String LOG_ECHO_DIR_PATH = LOG_DIR_PATH + File.separator + "echo";
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static final String DEFAULT_COLLECTOR_ID_NAME = "execution";
@@ -42,7 +42,7 @@ public final class LoggerHelper {
 		FileAppender appender = new FileAppender();
 		
 		appender.setName("file");
-		appender.setFile(String.format("%s%s%s.log", LOG_EXEC_DIR_PATH, File.separator, collectorId));
+		appender.setFile(String.format("%s%s%s_%d.log", LOG_ECHO_DIR_PATH, File.separator, collectorId, System.currentTimeMillis()));
 		appender.setLayout(new PatternLayout("%5p [%t] (%F:%L) - %m%n"));
 		appender.setThreshold(Level.DEBUG);
 		appender.setAppend(false);
