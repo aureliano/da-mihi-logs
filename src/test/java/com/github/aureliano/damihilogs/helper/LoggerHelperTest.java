@@ -45,6 +45,18 @@ public class LoggerHelperTest {
 		Assert.assertEquals(fileName, LoggerHelper.getLastExecutionLogDataFileName("test"));
 	}
 	
+	@Test
+	public void testCreateLoggerFileName() {
+		String dir = "log/exec";
+		String collectorId = "execution";
+		long timeMillis = 12345;
+		
+		String expected = "log/exec/execution_12345.log";
+		String actual = LoggerHelper.createLoggerFileName(dir, collectorId, timeMillis);
+		
+		Assert.assertEquals(expected, actual);
+	}
+	
 	private Properties loadProperties(File file) {
 		Properties p2 = new Properties();
 		try {

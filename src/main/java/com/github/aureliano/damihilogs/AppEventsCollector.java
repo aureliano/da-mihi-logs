@@ -75,7 +75,8 @@ public class AppEventsCollector {
 		}
 		
 		File log = LoggerHelper.saveExecutionLogData(this.collectorId, properties, true);
-		logger.info("Execution log output saved at " + log.getPath());		
+		logger.info("Execution log output saved at " + log.getPath());
+		
 		logger.info("Execution successful!");
 	}
 	

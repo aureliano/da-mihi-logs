@@ -42,7 +42,7 @@ public final class LoggerHelper {
 		FileAppender appender = new FileAppender();
 		
 		appender.setName("file");
-		appender.setFile(String.format("%s%s%s_%d.log", LOG_ECHO_DIR_PATH, File.separator, collectorId, System.currentTimeMillis()));
+		appender.setFile(createLoggerFileName(LOG_ECHO_DIR_PATH, collectorId, null));
 		appender.setLayout(new PatternLayout("%5p [%t] (%F:%L) - %m%n"));
 		appender.setThreshold(Level.DEBUG);
 		appender.setAppend(false);
@@ -117,26 +117,12 @@ public final class LoggerHelper {
 	}
 	
 	public static File saveExecutionLogData(String collectorId, Properties p, boolean ordered) {
-		Properties properties;
 		if (ordered) {
-			properties = new Properties() {
-			    
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public synchronized Enumeration<Object> keys() {
-					return Collections.enumeration(new TreeSet<Object>(super.keySet()));
-				}
-			};
-		} else {
-			properties = new Properties();
+			Properties properties = sortProperties(p);
+			return saveExecutionLogData(collectorId, properties);
 		}
 		
-		for (Object key : p.keySet()) {
-			properties.put(key, p.get(key));
-		}
-		
-		return saveExecutionLogData(collectorId, properties);
+		return saveExecutionLogData(collectorId, p);
 	}
 	
 	public static File saveExecutionLogData(String collectorId, Properties properties) {
@@ -154,8 +140,8 @@ public final class LoggerHelper {
 			
 			String fileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
 			File output = new File(dir.getPath() + File.separator + fileName);
-			logger.debug(properties.toString());
 			properties.store(new FileOutputStream(output), "Last execution information.");
+			logger.debug("Execution Log partial: " + properties);
 			
 			return output;
 		} catch (IOException ex) {
@@ -164,7 +150,37 @@ public final class LoggerHelper {
 		}
 	}
 	
+	public static void saveExecutionLogExec(String collectorId, Properties properties) {
+		logger.debug("Execution Log partial: " + properties);
+		
+	}
+	
 	protected static String getLastExecutionLogDataFileName(final String collectorId) {
 		return collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
+	}
+	
+	protected static Properties sortProperties(Properties p) {
+		Properties properties = new Properties() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public synchronized Enumeration<Object> keys() {
+				return Collections.enumeration(new TreeSet<Object>(super.keySet()));
+			}
+		};
+		
+		for (Object key : p.keySet()) {
+			properties.put(key, p.get(key));
+		}
+		
+		return properties;
+	}
+	
+	protected static String createLoggerFileName(String dir, String collectorId, Long timeMillis) {
+		if (timeMillis == null) {
+			timeMillis = System.currentTimeMillis();
+		}
+		
+		return String.format("%s%s%s_%s.log", dir, File.separator, collectorId, timeMillis);
 	}
 }
