@@ -26,6 +26,8 @@ public class AppEventsCollector {
 	}
 	
 	public void execute() {
+		this.configureLogger();
+		
 		if (this.scheduler == null) {
 			this._execute();
 			return;
@@ -55,6 +57,12 @@ public class AppEventsCollector {
 		if (this.configuration.isPersistExecutionLog()) {
 			this.printLogToOutput(profiler);
 		}
+	}
+	
+	private void configureLogger() {
+		LoggerHelper.configureFileAppenderLogger(this.collectorId);
+		System.setOut(LoggerHelper.createLoggingProxy(System.out, logger));
+		System.setErr(LoggerHelper.createLoggingProxy(System.err, logger));
 	}
 	
 	private void printLogToOutput(Profiler profiler) {

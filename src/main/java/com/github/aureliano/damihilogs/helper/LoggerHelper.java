@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
@@ -12,7 +13,10 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.util.TreeSet;
 
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
@@ -23,9 +27,54 @@ public final class LoggerHelper {
 	private static final String LOG_DATA_DIR_PATH = LOG_DIR_PATH + File.separator + "data";
 	private static final String LOG_EXEC_DIR_PATH = LOG_DIR_PATH + File.separator + "exec";
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+	
+	public static final String DEFAULT_COLLECTOR_ID_NAME = "execution";
 
 	private LoggerHelper() {
 		super();
+	}
+	
+	public static void configureFileAppenderLogger(String collectorId) {
+		if ((collectorId == null) || (collectorId.equals(""))) {
+			collectorId = DEFAULT_COLLECTOR_ID_NAME;
+		}
+		
+		FileAppender appender = new FileAppender();
+		
+		appender.setName("file");
+		appender.setFile(String.format("%s%s%s.log", LOG_EXEC_DIR_PATH, File.separator, collectorId));
+		appender.setLayout(new PatternLayout("%5p [%t] (%F:%L) - %m%n"));
+		appender.setThreshold(Level.DEBUG);
+		appender.setAppend(false);
+		appender.activateOptions();
+		
+		Logger.getRootLogger().addAppender(appender);
+	}
+	
+	public static PrintStream createLoggingProxy(final PrintStream printStream) {
+		return createLoggingProxy(printStream, null);
+	}
+	
+	public static PrintStream createLoggingProxy(final PrintStream printStream, final Logger _logger) {
+		return new PrintStream(printStream) {
+			public void print(final String text) {
+				printStream.print(text);
+				this._printLog(text, _logger);
+			}
+			
+			public void println(final String text) {
+				printStream.println(text);
+				this._printLog(text, _logger);
+			}
+			
+			private void _printLog(final String text, final Logger _logger) {
+				if (_logger == null) {
+					Logger.getRootLogger().debug(text);
+				} else {
+					_logger.debug(text);
+				}
+			}
+		};
 	}
 	
 	public static Properties getLastExecutionLog(final String collectorId) {
@@ -100,7 +149,7 @@ public final class LoggerHelper {
 			}
 			
 			if ((collectorId == null) || (collectorId.equals(""))) {
-				collectorId = "execution";
+				collectorId = DEFAULT_COLLECTOR_ID_NAME;
 			}
 			
 			String fileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
