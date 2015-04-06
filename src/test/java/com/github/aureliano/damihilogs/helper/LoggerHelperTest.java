@@ -13,7 +13,7 @@ import org.junit.Test;
 public class LoggerHelperTest {
 
 	@Test
-	public void testSaveExecutionLog() {
+	public void testSaveExecutionLogData() {
 		Properties p = new Properties();
 		p.put("profile.time.elapsed", "8 ms");
 		p.put("profile.processor.available", "8");
@@ -22,7 +22,7 @@ public class LoggerHelperTest {
 		p.put("profile.memomry.total", "61.38 MB");
 		
 		String colectorId = "blow-up";
-		File output = LoggerHelper.saveExecutionLog(colectorId, p);
+		File output = LoggerHelper.saveExecutionLogData(colectorId, p);
 		Assert.assertNotNull(output);
 		Assert.assertTrue(output.exists() && output.isFile());
 		Assert.assertTrue(output.getName().startsWith("blow-up"));
@@ -37,12 +37,12 @@ public class LoggerHelperTest {
 	}
 	
 	@Test
-	public void testGetLastExecutionLogFileName() {
+	public void testGetLastExecutionLogDataFileName() {
 		final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 		String collectorId = "test";
 		String fileName = collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
 		
-		Assert.assertEquals(fileName, LoggerHelper.getLastExecutionLogFileName("test"));
+		Assert.assertEquals(fileName, LoggerHelper.getLastExecutionLogDataFileName("test"));
 	}
 	
 	private Properties loadProperties(File file) {

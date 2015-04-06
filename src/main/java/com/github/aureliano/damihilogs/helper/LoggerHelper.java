@@ -20,6 +20,8 @@ public final class LoggerHelper {
 	
 	private static final Logger logger = Logger.getLogger(LoggerHelper.class);
 	private static final String LOG_DIR_PATH = "log";
+	private static final String LOG_DATA_DIR_PATH = LOG_DIR_PATH + File.separator + "data";
+	private static final String LOG_EXEC_DIR_PATH = LOG_DIR_PATH + File.separator + "exec";
 	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
 	private LoggerHelper() {
@@ -45,7 +47,7 @@ public final class LoggerHelper {
 	}
 	
 	private static File getLastExecutionFileLog(final String collectorId) {
-		String[] files = new File(LOG_DIR_PATH).list(new FilenameFilter() {
+		String[] files = new File(LOG_DATA_DIR_PATH).list(new FilenameFilter() {
 			
 			@Override
 			public boolean accept(File dir, String name) {
@@ -54,7 +56,7 @@ public final class LoggerHelper {
 		});
 		
 		String fileName = null;
-		String expectedFileName = LoggerHelper.getLastExecutionLogFileName(collectorId);
+		String expectedFileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
 		for (String file : files) {
 			if (expectedFileName.equals(file)) {
 				fileName = file;
@@ -62,10 +64,10 @@ public final class LoggerHelper {
 			}
 		}
 		
-		return (fileName != null) ? new File(LOG_DIR_PATH + File.separator + fileName) : null;
+		return (fileName != null) ? new File(LOG_DATA_DIR_PATH + File.separator + fileName) : null;
 	}
 	
-	public static File saveExecutionLog(String collectorId, Properties p, boolean ordered) {
+	public static File saveExecutionLogData(String collectorId, Properties p, boolean ordered) {
 		Properties properties;
 		if (ordered) {
 			properties = new Properties() {
@@ -85,14 +87,14 @@ public final class LoggerHelper {
 			properties.put(key, p.get(key));
 		}
 		
-		return saveExecutionLog(collectorId, properties);
+		return saveExecutionLogData(collectorId, properties);
 	}
 	
-	public static File saveExecutionLog(String collectorId, Properties properties) {
-		File dir = new File(LOG_DIR_PATH);
+	public static File saveExecutionLogData(String collectorId, Properties properties) {
+		File dir = new File(LOG_DATA_DIR_PATH);
 		try {
 			if (!dir.exists()) {
-				if (!dir.mkdir()) {
+				if (!dir.mkdirs()) {
 					throw new DaMihiLogsException("Could not create log directory.");
 				}
 			}
@@ -101,7 +103,7 @@ public final class LoggerHelper {
 				collectorId = "execution";
 			}
 			
-			String fileName = LoggerHelper.getLastExecutionLogFileName(collectorId);
+			String fileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
 			File output = new File(dir.getPath() + File.separator + fileName);
 			logger.debug(properties.toString());
 			properties.store(new FileOutputStream(output), "Last execution information.");
@@ -113,7 +115,7 @@ public final class LoggerHelper {
 		}
 	}
 	
-	protected static String getLastExecutionLogFileName(final String collectorId) {
+	protected static String getLastExecutionLogDataFileName(final String collectorId) {
 		return collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
 	}
 }
