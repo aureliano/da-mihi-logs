@@ -5,6 +5,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.event.AfterReadingEvent;
@@ -12,6 +13,7 @@ import com.github.aureliano.damihilogs.event.AfterWritingEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.JsonFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -43,6 +45,63 @@ public class AppEventsCollectorTest {
 				.withOutputFormatter(new JsonFormatter())
 				)
 			.execute();
+	}
+	
+	@Test
+	public void testExecuteSerialWithErrorHandling() {
+		new AppEventsCollector()
+			.withConfiguration(new EventCollectorConfiguration()
+				.withMultiThreadingEnabled(false)
+				.addInputConfig(new InputFileConfig()
+					.withConfigurationId("Batman")
+					.withFile("src/test/resources/server.log")
+					.withStartPosition(0)
+					.addExceptionHandler(new IExceptionHandler() {
+						
+						public void captureException(Runnable runnable, IConfigInput inputConfig) {
+							System.out.println("  >>> Batman has captured an exception");
+							System.out.println("  <<< Got it?");
+						}
+					}))
+				.addInputConfig(new InputFileConfig()
+					.withConfigurationId("Spiderman")
+					.withFile("src/test/resources/server.log")
+					.withStartPosition(0))
+				.addOutputConfig(new StandardOutputConfig()
+					.withParser(new JsonEventParser()))
+			).withCollectorId("super-hero").execute();
+	}
+	
+	@Test
+	public void testExecuteParalelWithErrorHandling() {
+		new AppEventsCollector()
+			.withConfiguration(new EventCollectorConfiguration()
+				.withMultiThreadingEnabled(true)
+				.addInputConfig(new InputFileConfig()
+					.withConfigurationId("Hulk")
+					.withFile("src/test/resources/server.log")
+					.withStartPosition(0)
+					.addExceptionHandler(new IExceptionHandler() {
+						
+						public void captureException(Runnable runnable, IConfigInput inputConfig) {
+							System.out.println("  >>> Amazing Hulk has captured an exception");
+							System.out.println("  <<< Of course he got it!");
+						}
+					}))
+				.addInputConfig(new InputFileConfig()
+					.withConfigurationId("Iron-Man")
+					.withFile("src/test/resources/server.log")
+					.withStartPosition(0)
+					.addExceptionHandler(new IExceptionHandler() {
+						
+						public void captureException(Runnable runnable, IConfigInput inputConfig) {
+							System.out.println("  >>> Iron-Man has captured an exception");
+							System.out.println("  <<< Gotcha!");
+						}
+					}))
+				.addOutputConfig(new StandardOutputConfig()
+					.withParser(new JsonEventParser()))
+			).withCollectorId("super-hero").execute();
 	}
 	
 	private DataReadingListener getDataReadingListener() {

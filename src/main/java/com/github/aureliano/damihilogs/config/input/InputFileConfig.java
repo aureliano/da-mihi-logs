@@ -1,7 +1,12 @@
 package com.github.aureliano.damihilogs.config.input;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.exception.ThreadExceptionHandler;
 
 public class InputFileConfig implements IConfigInput {
 
@@ -14,6 +19,7 @@ public class InputFileConfig implements IConfigInput {
 	private String id;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
 
 	public InputFileConfig() {
 		this.encoding = "UTF-8";
@@ -22,6 +28,7 @@ public class InputFileConfig implements IConfigInput {
 		this.tailInterval = 0L;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 	}
 	
 	@Override
@@ -115,7 +122,8 @@ public class InputFileConfig implements IConfigInput {
 			.withTailFile(this.tailFile)
 			.withTailInterval(this.tailInterval)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata);
+			.withMetadata(this.metadata)
+			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	
 	@Override
@@ -133,9 +141,25 @@ public class InputFileConfig implements IConfigInput {
 		this.metadata = properties;
 		return this;
 	}
+	
+	protected InputFileConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
+		this.exceptionHandlers = handlers;
+		return this;
+	}
 
 	@Override
 	public Properties getMetadata() {
 		return this.metadata;
+	}
+
+	@Override
+	public InputFileConfig addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+		return this;
+	}
+
+	@Override
+	public List<IExceptionHandler> getExceptionHandlers() {
+		return this.exceptionHandlers;
 	}
 }

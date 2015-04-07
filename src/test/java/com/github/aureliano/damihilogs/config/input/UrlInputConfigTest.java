@@ -3,6 +3,8 @@ package com.github.aureliano.damihilogs.config.input;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+
 public class UrlInputConfigTest {
 
 	@Test
@@ -70,7 +72,10 @@ public class UrlInputConfigTest {
 			.withPassword("my-password")
 			.withNoCheckCertificate(true)
 			.withConfigurationId("url.input.config")
-			.putMetadata("test", "my test");
+			.putMetadata("test", "my test")
+			.addExceptionHandler(new IExceptionHandler() {
+				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+			});
 		
 		UrlInputConfig c2 = c1.clone();
 		
@@ -89,5 +94,6 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(c1.getPort(), c2.getPort());
 		Assert.assertEquals(c1.isNoCheckCertificate(), c2.isNoCheckCertificate());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
+		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 	}
 }

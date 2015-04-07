@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.reader;
 
+import java.util.List;
 import java.util.Properties;
 
 import junit.framework.Assert;
@@ -13,6 +14,7 @@ import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 
 public class DataReaderFactoryTest {
 
@@ -53,6 +55,14 @@ public class DataReaderFactoryTest {
 			}
 			
 			public Properties getMetadata() {
+				return null;
+			}
+
+			public IConfigInput addExceptionHandler(IExceptionHandler handler) {
+				return null;
+			}
+
+			public List<IExceptionHandler> getExceptionHandlers() {
 				return null;
 			}
 		});

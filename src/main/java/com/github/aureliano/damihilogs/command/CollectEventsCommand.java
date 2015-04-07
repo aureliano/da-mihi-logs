@@ -13,8 +13,10 @@ import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.exception.ThreadExceptionHandler;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.helper.ExceptionHandlerHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.DataReaderFactory;
@@ -80,6 +82,7 @@ public class CollectEventsCommand {
 		if (this.configuration.isMultiThreadingEnabled()) {
 			if (commands.size() > 1) {
 				this.parallelExecution(commands);
+				this.copyLogExecutions(commands);
 				return;
 			}
 			
@@ -99,7 +102,7 @@ public class CollectEventsCommand {
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
 		for (DataIterationCommand command : commands) {
-			command.execute();
+			ExceptionHandlerHelper.executeHandlingException(command);
 		}
 	}
 	
@@ -110,6 +113,8 @@ public class CollectEventsCommand {
 			Thread t = this.createThread(command);
 			
 			t.start();
+			t.setUncaughtExceptionHandler(new ThreadExceptionHandler(command));
+			
 			threads.add(t);
 		}
 		

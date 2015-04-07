@@ -3,6 +3,8 @@ package com.github.aureliano.damihilogs.config.input;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+
 public class InputFileConfigTest {
 
 	@Test
@@ -44,7 +46,10 @@ public class InputFileConfigTest {
 			.withTailDelay(new Long(2000))
 			.withTailInterval(new Long(10000))
 			.withConfigurationId("input.file.config")
-			.putMetadata("test", "my test");
+			.putMetadata("test", "my test")
+			.addExceptionHandler(new IExceptionHandler() {
+				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+			});
 		
 		InputFileConfig c2 = c1.clone();
 		
@@ -56,5 +61,6 @@ public class InputFileConfigTest {
 		Assert.assertEquals(c1.getStartPosition(), c2.getStartPosition());
 		Assert.assertEquals(c1.isTailFile(), c2.isTailFile());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
+		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 	}
 }

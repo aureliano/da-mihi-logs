@@ -1,6 +1,10 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 
 public class StandardInputConfig implements IConfigInput {
 
@@ -8,11 +12,13 @@ public class StandardInputConfig implements IConfigInput {
 	private String id;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
 	
 	public StandardInputConfig() {
 		this.encoding = "UTF-8";
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 	}
 	
 	public String getEncoding() {
@@ -51,7 +57,8 @@ public class StandardInputConfig implements IConfigInput {
 		return new StandardInputConfig()
 			.withEncoding(this.encoding)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata);
+			.withMetadata(this.metadata)
+			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	
 	@Override
@@ -69,9 +76,25 @@ public class StandardInputConfig implements IConfigInput {
 		this.metadata = properties;
 		return this;
 	}
+	
+	protected StandardInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
+		this.exceptionHandlers = handlers;
+		return this;
+	}
 
 	@Override
 	public Properties getMetadata() {
 		return this.metadata;
+	}
+
+	@Override
+	public StandardInputConfig addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+		return this;
+	}
+
+	@Override
+	public List<IExceptionHandler> getExceptionHandlers() {
+		return this.exceptionHandlers;
 	}
 }

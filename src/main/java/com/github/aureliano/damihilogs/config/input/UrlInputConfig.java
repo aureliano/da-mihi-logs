@@ -1,9 +1,13 @@
 package com.github.aureliano.damihilogs.config.input;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 
 public class UrlInputConfig implements IConfigInput {
 
@@ -30,6 +34,7 @@ public class UrlInputConfig implements IConfigInput {
 
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -42,6 +47,7 @@ public class UrlInputConfig implements IConfigInput {
 		this.noCheckCertificate = false;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 	}
 
 	public ConnectionSchema getConnectionSchema() {
@@ -219,7 +225,8 @@ public class UrlInputConfig implements IConfigInput {
 			.withUser(this.user)
 			.withAppendIfOutputFileExist(this.appendIfOutputFileExist)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata);
+			.withMetadata(this.metadata)
+			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	
 	@Override
@@ -237,9 +244,25 @@ public class UrlInputConfig implements IConfigInput {
 		this.metadata = properties;
 		return this;
 	}
+	
+	protected UrlInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
+		this.exceptionHandlers = handlers;
+		return this;
+	}
 
 	@Override
 	public Properties getMetadata() {
 		return this.metadata;
+	}
+
+	@Override
+	public UrlInputConfig addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+		return this;
+	}
+
+	@Override
+	public List<IExceptionHandler> getExceptionHandlers() {
+		return this.exceptionHandlers;
 	}
 }

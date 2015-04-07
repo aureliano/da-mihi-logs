@@ -52,6 +52,10 @@ public class DataIterationCommand implements Runnable {
 		return this.logExecution;
 	}
 	
+	public void setLogExecution(Map<String, Object> logExecution) {
+		this.logExecution = logExecution;
+	}
+	
 	private Map<String, Object> dataIteration() {		
 		while (this.dataReader.keepReading()) {
 			String data = this.dataReader.nextData();
@@ -76,5 +80,13 @@ public class DataIterationCommand implements Runnable {
 		for (IDataWriter dataWriter : dataWriters) {
 			dataWriter.endResources();
 		}
+	}
+	
+	public IDataReader getDataReader() {
+		return this.dataReader;
+	}
+	
+	public List<IDataWriter> getDataWriters() {
+		return this.dataWriters;
 	}
 }

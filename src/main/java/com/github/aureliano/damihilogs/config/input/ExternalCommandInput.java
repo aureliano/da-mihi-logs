@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+
 public class ExternalCommandInput implements IConfigInput {
 
 	private String id;
@@ -11,11 +13,13 @@ public class ExternalCommandInput implements IConfigInput {
 	private List<String> parameters;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
 	
 	public ExternalCommandInput() {
 		this.useLastExecutionRecords = false;
 		this.parameters = new ArrayList<String>();
 		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 	}
 	
 	@Override
@@ -35,7 +39,8 @@ public class ExternalCommandInput implements IConfigInput {
 			.withConfigurationId(this.id)
 			.withCommand(this.command)
 			.withParameters(this.parameters)
-			.withMetadata(this.metadata);
+			.withMetadata(this.metadata)
+			.withExceptionHandlers(this.exceptionHandlers);
 	}
 
 	@Override
@@ -87,9 +92,25 @@ public class ExternalCommandInput implements IConfigInput {
 		this.metadata = properties;
 		return this;
 	}
+	
+	protected ExternalCommandInput withExceptionHandlers(List<IExceptionHandler> handlers) {
+		this.exceptionHandlers = handlers;
+		return this;
+	}
 
 	@Override
 	public Properties getMetadata() {
 		return this.metadata;
+	}
+
+	@Override
+	public ExternalCommandInput addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+		return this;
+	}
+
+	@Override
+	public List<IExceptionHandler> getExceptionHandlers() {
+		return this.exceptionHandlers;
 	}
 }
