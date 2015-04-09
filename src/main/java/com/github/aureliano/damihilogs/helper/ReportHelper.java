@@ -1,12 +1,7 @@
 package com.github.aureliano.damihilogs.helper;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +15,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.report.model.CollectorModel;
 import com.github.aureliano.damihilogs.report.model.ExceptionModel;
@@ -32,7 +26,6 @@ public final class ReportHelper {
 	private static final Pattern EXECUTION_LOG_PARTIAL = Pattern.compile("(" + EXECUTION_LOG_PARTIAL_REGEX + ")");
 	private static final Pattern FILE_SEED = Pattern.compile("(\\d+)\\.log$");
 	
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 	private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	
 	private ReportHelper() {
@@ -77,7 +70,7 @@ public final class ReportHelper {
 		List<CollectorModel> models = new ArrayList<CollectorModel>();
 		
 		for (String name : names) {
-			String content = readFile(LoggerHelper.LOG_ECHO_DIR_PATH + File.separator + name);
+			String content = FileHelper.readFile(LoggerHelper.LOG_ECHO_DIR_PATH + File.separator + name);
 			Matcher matcher = EXECUTION_LOG_PARTIAL.matcher(content);
 			
 			String buildId = convertExecutionFileNameToDate(name);
@@ -90,14 +83,7 @@ public final class ReportHelper {
 			
 			while (matcher.find()) {
 				String hash = matcher.group().replaceAll(EXECUTION_LOG_PARTIAL_PREFIX_REGEX, "").trim();
-				Map<String, String> map = null;
-				
-				try {
-					map = OBJECT_MAPPER.readValue(hash, Map.class);
-				} catch (Exception ex) {
-					throw new DaMihiLogsException(ex);
-				}
-				
+				Map<String, String> map = DataHelper.jsonStringToObject(hash, Map.class);				
 				Boolean statusOk = getStatus(map.keySet());
 				
 				model
@@ -118,9 +104,8 @@ public final class ReportHelper {
 		return models;
 	}
 	
-	public static String loadHtmlTemplate(String path) {
-		InputStream stream = ClassLoader.getSystemResourceAsStream(path);
-		return readFile(stream);
+	public static String loadHtmlTemplate(String resource) {
+		return FileHelper.readResource(resource);
 	}
 	
 	private static ExceptionModel findException(Map<String, String> map) {
@@ -162,39 +147,5 @@ public final class ReportHelper {
 		}
 		
 		return statusOk;
-	}
-	
-	private static String readFile(String path) {
-		return readFile(new File(path));
-	}
-	
-	private static String readFile(File file) {
-		try {
-			return readFile(new FileInputStream(file));
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
-	
-	private static String readFile(InputStream stream) {
-		StringBuilder builder = new StringBuilder();
-		
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-			String line = null;
-			
-			while ((line = reader.readLine()) != null) {
-				if (builder.length() > 0) {
-					builder.append("\n");
-				}
-				builder.append(line);
-			}
-			
-			reader.close();
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-		
-		return builder.toString();
 	}
 }

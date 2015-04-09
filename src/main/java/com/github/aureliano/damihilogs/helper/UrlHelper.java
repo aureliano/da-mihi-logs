@@ -5,9 +5,11 @@ import java.nio.charset.Charset;
 import java.util.BitSet;
 import java.util.Map;
 
-public final class UrlEncodeHelper {
+import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 
-	public UrlEncodeHelper() {
+public final class UrlHelper {
+
+	public UrlHelper() {
 		super();
 	}
 	
@@ -82,6 +84,42 @@ public final class UrlEncodeHelper {
 		
 		URIC.or(RESERVED);
 		URIC.or(UNRESERVED);
+	}
+	
+	public static String buildUrl(UrlInputConfig config) {
+		StringBuilder builder = new StringBuilder();
+		
+		builder
+			.append(config.getConnectionSchema().name().toLowerCase())
+			.append("://");
+		
+		String host = config.getHost();
+		if (host.endsWith("/")) {
+			host = host.replaceFirst("/$", "");
+		}
+		
+		builder.append(host);
+		
+		if (config.getPort() >= 0) {
+			builder.append(":").append(config.getPort());
+		}
+		
+		String path = config.getPath();
+		if (path != null) {
+			if (path.startsWith("/")) {
+				path = path.replaceFirst("^/", "");
+			}
+			builder.append("/").append(path);
+		}
+		
+		Map<String, String> parameters = config.getParameters();
+		if (!parameters.isEmpty()) {
+			builder.append("?");
+		}
+		
+		builder.append(UrlHelper.formatParameters(parameters));
+		
+		return builder.toString();
 	}
 	
 	public static String formatParameters(final Map<String, String> parameters) {

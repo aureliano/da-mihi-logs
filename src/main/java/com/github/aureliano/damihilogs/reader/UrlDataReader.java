@@ -27,6 +27,7 @@ import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.helper.UrlHelper;
 
 public class UrlDataReader extends AbstractDataReader {
 
@@ -76,7 +77,7 @@ public class UrlDataReader extends AbstractDataReader {
 			this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
 		}
 		
-		this.url = ConfigHelper.buildUrl(this.urlInputConfiguration);
+		this.url = UrlHelper.buildUrl(this.urlInputConfiguration);
 		logger.info("Fetching data from " + url);
 		logger.info("Read (download) timeout: " + this.urlInputConfiguration.getReadTimeout());
 		

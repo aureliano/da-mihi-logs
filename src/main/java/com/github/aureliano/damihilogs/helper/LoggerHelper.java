@@ -6,34 +6,23 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.TreeSet;
 
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class LoggerHelper {
 	
 	private static final Logger logger = Logger.getLogger(LoggerHelper.class);
 	private static final String LOG_DIR_PATH = "log";
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static final String DEFAULT_COLLECTOR_ID_NAME = "execution";
 	public static final String LOG_DATA_DIR_PATH = LOG_DIR_PATH + File.separator + "data";
 	public static final String LOG_ECHO_DIR_PATH = LOG_DIR_PATH + File.separator + "echo";
-	
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	private LoggerHelper() {
 		super();
@@ -47,7 +36,7 @@ public final class LoggerHelper {
 		FileAppender appender = new FileAppender();
 		
 		appender.setName("file");
-		appender.setFile(createLoggerFileName(LOG_ECHO_DIR_PATH, collectorId, null));
+		appender.setFile(FileHelper.createLoggerFileName(LOG_ECHO_DIR_PATH, collectorId, null));
 		appender.setLayout(new PatternLayout("%d %5p [%t] (%F:%L) - %m%n"));
 		appender.setThreshold(Level.DEBUG);
 		appender.setAppend(false);
@@ -114,7 +103,7 @@ public final class LoggerHelper {
 		}
 		
 		String fileName = null;
-		String expectedFileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
+		String expectedFileName = FileHelper.getLastExecutionLogDataFileName(collectorId);
 		for (String file : files) {
 			if (expectedFileName.equals(file)) {
 				fileName = file;
@@ -127,7 +116,7 @@ public final class LoggerHelper {
 	
 	public static File saveExecutionLogData(String collectorId, Properties p, boolean ordered) {
 		if (ordered) {
-			Properties properties = sortProperties(p);
+			Properties properties = DataHelper.sortProperties(p);
 			return saveExecutionLogData(collectorId, properties);
 		}
 		
@@ -147,57 +136,14 @@ public final class LoggerHelper {
 				collectorId = DEFAULT_COLLECTOR_ID_NAME;
 			}
 			
-			String fileName = LoggerHelper.getLastExecutionLogDataFileName(collectorId);
+			String fileName = FileHelper.getLastExecutionLogDataFileName(collectorId);
 			File output = new File(dir.getPath() + File.separator + fileName);
 			properties.store(new FileOutputStream(output), "Last execution information.");
-			logger.debug("Execution Log partial: " + propertiesToJson(properties));
+			logger.debug("Execution Log partial: " + DataHelper.propertiesToJson(properties));
 			
 			return output;
 		} catch (IOException ex) {
 			logger.error("Could not save execution log.", ex);
-			throw new DaMihiLogsException(ex);
-		}
-	}
-	
-	protected static String getLastExecutionLogDataFileName(final String collectorId) {
-		return collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
-	}
-	
-	protected static Properties sortProperties(Properties p) {
-		Properties properties = new Properties() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public synchronized Enumeration<Object> keys() {
-				return Collections.enumeration(new TreeSet<Object>(super.keySet()));
-			}
-		};
-		
-		for (Object key : p.keySet()) {
-			properties.put(key, p.get(key));
-		}
-		
-		return properties;
-	}
-	
-	protected static String createLoggerFileName(String dir, String collectorId, Long timeMillis) {
-		if (timeMillis == null) {
-			timeMillis = System.currentTimeMillis();
-		}
-		
-		return String.format("%s%s%s_%s.log", dir, File.separator, collectorId, timeMillis);
-	}
-	
-	private static String propertiesToJson(Properties properties) {
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		
-		for (Object key : properties.keySet()) {
-			map.put(key.toString(), properties.get(key));
-		}
-		
-		try {
-			return OBJECT_MAPPER.writeValueAsString(map);
-		} catch (Exception ex) {
 			throw new DaMihiLogsException(ex);
 		}
 	}

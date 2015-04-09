@@ -1,6 +1,5 @@
 package com.github.aureliano.damihilogs.helper;
 
-import java.util.Map;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
@@ -26,42 +25,6 @@ public final class ConfigHelper {
 		for (Object key : keys) {
 			to.putMetadata(key.toString(), from.getMetadata(key.toString()));
 		}
-	}
-	
-	public static String buildUrl(UrlInputConfig config) {
-		StringBuilder builder = new StringBuilder();
-		
-		builder
-			.append(config.getConnectionSchema().name().toLowerCase())
-			.append("://");
-		
-		String host = config.getHost();
-		if (host.endsWith("/")) {
-			host = host.replaceFirst("/$", "");
-		}
-		
-		builder.append(host);
-		
-		if (config.getPort() >= 0) {
-			builder.append(":").append(config.getPort());
-		}
-		
-		String path = config.getPath();
-		if (path != null) {
-			if (path.startsWith("/")) {
-				path = path.replaceFirst("^/", "");
-			}
-			builder.append("/").append(path);
-		}
-		
-		Map<String, String> parameters = config.getParameters();
-		if (!parameters.isEmpty()) {
-			builder.append("?");
-		}
-		
-		builder.append(UrlEncodeHelper.formatParameters(parameters));
-		
-		return builder.toString();
 	}
 	
 	public static void inputConfigValidation(IConfigInput config) {

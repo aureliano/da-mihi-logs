@@ -3,8 +3,6 @@ package com.github.aureliano.damihilogs.helper;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -34,27 +32,6 @@ public class LoggerHelperTest {
 		Assert.assertEquals(p.get("profile.memory.free"), p2.get("profile.memory.free"));
 		Assert.assertEquals(p.get("profile.memory.max"), p2.get("profile.memory.max"));
 		Assert.assertEquals(p.get("profile.memomry.total"), p2.get("profile.memomry.total"));
-	}
-	
-	@Test
-	public void testGetLastExecutionLogDataFileName() {
-		final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-		String collectorId = "test";
-		String fileName = collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
-		
-		Assert.assertEquals(fileName, LoggerHelper.getLastExecutionLogDataFileName("test"));
-	}
-	
-	@Test
-	public void testCreateLoggerFileName() {
-		String dir = "log/exec";
-		String collectorId = "execution";
-		long timeMillis = 12345;
-		
-		String expected = "log/exec/execution_12345.log";
-		String actual = LoggerHelper.createLoggerFileName(dir, collectorId, timeMillis);
-		
-		Assert.assertEquals(expected, actual);
 	}
 	
 	private Properties loadProperties(File file) {
