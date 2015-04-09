@@ -15,7 +15,7 @@ public class LoggerHelperTest {
 	@Test
 	public void testSaveExecutionLogData() {
 		Properties p = new Properties();
-		p.put("profile.time.elapsed", "8 ms");
+		p.put("profile.time.elapsed", "8 milliseconds");
 		p.put("profile.processor.available", "8");
 		p.put("profile.memory.free", "0.34 MB");
 		p.put("profile.memory.max", "910.25 MB");

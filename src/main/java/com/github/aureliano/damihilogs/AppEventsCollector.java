@@ -1,6 +1,8 @@
 package com.github.aureliano.damihilogs;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -10,6 +12,7 @@ import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.profile.Profiler;
+import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
 public class AppEventsCollector {
@@ -20,15 +23,13 @@ public class AppEventsCollector {
 	private String collectorId;
 	private CollectEventsCommand commandExecutor;
 	private EventCollectionSchedule scheduler;
+	private List<ILoggerReporter> reporters;
 	
 	public AppEventsCollector() {
-		super();
+		this.reporters = new ArrayList<ILoggerReporter>();
 	}
 	
-	public void execute() {
-		this.configureLogger();
-		
-		if (this.scheduler == null) {
+	public void execute() {if (this.scheduler == null) {
 			this._execute();
 			return;
 		}
@@ -43,6 +44,9 @@ public class AppEventsCollector {
 	}
 	
 	private void _execute() {
+		Logger.getRootLogger().removeAppender("file");
+		this.configureLogger();		
+		
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
 			logger.info("Using default event collector configuration.");
@@ -57,8 +61,20 @@ public class AppEventsCollector {
 		if (this.configuration.isPersistExecutionLog()) {
 			this.printLogToOutput(profiler);
 		}
+		
+		this.buildReports();
 	}
 	
+	private void buildReports() {
+		for (ILoggerReporter reporter : this.reporters) {
+			try {
+				reporter.buildReport();
+			} catch (Exception ex) {
+				logger.error("An exception ocurred when building report.", ex);
+			}
+		}
+	}
+
 	private void configureLogger() {
 		LoggerHelper.configureFileAppenderLogger(this.collectorId);
 		System.setOut(LoggerHelper.createLoggingProxy(System.out, logger));
@@ -105,5 +121,14 @@ public class AppEventsCollector {
 	
 	public EventCollectionSchedule getScheduler() {
 		return scheduler;
+	}
+	
+	public List<ILoggerReporter> getReporters() {
+		return reporters;
+	}
+	
+	public AppEventsCollector addReporter(ILoggerReporter reporter) {
+		this.reporters.add(reporter);
+		return this;
 	}
 }

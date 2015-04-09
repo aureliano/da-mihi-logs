@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>{$pageTitle}</title>
+  </head>
+  
+  <body>
+    <h2>{$pageSubTitle} - {$collector.text_status}</h2>
+    <p>
+      {$description}
+    </p>
+    
+    <hr/>
+    
+    <h3>{$executionsSubtitle}</h3>
+    <h4>{$profileTitle}</h4>
+     <table>
+       <tr>
+         <td><b>{$freeMemoryLabel}:</b></td><td>{$collector.free_memory}</td>
+       </tr>
+       <tr>
+         <td><b>{$maxMemoryLabel}:</b></td><td>{$collector.max_memory}</td>
+       </tr>
+       <tr>
+         <td><b>{$totalMemoryLabel}:</b></td><td>{$collector.total_memory}</td>
+       </tr>
+       <tr>
+         <td><b>{$processorsAvailableLabel}:</b></td><td>{$collector.processor_available}</td>
+       </tr>
+       <tr>
+         <td><b>{$timeElapsedLabel}:</b></td><td>{$collector.time_elapsed}</td>
+       </tr>
+     </table>
+     
+     <br/>
+     <hr/>
+    
+     <h4>{$exceptionsTitle}</h4>    
+     <table>
+     {% loop in $exceptions as $exception %}
+       <tr>
+         <td><b>Configuration:</b></td><td>{$exception.seed}</td>
+       </tr>
+       <tr>
+         <td><b>Exception:</b></td><td>{$exception.message}</td>
+       </tr>
+       <tr>
+         <td><b>Stack trace:</b></td><td><pre>{$exception.stack_trace}</pre></td>
+       </tr>
+       {% onEmpty %}
+         <i>{$exceptionsEmpty}</i>
+       {% endloop %}
+     </table>
+    
+    <br/>
+    <hr/>
+    
+    <h4>{$consoleOutputTitle}</h4>
+    <pre>{$collector.output_log}</pre>
+  </body>
+</html>
