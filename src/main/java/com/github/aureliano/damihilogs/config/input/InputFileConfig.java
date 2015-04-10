@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
-import com.github.aureliano.damihilogs.exception.ThreadExceptionHandler;
 
 public class InputFileConfig implements IConfigInput {
 
