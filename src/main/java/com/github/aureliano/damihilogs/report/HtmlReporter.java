@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.helper.FileHelper;
 import com.github.aureliano.damihilogs.helper.ReportHelper;
 import com.github.aureliano.damihilogs.report.model.CollectorModel;
 import com.x5.template.Chunk;
@@ -19,6 +20,7 @@ public class HtmlReporter implements ILoggerReporter {
 	private String pageTitle;
 	private String description;
 	private File outputDir;
+	private Boolean deleteOldFiles;
 	
 	private static final Logger logger = Logger.getLogger(HtmlReporter.class);
 	
@@ -26,11 +28,16 @@ public class HtmlReporter implements ILoggerReporter {
 		this.language = ReportLanguage.ENGLISH;
 		this.pageTitle = this.language.getLabel("index.title");
 		this.description = this.language.getLabel("index.description");
+		this.deleteOldFiles = false;
 	}
 
 	@Override
 	public void buildReport() {
 		this.validateOutputDir();
+		
+		if (this.deleteOldFiles) {
+			this.deleteOldFiles();
+		}
 		
 		if (!this.outputDir.exists()) {
 			if (!this.outputDir.mkdirs()) {
@@ -47,6 +54,13 @@ public class HtmlReporter implements ILoggerReporter {
 			throw new DaMihiLogsException("Report output dir not provided.");
 		} else if (this.outputDir.isFile()) {
 			throw new DaMihiLogsException(outputDir.getPath() + " must be a directory (existing or not).");
+		}
+	}
+	
+	private void deleteOldFiles() {
+		if (this.outputDir.exists()) {
+			logger.info("Deleting files from " + this.outputDir.getPath());
+			FileHelper.delete(this.outputDir, true);
 		}
 	}
 	
@@ -186,5 +200,16 @@ public class HtmlReporter implements ILoggerReporter {
 	@Override
 	public File getOutputDir() {
 		return this.outputDir;
+	}
+
+	@Override
+	public HtmlReporter withDeleteOldFiles(Boolean deleteOldFiles) {
+		this.deleteOldFiles = deleteOldFiles;
+		return this;
+	}
+
+	@Override
+	public Boolean isDeleteOldFiles() {
+		return this.deleteOldFiles;
 	}
 }

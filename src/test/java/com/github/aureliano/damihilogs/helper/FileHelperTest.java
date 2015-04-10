@@ -12,6 +12,33 @@ import org.junit.Test;
 public class FileHelperTest {
 
 	@Test
+	public void testCopyFile() {
+		File srcFile = new File("src/test/resources/simple_file");
+		File destFile = new File("target/thrash/copied");
+		
+		if (destFile.exists()) {
+			destFile.delete();
+		}
+		
+		Assert.assertTrue(srcFile.isFile());
+		Assert.assertFalse(destFile.exists());
+		
+		FileHelper.copyFile(srcFile, destFile, true);
+		destFile = new File(destFile.getPath()); // refresh file object.
+		
+		Assert.assertTrue(destFile.exists());
+		Assert.assertTrue(destFile.isFile());
+	}
+	
+	@Test
+	public void testDelete() {
+		this.prepareDeleteTest();
+		
+		FileHelper.delete(new File("target/thrash"), true);
+		Assert.assertFalse(new File("target/thrash").exists());
+	}
+
+	@Test
 	public void testCreateLoggerFileName() {
 		String dir = "log/exec";
 		String collectorId = "execution";
@@ -48,5 +75,21 @@ public class FileHelperTest {
 		String expected = "Ecce quam bonum et quam icundum habitare fratres in unum.";
 		
 		Assert.assertEquals(expected, FileHelper.readResource(resourceName));
+	}
+	
+	private void prepareDeleteTest() {
+		File sourceDir = new File("src/test/resources");
+		
+		for (File file : sourceDir.listFiles()) {
+			if (file.isFile()) {
+				FileHelper.copyFile(file, new File("target/thrash/" + file.getName()), true);
+			}
+		}
+		
+		for (File file : sourceDir.listFiles()) {
+			if (file.isFile()) {
+				FileHelper.copyFile(file, new File("target/thrash/level2/" + file.getName()), true);
+			}
+		}
 	}
 }

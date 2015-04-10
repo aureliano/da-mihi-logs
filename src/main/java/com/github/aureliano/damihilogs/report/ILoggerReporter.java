@@ -13,4 +13,8 @@ public interface ILoggerReporter {
 	public abstract ILoggerReporter withLanguage(ReportLanguage language);
 	
 	public abstract ReportLanguage getLanguage();
+	
+	public abstract ILoggerReporter withDeleteOldFiles(Boolean deleteOldFiles);
+	
+	public abstract Boolean isDeleteOldFiles();
 }
