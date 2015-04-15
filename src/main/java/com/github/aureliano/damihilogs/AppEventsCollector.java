@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
@@ -24,9 +25,11 @@ public class AppEventsCollector {
 	private CollectEventsCommand commandExecutor;
 	private EventCollectionSchedule scheduler;
 	private List<ILoggerReporter> reporters;
+	private List<ICleaner> cleaners;
 	
 	public AppEventsCollector() {
 		this.reporters = new ArrayList<ILoggerReporter>();
+		this.cleaners = new ArrayList<ICleaner>();
 	}
 	
 	public void execute() {if (this.scheduler == null) {
@@ -63,6 +66,7 @@ public class AppEventsCollector {
 		}
 		
 		this.buildReports();
+		this.executeCleaners();
 	}
 	
 	private void buildReports() {
@@ -71,6 +75,16 @@ public class AppEventsCollector {
 				reporter.buildReport();
 			} catch (Exception ex) {
 				logger.error("An exception ocurred when building report.", ex);
+			}
+		}
+	}
+	
+	private void executeCleaners() {
+		for (ICleaner cleaner : this.cleaners) {
+			try {
+				cleaner.clean();
+			} catch (Exception ex) {
+				logger.error("An exception ocurred when executing cleaner.", ex);
 			}
 		}
 	}
@@ -129,6 +143,15 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector addReporter(ILoggerReporter reporter) {
 		this.reporters.add(reporter);
+		return this;
+	}
+	
+	public List<ICleaner> getCleaners() {
+		return cleaners;
+	}
+	
+	public AppEventsCollector addCleaner(ICleaner cleaner) {
+		this.cleaners.add(cleaner);
 		return this;
 	}
 }

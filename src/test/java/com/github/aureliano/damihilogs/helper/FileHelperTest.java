@@ -32,10 +32,31 @@ public class FileHelperTest {
 	
 	@Test
 	public void testDelete() {
-		this.prepareDeleteTest();
+		createDirectoryStructure();
 		
 		FileHelper.delete(new File("target/thrash"), true);
 		Assert.assertFalse(new File("target/thrash").exists());
+	}
+	
+	@Test
+	public void testDeleteAllFiles() {
+		createDirectoryStructure();
+		
+		FileHelper.deleteAllFiles(new File("target/thrash"));
+		File[] files = new File("target/thrash").listFiles();
+		
+		Assert.assertTrue(files.length == 1);
+		Assert.assertEquals("target/thrash/level2", files[0].getPath());
+	}
+	
+	@Test
+	public void testDeleteAllFilesByTime() throws InterruptedException {
+		int oneSecond = 1000;
+		String dirPath = createDirectoryStructureWithDelay(oneSecond);
+		
+		Assert.assertEquals(5, new File(dirPath).list().length);
+		FileHelper.deleteAllFiles(new File(dirPath), System.currentTimeMillis() - oneSecond);
+		Assert.assertEquals(2, new File(dirPath).list().length);
 	}
 
 	@Test
@@ -77,7 +98,7 @@ public class FileHelperTest {
 		Assert.assertEquals(expected, FileHelper.readResource(resourceName));
 	}
 	
-	private void prepareDeleteTest() {
+	public static void createDirectoryStructure() {
 		File sourceDir = new File("src/test/resources");
 		
 		for (File file : sourceDir.listFiles()) {
@@ -91,5 +112,24 @@ public class FileHelperTest {
 				FileHelper.copyFile(file, new File("target/thrash/level2/" + file.getName()), true);
 			}
 		}
+	}
+	
+	public static String createDirectoryStructureWithDelay(long delay) {
+		String dirPath = "target/thrash/drop";
+		
+		FileHelper.copyFile(new File("src/test/resources/simple_file"), new File(dirPath + "/f1"), true);
+		FileHelper.copyFile(new File("src/test/resources/simple_file"), new File(dirPath + "/f2"), true);
+		FileHelper.copyFile(new File("src/test/resources/simple_file"), new File(dirPath + "/f3"), true);
+		
+		try {
+			Thread.sleep(delay);
+		} catch (InterruptedException ex) {
+			Assert.fail(ex.getMessage());
+		}
+		
+		FileHelper.copyFile(new File("src/test/resources/simple_file"), new File(dirPath + "/f4"), true);
+		FileHelper.copyFile(new File("src/test/resources/simple_file"), new File(dirPath + "/f5"), true);
+		
+		return dirPath;
 	}
 }

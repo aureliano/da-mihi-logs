@@ -73,12 +73,12 @@ public final class LoggerHelper {
 	
 	public static Properties getLastExecutionLog(final String collectorId) {
 		File file = getLastExecutionFileLog(collectorId);
-		if (file == null) {
-			logger.warn("There is not last execution log for collector with id " + collectorId);
-			return null;
-		}
 		
 		Properties properties = new Properties();
+		if (file == null) {
+			logger.warn("There is not last execution log for collector with id " + collectorId);
+			return properties;
+		}
 		
 		try {
 			properties.load(new FileInputStream(file));

@@ -68,6 +68,36 @@ public final class FileHelper {
 		}
 	}
 	
+	public static void deleteAllFiles(File directory) {
+		File[] files = directory.listFiles();
+		if (files == null) {
+			return;
+		}
+		
+		for (File file : files) {
+			if (!file.isDirectory()) {
+				delete(file);
+			}
+		}
+	}
+	
+	public static void deleteAllFiles(File directory, long timeSeed) {
+		long currentTimeMillis = System.currentTimeMillis();
+		long seed = currentTimeMillis - timeSeed;
+		
+		File[] files = directory.listFiles();
+		if (files == null) {
+			return;
+		}
+		
+		for (File file : files) {
+			long fileLastModificationSeed = currentTimeMillis - file.lastModified();
+			if ((!file.isDirectory()) && (fileLastModificationSeed >= seed)) {
+				delete(file);
+			}
+		}
+	}
+	
 	private static void forceDelete(File file) {
 		if (file.isDirectory()) {
 			File[] children = file.listFiles();
