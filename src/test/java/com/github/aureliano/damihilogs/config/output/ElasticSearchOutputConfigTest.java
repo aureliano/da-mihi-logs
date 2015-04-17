@@ -10,7 +10,6 @@ public class ElasticSearchOutputConfigTest {
 		ElasticSearchOutputConfig c = new ElasticSearchOutputConfig();
 		Assert.assertEquals("localhost", c.getHost());
 		Assert.assertEquals(9200, c.getPort());
-		Assert.assertEquals(9300, c.getTransportClientPort());
 		Assert.assertFalse(c.isPrintElasticSearchLog());
 	}
 	
@@ -19,12 +18,10 @@ public class ElasticSearchOutputConfigTest {
 		ElasticSearchOutputConfig c = new ElasticSearchOutputConfig()
 			.withHost("127.0.0.1")
 			.withPort(8080)
-			.withTransportClientPort(9301)
 			.withPrintElasticSearchLog(true);
 		
 		Assert.assertEquals("127.0.0.1", c.getHost());
 		Assert.assertEquals(8080, c.getPort());
-		Assert.assertEquals(9301, c.getTransportClientPort());
 		Assert.assertTrue(c.isPrintElasticSearchLog());
 	}
 	
@@ -33,7 +30,6 @@ public class ElasticSearchOutputConfigTest {
 		ElasticSearchOutputConfig c1 = new ElasticSearchOutputConfig()
 			.withHost("127.0.0.1")
 			.withPort(8080)
-			.withTransportClientPort(9301)
 			.withPrintElasticSearchLog(true)
 			.putMetadata("test", "my test");
 			
@@ -41,7 +37,6 @@ public class ElasticSearchOutputConfigTest {
 		
 		Assert.assertEquals(c1.getHost(), c2.getHost());
 		Assert.assertEquals(c1.getPort(), c2.getPort());
-		Assert.assertEquals(c1.getTransportClientPort(), c2.getTransportClientPort());
 		Assert.assertEquals(c1.isPrintElasticSearchLog(), c2.isPrintElasticSearchLog());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}

@@ -1,12 +1,10 @@
 package com.github.aureliano.damihilogs.formatter;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.aureliano.damihilogs.data.ObjectMapperSingleton;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class JsonFormatter implements IOutputFormatter {
-
-	private static final ObjectMapper objectMapper = new ObjectMapper();
 	
 	public JsonFormatter() {
 		super();
@@ -19,7 +17,7 @@ public class JsonFormatter implements IOutputFormatter {
 		}
 		
 		try {
-			return objectMapper.writeValueAsString(data);
+			return ObjectMapperSingleton.instance().getObjectMapper().writeValueAsString(data);
 		} catch (JsonProcessingException ex) {
 			throw new DaMihiLogsException(ex);
 		}

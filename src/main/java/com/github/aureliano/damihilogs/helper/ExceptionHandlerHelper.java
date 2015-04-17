@@ -5,12 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.github.aureliano.damihilogs.command.DataIterationCommand;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 
 public final class ExceptionHandlerHelper {
 
+	private static final Logger logger = Logger.getLogger(ExceptionHandlerHelper.class);
+	
 	private ExceptionHandlerHelper() {
 		super();
 	}
@@ -28,6 +32,7 @@ public final class ExceptionHandlerHelper {
 		try {
 			command.execute();
 		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
 			ExceptionHandlerHelper.configureCommandLogExecutionForException(command, ex);
 		}
 	}

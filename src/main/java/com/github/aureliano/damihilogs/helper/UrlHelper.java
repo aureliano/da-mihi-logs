@@ -6,6 +6,7 @@ import java.util.BitSet;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
+import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 
 public final class UrlHelper {
 
@@ -120,6 +121,40 @@ public final class UrlHelper {
 		builder.append(UrlHelper.formatParameters(parameters));
 		
 		return builder.toString();
+	}
+	
+	public static String buildGetIndexUrl(IElasticSearchConfiguration configuration) {
+		return new StringBuilder("http://")
+			.append(configuration.getHost())
+			.append(":")
+			.append(configuration.getPort())
+			.append("/")
+			.append(configuration.getIndex())
+			.toString();
+	}
+	
+	public static String buildGetIndexTypeUrl(IElasticSearchConfiguration configuration, String mappingType) {
+		return  new StringBuilder()
+			.append(buildGetIndexUrl(configuration))
+			.append("/")
+			.append(mappingType)
+			.toString();
+	}
+	
+	public static String buildGetIndexTypePutUrl(IElasticSearchConfiguration configuration, String mappingType) {
+		return new StringBuilder()
+			.append(buildGetIndexUrl(configuration))
+			.append("/_mapping/")
+			.append(mappingType)
+			.toString();
+	}
+	
+	public static String buildPutDocumentUrl(IElasticSearchConfiguration configuration, String mappingType, String documentId) {
+		return new StringBuilder()
+			.append(buildGetIndexTypeUrl(configuration, mappingType))
+			.append("/")
+			.append(documentId)
+			.toString();
 	}
 	
 	public static String formatParameters(final Map<String, String> parameters) {

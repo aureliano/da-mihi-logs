@@ -7,12 +7,10 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.aureliano.damihilogs.data.ObjectMapperSingleton;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class DataHelper {
-	
-	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	private DataHelper() {
 		super();
@@ -43,7 +41,7 @@ public final class DataHelper {
 		}
 		
 		try {
-			return OBJECT_MAPPER.writeValueAsString(map);
+			return ObjectMapperSingleton.instance().getObjectMapper().writeValueAsString(map);
 		} catch (Exception ex) {
 			throw new DaMihiLogsException(ex);
 		}
@@ -51,7 +49,7 @@ public final class DataHelper {
 	
 	public static <T> T jsonStringToObject(String jsonString, Class<T> valueType) {
 		try {
-			return (T) OBJECT_MAPPER.readValue(jsonString, valueType);
+			return (T) ObjectMapperSingleton.instance().getObjectMapper().readValue(jsonString, valueType);
 		} catch (Exception ex) {
 			throw new DaMihiLogsException(ex);
 		}

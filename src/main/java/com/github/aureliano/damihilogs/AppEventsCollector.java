@@ -32,7 +32,8 @@ public class AppEventsCollector {
 		this.cleaners = new ArrayList<ICleaner>();
 	}
 	
-	public void execute() {if (this.scheduler == null) {
+	public void execute() {
+		if (this.scheduler == null) {
 			this._execute();
 			return;
 		}
@@ -69,7 +70,7 @@ public class AppEventsCollector {
 		this.executeCleaners();
 	}
 	
-	private void buildReports() {
+	private synchronized void buildReports() {
 		for (ILoggerReporter reporter : this.reporters) {
 			try {
 				reporter.buildReport();

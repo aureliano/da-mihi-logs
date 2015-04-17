@@ -1,33 +1,26 @@
 package com.github.aureliano.damihilogs.es;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 
+import com.github.aureliano.damihilogs.es.annotations.Indexable;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.kzwang.osem.annotations.Indexable;
-import com.github.kzwang.osem.impl.ElasticSearchIndexerImpl;
+import com.github.aureliano.damihilogs.http.HttpActionMetadata;
 
 public class ElasticSearchClient {
 
-	private Client client;
 	private IElasticSearchConfiguration configuration;
-	private ElasticSearchIndexerImpl indexer;
+	private ElasticSearchIndexer indexer;
 	
 	private static final Logger logger = Logger.getLogger(ElasticSearchClient.class);
 	
 	public ElasticSearchClient() {
 		super();
+	}
+	
+	public void startUp() {
+		this.indexer = new ElasticSearchIndexer(this.configuration);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -46,48 +39,36 @@ public class ElasticSearchClient {
 	}
 	
 	private void indexIndexable(Object indexable) {
-		IndexResponse response = this.indexer.index(indexable);
+		HttpActionMetadata response = this.indexer.index(indexable);
 		this.printIndexDocumentResponseLog(response);
 	}
 	
 	private void indexSource(Map<String, Object> data) {
-		IndexRequestBuilder indexRequestBuilder = this.client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
-        indexRequestBuilder.setSource(data);
-        
-        IndexResponse response = indexRequestBuilder.get();
+		HttpActionMetadata response = this.indexer.index(data);
 		this.printIndexDocumentResponseLog(response);
 	}
 	
 	private void indexSource(String json) {
-		IndexRequestBuilder indexRequestBuilder = this.client.prepareIndex(this.configuration.getIndex(), this.configuration.getMappingType());
-        indexRequestBuilder.setSource(json);
-        
-        IndexResponse response = indexRequestBuilder.get();
+		HttpActionMetadata response = this.indexer.index(json);
 		this.printIndexDocumentResponseLog(response);
 	}
 	
-	private void printIndexDocumentResponseLog(IndexResponse response) {
+	private void printIndexDocumentResponseLog(HttpActionMetadata metadata) {
 		if (this.configuration.isPrintElasticSearchLog()) {
-			logger.info(String.format(
-					"Document with id %s %s index %s and mapping type %s", response.getId(),
-					(response.isCreated() ? "added to" : "put on"), response.getIndex(), response.getType()));
-			logger.info("Document version: " + response.getVersion());
+			logger.info(new StringBuilder()
+				.append(metadata.getRequestMethod())
+				.append(" ")
+				.append(metadata.getRequestUrl())
+				.append(" [status:")
+				.append(metadata.getResponseStatus())
+				.append(", request:")
+				.append(metadata.getRequestTime())
+				.append("]")
+				.toString());
+			
+			logger.info(">>> " + metadata.getRequestData());
+			logger.info("<<< " + metadata.getResponseContent());
 		}
-	}
-	
-	public void start() {
-		if (this.client != null) {
-			return;
-		}
-		
-		this.client = this.configureNewClient();
-		this.indexer = new ElasticSearchIndexerImpl(this.client, this.configuration.getIndex());
-		this.indexer.createIndex();
-	}
-	
-	public void shutdown() {
-		this.client.close();
-		this.client = null;
 	}
 	
 	public IElasticSearchConfiguration getConfiguration() {
@@ -97,40 +78,5 @@ public class ElasticSearchClient {
 	public ElasticSearchClient withConfiguration(IElasticSearchConfiguration configuration) {
 		this.configuration = configuration;
 		return this;
-	}
-	
-	private Client configureNewClient() {
-		if (this.configuration == null) {
-			throw new DaMihiLogsException("ElasticSearch configuration is null.");
-		}
-		
-		logger.info("Configure Inet Socket Transport Address.");
-		logger.info("Host: " + this.configuration.getHost());
-		logger.info("Transport client port: " + this.configuration.getTransportClientPort());
-		
-		Settings settings = null;
-		if (this.configuration.getConfigProperties() != null) {
-			Properties properties = this.getConfigProperties();
-			settings = ImmutableSettings.settingsBuilder().put(properties).build();			
-		}
-		
-		TransportClient transportClient = (settings == null) ? new TransportClient() : new TransportClient(settings);
-		return transportClient.addTransportAddress(
-			new InetSocketTransportAddress(
-				this.configuration.getHost(),
-				this.configuration.getTransportClientPort()
-			)
-		);
-	}
-	
-	private Properties getConfigProperties() {
-		Properties properties = new Properties();
-		try {
-			properties.load(new FileInputStream(this.configuration.getConfigProperties()));
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-		
-		return properties;
 	}
 }

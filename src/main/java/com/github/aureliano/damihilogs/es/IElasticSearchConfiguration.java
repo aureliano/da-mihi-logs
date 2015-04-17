@@ -1,12 +1,9 @@
 package com.github.aureliano.damihilogs.es;
 
-import java.io.File;
-
 public interface IElasticSearchConfiguration {
 	
 	public static final String DEFAULT_ELASTIC_SEARCH_HOST = "localhost";
 	public static final int DEFAULT_ELASTIC_SEARCH_PORT = 9200;
-	public static final int DEFAULT_TRANSPORT_CLIENT_PORT = 9300;
 	public static final boolean DEFAULT_PRINT_ELASTIC_SEARCH_LOG = false;
 
 	public abstract String getHost();
@@ -16,10 +13,6 @@ public interface IElasticSearchConfiguration {
 	public abstract int getPort();
 
 	public abstract IElasticSearchConfiguration withPort(int port);
-	
-	public abstract int getTransportClientPort();
-	
-	public abstract IElasticSearchConfiguration withTransportClientPort(int transportClientPort);
 	
 	public abstract String getIndex();
 
@@ -32,8 +25,4 @@ public interface IElasticSearchConfiguration {
 	public abstract boolean isPrintElasticSearchLog();
 	
 	public abstract IElasticSearchConfiguration withPrintElasticSearchLog(boolean printElasticSearchLog);
-	
-	public abstract File getConfigProperties();
-	
-	public abstract IElasticSearchConfiguration withConfigProperties(File configProperties);
 }

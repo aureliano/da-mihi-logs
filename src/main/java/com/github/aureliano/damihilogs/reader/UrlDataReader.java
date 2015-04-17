@@ -20,7 +20,6 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.log4j.Logger;
-import org.elasticsearch.common.Base64;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
@@ -28,6 +27,7 @@ import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.UrlHelper;
+import com.google.common.io.BaseEncoding;
 
 public class UrlDataReader extends AbstractDataReader {
 
@@ -195,7 +195,7 @@ public class UrlDataReader extends AbstractDataReader {
 			
 			if (this.urlInputConfiguration.getUser() != null) {
 				String userPassword = "usrpsiconv:45sicX32";
-				String encoding = Base64.encodeBytes(userPassword.getBytes());
+				String encoding = BaseEncoding.base64().encode(userPassword.getBytes());
 				conn.addRequestProperty("Authorization", "Basic " + encoding);
 			}
 			
