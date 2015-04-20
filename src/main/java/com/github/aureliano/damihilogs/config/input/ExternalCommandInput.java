@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 
 public class ExternalCommandInput implements IConfigInput {
 
@@ -39,7 +40,7 @@ public class ExternalCommandInput implements IConfigInput {
 			.withConfigurationId(this.id)
 			.withCommand(this.command)
 			.withParameters(this.parameters)
-			.withMetadata(this.metadata)
+			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
 

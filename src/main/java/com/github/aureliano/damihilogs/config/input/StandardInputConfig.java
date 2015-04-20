@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 
 public class StandardInputConfig implements IConfigInput {
 
@@ -57,7 +58,7 @@ public class StandardInputConfig implements IConfigInput {
 		return new StandardInputConfig()
 			.withEncoding(this.encoding)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata)
+			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	

@@ -56,7 +56,7 @@ public class DataIterationCommand implements Runnable {
 		this.logExecution = logExecution;
 	}
 	
-	private Map<String, Object> dataIteration() {		
+	private Map<String, Object> dataIteration() {
 		while (this.dataReader.keepReading()) {
 			String data = this.dataReader.nextData();
 			if (data != null) {

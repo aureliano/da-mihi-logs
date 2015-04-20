@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 
 public class InputFileConfig implements IConfigInput {
 
@@ -121,7 +122,7 @@ public class InputFileConfig implements IConfigInput {
 			.withTailFile(this.tailFile)
 			.withTailInterval(this.tailInterval)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata)
+			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	

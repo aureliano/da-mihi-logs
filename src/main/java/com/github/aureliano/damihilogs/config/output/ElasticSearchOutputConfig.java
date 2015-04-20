@@ -4,6 +4,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchConfiguration {
@@ -115,7 +116,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 			.withMappingType(this.type)
 			.withPort(this.port)
 			.withPrintElasticSearchLog(this.printElasticSearchLog)
-			.withMetadata(this.metadata);
+			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	
 	@Override

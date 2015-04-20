@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.config.output;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class StandardOutputConfig implements IConfigOutput {
@@ -44,7 +45,7 @@ public class StandardOutputConfig implements IConfigOutput {
 	
 	public StandardOutputConfig clone() {
 		return new StandardOutputConfig()
-			.withMetadata(this.metadata);
+			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	
 	@Override

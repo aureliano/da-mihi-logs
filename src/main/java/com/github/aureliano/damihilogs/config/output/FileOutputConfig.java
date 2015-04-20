@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class FileOutputConfig implements IConfigOutput {
@@ -85,7 +86,7 @@ public class FileOutputConfig implements IConfigOutput {
 			.withAppend(this.append)
 			.withEncoding(this.encoding)
 			.withFile(this.file)
-			.withMetadata(this.metadata);
+			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	
 	@Override

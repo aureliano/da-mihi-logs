@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 
 public class UrlInputConfig implements IConfigInput {
 
@@ -225,7 +226,7 @@ public class UrlInputConfig implements IConfigInput {
 			.withUser(this.user)
 			.withAppendIfOutputFileExist(this.appendIfOutputFileExist)
 			.withConfigurationId(this.id)
-			.withMetadata(this.metadata)
+			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	

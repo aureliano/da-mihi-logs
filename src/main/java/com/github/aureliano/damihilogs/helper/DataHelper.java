@@ -16,6 +16,15 @@ public final class DataHelper {
 		super();
 	}
 	
+	public static Properties copyProperties(Properties properties) {
+		Properties copy = new Properties();
+		for (Object key : properties.keySet()) {
+			copy.setProperty(key.toString(), properties.getProperty(key.toString()));
+		}
+		
+		return copy;
+	}
+	
 	public static Properties sortProperties(Properties p) {
 		Properties properties = new Properties() {
 			private static final long serialVersionUID = 1L;

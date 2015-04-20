@@ -157,7 +157,9 @@ public class CollectEventsCommand {
 	private List<IDataWriter> createDataWriters() {
 		List<IDataWriter> dataWriters = new ArrayList<IDataWriter>();
 		
-		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
+		for (IConfigOutput config : this.configuration.getOutputConfigs()) {
+			IConfigOutput outputConfig = (IConfigOutput) config.clone();
+			
 			if (outputConfig.getParser() == null) {
 				outputConfig.withParser(new PlainTextParser());
 			}
@@ -165,8 +167,6 @@ public class CollectEventsCommand {
 			if (outputConfig.getFilter() == null) {
 				outputConfig.withFilter(new DefaultEmptyFilter());
 			}
-			
-			ConfigHelper.copyMetadata(this.configuration, outputConfig);
 			
 			IDataWriter dataWriter = DataWriterFactory
 					.createDataWriter(outputConfig)
