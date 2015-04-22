@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aureliano.damihilogs.data.ObjectMapperSingleton;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -20,6 +22,7 @@ public final class ElasticSearchHelper {
 	private static final int MINUTE_IN_MILLIS = 60 * SECOND_IN_MILLIS;
 	private static final int HOUR_IN_MILLIS = 60 * MINUTE_IN_MILLIS;
 	
+	private static final Logger logger = Logger.getLogger(ElasticSearchHelper.class);
 	private static final Pattern PATTERN_ID = Pattern.compile("\"_id\"\\s*:\\s*\"?[^,]+");
 	
 	private ElasticSearchHelper() {
@@ -27,6 +30,8 @@ public final class ElasticSearchHelper {
 	}
 	
 	public static HttpActionMetadata doRequest(HttpActionData action) {
+		HttpActionMetadata metadata = new HttpActionMetadata();
+		
 		try {
 			long start = System.currentTimeMillis();
 			HttpURLConnection conn = (HttpURLConnection) new URL(action.getUrl()).openConnection();
@@ -35,8 +40,6 @@ public final class ElasticSearchHelper {
 			for (String key : action.getRequestProperties().keySet()) {
 				conn.setRequestProperty(key, action.getRequestProperties().get(key));
 			}
-			
-			HttpActionMetadata metadata = new HttpActionMetadata();
 			
 			if (action.getData() != null) {
 				conn.setDoOutput(true);
@@ -60,6 +63,11 @@ public final class ElasticSearchHelper {
 			conn.disconnect();
 			return metadata;
 		} catch (IOException ex) {
+			logger.warn(new StringBuilder("Response code: ")
+				.append(metadata.getResponseStatus())
+				.append(" Method: ").append(metadata.getRequestMethod())
+				.append(" URL: ").append(metadata.getRequestUrl())
+				.append(" Body: ").append(metadata.getRequestData()).toString());
 			throw new DaMihiLogsException(ex);
 		}
 	}
