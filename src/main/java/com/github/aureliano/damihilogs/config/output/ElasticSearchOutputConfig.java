@@ -92,7 +92,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	}
 
 	@Override
-	public IConfigOutput withParser(IParser<?> parser) {
+	public ElasticSearchOutputConfig withParser(IParser<?> parser) {
 		this.parser = parser;
 		return this;
 	}
@@ -103,7 +103,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	}
 
 	@Override
-	public IConfigOutput withFilter(IEventFielter filter) {
+	public ElasticSearchOutputConfig withFilter(IEventFielter filter) {
 		this.filter = filter;
 		return this;
 	}
@@ -116,6 +116,8 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 			.withMappingType(this.type)
 			.withPort(this.port)
 			.withPrintElasticSearchLog(this.printElasticSearchLog)
+			.withParser(this.parser)
+			.withFilter(this.filter)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	

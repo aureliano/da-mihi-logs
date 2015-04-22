@@ -27,7 +27,7 @@ public class StandardOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withParser(IParser<?> parser) {
+	public StandardOutputConfig withParser(IParser<?> parser) {
 		this.parser = parser;
 		return this;
 	}
@@ -38,13 +38,15 @@ public class StandardOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withFilter(IEventFielter filter) {
+	public StandardOutputConfig withFilter(IEventFielter filter) {
 		this.filter = filter;
 		return this;
 	}
 	
 	public StandardOutputConfig clone() {
 		return new StandardOutputConfig()
+			.withParser(this.parser)
+			.withFilter(this.filter)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	

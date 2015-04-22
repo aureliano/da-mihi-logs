@@ -65,7 +65,7 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withParser(IParser<?> parser) {
+	public FileOutputConfig withParser(IParser<?> parser) {
 		this.parser = parser;
 		return this;
 	}
@@ -76,7 +76,7 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withFilter(IEventFielter filter) {
+	public FileOutputConfig withFilter(IEventFielter filter) {
 		this.filter = filter;
 		return this;
 	}
@@ -86,6 +86,8 @@ public class FileOutputConfig implements IConfigOutput {
 			.withAppend(this.append)
 			.withEncoding(this.encoding)
 			.withFile(this.file)
+			.withParser(this.parser)
+			.withFilter(this.filter)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	
