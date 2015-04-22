@@ -21,6 +21,7 @@ public class ElasticSearchClient {
 	
 	public void startUp() {
 		this.indexer = new ElasticSearchIndexer(this.configuration);
+		this.indexer.createIndex();
 	}
 	
 	@SuppressWarnings("unchecked")
