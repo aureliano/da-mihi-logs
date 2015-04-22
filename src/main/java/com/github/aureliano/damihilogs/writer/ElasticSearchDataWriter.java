@@ -25,8 +25,8 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 			return;
 		}
 		
-		if (this.outputFormatter != null) {
-			data = this.outputFormatter.format(data);
+		if (super.outputFormatter != null) {
+			data = super.outputFormatter.format(data);
 		}
 		
 		boolean accept = super.getFilter().accept(data);

@@ -87,6 +87,10 @@ public class CollectorModel {
 	}
 
 	public CollectorModel withTimeElapsed(String timeElapsed) {
+		if (timeElapsed == null) {
+			timeElapsed = "0 sec";
+		}
+		
 		this.timeElapsed = timeElapsed;
 		return this;
 	}
