@@ -57,10 +57,12 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			return;
 		}
 
-		this.process.destroy();
 		if (this.process.exitValue() != 0) {
 			logger.warn("External command exited with no normal exit status.");
+			logger.warn(this.readError());
 		}
+		
+		this.process.destroy();
 		
 		try {
 			this.bufferedReader.close();
@@ -121,6 +123,26 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		}
 		
 		return command;
+	}
+	
+	private String readError() {
+		InputStreamReader inputStreamReader = new InputStreamReader(this.process.getErrorStream());
+		BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		StringBuilder error = new StringBuilder();
+		String line = null;
+		
+		try {
+			while ((line = reader.readLine()) != null) {
+				error.append(line).append("\n");
+			}
+			reader.close();
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
+		
+		error.deleteCharAt(error.length() - 1);
+		return error.toString();
 	}
 
 	@Override
