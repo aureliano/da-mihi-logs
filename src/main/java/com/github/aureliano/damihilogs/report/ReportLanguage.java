@@ -31,7 +31,7 @@ public enum ReportLanguage {
 		this.labels.put("index.description", "Management of log events collection.");
 		this.labels.put("index.collectors.empty", "There's not any collector execution to show.");
 		
-		this.labels.put("collector.description", "Configuration description of executor.");
+		this.labels.put("collector.description", "List of the last processes executed.");
 		this.labels.put("collector.execution.subtitle", "Execution history");
 		this.labels.put("collectors.empty", "There's not any collector execution to show.");
 		this.labels.put("collector.execution.description", "Execution description of executor.");
@@ -61,7 +61,7 @@ public enum ReportLanguage {
 		this.labels.put("index.description", "Ger\u00eancia de coleta de log de eventos.");
 		this.labels.put("index.collectors.empty", "N\u00e3o h\u00e1 execu\u00e7\u00f5es de coletores a exibir.");
 		
-		this.labels.put("collector.description", "Descri\u00e7\u00e3o da configura\u00e7\u00e3o de executor.");
+		this.labels.put("collector.description", "Relação dos últimos processos executados.");
 		this.labels.put("collector.execution.subtitle", "Hist\u00f3rico de execu\u00e7\u00e3o");
 		this.labels.put("collectors.empty", "N\u00e3o h\u00e1 execu\u00e7\u00f5es de coletores a exibir.");
 		this.labels.put("collector.execution.description", "Descri\u00e7\u00e3o da execu\u00e7\u00e3o do processo.");
