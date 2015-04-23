@@ -98,15 +98,28 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		this.externalCommandInput = (ExternalCommandInput) super.inputConfiguration;
 		
 		logger.info("Execute command " + this.externalCommandInput.getCommand());
+		logger.info("With parameters: " + this.externalCommandInput.getParameters());
+		
+		String command = this.buildCommand();
 		
 		try {
-			this.process = Runtime.getRuntime().exec(this.externalCommandInput.getCommand());
+			this.process = Runtime.getRuntime().exec(command);
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
 		}
 		
 		InputStreamReader inputStreamReader = new InputStreamReader(this.process.getInputStream());
 		this.bufferedReader = new BufferedReader(inputStreamReader);
+	}
+	
+	private String buildCommand() {
+		StringBuilder command = new StringBuilder(this.externalCommandInput.getCommand());
+		
+		for (String parameter : this.externalCommandInput.getParameters()) {
+			command.append(" ").append(parameter);
+		}
+		
+		return command.toString();
 	}
 	
 	private String readError() {
