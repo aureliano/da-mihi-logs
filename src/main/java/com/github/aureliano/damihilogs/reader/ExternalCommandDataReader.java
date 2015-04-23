@@ -3,9 +3,7 @@ package com.github.aureliano.damihilogs.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -100,29 +98,15 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		this.externalCommandInput = (ExternalCommandInput) super.inputConfiguration;
 		
 		logger.info("Execute command " + this.externalCommandInput.getCommand());
-		logger.info("With parameters: " + this.externalCommandInput.getParameters());
-		
-		List<String> command = this.buildCommand();
 		
 		try {
-			this.process = new ProcessBuilder(command).start();
+			this.process = Runtime.getRuntime().exec(this.externalCommandInput.getCommand());
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
 		}
 		
 		InputStreamReader inputStreamReader = new InputStreamReader(this.process.getInputStream());
 		this.bufferedReader = new BufferedReader(inputStreamReader);
-	}
-	
-	private List<String> buildCommand() {
-		List<String> command = new ArrayList<String>();
-		command.add(this.externalCommandInput.getCommand());
-		
-		for (String parameter : this.externalCommandInput.getParameters()) {
-			command.add(parameter);
-		}
-		
-		return command;
 	}
 	
 	private String readError() {
