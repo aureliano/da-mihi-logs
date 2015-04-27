@@ -12,6 +12,7 @@ public class CollectorModel {
 	private String processorAvailable;
 	private String maxMemory;
 	private String totalMemory;
+	private String usedMemory;
 	private List<ExceptionModel> exceptions;
 	private String outputLog;
 	private String textStatus;
@@ -125,5 +126,14 @@ public class CollectorModel {
 	public CollectorModel withTextStatus(String textStatus) {
 		this.textStatus = textStatus;
 		return this;
+	}
+	
+	public CollectorModel withUsedMemory(String usedMemory) {
+		this.usedMemory = usedMemory;
+		return this;
+	}
+	
+	public String getUsedMemory() {
+		return usedMemory;
 	}
 }

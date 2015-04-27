@@ -15,9 +15,10 @@ public class LoggerHelperTest {
 		Properties p = new Properties();
 		p.put("profile.time.elapsed", "8 milliseconds");
 		p.put("profile.processor.available", "8");
-		p.put("profile.memory.free", "0.34 MB");
-		p.put("profile.memory.max", "910.25 MB");
-		p.put("profile.memomry.total", "61.38 MB");
+		p.put("profile.jvm.memory.free", "0.34 MiB");
+		p.put("profile.jvm.memory.max", "910.25 MiB");
+		p.put("profile.jvm.memomry.total", "61.38 MiB");
+		p.put("profile.jvm.memomry.used", "23.1 MiB");
 		
 		String colectorId = "blow-up";
 		File output = LoggerHelper.saveExecutionLogData(colectorId, p);
@@ -29,9 +30,10 @@ public class LoggerHelperTest {
 		
 		Assert.assertEquals(p.get("profile.time.elapsed"), p2.get("profile.time.elapsed"));
 		Assert.assertEquals(p.get("profile.processor.available"), p2.get("profile.processor.available"));
-		Assert.assertEquals(p.get("profile.memory.free"), p2.get("profile.memory.free"));
-		Assert.assertEquals(p.get("profile.memory.max"), p2.get("profile.memory.max"));
-		Assert.assertEquals(p.get("profile.memomry.total"), p2.get("profile.memomry.total"));
+		Assert.assertEquals(p.get("profile.jvm.memory.free"), p2.get("profile.jvm.memory.free"));
+		Assert.assertEquals(p.get("profile.jvm.memory.max"), p2.get("profile.jvm.memory.max"));
+		Assert.assertEquals(p.get("profile.jvm.memomry.total"), p2.get("profile.jvm.memomry.total"));
+		Assert.assertEquals(p.get("profile.jvm.memomry.used"), p2.get("profile.jvm.memomry.used"));
 	}
 	
 	private Properties loadProperties(File file) {

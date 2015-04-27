@@ -24,6 +24,7 @@ public class Profiler {
 	private double freeMemory;
 	private double maxMemory;
 	private double totalMemory;
+	private double usedMemory;
 	
 	public Profiler() {
 		super();
@@ -37,6 +38,7 @@ public class Profiler {
 		this.freeMemory = runtime.freeMemory();
 		this.maxMemory = runtime.maxMemory();
 		this.totalMemory = runtime.totalMemory();
+		this.usedMemory = (runtime.totalMemory() - runtime.freeMemory());
 	}
 	
 	public Profiler stop() {
@@ -47,6 +49,7 @@ public class Profiler {
 		profiler.freeMemory = Runtime.getRuntime().freeMemory();
 		profiler.maxMemory = this.maxMemory;
 		profiler.totalMemory = this.totalMemory;
+		profiler.usedMemory = this.totalMemory - profiler.freeMemory;
 		
 		return profiler;
 	}
@@ -56,9 +59,10 @@ public class Profiler {
 		
 		profiler.time = p2.time - p1.time;
 		profiler.availableProcessors = p1.availableProcessors;
-		profiler.freeMemory = p1.freeMemory - p2.freeMemory;
+		profiler.freeMemory = p2.freeMemory;
 		profiler.maxMemory = p1.maxMemory;
 		profiler.totalMemory = p1.totalMemory;
+		profiler.usedMemory = p2.usedMemory;
 		
 		return profiler;
 	}
@@ -68,9 +72,10 @@ public class Profiler {
 		
 		properties.put("profile.time.elapsed", formatTime(profiler.time));
 		properties.put("profile.processor.available", String.valueOf(profiler.availableProcessors));
-		properties.put("profile.memory.free", DECIMAL_FORMAT.format(profiler.freeMemory / MEM_FACTOR) + " MiB");
-		properties.put("profile.memory.max", DECIMAL_FORMAT.format(profiler.maxMemory / MEM_FACTOR) + " MiB");
-		properties.put("profile.memomry.total", DECIMAL_FORMAT.format(profiler.totalMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.jvm.memory.free", DECIMAL_FORMAT.format(profiler.freeMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.jvm.memory.max", DECIMAL_FORMAT.format(profiler.maxMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.jvm.memomry.total", DECIMAL_FORMAT.format(profiler.totalMemory / MEM_FACTOR) + " MiB");
+		properties.put("profile.jvm.memomry.used", DECIMAL_FORMAT.format(profiler.usedMemory / MEM_FACTOR) + " MiB");
 		
 		return properties;
 	}
@@ -108,5 +113,9 @@ public class Profiler {
 
 	public double getTotalMemory() {
 		return totalMemory;
+	}
+	
+	public double getUsedMemory() {
+		return usedMemory;
 	}
 }

@@ -88,10 +88,11 @@ public final class ReportHelper {
 				
 				model
 					.withTimeElapsed(map.get("profile.time.elapsed"))
-					.withFreeMemory(map.get("profile.memory.free"))
-					.withMaxMemory(map.get("profile.memory.max"))
+					.withFreeMemory(map.get("profile.jvm.memory.free"))
+					.withMaxMemory(map.get("profile.jvm.memory.max"))
 					.withProcessorAvailable(map.get("profile.processor.available"))
-					.withTotalMemory(map.get("profile.memomry.total"))
+					.withTotalMemory(map.get("profile.jvm.memomry.total"))
+					.withUsedMemory(map.get("profile.jvm.memomry.used"))
 					.withStatus(statusOk);
 				
 				ExceptionModel ex = findException(map);

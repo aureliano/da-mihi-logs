@@ -42,6 +42,7 @@ public enum ReportLanguage {
 		this.labels.put("collector.execution.free.memory", "Free memory");
 		this.labels.put("collector.execution.max.memory", "Max memory");
 		this.labels.put("collector.execution.total.memory", "Total memory");
+		this.labels.put("collector.execution.used.memory", "Used memory");
 		this.labels.put("collector.execution.processors.available", "Processors available");
 		this.labels.put("collector.execution.time.elapsed", "Time elapsed");
 		this.labels.put("collector.execution.output.log", "Output log");
@@ -72,6 +73,7 @@ public enum ReportLanguage {
 		this.labels.put("collector.execution.free.memory", "Mem\u00f3ria livre");
 		this.labels.put("collector.execution.max.memory", "Mem\u00f3ria m\u00e1xima");
 		this.labels.put("collector.execution.total.memory", "Total de mem\u00f3ria");
+		this.labels.put("collector.execution.used.memory", "Mem\u00f3ria usada");
 		this.labels.put("collector.execution.processors.available", "Processadores dispon\u00edveis");
 		this.labels.put("collector.execution.time.elapsed", "Tempo gasto");
 		this.labels.put("collector.execution.output.log", "Sa\u00edda de log");

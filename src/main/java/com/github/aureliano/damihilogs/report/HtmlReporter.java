@@ -145,6 +145,7 @@ public class HtmlReporter implements ILoggerReporter {
 		
 		html.set("freeMemoryLabel", this.language.getLabel("collector.execution.free.memory"));
 		html.set("maxMemoryLabel", this.language.getLabel("collector.execution.max.memory"));
+		html.set("usedMemoryLabel", this.language.getLabel("collector.execution.used.memory"));
 		html.set("totalMemoryLabel", this.language.getLabel("collector.execution.total.memory"));
 		html.set("processorsAvailableLabel", this.language.getLabel("collector.execution.processors.available"));
 		html.set("timeElapsedLabel", this.language.getLabel("collector.execution.time.elapsed"));
