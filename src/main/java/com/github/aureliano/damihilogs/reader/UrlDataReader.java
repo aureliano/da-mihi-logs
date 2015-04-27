@@ -194,7 +194,7 @@ public class UrlDataReader extends AbstractDataReader {
 			HttpsURLConnection conn = (HttpsURLConnection) new URL(this.url).openConnection();
 			
 			if (this.urlInputConfiguration.getUser() != null) {
-				String userPassword = "usrpsiconv:45sicX32";
+				String userPassword = this.urlInputConfiguration.getUser() + ":" + this.urlInputConfiguration.getPassword();
 				String encoding = BaseEncoding.base64().encode(userPassword.getBytes());
 				conn.addRequestProperty("Authorization", "Basic " + encoding);
 			}
