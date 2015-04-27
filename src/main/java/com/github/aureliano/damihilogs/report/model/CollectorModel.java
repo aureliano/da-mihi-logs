@@ -7,6 +7,8 @@ public class CollectorModel {
 
 	private String id;
 	private Boolean status;
+	private String timeInit;
+	private String timeEnd;
 	private String timeElapsed;
 	private String freeMemory;
 	private String processorAvailable;
@@ -135,5 +137,23 @@ public class CollectorModel {
 	
 	public String getUsedMemory() {
 		return usedMemory;
+	}
+
+	public String getTimeInit() {
+		return timeInit;
+	}
+
+	public CollectorModel withTimeInit(String timeInit) {
+		this.timeInit = timeInit;
+		return this;
+	}
+
+	public String getTimeEnd() {
+		return timeEnd;
+	}
+
+	public CollectorModel withTimeEnd(String timeEnd) {
+		this.timeEnd = timeEnd;
+		return this;
 	}
 }

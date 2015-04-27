@@ -52,6 +52,8 @@ public enum ReportLanguage {
 		
 		this.labels.put("collector.id", "Collector");
 		this.labels.put("collector.status", "Status");
+		this.labels.put("collector.time.init", "Started");
+		this.labels.put("collector.time.end", "Finished");
 		this.labels.put("collector.time.elapsed", "Time elapsed");
 		this.labels.put("collector.execution.id", "Execution");
 	}
@@ -83,6 +85,8 @@ public enum ReportLanguage {
 		
 		this.labels.put("collector.id", "Coletor");
 		this.labels.put("collector.status", "Status");
+		this.labels.put("collector.time.init", "Iniciado");
+		this.labels.put("collector.time.end", "Finalizado");
 		this.labels.put("collector.time.elapsed", "Tempo gasto");
 		this.labels.put("collector.execution.id", "Executor");
 	}

@@ -73,7 +73,8 @@ public final class ReportHelper {
 			String content = FileHelper.readFile(LoggerHelper.LOG_ECHO_DIR_PATH + File.separator + name);
 			Matcher matcher = EXECUTION_LOG_PARTIAL.matcher(content);
 			
-			String buildId = convertExecutionFileNameToDate(name);
+			//String buildId = convertExecutionFileNameToDate(name);
+			String buildId = name;
 			CollectorModel model = new CollectorModel()
 				.withId(buildId)
 				.withOutputLog(content.replaceAll(EXECUTION_LOG_PARTIAL_REGEX, ""));
@@ -88,6 +89,8 @@ public final class ReportHelper {
 				
 				model
 					.withTimeElapsed(map.get("profile.time.elapsed"))
+					.withTimeInit(map.get("profile.time.init.date"))
+					.withTimeEnd(map.get("profile.time.end.date"))
 					.withFreeMemory(map.get("profile.jvm.memory.free"))
 					.withMaxMemory(map.get("profile.jvm.memory.max"))
 					.withProcessorAvailable(map.get("profile.processor.available"))
