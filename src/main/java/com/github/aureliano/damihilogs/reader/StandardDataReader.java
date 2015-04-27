@@ -66,7 +66,7 @@ public class StandardDataReader extends AbstractDataReader {
 		}
 		
 		logger.info("Reading data from Standard Input.");
-		logger.info("Data encondig: " + ((StandardInputConfig) super.inputConfiguration).getEncoding());
+		logger.debug("Data encondig: " + ((StandardInputConfig) super.inputConfiguration).getEncoding());
 		
 		System.out.println("Listening standard input. Type text and then press Enter to process event or Ctrl + C to quit.");
 		
@@ -75,7 +75,7 @@ public class StandardDataReader extends AbstractDataReader {
 
 	@Override
 	public void endResources() {
-		logger.info(" >>> Flushing and closing stream reader.");
+		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
 		}

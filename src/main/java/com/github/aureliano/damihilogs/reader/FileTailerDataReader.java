@@ -85,14 +85,14 @@ public class FileTailerDataReader extends AbstractDataReader {
 	}
 
 	private void rotateFile() {
-		logger.info("File got smaller! Maybe file rotation? Reseting and reading from beginning.");
+		logger.debug("File got smaller! Maybe file rotation? Reseting and reading from beginning.");
 		this.fileLength = this.currentFileLength();
 		this.filePointer = super.lineCounter = 0;
 	}
 
 	@Override
 	public void endResources() {
-		logger.info(" >>> Flushing and closing stream reader.");
+		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.randomAccessFile == null) {
 			return;
 		}

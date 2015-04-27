@@ -47,7 +47,7 @@ public class FileDataReader extends AbstractDataReader {
 	
 	@Override
 	public void endResources() {
-		logger.info(" >>> Flushing and closing stream reader.");
+		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
 		}
@@ -83,8 +83,8 @@ public class FileDataReader extends AbstractDataReader {
 		}
 		
 		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
-		logger.info("Starting from line " + this.fileInputConfiguration.getStartPosition());
-		logger.info("Data encondig: " + this.fileInputConfiguration.getEncoding());
+		logger.debug("Starting from line " + this.fileInputConfiguration.getStartPosition());
+		logger.debug("Data encondig: " + this.fileInputConfiguration.getEncoding());
 		
 		try {
 			this.bufferedReader = new BufferedReader(

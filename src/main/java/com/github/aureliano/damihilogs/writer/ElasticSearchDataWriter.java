@@ -43,7 +43,7 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 			return;
 		}
 		
-		logger.info(" >>> Shutting ElasticSearch client instance down.");
+		logger.debug(" >>> Shutting ElasticSearch client instance down.");
 	}
 	
 	private void initialize() {
@@ -51,7 +51,7 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 			return;
 		}
 		
-		logger.info(" >>> Starting new ElasticSearch client instance.");
+		logger.debug(" >>> Starting new ElasticSearch client instance.");
 		this.elasticSearchClient = new ElasticSearchClient().withConfiguration((IElasticSearchConfiguration) this.outputConfiguration);
 		this.elasticSearchClient.startUp();
 	}

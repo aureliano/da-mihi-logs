@@ -50,7 +50,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 
 	@Override
 	public void endResources() {
-		logger.info(" >>> Flushing and closing stream reader.");
+		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
 		}

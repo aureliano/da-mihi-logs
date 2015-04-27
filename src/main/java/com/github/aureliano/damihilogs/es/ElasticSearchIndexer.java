@@ -95,7 +95,7 @@ public class ElasticSearchIndexer {
 			return (metadata.getResponseStatus() / 100 == 2);
 		}
 		
-		logger.warn("Index " + this.configuration.getIndex() + " already exist, cannot create");
+		logger.debug("Index " + this.configuration.getIndex() + " already exist, cannot create");
 		return false;
 	}
 	
@@ -107,7 +107,7 @@ public class ElasticSearchIndexer {
 			return (metadata.getResponseStatus() / 100 == 2);
 		}
 		
-		logger.warn("Index " + this.configuration.getIndex() + " does not exist, cannot delete");
+		logger.debug("Index " + this.configuration.getIndex() + " does not exist, cannot delete");
 		return false;
 	}
 

@@ -48,7 +48,7 @@ public class UrlDataReader extends AbstractDataReader {
 
 	@Override
 	public void endResources() {
-		logger.info(" >>> Finalizing url data reader.");
+		logger.debug(" >>> Finalizing url data reader.");
 		logger.info("Downloaded file: " + ((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
 		this.fileDataReader.endResources();
 	}
@@ -79,11 +79,11 @@ public class UrlDataReader extends AbstractDataReader {
 		
 		this.url = UrlHelper.buildUrl(this.urlInputConfiguration);
 		logger.info("Fetching data from " + url);
-		logger.info("Read (download) timeout: " + this.urlInputConfiguration.getReadTimeout());
+		logger.debug("Read (download) timeout: " + this.urlInputConfiguration.getReadTimeout());
 		
 		if (this.urlInputConfiguration.getUser() != null) {
-			logger.info("Using basic authentication for " + this.urlInputConfiguration.getUser());
-			logger.info("Check certificate? " + !this.urlInputConfiguration.isNoCheckCertificate());
+			logger.debug("Using basic authentication for " + this.urlInputConfiguration.getUser());
+			logger.debug("Check certificate? " + !this.urlInputConfiguration.isNoCheckCertificate());
 		}
 		
 		this.bytesRead = this.urlInputConfiguration.getByteOffSet();
@@ -134,11 +134,11 @@ public class UrlDataReader extends AbstractDataReader {
 		
 		if (this.urlInputConfiguration.getOutputFile().exists()) {
 			if (this.urlInputConfiguration.isAppendIfOutputFileExist()) {
-				logger.info("Appending data to " + this.urlInputConfiguration.getOutputFile().getPath());
+				logger.debug("Appending data to " + this.urlInputConfiguration.getOutputFile().getPath());
 				raf = new RandomAccessFile(this.urlInputConfiguration.getOutputFile(), "rw");
 				raf.seek(this.urlInputConfiguration.getOutputFile().length());
 			} else {
-				logger.info("Erasing data from file: " + this.urlInputConfiguration.getOutputFile().getPath());
+				logger.debug("Erasing data from file: " + this.urlInputConfiguration.getOutputFile().getPath());
 				this.urlInputConfiguration.getOutputFile().delete();
 				this.urlInputConfiguration.withOutputFile(this.urlInputConfiguration.getOutputFile().getPath());
 			}
