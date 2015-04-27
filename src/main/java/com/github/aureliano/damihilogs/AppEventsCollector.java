@@ -48,7 +48,7 @@ public class AppEventsCollector {
 	}
 	
 	private void _execute() {
-		Logger.getRootLogger().removeAppender("file");
+		Thread.currentThread().setName("Thread-" + this.collectorId);
 		this.configureLogger();		
 		
 		if (this.configuration == null) {
@@ -91,7 +91,6 @@ public class AppEventsCollector {
 	}
 
 	private void configureLogger() {
-		LoggerHelper.configureFileAppenderLogger(this.collectorId);
 		System.setOut(LoggerHelper.createLoggingProxy(System.out, logger));
 		System.setErr(LoggerHelper.createLoggingProxy(System.err, logger));
 	}
