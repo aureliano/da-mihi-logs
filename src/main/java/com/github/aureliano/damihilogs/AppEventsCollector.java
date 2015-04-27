@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.profile.Profiler;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
@@ -48,7 +49,7 @@ public class AppEventsCollector {
 	}
 	
 	private void _execute() {
-		Thread.currentThread().setName("Thread-" + this.collectorId);
+		this.configureThreadName();
 		this.configureLogger();		
 		
 		if (this.configuration == null) {
@@ -88,6 +89,14 @@ public class AppEventsCollector {
 				logger.error("An exception ocurred when executing cleaner.", ex);
 			}
 		}
+	}
+	
+	private void configureThreadName() {
+		if ((this.collectorId == null) || (this.collectorId.equals(""))) {
+			this.collectorId = ConfigHelper.newUniqueConfigurationName();
+		}
+		
+		Thread.currentThread().setName("Thread-" + this.collectorId);
 	}
 
 	private void configureLogger() {

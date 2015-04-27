@@ -67,6 +67,10 @@ public class CollectEventsCommand {
 		
 		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
 			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
+			if ((inputConfig.getConfigurationId() == null) || (inputConfig.getConfigurationId().equals(""))) {
+				inputConfig.withConfigurationId(ConfigHelper.newUniqueConfigurationName());
+			}
+			
 			ConfigHelper.inputConfigValidation(inputConfig);
 			ConfigHelper.copyMetadata(this.configuration, inputConfig);
 			
@@ -102,6 +106,7 @@ public class CollectEventsCommand {
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
 		for (DataIterationCommand command : commands) {
+			Thread.currentThread().setName(String.format("Thread-%s-%s", this.collectorId, command.getId()));
 			ExceptionHandlerHelper.executeHandlingException(command);
 		}
 	}
@@ -130,9 +135,9 @@ public class CollectEventsCommand {
 	private Thread createThread(DataIterationCommand command) {
 		Thread t = null;
 		if (command.getId() != null && !command.getId().equals("")) {
-			t = new Thread(command, "Thread-" + command.getId());
+			t = new Thread(command, String.format("Thread-%s-%s", this.collectorId, command.getId()));
 		} else {
-			t = new Thread(command);
+			throw new DaMihiLogsException("Executor with no id.");
 		}
 		
 		return t;

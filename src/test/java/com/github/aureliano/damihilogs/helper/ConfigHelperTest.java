@@ -1,6 +1,8 @@
 package com.github.aureliano.damihilogs.helper;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.Assert;
 
@@ -38,6 +40,7 @@ public class ConfigHelperTest {
 	public void testInputConfigValidation() {
 		try {
 			ConfigHelper.inputConfigValidation(null);
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input configuration must be provided.", ex.getMessage());
 		}
@@ -47,6 +50,7 @@ public class ConfigHelperTest {
 	public void testOutputConfigValidation() {
 		try {
 			ConfigHelper.outputConfigValidation(null);
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output configuration must be provided.", ex.getMessage());
 		}
@@ -56,18 +60,21 @@ public class ConfigHelperTest {
 	public void testInputFileConfigValidationFile() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig());
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("/non/existent/file")));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file '/non/existent/file' does not exist.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources")));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
@@ -80,6 +87,7 @@ public class ConfigHelperTest {
 	public void testInputFileConfigValidationStartPosition() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
 		}
@@ -91,20 +99,9 @@ public class ConfigHelperTest {
 	public void testOutputFileConfigValidationFile() {
 		try {
 			ConfigHelper.outputConfigValidation(new FileOutputConfig());
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file not provided.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("/non/existent/file")));
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output file '/non/existent/file' does not exist.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("src/test/resources")));
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output resource 'src/test/resources' is not a file.", ex.getMessage());
 		}
 		
 		ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("src/test/resources/empty-file.log")));
@@ -115,12 +112,14 @@ public class ConfigHelperTest {
 	public void testUrlInputConfigValidation() {
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(null));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Connection schema not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(ConnectionSchema.HTTP));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Host not provided.", ex.getMessage());
 		}
@@ -128,6 +127,7 @@ public class ConfigHelperTest {
 		try {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
 				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost"));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file not provided.", ex.getMessage());
 		}
@@ -136,6 +136,7 @@ public class ConfigHelperTest {
 			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
 				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
 				.withOutputFile("src/test/resources"));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Output file 'src/test/resources' is a directory.", ex.getMessage());
 		}
@@ -149,16 +150,28 @@ public class ConfigHelperTest {
 	public void testExternalCommandConfigValidation() {
 		try {
 			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput());
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Command not provided.", ex.getMessage());
 		}
 		
 		try {
 			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand(""));
+			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Command not provided.", ex.getMessage());
 		}
 		
 		ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand("ls -la"));
+	}
+	
+	@Test
+	public void testNewUniqueConfigurationName() {
+		Set<String> names = new HashSet<String>();
+		for (byte i = 0; i < 85; i++) {
+			Assert.assertTrue(names.add(ConfigHelper.newUniqueConfigurationName()));
+		}
+		
+		Assert.assertTrue(names.size() == 85);
 	}
 }

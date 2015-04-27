@@ -1,5 +1,7 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
@@ -15,11 +17,17 @@ import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class ConfigHelper {
+	
+	private static final Map<String, Boolean> EXECUTOR_NAMES = new HashMap<String, Boolean>();
+	
+	static {
+		populateExecutorNamesMap();
+	}
 
 	private ConfigHelper() {
 		super();
 	}
-	
+
 	public static void copyMetadata(IConfiguration from, IConfiguration to) {
 		Set<Object> keys = from.getMetadata().keySet();
 		for (Object key : keys) {
@@ -30,6 +38,8 @@ public final class ConfigHelper {
 	public static void inputConfigValidation(IConfigInput config) {
 		if (config == null) {
 			throw new DaMihiLogsException("Input configuration must be provided.");
+		} else if (config.getConfigurationId() == null || config.getConfigurationId().equals("")) {
+			throw new DaMihiLogsException("Input configuration ID must be provided.");
 		}
 		
 		if (config instanceof InputFileConfig) {
@@ -136,6 +146,24 @@ public final class ConfigHelper {
 			throw new DaMihiLogsException("Mapping type not provided.");
 		} else if ("".equals(config.getMappingType())) {
 			throw new DaMihiLogsException("Empty mapping type.");
+		}
+	}
+	
+	public synchronized static String newUniqueConfigurationName() {
+		for (String key : EXECUTOR_NAMES.keySet()) {
+			if (!EXECUTOR_NAMES.get(key)) {
+				EXECUTOR_NAMES.put(key, true);
+				return key;
+			}
+		}
+		
+		throw new DaMihiLogsException("Could not create a new unique configuration name. Exceeded!");
+	}
+	
+	private static void populateExecutorNamesMap() {
+		String[] names = FileHelper.readResource("configuration-names").split("\n");
+		for (String name : names) {
+			EXECUTOR_NAMES.put(name, false);
 		}
 	}
 }
