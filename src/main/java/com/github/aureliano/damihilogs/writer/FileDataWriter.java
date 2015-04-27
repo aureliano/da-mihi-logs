@@ -47,7 +47,7 @@ public class FileDataWriter extends AbstractDataWriter {
 			return;
 		}
 		
-		logger.info(" >>> Flushing and closing stream writer.");
+		logger.debug(" >>> Flushing and closing stream writer.");
 		
 		this.writer.flush();
 		this.writer.close();		
@@ -65,8 +65,8 @@ public class FileDataWriter extends AbstractDataWriter {
 		FileOutputConfig fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;
 		
 		logger.info("Outputing data to " + fileOutputConfiguration.getFile().getPath());
-		logger.info("Data encondig: " + fileOutputConfiguration.getEncoding());
-		logger.info("Append data to file? " + fileOutputConfiguration.isAppend());
+		logger.debug("Data encondig: " + fileOutputConfiguration.getEncoding());
+		logger.debug("Append data to file? " + fileOutputConfiguration.isAppend());
 		
 		try {
 			FileOutputStream stream = new FileOutputStream(fileOutputConfiguration.getFile(), fileOutputConfiguration.isAppend());
