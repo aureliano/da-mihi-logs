@@ -91,8 +91,10 @@ public class UrlDataReader extends AbstractDataReader {
 		this.download();
 		
 		if (!this.urlInputConfiguration.isAlwaysDownloadCompleteFile() && !this.urlInputConfiguration.isAppendIfOutputFileExist()) {
-			logger.warn("ATENTION! Defining file start position to 0 because you have decided to download only piece of file and you haven't configured to append downloaded file.");
-			this.urlInputConfiguration.withFileStartPosition(0);
+			if (this.urlInputConfiguration.getFileStartPosition() != 0) {
+				logger.warn("ATENTION! Defining file start position to 0 because you have decided to download only piece of file and you haven't configured to append downloaded file.");
+				this.urlInputConfiguration.withFileStartPosition(0);
+			}
 		}
 		
 		this.fileDataReader = (FileDataReader) new FileDataReader()
