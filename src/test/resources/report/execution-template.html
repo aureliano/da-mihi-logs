@@ -1,6 +1,9 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="id" content="{$collector.id}"/>
+    <meta name="status" content="{$collector.status_as_string}"/>
+    <meta name="time_elapsed" content="{$collector.time_elapsed}"/>
     <title>{$pageTitle}</title>
   </head>
   
@@ -22,10 +25,19 @@
          <td><b>{$maxMemoryLabel}:</b></td><td>{$collector.max_memory}</td>
        </tr>
        <tr>
+         <td><b>{$usedMemoryLabel}:</b></td><td>{$collector.used_memory}</td>
+       </tr>
+       <tr>
          <td><b>{$totalMemoryLabel}:</b></td><td>{$collector.total_memory}</td>
        </tr>
        <tr>
          <td><b>{$processorsAvailableLabel}:</b></td><td>{$collector.processor_available}</td>
+       </tr>
+       <tr>
+         <td><b>{$timeInitLabel}:</b></td><td>{$collector.time_init}</td>
+       </tr>
+       <tr>
+         <td><b>{$timeEndLabel}:</b></td><td>{$collector.time_end}</td>
        </tr>
        <tr>
          <td><b>{$timeElapsedLabel}:</b></td><td>{$collector.time_elapsed}</td>

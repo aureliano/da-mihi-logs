@@ -11,7 +11,7 @@ public class LogCleaner implements ICleaner {
 	
 	public LogCleaner() {
 		this.dataCleaner = new FileCleaner(new File(LoggerHelper.LOG_DATA_DIR_PATH));
-		this.echoCleaner = new FileCleaner(new File(LoggerHelper.LOG_ECHO_DIR_PATH));
+		this.echoCleaner = new FileCleaner(new File(LoggerHelper.LOG_DIR_PATH));
 	}
 	
 	public LogCleaner removeLogDataFilesAfterSeconds(Integer seconds) {

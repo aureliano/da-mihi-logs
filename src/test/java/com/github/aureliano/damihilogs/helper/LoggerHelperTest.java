@@ -19,6 +19,7 @@ public class LoggerHelperTest {
 		p.put("profile.jvm.memory.max", "910.25 MiB");
 		p.put("profile.jvm.memomry.total", "61.38 MiB");
 		p.put("profile.jvm.memomry.used", "23.1 MiB");
+		p.put("profile.time.init", String.valueOf(System.currentTimeMillis()));
 		
 		String colectorId = "blow-up";
 		File output = LoggerHelper.saveExecutionLogData(colectorId, p);

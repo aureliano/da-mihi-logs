@@ -114,14 +114,6 @@ public final class FileHelper {
 		}
 	}
 	
-	public static String createLoggerFileName(String dir, String collectorId, Long seed) {
-		if (seed == null) {
-			seed = System.currentTimeMillis();
-		}
-		
-		return String.format("%s%s%s_%s.log", dir, File.separator, collectorId, seed);
-	}
-	
 	public static String getLastExecutionLogDataFileName(final String collectorId) {
 		return collectorId + "_" + DATE_FORMAT.format(new Date()) + ".log";
 	}

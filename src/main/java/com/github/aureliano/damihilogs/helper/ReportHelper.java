@@ -1,15 +1,15 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -21,11 +21,6 @@ import com.github.aureliano.damihilogs.report.model.ExceptionModel;
 
 public final class ReportHelper {
 
-	private static final String EXECUTION_LOG_PARTIAL_PREFIX_REGEX = "DEBUG\\s\\[[^\\]]+\\]\\s\\([^\\)]+\\)\\s-\\sExecution\\sLog\\spartial:";
-	private static final String EXECUTION_LOG_PARTIAL_REGEX = EXECUTION_LOG_PARTIAL_PREFIX_REGEX + "([\\W\\w\\d](?!TRACE|DEBUG|INFO|WARN|ERROR|FATAL))+";
-	private static final Pattern EXECUTION_LOG_PARTIAL = Pattern.compile("(" + EXECUTION_LOG_PARTIAL_REGEX + ")");
-	private static final Pattern FILE_SEED = Pattern.compile("(\\d+)\\.log$");
-	
 	private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
 	
 	private ReportHelper() {
@@ -50,77 +45,102 @@ public final class ReportHelper {
 			}
 		}
 		
-		
 		return models;
 	}
 	
-	public static List<CollectorModel> getCollectorExecutions(final String collectorId) {
-		String[] names = new File(LoggerHelper.LOG_ECHO_DIR_PATH).list(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.startsWith(collectorId);
-			}
-		});
+	public static CollectorModel getLastCollectorExecution(final String collectorId) {
+		Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
+		String buildId = DATE_FORMATTER.format(new Date(Long.parseLong(properties.getProperty("profile.time.init"))));
 		
-		if (names == null) {
-			names = new String[0];
+		String content = FileHelper.readFile(LoggerHelper.getCurrentLogFile());
+		int index = content.indexOf(buildId.replaceFirst("\\.\\d+", ""));
+		if (index >= 0) {
+			content = content.substring(content.indexOf(buildId.replaceFirst("\\.\\d+", "")));
+		}
+		BufferedReader reader = new BufferedReader(new StringReader(content));
+		
+		CollectorModel model = new CollectorModel()
+			.withId(buildId)
+			.withStatus(false);
+		
+		StringBuilder log = new StringBuilder();
+		String line = null;
+		
+		try {
+			while ((line = reader.readLine()) != null) {
+				log.append(line).append("\n");
+			}
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
 		}
 		
-		Arrays.sort(names, Collections.reverseOrder());
-		List<CollectorModel> models = new ArrayList<CollectorModel>();
+		content = ((log.length() > 0) ? (log.deleteCharAt(log.length() - 1).toString()) : "");
 		
-		for (String name : names) {
-			String content = FileHelper.readFile(LoggerHelper.LOG_ECHO_DIR_PATH + File.separator + name);
-			Matcher matcher = EXECUTION_LOG_PARTIAL.matcher(content);
-			
-			//String buildId = convertExecutionFileNameToDate(name);
-			String buildId = name;
-			CollectorModel model = new CollectorModel()
-				.withId(buildId)
-				.withOutputLog(content.replaceAll(EXECUTION_LOG_PARTIAL_REGEX, ""));
-			
-			models.add(model);
-			model.withStatus(false);
-			
-			while (matcher.find()) {
-				String hash = matcher.group().replaceAll(EXECUTION_LOG_PARTIAL_PREFIX_REGEX, "").trim();
-				Map<String, String> map = DataHelper.jsonStringToObject(hash, Map.class);				
-				Boolean statusOk = getStatus(map.keySet());
-				
-				model
-					.withTimeElapsed(map.get("profile.time.elapsed"))
-					.withTimeInit(map.get("profile.time.init.date"))
-					.withTimeEnd(map.get("profile.time.end.date"))
-					.withFreeMemory(map.get("profile.jvm.memory.free"))
-					.withMaxMemory(map.get("profile.jvm.memory.max"))
-					.withProcessorAvailable(map.get("profile.processor.available"))
-					.withTotalMemory(map.get("profile.jvm.memomry.total"))
-					.withUsedMemory(map.get("profile.jvm.memomry.used"))
-					.withStatus(statusOk);
-				
-				ExceptionModel ex = findException(map);
-				if (ex != null) {
-					model.addException(findException(map));
-				}
-			}
+		model
+			.withOutputLog(content)
+			.withStatus(getStatus(properties.keySet()))
+			.withTimeElapsed(properties.getProperty("profile.time.elapsed"))
+			.withTimeInit(properties.getProperty("profile.time.init.date"))
+			.withTimeEnd(properties.getProperty("profile.time.end.date"))
+			.withFreeMemory(properties.getProperty("profile.jvm.memory.free"))
+			.withMaxMemory(properties.getProperty("profile.jvm.memory.max"))
+			.withProcessorAvailable(properties.getProperty("profile.processor.available"))
+			.withTotalMemory(properties.getProperty("profile.jvm.memomry.total"))
+			.withUsedMemory(properties.getProperty("profile.jvm.memomry.used"));
+		
+		ExceptionModel ex = findException(properties);
+		if (ex != null) {
+			model.addException(ex);
 		}
 		
-		return models;
+		return model;
 	}
 	
 	public static String loadHtmlTemplate(String resource) {
 		return FileHelper.readResource(resource);
 	}
 	
-	private static ExceptionModel findException(Map<String, String> map) {
+	public static List<CollectorModel> getOldCollectorExecutions(File dir, final String collectorId) {
+		File[] files = dir.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.matches(collectorId + "_[\\d_]+\\.html");
+			}
+		});
+		
+		if (files == null) {
+			return new ArrayList<CollectorModel>();
+		}
+		
+		List<CollectorModel> executions = new ArrayList<CollectorModel>();
+		Pattern pattern = Pattern.compile("<meta\\sname=\"([^\"]+)\"\\scontent=\"([^\"]+)\"/>");
+		for (File file : files) {
+			CollectorModel exec = new CollectorModel();
+			String content = FileHelper.readFile(file);
+			
+			Matcher matcher = pattern.matcher(content);
+			matcher.find();
+			exec.withId(matcher.group(2));
+			matcher.find();
+			exec.withStatus(Boolean.parseBoolean(matcher.group(2)));
+			matcher.find();
+			exec.withTimeElapsed(matcher.group(2));
+			
+			executions.add(exec);
+		}
+
+		return executions;
+	}
+	
+	private static ExceptionModel findException(Properties properties) {
 		ExceptionModel exception = new ExceptionModel();
 		
-		for (String key : map.keySet()) {
-			if (key.endsWith(".exception")) {
-				String seed = key.replaceFirst("input.config.", "").replaceFirst(".exception", "");
-				exception.withMessage(map.get(key)).withSeed(seed);
-			} else if (key.endsWith(".stackTrace")) {
-				exception.withStackTrace(map.get(key).replaceFirst("^\\[", "").replaceFirst("\\]$", "").replaceAll(",\\s", "\n"));
+		for (Object key : properties.keySet()) {
+			if (key.toString().endsWith(".exception")) {
+				String seed = key.toString().replaceFirst("input.config.", "").replaceFirst(".exception", "");
+				exception.withMessage(properties.get(key).toString()).withSeed(seed);
+			} else if (key.toString().endsWith(".stackTrace")) {
+				exception.withStackTrace(properties.get(key).toString().replaceFirst("^\\[", "").replaceFirst("\\]$", "").replaceAll(",\\s", "\n"));
 			}
 		}
 		
@@ -129,15 +149,6 @@ public final class ReportHelper {
 		}
 		
 		return exception;
-	}
-	
-	private static String convertExecutionFileNameToDate(String fileName) {
-		Matcher matcher = FILE_SEED.matcher(fileName);
-		if (!matcher.find()) {
-			throw new DaMihiLogsException("Invalid execution log file name. Expected to match " + FILE_SEED.pattern() + " onto " + fileName);
-		}
-		
-		return DATE_FORMATTER.format(new Date(Long.parseLong(matcher.group(1))));
 	}
 	
 	private static boolean getStatus(Set<?> keySet) {

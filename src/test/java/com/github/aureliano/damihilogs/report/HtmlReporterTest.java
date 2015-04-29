@@ -29,8 +29,7 @@ public class HtmlReporterTest {
 		HtmlReporter r = new HtmlReporter()
 			.withPageTitle("Resurrexit, sicut dixit")
 			.withDescription("Deus, qui per ressurrectionem Filii tui, Domini nostri Iesu Christi, mundum laetificare dignatus es: praesta, quaesumus; ut per eius Genetricem Virginem Mariam, perpetuae capiamus gaudia vitae. Per eundem Christum Dominum nostrum.")
-			.withOutputDir(OUTPUT_DIR)
-			.withDeleteOldFiles(true);
+			.withOutputDir(OUTPUT_DIR);
 		r.buildReport();
 		
 		String html = this.loadHtmlIndexReport();

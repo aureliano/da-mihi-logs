@@ -3,12 +3,12 @@ package com.github.aureliano.damihilogs.report;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.helper.FileHelper;
 import com.github.aureliano.damihilogs.helper.ReportHelper;
 import com.github.aureliano.damihilogs.report.model.CollectorModel;
 import com.x5.template.Chunk;
@@ -20,7 +20,6 @@ public class HtmlReporter implements ILoggerReporter {
 	private String pageTitle;
 	private String description;
 	private File outputDir;
-	private Boolean deleteOldFiles;
 	
 	private static final Logger logger = Logger.getLogger(HtmlReporter.class);
 	
@@ -28,16 +27,11 @@ public class HtmlReporter implements ILoggerReporter {
 		this.language = ReportLanguage.ENGLISH;
 		this.pageTitle = this.language.getLabel("index.title");
 		this.description = this.language.getLabel("index.description");
-		this.deleteOldFiles = false;
 	}
 
 	@Override
 	public void buildReport() {
 		this.validateOutputDir();
-		
-		if (this.deleteOldFiles) {
-			this.deleteOldFiles();
-		}
 		
 		if (!this.outputDir.exists()) {
 			if (!this.outputDir.mkdirs()) {
@@ -54,13 +48,6 @@ public class HtmlReporter implements ILoggerReporter {
 			throw new DaMihiLogsException("Report output dir not provided.");
 		} else if (this.outputDir.isFile()) {
 			throw new DaMihiLogsException(outputDir.getPath() + " must be a directory (existing or not).");
-		}
-	}
-	
-	private void deleteOldFiles() {
-		if (this.outputDir.exists()) {
-			logger.info("Deleting files from " + this.outputDir.getPath());
-			FileHelper.delete(this.outputDir, true);
 		}
 	}
 	
@@ -102,17 +89,27 @@ public class HtmlReporter implements ILoggerReporter {
 		Chunk html = new Theme().makeChunk();
 		html.append(collectorTemplate);
 		
-		List<CollectorModel> collectorExecutions = ReportHelper.getCollectorExecutions(model.getId());
-		for (CollectorModel c : collectorExecutions) {
-			c.withTextStatus(c.getStatus() ? this.language.getLabel("status.ok") : this.language.getLabel("status.bad"));
+		List<CollectorModel> collectors = new ArrayList<CollectorModel>();
+		CollectorModel collectorExecution = ReportHelper.getLastCollectorExecution(model.getId());
+		collectorExecution.withTextStatus(collectorExecution.getStatus() ? this.language.getLabel("status.ok") : this.language.getLabel("status.bad"));
+		collectors.add(collectorExecution);
+		
+		this.generateHtmlExecutionPage(collectorExecution, model.getId());
+		
+		for (CollectorModel c : ReportHelper.getOldCollectorExecutions(this.outputDir, model.getId())) {
+			if (collectorExecution.equals(c)) {
+				continue;
+			}
 			
-			this.generateHtmlExecutionPage(c);
+			c.withTextStatus(c.getStatus() ? this.language.getLabel("status.ok") : this.language.getLabel("status.bad"));
+			collectors.add(c);
 		}
 		
 		html.set("pageTitle", this.pageTitle + " - " + model.getId());
 		html.set("pageSubTitle", this.language.getLabel("collector.id") + " " + model.getId());
-		html.set("collectors", collectorExecutions);
+		html.set("collectors", collectors);
 		html.set("description", this.language.getLabel("collector.description"));
+		html.set("id", model.getId());
 		
 		html.set("statusLabel", this.language.getLabel("collector.status"));
 		html.set("collectorLabel", this.language.getLabel("collector.id"));
@@ -129,7 +126,7 @@ public class HtmlReporter implements ILoggerReporter {
 		}
 	}
 
-	private void generateHtmlExecutionPage(CollectorModel model) {
+	private void generateHtmlExecutionPage(CollectorModel model, String collectorId) {
 		String executionTemplate = ReportHelper.loadHtmlTemplate("report/execution-template.html");
 		
 		Chunk html = new Theme().makeChunk();
@@ -148,16 +145,16 @@ public class HtmlReporter implements ILoggerReporter {
 		html.set("usedMemoryLabel", this.language.getLabel("collector.execution.used.memory"));
 		html.set("totalMemoryLabel", this.language.getLabel("collector.execution.total.memory"));
 		html.set("processorsAvailableLabel", this.language.getLabel("collector.execution.processors.available"));
-		html.set("timeInitLabel", this.language.getLabel("collector.execution.time.init"));
-		html.set("timeEndLabel", this.language.getLabel("collector.execution.time.end"));
-		html.set("timeElapsedLabel", this.language.getLabel("collector.execution.time.elapsed"));
+		html.set("timeInitLabel", this.language.getLabel("collector.time.init"));
+		html.set("timeEndLabel", this.language.getLabel("collector.time.end"));
+		html.set("timeElapsedLabel", this.language.getLabel("collector.time.elapsed"));
 		html.set("consoleOutputTitle", this.language.getLabel("collector.execution.output.log"));
 		
 		html.set("collector", model);
 		html.set("exceptions", model.getExceptions());
 		
 		try {
-			File file = new File(this.outputDir.getPath() + File.separator + model.getExecutionId() + ".html");
+			File file = new File(this.outputDir.getPath() + File.separator + collectorId + "_" + model.getExecutionId() + ".html");
 			logger.debug("Saving execution page " + model.getExecutionId() + ".html");
 			html.render(new PrintStream(file));
 		} catch (IOException ex) {
@@ -203,16 +200,5 @@ public class HtmlReporter implements ILoggerReporter {
 	@Override
 	public File getOutputDir() {
 		return this.outputDir;
-	}
-
-	@Override
-	public HtmlReporter withDeleteOldFiles(Boolean deleteOldFiles) {
-		this.deleteOldFiles = deleteOldFiles;
-		return this;
-	}
-
-	@Override
-	public Boolean isDeleteOldFiles() {
-		return this.deleteOldFiles;
 	}
 }

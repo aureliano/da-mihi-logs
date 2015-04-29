@@ -58,18 +58,6 @@ public class FileHelperTest {
 		FileHelper.deleteAllFiles(new File(dirPath), System.currentTimeMillis() - oneSecond);
 		Assert.assertEquals(2, new File(dirPath).list().length);
 	}
-
-	@Test
-	public void testCreateLoggerFileName() {
-		String dir = "log/exec";
-		String collectorId = "execution";
-		long timeMillis = 12345;
-		
-		String expected = "log/exec/execution_12345.log";
-		String actual = FileHelper.createLoggerFileName(dir, collectorId, timeMillis);
-		
-		Assert.assertEquals(expected, actual);
-	}
 	
 	@Test
 	public void testGetLastExecutionLogDataFileName() {

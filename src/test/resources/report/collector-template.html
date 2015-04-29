@@ -22,7 +22,7 @@
       {% loop in $collectors as $collector %}
       <tr>
         <td>{$collector.text_status}</td>
-        <td><a href="{$collector.execution_id}.html">{$collector.id}</a></td>
+        <td><a href="{$id}_{$collector.execution_id}.html">{$collector.id}</a></td>
         <td>{$collector.time_elapsed}</td>
       </tr>
       {% onEmpty %}
