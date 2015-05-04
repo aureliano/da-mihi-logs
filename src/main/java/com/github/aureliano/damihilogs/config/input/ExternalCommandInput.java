@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class ExternalCommandInput implements IConfigInput {
 
@@ -15,12 +16,22 @@ public class ExternalCommandInput implements IConfigInput {
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
+	private IMatcher matcher;
 	
 	public ExternalCommandInput() {
 		this.useLastExecutionRecords = false;
 		this.parameters = new ArrayList<String>();
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+	}
+	
+	public IMatcher getMatcher() {
+		return matcher;
+	}
+	
+	public ExternalCommandInput withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
+		return this;
 	}
 	
 	@Override
@@ -39,6 +50,7 @@ public class ExternalCommandInput implements IConfigInput {
 		return new ExternalCommandInput()
 			.withConfigurationId(this.id)
 			.withCommand(this.command)
+			.withMatcher(this.matcher)
 			.withParameters(this.parameters)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);

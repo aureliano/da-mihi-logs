@@ -15,6 +15,7 @@ import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class DataReaderFactoryTest {
 
@@ -63,6 +64,14 @@ public class DataReaderFactoryTest {
 			}
 
 			public List<IExceptionHandler> getExceptionHandlers() {
+				return null;
+			}
+
+			public IMatcher getMatcher() {
+				return null;
+			}
+
+			public IConfigInput withMatcher(IMatcher matcher) {
 				return null;
 			}
 		});

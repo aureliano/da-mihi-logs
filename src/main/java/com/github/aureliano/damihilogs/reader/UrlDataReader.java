@@ -102,8 +102,8 @@ public class UrlDataReader extends AbstractDataReader {
 				new InputFileConfig()
 					.withFile(this.urlInputConfiguration.getOutputFile())
 					.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
-					.withConfigurationId(this.urlInputConfiguration.getConfigurationId()))
-			.withMatcher(super.matcher)
+					.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
+					.withMatcher(this.urlInputConfiguration.getMatcher()))
 			.withListeners(super.listeners);
 	}
 

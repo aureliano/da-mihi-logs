@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class InputFileConfig implements IConfigInput {
 
@@ -20,6 +21,7 @@ public class InputFileConfig implements IConfigInput {
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
+	private IMatcher matcher;
 
 	public InputFileConfig() {
 		this.encoding = "UTF-8";
@@ -39,6 +41,15 @@ public class InputFileConfig implements IConfigInput {
 	@Override
 	public InputFileConfig withConfigurationId(String id) {
 		this.id = id;
+		return this;
+	}
+	
+	public IMatcher getMatcher() {
+		return matcher;
+	}
+	
+	public InputFileConfig withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
 		return this;
 	}
 
@@ -122,6 +133,7 @@ public class InputFileConfig implements IConfigInput {
 			.withTailFile(this.tailFile)
 			.withTailInterval(this.tailInterval)
 			.withConfigurationId(this.id)
+			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}

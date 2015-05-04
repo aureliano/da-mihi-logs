@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class StandardInputConfig implements IConfigInput {
 
@@ -14,6 +15,7 @@ public class StandardInputConfig implements IConfigInput {
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
+	private IMatcher matcher;
 	
 	public StandardInputConfig() {
 		this.encoding = "UTF-8";
@@ -42,6 +44,15 @@ public class StandardInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public IMatcher getMatcher() {
+		return matcher;
+	}
+	
+	public StandardInputConfig withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
+		return this;
+	}
+	
 	@Override
 	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
@@ -58,6 +69,7 @@ public class StandardInputConfig implements IConfigInput {
 		return new StandardInputConfig()
 			.withEncoding(this.encoding)
 			.withConfigurationId(this.id)
+			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}

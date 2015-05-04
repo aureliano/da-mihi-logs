@@ -144,10 +144,12 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
+		if (inputConfig.getMatcher() == null) {
+			inputConfig.withMatcher(this.configuration.getMatcher());
+		}
+		
 		IDataReader dataReader = DataReaderFactory
-			.createDataReader(inputConfig)
-				.withMatcher(this.configuration.getMatcher())
-				.withListeners(this.configuration.getDataReadingListeners());
+			.createDataReader(inputConfig).withListeners(this.configuration.getDataReadingListeners());
 		
 		if (inputConfig.isUseLastExecutionRecords()) {
 			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);

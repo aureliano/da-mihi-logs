@@ -9,12 +9,10 @@ import com.github.aureliano.damihilogs.event.AfterReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
-import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public abstract class AbstractDataReader implements IDataReader {
 
 	protected IConfigInput inputConfiguration;
-	protected IMatcher matcher;
 	protected long lineCounter;
 	protected List<DataReadingListener> listeners;
 	protected String unprocessedLine;
@@ -36,17 +34,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	@Override
 	public IDataReader withInputConfiguration(IConfigInput config) {
 		this.inputConfiguration = config;
-		return this;
-	}
-	
-	@Override
-	public IMatcher getMatcher() {
-		return this.matcher;
-	}
-	
-	@Override
-	public IDataReader withMatcher(IMatcher matcher) {
-		this.matcher = matcher;
 		return this;
 	}
 
@@ -79,12 +66,12 @@ public abstract class AbstractDataReader implements IDataReader {
 			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
 		}
 		
-		String logEvent = this.matcher.endMatch(buffer.toString());
-		if (!this.matcher.isMultiLine()) {
+		String logEvent = this.inputConfiguration.getMatcher().endMatch(buffer.toString());
+		if (!this.inputConfiguration.getMatcher().isMultiLine()) {
 			return logEvent;
 		}
 		
-		if (!this.matcher.matches(buffer.toString())) {
+		if (!this.inputConfiguration.getMatcher().matches(buffer.toString())) {
 			return null;
 		}
 		
@@ -96,7 +83,7 @@ public abstract class AbstractDataReader implements IDataReader {
 				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
 			}
 			
-			logEvent = this.matcher.endMatch(buffer.toString());
+			logEvent = this.inputConfiguration.getMatcher().endMatch(buffer.toString());
 		}
 		
 		this.unprocessedLine = line;

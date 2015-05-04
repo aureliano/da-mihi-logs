@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class UrlInputConfig implements IConfigInput {
 
@@ -36,6 +37,8 @@ public class UrlInputConfig implements IConfigInput {
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
+
+	private IMatcher matcher;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -198,6 +201,15 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public IMatcher getMatcher() {
+		return matcher;
+	}
+	
+	public UrlInputConfig withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
+		return this;
+	}
+	
 	@Override
 	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
@@ -226,6 +238,7 @@ public class UrlInputConfig implements IConfigInput {
 			.withUser(this.user)
 			.withAppendIfOutputFileExist(this.appendIfOutputFileExist)
 			.withConfigurationId(this.id)
+			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
