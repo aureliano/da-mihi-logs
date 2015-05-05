@@ -15,7 +15,6 @@ import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.profile.Profiler;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
-import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
 public class AppEventsCollector {
 
@@ -24,7 +23,6 @@ public class AppEventsCollector {
 	private EventCollectorConfiguration configuration;
 	private String collectorId;
 	private CollectEventsCommand commandExecutor;
-	private EventCollectionSchedule scheduler;
 	private List<ILoggerReporter> reporters;
 	private List<ICleaner> cleaners;
 	
@@ -34,12 +32,12 @@ public class AppEventsCollector {
 	}
 	
 	public void execute() {
-		if (this.scheduler == null) {
+		if (this.configuration.getScheduler() == null) {
 			this._execute();
 			return;
 		}
 		
-		this.scheduler.prepareSchedulingForExecution(new Runnable() {			
+		this.configuration.getScheduler().prepareSchedulingForExecution(new Runnable() {			
 			
 			@Override
 			public void run() {
@@ -133,15 +131,6 @@ public class AppEventsCollector {
 	public AppEventsCollector withCollectorId(String colectorId) {
 		this.collectorId = colectorId;
 		return this;
-	}
-	
-	public AppEventsCollector withScheduler(EventCollectionSchedule scheduler) {
-		this.scheduler = scheduler;
-		return this;
-	}
-	
-	public EventCollectionSchedule getScheduler() {
-		return scheduler;
 	}
 	
 	public List<ILoggerReporter> getReporters() {
