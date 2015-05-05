@@ -8,6 +8,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
+import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
 public class InputFileConfig implements IConfigInput {
 
@@ -31,6 +32,7 @@ public class InputFileConfig implements IConfigInput {
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		this.matcher = new SingleLineMatcher();
 	}
 	
 	@Override

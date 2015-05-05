@@ -144,10 +144,6 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		if (inputConfig.getMatcher() == null) {
-			inputConfig.withMatcher(this.configuration.getMatcher());
-		}
-		
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(inputConfig).withListeners(this.configuration.getDataReadingListeners());
 		

@@ -9,14 +9,11 @@ import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
-import com.github.aureliano.damihilogs.matcher.IMatcher;
-import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
 public class EventCollectorConfiguration implements IConfiguration {
 
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
-	private IMatcher matcher;
 	private IOutputFormatter outputFormatter;
 	private List<DataReadingListener> dataReadingListeners;
 	private List<DataWritingListener> dataWritingListeners;
@@ -27,8 +24,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
 		this.outputConfigs = new ArrayList<IConfigOutput>();
-		
-		this.matcher = new SingleLineMatcher();
 		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
@@ -54,15 +49,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public EventCollectorConfiguration addOutputConfig(IConfigOutput outputConfig) {
 		this.outputConfigs.add(outputConfig);
-		return this;
-	}
-	
-	public IMatcher getMatcher() {
-		return matcher;
-	}
-	
-	public EventCollectorConfiguration withMatcher(IMatcher matcher) {
-		this.matcher = matcher;
 		return this;
 	}
 	
