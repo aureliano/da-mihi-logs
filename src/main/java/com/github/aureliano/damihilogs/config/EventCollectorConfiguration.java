@@ -7,6 +7,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.listener.EventsCollectorListener;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
@@ -20,6 +21,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	private EventCollectionSchedule scheduler;
 	private List<ILoggerReporter> reporters;
 	private List<ICleaner> cleaners;
+	private List<EventsCollectorListener> eventsCollectorListeners;
 	
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
@@ -31,6 +33,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.metadata = new Properties();
 		this.reporters = new ArrayList<ILoggerReporter>();
 		this.cleaners = new ArrayList<ICleaner>();
+		this.eventsCollectorListeners = new ArrayList<EventsCollectorListener>();
 	}
 
 	public List<IConfigInput> getInputConfigs() {
@@ -98,6 +101,20 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public EventCollectorConfiguration addCleaner(ICleaner cleaner) {
 		this.cleaners.add(cleaner);
+		return this;
+	}
+	
+	public List<EventsCollectorListener> getEventsCollectorListeners() {
+		return eventsCollectorListeners;
+	}
+	
+	public EventCollectorConfiguration withEventsCollectorListeners(List<EventsCollectorListener> eventsCollectorListeners) {
+		this.eventsCollectorListeners = eventsCollectorListeners;
+		return this;
+	}
+	
+	public EventCollectorConfiguration addEventsCollectorListeners(EventsCollectorListener eventsCollectorListener) {
+		this.eventsCollectorListeners.add(eventsCollectorListener);
 		return this;
 	}
 	

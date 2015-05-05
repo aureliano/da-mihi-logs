@@ -9,8 +9,11 @@ import org.apache.log4j.Logger;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.event.AfterCollectorsEvent;
+import com.github.aureliano.damihilogs.event.BeforeCollectorsEvent;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
+import com.github.aureliano.damihilogs.listener.EventsCollectorListener;
 import com.github.aureliano.damihilogs.profile.Profiler;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 
@@ -53,17 +56,21 @@ public class AppEventsCollector {
 		Profiler profiler = new Profiler();
 		profiler.start();
 		
+		this.executeBeforeListeners();
 		this.commandExecutor = new CollectEventsCommand(this.configuration);
 		this.commandExecutor.execute(this.collectorId);
 		
+		Properties executionLog = null;
 		if (this.configuration.isPersistExecutionLog()) {
-			this.printLogToOutput(profiler);
+			executionLog = this.printLogToOutput(profiler);
 		}
 		
 		this.buildReports();
 		this.executeCleaners();
+		
+		this.executeAfterListeners(executionLog);
 	}
-	
+
 	private synchronized void buildReports() {
 		for (ILoggerReporter reporter : this.configuration.getReporters()) {
 			try {
@@ -97,7 +104,7 @@ public class AppEventsCollector {
 		System.setErr(LoggerHelper.createLoggingProxy(System.err, logger));
 	}
 	
-	private void printLogToOutput(Profiler profiler) {
+	private Properties printLogToOutput(Profiler profiler) {
 		Properties properties = Profiler.parse(Profiler.diff(profiler, profiler.stop()));
 		
 		for (Map<String, Object> executionLog : this.commandExecutor.getLogExecutions()) {
@@ -108,6 +115,22 @@ public class AppEventsCollector {
 		
 		File log = LoggerHelper.saveExecutionLogData(this.collectorId, properties, true);
 		logger.info("Execution log output saved at " + log.getPath());
+		
+		return properties;
+	}
+	
+	private void executeBeforeListeners() {
+		for (EventsCollectorListener listener : this.configuration.getEventsCollectorListeners()) {
+			BeforeCollectorsEvent event = new BeforeCollectorsEvent(this.collectorId, this.configuration);
+			listener.beforeExecution(event);
+		}
+	}
+
+	private void executeAfterListeners(Properties executionLog) {
+		for (EventsCollectorListener listener : this.configuration.getEventsCollectorListeners()) {
+			AfterCollectorsEvent event = new AfterCollectorsEvent(this.collectorId, this.configuration, executionLog);
+			listener.afterExecution(event);
+		}
 	}
 	
 	public EventCollectorConfiguration getConfiguration() {
