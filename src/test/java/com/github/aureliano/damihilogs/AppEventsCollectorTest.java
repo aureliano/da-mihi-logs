@@ -26,7 +26,8 @@ public class AppEventsCollectorTest {
 			.withConfiguration(new EventCollectorConfiguration()
 				.addInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
-					.withStartPosition(10))
+					.withStartPosition(10)
+					.addDataReadingListeners(this.getDataReadingListener()))
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {
@@ -38,8 +39,7 @@ public class AppEventsCollectorTest {
 							return map.get("tipoLog").equals("MemoriaServidor");
 						}
 					})
-					.withOutputFormatter(new JsonFormatter()))				
-				.addDataReadingListeners(this.getDataReadingListener())
+					.withOutputFormatter(new JsonFormatter()))
 				.addDataWritingListeners(this.getDataWriteListener())
 				)
 			.execute();

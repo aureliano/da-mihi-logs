@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class UrlInputConfig implements IConfigInput {
@@ -39,6 +40,8 @@ public class UrlInputConfig implements IConfigInput {
 	private List<IExceptionHandler> exceptionHandlers;
 
 	private IMatcher matcher;
+
+	private List<DataReadingListener> dataReadingListeners;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -52,6 +55,7 @@ public class UrlInputConfig implements IConfigInput {
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 	}
 
 	public ConnectionSchema getConnectionSchema() {
@@ -220,6 +224,20 @@ public class UrlInputConfig implements IConfigInput {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
+
+	public List<DataReadingListener> getDataReadingListeners() {
+		return dataReadingListeners;
+	}
+
+	public UrlInputConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+		this.dataReadingListeners = dataReadingListeners;
+		return this;
+	}
+	
+	public UrlInputConfig addDataReadingListeners(DataReadingListener listener) {
+		this.dataReadingListeners.add(listener);
+		return this;
+	}
 	
 	@Override
 	public UrlInputConfig clone() {
@@ -240,6 +258,7 @@ public class UrlInputConfig implements IConfigInput {
 			.withConfigurationId(this.id)
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
+			.withDataReadingListeners(this.dataReadingListeners)
 			.withExceptionHandlers(this.exceptionHandlers);
 	}
 	

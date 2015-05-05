@@ -98,13 +98,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		this.fileDataReader = (FileDataReader) new FileDataReader()
-			.withInputConfiguration(
-				new InputFileConfig()
-					.withFile(this.urlInputConfiguration.getOutputFile())
-					.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
-					.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
-					.withMatcher(this.urlInputConfiguration.getMatcher()))
-			.withListeners(super.listeners);
+			.withInputConfiguration(this.urlInputConfiguration.clone());
 	}
 
 	private void download() {

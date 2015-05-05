@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
@@ -18,6 +19,7 @@ public class ExternalCommandInput implements IConfigInput {
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
 	private IMatcher matcher;
+	private List<DataReadingListener> dataReadingListeners;
 	
 	public ExternalCommandInput() {
 		this.useLastExecutionRecords = false;
@@ -25,6 +27,7 @@ public class ExternalCommandInput implements IConfigInput {
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 		this.matcher = new SingleLineMatcher();
+		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 	}
 	
 	public IMatcher getMatcher() {
@@ -47,6 +50,20 @@ public class ExternalCommandInput implements IConfigInput {
 		return this;
 	}
 
+	public List<DataReadingListener> getDataReadingListeners() {
+		return dataReadingListeners;
+	}
+
+	public ExternalCommandInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+		this.dataReadingListeners = dataReadingListeners;
+		return this;
+	}
+	
+	public ExternalCommandInput addDataReadingListeners(DataReadingListener listener) {
+		this.dataReadingListeners.add(listener);
+		return this;
+	}
+
 	@Override
 	public ExternalCommandInput clone() {
 		return new ExternalCommandInput()
@@ -55,7 +72,8 @@ public class ExternalCommandInput implements IConfigInput {
 			.withMatcher(this.matcher)
 			.withParameters(this.parameters)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
-			.withExceptionHandlers(this.exceptionHandlers);
+			.withExceptionHandlers(this.exceptionHandlers)
+			.withDataReadingListeners(this.dataReadingListeners);
 	}
 
 	@Override

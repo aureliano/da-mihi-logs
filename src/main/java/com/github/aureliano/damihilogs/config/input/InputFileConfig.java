@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class InputFileConfig implements IConfigInput {
@@ -22,6 +23,7 @@ public class InputFileConfig implements IConfigInput {
 	private Properties metadata;
 	private List<IExceptionHandler> exceptionHandlers;
 	private IMatcher matcher;
+	private List<DataReadingListener> dataReadingListeners;
 
 	public InputFileConfig() {
 		this.encoding = "UTF-8";
@@ -31,6 +33,7 @@ public class InputFileConfig implements IConfigInput {
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 	}
 	
 	@Override
@@ -122,6 +125,20 @@ public class InputFileConfig implements IConfigInput {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
+
+	public List<DataReadingListener> getDataReadingListeners() {
+		return dataReadingListeners;
+	}
+
+	public InputFileConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+		this.dataReadingListeners = dataReadingListeners;
+		return this;
+	}
+	
+	public InputFileConfig addDataReadingListeners(DataReadingListener listener) {
+		this.dataReadingListeners.add(listener);
+		return this;
+	}
 	
 	@Override
 	public InputFileConfig clone() {
@@ -135,7 +152,8 @@ public class InputFileConfig implements IConfigInput {
 			.withConfigurationId(this.id)
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
-			.withExceptionHandlers(this.exceptionHandlers);
+			.withExceptionHandlers(this.exceptionHandlers)
+			.withDataReadingListeners(this.dataReadingListeners);
 	}
 	
 	@Override

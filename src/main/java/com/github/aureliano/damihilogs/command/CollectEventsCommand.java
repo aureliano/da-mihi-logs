@@ -146,8 +146,7 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		IDataReader dataReader = DataReaderFactory
-			.createDataReader(inputConfig).withListeners(this.configuration.getDataReadingListeners());
+		IDataReader dataReader = DataReaderFactory.createDataReader(inputConfig);
 		
 		if (inputConfig.getMatcher() == null) {
 			inputConfig.withMatcher(new SingleLineMatcher());

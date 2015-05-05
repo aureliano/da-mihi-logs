@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public interface IConfigInput extends IConfiguration {
@@ -23,4 +24,10 @@ public interface IConfigInput extends IConfiguration {
 	public abstract IConfigInput addExceptionHandler(IExceptionHandler handler);
 	
 	public abstract List<IExceptionHandler> getExceptionHandlers();
+	
+	public List<DataReadingListener> getDataReadingListeners();
+	
+	public IConfigInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners);
+	
+	public IConfigInput addDataReadingListeners(DataReadingListener listener);
 }

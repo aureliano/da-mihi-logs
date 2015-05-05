@@ -1,7 +1,6 @@
 package com.github.aureliano.damihilogs.reader;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
@@ -14,7 +13,6 @@ public abstract class AbstractDataReader implements IDataReader {
 
 	protected IConfigInput inputConfiguration;
 	protected long lineCounter;
-	protected List<DataReadingListener> listeners;
 	protected String unprocessedLine;
 	protected boolean markedToStop;
 	
@@ -38,17 +36,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	}
 
 	@Override
-	public List<DataReadingListener> getListeners() {
-		return this.listeners;
-	}
-
-	@Override
-	public IDataReader withListeners(List<DataReadingListener> listeners) {
-		this.listeners = listeners;
-		return this;
-	}
-
-	@Override
 	public boolean keepReading() {
 		return !this.markedToStop;
 	}
@@ -62,7 +49,7 @@ public abstract class AbstractDataReader implements IDataReader {
 		int counter = 0;
 		StringBuilder buffer = new StringBuilder(line);
 		
-		for (DataReadingListener listener : this.listeners) {
+		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
 		}
 		
@@ -79,7 +66,7 @@ public abstract class AbstractDataReader implements IDataReader {
 			line = this.readNextLine();
 			buffer.append("\n").append(line);
 			
-			for (DataReadingListener listener : this.listeners) {
+			for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
 			}
 			
@@ -91,13 +78,13 @@ public abstract class AbstractDataReader implements IDataReader {
 	}
 	
 	protected void executeBeforeReadingMethodListeners() {
-		for (DataReadingListener listener : this.listeners) {
+		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter));
 		}
 	}
 	
 	protected void executeAfterReadingMethodListeners(Object data) {
-		for (DataReadingListener listener : this.listeners) {
+		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
 		}
 	}
