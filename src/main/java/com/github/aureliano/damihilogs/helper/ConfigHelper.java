@@ -1,7 +1,8 @@
 package com.github.aureliano.damihilogs.helper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
@@ -18,7 +19,8 @@ import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public final class ConfigHelper {
 	
-	private static final Map<String, Boolean> EXECUTOR_NAMES = new HashMap<String, Boolean>();
+	private static final List<String> AVAILABLE_EXECUTOR_NAMES = new ArrayList<String>();
+	private static final List<String> UNAVAILABLE_EXECUTOR_NAMES = new ArrayList<String>();
 	
 	static {
 		populateExecutorNamesMap();
@@ -150,10 +152,12 @@ public final class ConfigHelper {
 	}
 	
 	public synchronized static String newUniqueConfigurationName() {
-		for (String key : EXECUTOR_NAMES.keySet()) {
-			if (!EXECUTOR_NAMES.get(key)) {
-				EXECUTOR_NAMES.put(key, true);
-				return key;
+		for (String executorName : AVAILABLE_EXECUTOR_NAMES) {
+			if (!UNAVAILABLE_EXECUTOR_NAMES.contains(executorName)) {
+				AVAILABLE_EXECUTOR_NAMES.remove(executorName);
+				UNAVAILABLE_EXECUTOR_NAMES.add(executorName);
+				
+				return executorName;
 			}
 		}
 		
@@ -162,8 +166,11 @@ public final class ConfigHelper {
 	
 	private static void populateExecutorNamesMap() {
 		String[] names = FileHelper.readResource("configuration-names").split("\n");
+		
 		for (String name : names) {
-			EXECUTOR_NAMES.put(name, false);
+			AVAILABLE_EXECUTOR_NAMES.add(name);
 		}
+		
+		Collections.shuffle(AVAILABLE_EXECUTOR_NAMES);
 	}
 }
