@@ -27,7 +27,7 @@ public class AppEventsCollectorTest {
 				.addInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10)
-					.addDataReadingListeners(this.getDataReadingListener()))
+					.addDataReadingListener(this.getDataReadingListener()))
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {

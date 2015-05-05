@@ -135,7 +135,7 @@ public class InputFileConfig implements IConfigInput {
 		return this;
 	}
 	
-	public InputFileConfig addDataReadingListeners(DataReadingListener listener) {
+	public InputFileConfig addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}

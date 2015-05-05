@@ -76,7 +76,7 @@ public class StandardInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	public StandardInputConfig addDataReadingListeners(DataReadingListener listener) {
+	public StandardInputConfig addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}

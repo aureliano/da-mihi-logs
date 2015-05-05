@@ -84,7 +84,7 @@ public class DataReaderFactoryTest {
 				return null;
 			}
 
-			public IConfigInput addDataReadingListeners(DataReadingListener listener) {
+			public IConfigInput addDataReadingListener(DataReadingListener listener) {
 				return null;
 			}
 		});

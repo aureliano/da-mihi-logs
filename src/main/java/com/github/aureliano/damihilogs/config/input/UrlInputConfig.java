@@ -234,7 +234,7 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	public UrlInputConfig addDataReadingListeners(DataReadingListener listener) {
+	public UrlInputConfig addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}

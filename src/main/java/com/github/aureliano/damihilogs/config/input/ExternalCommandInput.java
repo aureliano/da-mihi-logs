@@ -59,7 +59,7 @@ public class ExternalCommandInput implements IConfigInput {
 		return this;
 	}
 	
-	public ExternalCommandInput addDataReadingListeners(DataReadingListener listener) {
+	public ExternalCommandInput addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}
