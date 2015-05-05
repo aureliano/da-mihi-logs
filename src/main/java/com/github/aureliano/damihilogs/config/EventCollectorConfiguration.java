@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
-import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
 
@@ -14,7 +13,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
-	private IOutputFormatter outputFormatter;
 	private List<DataReadingListener> dataReadingListeners;
 	private List<DataWritingListener> dataWritingListeners;
 	private boolean persistExecutionLog;
@@ -49,15 +47,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public EventCollectorConfiguration addOutputConfig(IConfigOutput outputConfig) {
 		this.outputConfigs.add(outputConfig);
-		return this;
-	}
-	
-	public IOutputFormatter getOutputFormatter() {
-		return outputFormatter;
-	}
-	
-	public EventCollectorConfiguration withOutputFormatter(IOutputFormatter outputFormatter) {
-		this.outputFormatter = outputFormatter;
 		return this;
 	}
 

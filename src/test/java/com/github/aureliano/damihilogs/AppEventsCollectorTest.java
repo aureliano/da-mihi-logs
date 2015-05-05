@@ -37,10 +37,10 @@ public class AppEventsCollectorTest {
 							Map<String, Object> map = (Map<String, Object>) data;
 							return map.get("tipoLog").equals("MemoriaServidor");
 						}
-					}))				
+					})
+					.withOutputFormatter(new JsonFormatter()))				
 				.addDataReadingListeners(this.getDataReadingListener())
 				.addDataWritingListeners(this.getDataWriteListener())
-				.withOutputFormatter(new JsonFormatter())
 				)
 			.execute();
 	}

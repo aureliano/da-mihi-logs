@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class DataWriterFactoryTest {
@@ -57,6 +58,14 @@ public class DataWriterFactoryTest {
 			}
 			
 			public Properties getMetadata() {
+				return null;
+			}
+
+			public IOutputFormatter getOutputFormatter() {
+				return null;
+			}
+
+			public IConfigOutput withOutputFormatter(IOutputFormatter outputFormatter) {
 				return null;
 			}
 		});

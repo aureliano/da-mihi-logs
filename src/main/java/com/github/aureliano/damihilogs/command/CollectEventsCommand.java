@@ -15,6 +15,7 @@ import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.ThreadExceptionHandler;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
+import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.ExceptionHandlerHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
@@ -171,10 +172,12 @@ public class CollectEventsCommand {
 				outputConfig.withFilter(new DefaultEmptyFilter());
 			}
 			
+			if (outputConfig.getOutputFormatter() == null) {
+				outputConfig.withOutputFormatter(new PlainTextFormatter());
+			}
+			
 			IDataWriter dataWriter = DataWriterFactory
-					.createDataWriter(outputConfig)
-						.withOutputFormatter(this.configuration.getOutputFormatter())
-						.withListeners(this.configuration.getDataWritingListeners());
+				.createDataWriter(outputConfig).withListeners(this.configuration.getDataWritingListeners());
 			dataWriters.add(dataWriter);
 		}
 		

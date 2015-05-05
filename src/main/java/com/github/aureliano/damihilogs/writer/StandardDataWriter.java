@@ -1,7 +1,5 @@
 package com.github.aureliano.damihilogs.writer;
 
-import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
-
 public class StandardDataWriter extends AbstractDataWriter {
 	
 	public StandardDataWriter() {
@@ -10,10 +8,6 @@ public class StandardDataWriter extends AbstractDataWriter {
 
 	@Override
 	public void write(String content) {
-		if (super.outputFormatter == null) {
-			super.outputFormatter = new PlainTextFormatter();
-		}
-		
 		Object data = super.getParser().parse(content);
 		super.executeBeforeWritingMethodListeners(data);
 		if (data == null) {
@@ -22,7 +16,7 @@ public class StandardDataWriter extends AbstractDataWriter {
 		
 		boolean accept = super.getFilter().accept(data);
 		if (accept) {
-			System.out.println(this.outputFormatter.format(data));
+			System.out.println(super.getOutputConfiguration().getOutputFormatter().format(data));
 		}
 		
 		super.executeAfterWritingMethodListeners(data, accept);

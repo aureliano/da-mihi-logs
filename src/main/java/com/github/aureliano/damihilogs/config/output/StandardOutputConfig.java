@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.config.output;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.parser.IParser;
 
@@ -11,6 +12,7 @@ public class StandardOutputConfig implements IConfigOutput {
 	private IParser<?> parser;
 	private IEventFielter filter;
 	private Properties metadata;
+	private IOutputFormatter outputFormatter;
 	
 	public StandardOutputConfig() {
 		this.metadata = new Properties();
@@ -42,11 +44,23 @@ public class StandardOutputConfig implements IConfigOutput {
 		this.filter = filter;
 		return this;
 	}
+
+	@Override
+	public IOutputFormatter getOutputFormatter() {
+		return outputFormatter;
+	}
+
+	@Override
+	public StandardOutputConfig withOutputFormatter(IOutputFormatter outputFormatter) {
+		this.outputFormatter = outputFormatter;
+		return this;
+	}
 	
 	public StandardOutputConfig clone() {
 		return new StandardOutputConfig()
 			.withParser(this.parser)
 			.withFilter(this.filter)
+			.withOutputFormatter(this.outputFormatter)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	

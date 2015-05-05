@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 
 public class FileDataWriter extends AbstractDataWriter {
 	
@@ -34,7 +33,7 @@ public class FileDataWriter extends AbstractDataWriter {
 
 		boolean accept = super.getFilter().accept(data);
 		if (accept) {
-			String text = super.outputFormatter.format(data);
+			String text = super.outputConfiguration.getOutputFormatter().format(data);
 			this.writer.println(text);
 		}
 		
@@ -56,10 +55,6 @@ public class FileDataWriter extends AbstractDataWriter {
 	private void initialize() {
 		if (this.writer != null) {
 			return;
-		}
-		
-		if (super.outputFormatter == null) {
-			super.outputFormatter = new PlainTextFormatter();
 		}
 		
 		FileOutputConfig fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;

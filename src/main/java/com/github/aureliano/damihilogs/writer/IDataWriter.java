@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
-import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.parser.IParser;
 
@@ -23,10 +22,6 @@ public interface IDataWriter {
 	public abstract void write(String content);
 	
 	public abstract void endResources();
-	
-	public abstract IOutputFormatter getOutputFormatter();
-	
-	public abstract IDataWriter withOutputFormatter(IOutputFormatter outputFormatter);
 	
 	public abstract IEventFielter getFilter();
 	
