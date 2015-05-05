@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
 public class EventCollectorConfiguration implements IConfiguration {
@@ -16,6 +17,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	private boolean multiThreadingEnabled;
 	private Properties metadata;
 	private EventCollectionSchedule scheduler;
+	private List<ILoggerReporter> reporters;
 	
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
@@ -25,6 +27,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.multiThreadingEnabled = false;
 		
 		this.metadata = new Properties();
+		this.reporters = new ArrayList<ILoggerReporter>();
 	}
 
 	public List<IConfigInput> getInputConfigs() {
@@ -75,6 +78,15 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public EventCollectionSchedule getScheduler() {
 		return scheduler;
+	}
+	
+	public List<ILoggerReporter> getReporters() {
+		return reporters;
+	}
+	
+	public EventCollectorConfiguration addReporter(ILoggerReporter reporter) {
+		this.reporters.add(reporter);
+		return this;
 	}
 	
 	@Override

@@ -23,11 +23,9 @@ public class AppEventsCollector {
 	private EventCollectorConfiguration configuration;
 	private String collectorId;
 	private CollectEventsCommand commandExecutor;
-	private List<ILoggerReporter> reporters;
 	private List<ICleaner> cleaners;
 	
 	public AppEventsCollector() {
-		this.reporters = new ArrayList<ILoggerReporter>();
 		this.cleaners = new ArrayList<ICleaner>();
 	}
 	
@@ -70,7 +68,7 @@ public class AppEventsCollector {
 	}
 	
 	private synchronized void buildReports() {
-		for (ILoggerReporter reporter : this.reporters) {
+		for (ILoggerReporter reporter : this.configuration.getReporters()) {
 			try {
 				reporter.buildReport();
 			} catch (Exception ex) {
@@ -130,15 +128,6 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withCollectorId(String colectorId) {
 		this.collectorId = colectorId;
-		return this;
-	}
-	
-	public List<ILoggerReporter> getReporters() {
-		return reporters;
-	}
-	
-	public AppEventsCollector addReporter(ILoggerReporter reporter) {
-		this.reporters.add(reporter);
 		return this;
 	}
 	
