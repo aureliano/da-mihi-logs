@@ -7,6 +7,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.listener.InputExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class StandardInputConfig implements IConfigInput {
@@ -18,13 +19,16 @@ public class StandardInputConfig implements IConfigInput {
 	private List<IExceptionHandler> exceptionHandlers;
 	private IMatcher matcher;
 	private List<DataReadingListener> dataReadingListeners;
+	private List<InputExecutionListener> inputExecutionListeners;
 	
 	public StandardInputConfig() {
 		this.encoding = "UTF-8";
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.inputExecutionListeners = new ArrayList<InputExecutionListener>();
 	}
 	
 	public String getEncoding() {
@@ -89,7 +93,8 @@ public class StandardInputConfig implements IConfigInput {
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers)
-			.withDataReadingListeners(this.dataReadingListeners);
+			.withDataReadingListeners(this.dataReadingListeners)
+			.withInputExecutionListeners(this.inputExecutionListeners);
 	}
 	
 	@Override
@@ -127,5 +132,22 @@ public class StandardInputConfig implements IConfigInput {
 	@Override
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
+	}
+
+	@Override
+	public List<InputExecutionListener> getInputExecutionListeners() {
+		return this.inputExecutionListeners;
+	}
+
+	@Override
+	public StandardInputConfig withInputExecutionListeners(List<InputExecutionListener> inputExecutionListeners) {
+		this.inputExecutionListeners = inputExecutionListeners;
+		return this;
+	}
+
+	@Override
+	public StandardInputConfig addInputExecutionListener(InputExecutionListener listener) {
+		this.inputExecutionListeners.add(listener);
+		return this;
 	}
 }

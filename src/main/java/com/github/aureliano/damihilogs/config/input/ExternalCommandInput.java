@@ -7,6 +7,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.listener.InputExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
@@ -20,6 +21,7 @@ public class ExternalCommandInput implements IConfigInput {
 	private List<IExceptionHandler> exceptionHandlers;
 	private IMatcher matcher;
 	private List<DataReadingListener> dataReadingListeners;
+	private List<InputExecutionListener> inputExecutionListeners;
 	
 	public ExternalCommandInput() {
 		this.useLastExecutionRecords = false;
@@ -27,7 +29,9 @@ public class ExternalCommandInput implements IConfigInput {
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 		this.matcher = new SingleLineMatcher();
+		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.inputExecutionListeners = new ArrayList<InputExecutionListener>();
 	}
 	
 	public IMatcher getMatcher() {
@@ -73,7 +77,8 @@ public class ExternalCommandInput implements IConfigInput {
 			.withParameters(this.parameters)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers)
-			.withDataReadingListeners(this.dataReadingListeners);
+			.withDataReadingListeners(this.dataReadingListeners)
+			.withInputExecutionListeners(this.inputExecutionListeners);
 	}
 
 	@Override
@@ -145,5 +150,22 @@ public class ExternalCommandInput implements IConfigInput {
 	@Override
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
+	}
+
+	@Override
+	public List<InputExecutionListener> getInputExecutionListeners() {
+		return this.inputExecutionListeners;
+	}
+
+	@Override
+	public ExternalCommandInput withInputExecutionListeners(List<InputExecutionListener> inputExecutionListeners) {
+		this.inputExecutionListeners = inputExecutionListeners;
+		return this;
+	}
+
+	@Override
+	public ExternalCommandInput addInputExecutionListener(InputExecutionListener listener) {
+		this.inputExecutionListeners.add(listener);
+		return this;
 	}
 }

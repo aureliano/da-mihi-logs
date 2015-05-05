@@ -7,8 +7,10 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.event.AfterInputEvent;
 import com.github.aureliano.damihilogs.event.AfterReadingEvent;
 import com.github.aureliano.damihilogs.event.AfterWritingEvent;
+import com.github.aureliano.damihilogs.event.BeforeInputEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
@@ -16,6 +18,7 @@ import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.JsonFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
+import com.github.aureliano.damihilogs.listener.InputExecutionListener;
 import com.github.aureliano.damihilogs.parser.JsonEventParser;
 
 public class AppEventsCollectorTest {
@@ -27,7 +30,8 @@ public class AppEventsCollectorTest {
 				.addInputConfig(new InputFileConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10)
-					.addDataReadingListener(this.getDataReadingListener()))
+					.addDataReadingListener(this.getDataReadingListener())
+					.addInputExecutionListener(this.getInputExecutionListener()))
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {
@@ -67,6 +71,17 @@ public class AppEventsCollectorTest {
 			
 			@Override
 			public void afterDataWriting(AfterWritingEvent event) { }
+		};
+	}
+	
+	private InputExecutionListener getInputExecutionListener() {
+		return new InputExecutionListener() {
+			
+			@Override
+			public void beforeExecution(BeforeInputEvent evt) { }
+			
+			@Override
+			public void afterExecution(AfterInputEvent evt) { }
 		};
 	}
 }

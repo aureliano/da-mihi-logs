@@ -36,5 +36,5 @@ public interface IConfigInput extends IConfiguration {
 	
 	public IConfigInput withInputExecutionListeners(List<InputExecutionListener> inputExecutionListeners);
 	
-	public IConfigInput addInputExecutionListener(DataReadingListener listener);
+	public IConfigInput addInputExecutionListener(InputExecutionListener listener);
 }

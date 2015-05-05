@@ -16,6 +16,7 @@ import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.listener.InputExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class DataReaderFactoryTest {
@@ -28,65 +29,41 @@ public class DataReaderFactoryTest {
 	@Test(expected = DaMihiLogsException.class)
 	public void testCreateDataReaderUnsupported() {
 		DataReaderFactory.createDataReader(new IConfigInput() {
-			public String getConfigurationId() {
-				return null;
-			}
+			public String getConfigurationId() { return null; }
 
-			public IConfigInput withConfigurationId(String id) {
-				return null;
-			}
+			public IConfigInput withConfigurationId(String id) { return null; }
 			
-			public IConfiguration clone() {
-				return null;
-			}
+			public IConfiguration clone() { return null; }
 
-			public Boolean isUseLastExecutionRecords() {
-				return false;
-			}
+			public Boolean isUseLastExecutionRecords() { return false; }
 
-			public IConfigInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
-				return null;
-			}
+			public IConfigInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) { return null; }
 
-			public IConfiguration putMetadata(String key, String value) {
-				return null;
-			}
+			public IConfiguration putMetadata(String key, String value) { return null; }
 
-			public String getMetadata(String key) {
-				return null;
-			}
+			public String getMetadata(String key) { return null; }
 			
-			public Properties getMetadata() {
-				return null;
-			}
+			public Properties getMetadata() { return null; }
 
-			public IConfigInput addExceptionHandler(IExceptionHandler handler) {
-				return null;
-			}
+			public IConfigInput addExceptionHandler(IExceptionHandler handler) { return null; }
 
-			public List<IExceptionHandler> getExceptionHandlers() {
-				return null;
-			}
+			public List<IExceptionHandler> getExceptionHandlers() { return null; }
 
-			public IMatcher getMatcher() {
-				return null;
-			}
+			public IMatcher getMatcher() { return null; }
 
-			public IConfigInput withMatcher(IMatcher matcher) {
-				return null;
-			}
+			public IConfigInput withMatcher(IMatcher matcher) { return null; }
 
-			public List<DataReadingListener> getDataReadingListeners() {
-				return null;
-			}
+			public List<DataReadingListener> getDataReadingListeners() { return null; }
 
-			public IConfigInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
-				return null;
-			}
+			public IConfigInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) { return null; }
 
-			public IConfigInput addDataReadingListener(DataReadingListener listener) {
-				return null;
-			}
+			public IConfigInput addDataReadingListener(DataReadingListener listener) { return null; }
+
+			public List<InputExecutionListener> getInputExecutionListeners() { return null; }
+
+			public IConfigInput withInputExecutionListeners(List<InputExecutionListener> inputExecutionListeners) { return null; }
+
+			public IConfigInput addInputExecutionListener(InputExecutionListener listener) { return null; }
 		});
 	}
 	

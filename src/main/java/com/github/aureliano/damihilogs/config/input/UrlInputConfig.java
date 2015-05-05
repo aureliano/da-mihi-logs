@@ -10,6 +10,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
+import com.github.aureliano.damihilogs.listener.InputExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class UrlInputConfig implements IConfigInput {
@@ -42,6 +43,7 @@ public class UrlInputConfig implements IConfigInput {
 	private IMatcher matcher;
 
 	private List<DataReadingListener> dataReadingListeners;
+	private List<InputExecutionListener> inputExecutionListeners;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -55,7 +57,9 @@ public class UrlInputConfig implements IConfigInput {
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.inputExecutionListeners = new ArrayList<InputExecutionListener>();
 	}
 
 	public ConnectionSchema getConnectionSchema() {
@@ -259,7 +263,8 @@ public class UrlInputConfig implements IConfigInput {
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withDataReadingListeners(this.dataReadingListeners)
-			.withExceptionHandlers(this.exceptionHandlers);
+			.withExceptionHandlers(this.exceptionHandlers)
+			.withInputExecutionListeners(this.inputExecutionListeners);
 	}
 	
 	@Override
@@ -297,5 +302,22 @@ public class UrlInputConfig implements IConfigInput {
 	@Override
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
+	}
+
+	@Override
+	public List<InputExecutionListener> getInputExecutionListeners() {
+		return this.inputExecutionListeners;
+	}
+
+	@Override
+	public UrlInputConfig withInputExecutionListeners(List<InputExecutionListener> inputExecutionListeners) {
+		this.inputExecutionListeners = inputExecutionListeners;
+		return this;
+	}
+
+	@Override
+	public UrlInputConfig addInputExecutionListener(InputExecutionListener listener) {
+		this.inputExecutionListeners.add(listener);
+		return this;
 	}
 }
