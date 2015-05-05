@@ -19,6 +19,7 @@ import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.ExceptionHandlerHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
+import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.DataReaderFactory;
 import com.github.aureliano.damihilogs.reader.IDataReader;
@@ -147,6 +148,10 @@ public class CollectEventsCommand {
 	private IDataReader createDataReader(IConfigInput inputConfig) {
 		IDataReader dataReader = DataReaderFactory
 			.createDataReader(inputConfig).withListeners(this.configuration.getDataReadingListeners());
+		
+		if (inputConfig.getMatcher() == null) {
+			inputConfig.withMatcher(new SingleLineMatcher());
+		}
 		
 		if (inputConfig.isUseLastExecutionRecords()) {
 			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
