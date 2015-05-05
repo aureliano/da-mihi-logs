@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.writer;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.junit.Assert;
@@ -13,6 +14,7 @@ import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
+import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class DataWriterFactoryTest {
@@ -66,6 +68,18 @@ public class DataWriterFactoryTest {
 			}
 
 			public IConfigOutput withOutputFormatter(IOutputFormatter outputFormatter) {
+				return null;
+			}
+
+			public List<DataWritingListener> getDataWritingListeners() {
+				return null;
+			}
+
+			public IConfigOutput withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
+				return null;
+			}
+
+			public IConfigOutput addDataWritingListener(DataWritingListener listener) {
 				return null;
 			}
 		});

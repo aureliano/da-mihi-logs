@@ -1,11 +1,14 @@
 package com.github.aureliano.damihilogs.config.output;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchConfiguration {
@@ -20,12 +23,14 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	private IEventFielter filter;
 	private Properties metadata;
 	private IOutputFormatter outputFormatter;
+	private List<DataWritingListener> dataWritingListeners;
 	
 	public ElasticSearchOutputConfig() {
 		this.host = DEFAULT_ELASTIC_SEARCH_HOST;
 		this.port = DEFAULT_ELASTIC_SEARCH_PORT;
 		this.printElasticSearchLog = DEFAULT_PRINT_ELASTIC_SEARCH_LOG;
 		this.metadata = new Properties();
+		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 	}
 
 	@Override
@@ -121,6 +126,20 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		return this;
 	}
 	
+	public List<DataWritingListener> getDataWritingListeners() {
+		return dataWritingListeners;
+	}
+	
+	public ElasticSearchOutputConfig withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
+		this.dataWritingListeners = dataWritingListeners;
+		return this;
+	}
+	
+	public ElasticSearchOutputConfig addDataWritingListener(DataWritingListener listener) {
+		this.dataWritingListeners.add(listener);
+		return this;
+	}
+	
 	@Override
 	public ElasticSearchOutputConfig clone() {
 		return (ElasticSearchOutputConfig) new ElasticSearchOutputConfig()
@@ -132,6 +151,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 			.withParser(this.parser)
 			.withFilter(this.filter)
 			.withOutputFormatter(this.outputFormatter)
+			.withDataWritingListeners(this.dataWritingListeners)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	

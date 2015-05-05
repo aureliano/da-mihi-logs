@@ -6,13 +6,11 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
-import com.github.aureliano.damihilogs.listener.DataWritingListener;
 
 public class EventCollectorConfiguration implements IConfiguration {
 
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
-	private List<DataWritingListener> dataWritingListeners;
 	private boolean persistExecutionLog;
 	private boolean multiThreadingEnabled;
 	private Properties metadata;
@@ -20,8 +18,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 	public EventCollectorConfiguration() {
 		this.inputConfigs = new ArrayList<IConfigInput>();
 		this.outputConfigs = new ArrayList<IConfigOutput>();
-		
-		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 		
 		this.persistExecutionLog = true;
 		this.multiThreadingEnabled = false;
@@ -44,20 +40,6 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public EventCollectorConfiguration addOutputConfig(IConfigOutput outputConfig) {
 		this.outputConfigs.add(outputConfig);
-		return this;
-	}
-	
-	public List<DataWritingListener> getDataWritingListeners() {
-		return dataWritingListeners;
-	}
-	
-	public EventCollectorConfiguration withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
-		this.dataWritingListeners = dataWritingListeners;
-		return this;
-	}
-	
-	public EventCollectorConfiguration addDataWritingListeners(DataWritingListener listener) {
-		this.dataWritingListeners.add(listener);
 		return this;
 	}
 	

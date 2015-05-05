@@ -1,11 +1,14 @@
 package com.github.aureliano.damihilogs.config.output;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.parser.IParser;
 
 public class FileOutputConfig implements IConfigOutput {
@@ -17,11 +20,13 @@ public class FileOutputConfig implements IConfigOutput {
 	private IEventFielter filter;
 	private Properties metadata;
 	private IOutputFormatter outputFormatter;
+	private List<DataWritingListener> dataWritingListeners;
 	
 	public FileOutputConfig() {
 		this.append = false;
 		this.encoding = "UTF-8";
 		this.metadata = new Properties();
+		this.dataWritingListeners = new ArrayList<DataWritingListener>();
 	}
 
 	@Override
@@ -94,6 +99,20 @@ public class FileOutputConfig implements IConfigOutput {
 		return this;
 	}
 	
+	public List<DataWritingListener> getDataWritingListeners() {
+		return dataWritingListeners;
+	}
+	
+	public FileOutputConfig withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
+		this.dataWritingListeners = dataWritingListeners;
+		return this;
+	}
+	
+	public FileOutputConfig addDataWritingListener(DataWritingListener listener) {
+		this.dataWritingListeners.add(listener);
+		return this;
+	}
+	
 	public FileOutputConfig clone() {
 		return new FileOutputConfig()
 			.withAppend(this.append)
@@ -102,6 +121,7 @@ public class FileOutputConfig implements IConfigOutput {
 			.withParser(this.parser)
 			.withFilter(this.filter)
 			.withOutputFormatter(this.outputFormatter)
+			.withDataWritingListeners(this.dataWritingListeners)
 			.withMetadata(DataHelper.copyProperties(this.metadata));
 	}
 	

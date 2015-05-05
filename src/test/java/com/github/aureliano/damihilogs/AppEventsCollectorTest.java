@@ -39,8 +39,8 @@ public class AppEventsCollectorTest {
 							return map.get("tipoLog").equals("MemoriaServidor");
 						}
 					})
-					.withOutputFormatter(new JsonFormatter()))
-				.addDataWritingListeners(this.getDataWriteListener())
+					.withOutputFormatter(new JsonFormatter())
+					.addDataWritingListener(this.getDataWriteListener()))
 				)
 			.execute();
 	}

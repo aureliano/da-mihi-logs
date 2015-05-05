@@ -180,8 +180,7 @@ public class CollectEventsCommand {
 				outputConfig.withOutputFormatter(new PlainTextFormatter());
 			}
 			
-			IDataWriter dataWriter = DataWriterFactory
-				.createDataWriter(outputConfig).withListeners(this.configuration.getDataWritingListeners());
+			IDataWriter dataWriter = DataWriterFactory.createDataWriter(outputConfig);
 			dataWriters.add(dataWriter);
 		}
 		
