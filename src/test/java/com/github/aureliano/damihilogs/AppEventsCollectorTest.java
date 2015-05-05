@@ -18,7 +18,7 @@ import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.JsonFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
-import com.github.aureliano.damihilogs.listener.InputExecutionListener;
+import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.parser.JsonEventParser;
 
 public class AppEventsCollectorTest {
@@ -31,7 +31,7 @@ public class AppEventsCollectorTest {
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10)
 					.addDataReadingListener(this.getDataReadingListener())
-					.addInputExecutionListener(this.getInputExecutionListener()))
+					.addExecutionListener(this.getInputExecutionListener()))
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {
@@ -74,8 +74,8 @@ public class AppEventsCollectorTest {
 		};
 	}
 	
-	private InputExecutionListener getInputExecutionListener() {
-		return new InputExecutionListener() {
+	private ExecutionListener getInputExecutionListener() {
+		return new ExecutionListener() {
 			
 			@Override
 			public void beforeExecution(BeforeInputEvent evt) { }
