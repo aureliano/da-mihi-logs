@@ -1,8 +1,6 @@
 package com.github.aureliano.damihilogs;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -23,10 +21,9 @@ public class AppEventsCollector {
 	private EventCollectorConfiguration configuration;
 	private String collectorId;
 	private CollectEventsCommand commandExecutor;
-	private List<ICleaner> cleaners;
 	
 	public AppEventsCollector() {
-		this.cleaners = new ArrayList<ICleaner>();
+		super();
 	}
 	
 	public void execute() {
@@ -78,7 +75,7 @@ public class AppEventsCollector {
 	}
 	
 	private void executeCleaners() {
-		for (ICleaner cleaner : this.cleaners) {
+		for (ICleaner cleaner : this.configuration.getCleaners()) {
 			try {
 				cleaner.clean();
 			} catch (Exception ex) {
@@ -128,15 +125,6 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withCollectorId(String colectorId) {
 		this.collectorId = colectorId;
-		return this;
-	}
-	
-	public List<ICleaner> getCleaners() {
-		return cleaners;
-	}
-	
-	public AppEventsCollector addCleaner(ICleaner cleaner) {
-		this.cleaners.add(cleaner);
 		return this;
 	}
 }
