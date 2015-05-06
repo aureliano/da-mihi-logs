@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 
 public class FileDataWriter extends AbstractDataWriter {
 	
@@ -62,6 +63,10 @@ public class FileDataWriter extends AbstractDataWriter {
 		logger.info("Outputing data to " + fileOutputConfiguration.getFile().getPath());
 		logger.debug("Data encondig: " + fileOutputConfiguration.getEncoding());
 		logger.debug("Append data to file? " + fileOutputConfiguration.isAppend());
+		
+		if (super.getOutputConfiguration().getOutputFormatter() == null) {
+			super.getOutputConfiguration().withOutputFormatter(new PlainTextFormatter());
+		}
 		
 		try {
 			FileOutputStream stream = new FileOutputStream(fileOutputConfiguration.getFile(), fileOutputConfiguration.isAppend());
