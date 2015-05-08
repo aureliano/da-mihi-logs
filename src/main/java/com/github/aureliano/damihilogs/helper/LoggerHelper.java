@@ -6,6 +6,9 @@ import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
@@ -74,27 +77,20 @@ public final class LoggerHelper {
 	}
 	
 	private static File getLastExecutionFileLog(final String collectorId) {
-		String[] files = new File(LOG_DATA_DIR_PATH).list(new FilenameFilter() {
+		List<String> files = Arrays.asList(new File(LOG_DATA_DIR_PATH).list(new FilenameFilter() {
 			
 			@Override
 			public boolean accept(File dir, String name) {
 				return name.matches(collectorId + "_\\d{4}-\\d{2}-\\d{2}\\.log");
 			}
-		});
+		}));
 		
-		if (files == null) {
+		if ((files == null) || (files.isEmpty())) {
 			return null;
 		}
+		Collections.sort(files);
 		
-		String fileName = null;
-		String expectedFileName = FileHelper.getLastExecutionLogDataFileName(collectorId);
-		for (String file : files) {
-			if (expectedFileName.equals(file)) {
-				fileName = file;
-				break;
-			}
-		}
-		
+		String fileName = files.get(files.size() - 1);
 		return (fileName != null) ? new File(LOG_DATA_DIR_PATH + File.separator + fileName) : null;
 	}
 	
