@@ -39,7 +39,11 @@ public class AppEventsCollector {
 			
 			@Override
 			public void run() {
-				_execute();
+				try {
+					_execute();
+				} catch (Exception ex) {
+					logger.error(ex.getMessage(), ex);
+				}
 			}
 		});
 	}
@@ -69,6 +73,7 @@ public class AppEventsCollector {
 		this.executeCleaners();
 		
 		this.executeAfterListeners(executionLog);
+		logger.info("Events collector " + this.collectorId + " has just finished.");
 	}
 
 	private synchronized void buildReports() {
