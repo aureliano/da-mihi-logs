@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.report.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectorModel {
+public class CollectorModel implements Comparable<CollectorModel> {
 
 	private String id;
 	private Boolean status;
@@ -184,5 +184,10 @@ public class CollectorModel {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(CollectorModel o) {
+		return o.getId().compareTo(this.id);
 	}
 }

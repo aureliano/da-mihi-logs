@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -104,6 +105,8 @@ public class HtmlReporter implements ILoggerReporter {
 			c.withTextStatus(c.getStatus() ? this.language.getLabel("status.ok") : this.language.getLabel("status.bad"));
 			collectors.add(c);
 		}
+		
+		Collections.sort(collectors);
 		
 		html.set("pageTitle", this.pageTitle + " - " + model.getId());
 		html.set("pageSubTitle", this.language.getLabel("collector.id") + " " + model.getId());
