@@ -39,6 +39,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 	public List<IConfigInput> getInputConfigs() {
 		return inputConfigs;
 	}
+	
+	public EventCollectorConfiguration withInputConfigs(List<IConfigInput> inputConfigs) {
+		this.inputConfigs = inputConfigs;
+		return this;
+	}
 
 	public EventCollectorConfiguration addInputConfig(IConfigInput inputConfig) {
 		this.inputConfigs.add(inputConfig);
@@ -47,6 +52,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	public List<IConfigOutput> getOutputConfigs() {
 		return outputConfigs;
+	}
+	
+	public EventCollectorConfiguration withOutputConfigs(List<IConfigOutput> outputConfigs) {
+		this.outputConfigs = outputConfigs;
+		return this;
 	}
 	
 	public EventCollectorConfiguration addOutputConfig(IConfigOutput outputConfig) {
