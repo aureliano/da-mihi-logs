@@ -59,13 +59,13 @@ public class FileDecompressionTest {
 				new CompressMetadata()
 					.withCompressionType(SupportedCompressionType.ZIP)
 					.withInputFilePath("src/test/resources/one-inside.zip")
-					.withOutputFilePath(this.unzippedPath));
+					.withOutputFilePath(FileHelper.buildPath(this.unzippedPath, "test")));
 			
 		Assert.assertTrue(new File(this.unzippedPath).exists());
 	}
 	
 	private void unzipManySuccess() {
-		this.decompressor.decompress(
+		this.decompressor.unzip(
 				new CompressMetadata()
 					.withCompressionType(SupportedCompressionType.ZIP)
 					.withInputFilePath("src/test/resources/many.zip")
@@ -85,10 +85,16 @@ public class FileDecompressionTest {
 	}
 	
 	private void unzipError() {
+		this.unzipManyIsNotDirectory();
+		this.unzipOneIsDirectory();
+		this.unzipOneThereAreMoreFiles();
+	}
+	
+	private void unzipManyIsNotDirectory() {
 		String output = FileHelper.buildPath("src", "test", "resources", "server.log");
 		
 		try {
-			this.decompressor.decompress(
+			this.decompressor.unzip(
 				new CompressMetadata()
 					.withCompressionType(SupportedCompressionType.ZIP)
 					.withInputFilePath("src/test/resources/many.zip")
@@ -96,6 +102,35 @@ public class FileDecompressionTest {
 			Assert.fail("Expected to catch an exception.");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals(output + " is not a directory.", ex.getMessage());
+		}
+	}
+	
+	private void unzipOneIsDirectory() {
+		try {
+			this.decompressor.decompress(
+				new CompressMetadata()
+					.withCompressionType(SupportedCompressionType.ZIP)
+					.withInputFilePath("src/test/resources/one-inside.zip")
+					.withOutputFilePath(this.unzippedPath));
+			Assert.fail("Expected to catch an exception.");
+		} catch (DaMihiLogsException ex) {
+			Assert.assertEquals(this.unzippedPath + " is a directory.", ex.getMessage());
+		}
+	}
+	
+	private void unzipOneThereAreMoreFiles() {
+		String output = FileHelper.buildPath(this.unzippedPath, "test_error.log");
+		String input = "src/test/resources/many.zip";
+		
+		try {
+			this.decompressor.decompress(
+				new CompressMetadata()
+					.withCompressionType(SupportedCompressionType.ZIP)
+					.withInputFilePath(input)
+					.withOutputFilePath(output));
+			Assert.fail("Expected to catch an exception.");
+		} catch (DaMihiLogsException ex) {
+			Assert.assertEquals("There is more than one file in " + input, ex.getMessage());
 		}
 	}
 }
