@@ -156,4 +156,38 @@ public final class FileHelper {
 		InputStream stream = ClassLoader.getSystemResourceAsStream(resourceName);
 		return FileHelper.readFile(stream);
 	}
+	
+	public static String buildPath(String... tokens) {
+		StringBuilder builder = new StringBuilder();
+		
+		for (String token : tokens) {
+			if (builder.length() > 0) {
+				builder.append(File.separator);
+			}
+			builder.append(token);
+		}
+		
+		return builder.toString();
+	}
+	
+	public static void createParentDirectory(File file, boolean chain) {
+		createDirectory(file.getParentFile(), chain);
+	}
+	
+	public static void createDirectory(File file, boolean chain) {
+		if (file.exists()) {
+			return;
+		}
+		
+		DaMihiLogsException ex = new DaMihiLogsException("Could not create directory " + file.getPath());
+		if (chain) {
+			if (!file.mkdirs()) {
+				throw ex;
+			}
+		} else {
+			if (!file.mkdir()) {
+				throw ex;
+			}
+		}
+	}
 }

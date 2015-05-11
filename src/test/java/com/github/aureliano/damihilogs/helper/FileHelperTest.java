@@ -86,6 +86,11 @@ public class FileHelperTest {
 		Assert.assertEquals(expected, FileHelper.readResource(resourceName));
 	}
 	
+	@Test
+	public void testBuildPath() {
+		Assert.assertEquals("src/test/resources", FileHelper.buildPath("src", "test", "resources"));
+	}
+	
 	public static void createDirectoryStructure() {
 		File sourceDir = new File("src/test/resources");
 		
