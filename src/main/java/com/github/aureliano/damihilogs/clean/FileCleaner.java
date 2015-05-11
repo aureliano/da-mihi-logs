@@ -36,7 +36,7 @@ public class FileCleaner implements ICleaner {
 		}
 	}
 
-	public ICleaner removeFilesAfterSeconds(Integer seconds) {
+	public FileCleaner removeFilesAfterSeconds(Integer seconds) {
 		if ((seconds == null) || (seconds < 1)) {
 			seconds = 1;
 		}
@@ -45,7 +45,7 @@ public class FileCleaner implements ICleaner {
 		return this;
 	}
 
-	public ICleaner removeFilesAfterMinutes(Integer minutes) {
+	public FileCleaner removeFilesAfterMinutes(Integer minutes) {
 		if ((minutes == null) || (minutes < 1)) {
 			minutes = 1;
 		}
@@ -53,7 +53,7 @@ public class FileCleaner implements ICleaner {
 		return this.removeFilesAfterSeconds(minutes * 60);
 	}
 
-	public ICleaner removeFilesAfterHours(Integer hours) {
+	public FileCleaner removeFilesAfterHours(Integer hours) {
 		if ((hours == null) || (hours < 1)) {
 			hours = 1;
 		}
@@ -61,7 +61,7 @@ public class FileCleaner implements ICleaner {
 		return this.removeFilesAfterMinutes(hours * 60);
 	}
 
-	public ICleaner removeFilesAfterDays(Integer days) {
+	public FileCleaner removeFilesAfterDays(Integer days) {
 		if ((days == null) || (days < 1)) {
 			days = 1;
 		}
@@ -69,7 +69,7 @@ public class FileCleaner implements ICleaner {
 		return this.removeFilesAfterHours(days * 24);
 	}
 	
-	public ICleaner withFileNameRegex(String regex) {
+	public FileCleaner withFileNameRegex(String regex) {
 		this.fileNameRegex = regex;
 		return this;
 	}
