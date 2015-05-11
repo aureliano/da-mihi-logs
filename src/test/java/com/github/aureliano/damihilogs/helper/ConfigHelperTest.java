@@ -65,20 +65,6 @@ public class ConfigHelperTest {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
-		try {
-			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("/non/existent/file")));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Input file '/non/existent/file' does not exist.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources")));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Input resource 'src/test/resources' is not a file.", ex.getMessage());
-		}
-		
 		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
 		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
 	}

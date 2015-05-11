@@ -116,10 +116,6 @@ public final class ConfigHelper {
 	protected static void inputFileConfigFileValidation(InputFileConfig config) {
 		if (config.getFile() == null) {
 			throw new DaMihiLogsException("Input file not provided.");
-		} else if (!config.getFile().exists()) {
-			throw new DaMihiLogsException("Input file '" + config.getFile().getPath() + "' does not exist.");
-		} else if (!config.getFile().isFile()) {
-			throw new DaMihiLogsException("Input resource '" + config.getFile().getPath() + "' is not a file.");
 		}
 	}
 	
