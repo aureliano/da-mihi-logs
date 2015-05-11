@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.inout.CompressMetadata;
+import com.github.aureliano.damihilogs.inout.FileCompression;
+import com.github.aureliano.damihilogs.inout.FileDecompression;
 
 public final class FileHelper {
 	
@@ -112,6 +115,14 @@ public final class FileHelper {
 		if (!file.delete()) {
 			throw new DaMihiLogsException("Could not delete file " + file.getPath());
 		}
+	}
+	
+	public static void compress(CompressMetadata metadata) {
+		FileCompression.instance().compress(metadata);
+	}
+	
+	public static void decompress(CompressMetadata metadata) {
+		FileDecompression.instance().decompress(metadata);
 	}
 	
 	public static String getLastExecutionLogDataFileName(final String collectorId) {
