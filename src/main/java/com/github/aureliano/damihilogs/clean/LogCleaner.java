@@ -34,6 +34,11 @@ public class LogCleaner implements ICleaner {
 		return this;
 	}
 	
+	public LogCleaner withDataFileNameRegex(String regex) {
+		this.dataCleaner.withFileNameRegex(regex);
+		return this;
+	}
+	
 	public LogCleaner removeLogEchoFilesAfterSeconds(Integer seconds) {
 		this.echoCleaner.removeFilesAfterSeconds(seconds);
 		return this;
@@ -51,6 +56,11 @@ public class LogCleaner implements ICleaner {
 	
 	public LogCleaner removeLogEchoFilesAfterDays(Integer days) {
 		this.echoCleaner.removeFilesAfterDays(days);
+		return this;
+	}
+	
+	public LogCleaner withEchoFileNameRegex(String regex) {
+		this.echoCleaner.withFileNameRegex(regex);
 		return this;
 	}
 

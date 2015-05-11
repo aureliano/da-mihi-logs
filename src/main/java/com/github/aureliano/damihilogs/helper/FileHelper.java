@@ -4,12 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.inout.CompressMetadata;
@@ -84,11 +87,19 @@ public final class FileHelper {
 		}
 	}
 	
-	public static void deleteAllFiles(File directory, long timeSeed) {
+	public static void deleteAllFiles(File directory, long timeSeed, final String regex) {
 		long currentTimeMillis = System.currentTimeMillis();
 		long seed = currentTimeMillis - timeSeed;
 		
-		File[] files = directory.listFiles();
+		File[] files = directory.listFiles(new FilenameFilter() {
+			Pattern pattern = Pattern.compile(regex);
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				Matcher matcher = pattern.matcher(name);
+				return matcher.find();
+			}
+		});
 		if (files == null) {
 			return;
 		}

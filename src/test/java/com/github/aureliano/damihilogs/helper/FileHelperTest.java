@@ -55,7 +55,7 @@ public class FileHelperTest {
 		String dirPath = createDirectoryStructureWithDelay(oneSecond);
 		
 		Assert.assertEquals(5, new File(dirPath).list().length);
-		FileHelper.deleteAllFiles(new File(dirPath), System.currentTimeMillis() - oneSecond);
+		FileHelper.deleteAllFiles(new File(dirPath), System.currentTimeMillis() - oneSecond, "");
 		Assert.assertEquals(2, new File(dirPath).list().length);
 	}
 	

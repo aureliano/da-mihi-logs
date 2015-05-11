@@ -8,6 +8,7 @@ import com.github.aureliano.damihilogs.helper.FileHelper;
 public class FileCleaner implements ICleaner {
 
 	private Long seed;
+	private String fileNameRegex;
 	private File directory;
 	
 	public FileCleaner(File dir) {
@@ -17,7 +18,11 @@ public class FileCleaner implements ICleaner {
 	@Override
 	public void clean() {
 		this.validation();
-		FileHelper.deleteAllFiles(this.directory, (System.currentTimeMillis() - this.seed));
+		if (this.fileNameRegex == null) {
+			this.fileNameRegex = "";
+		}
+		
+		FileHelper.deleteAllFiles(this.directory, (System.currentTimeMillis() - this.seed), this.fileNameRegex);
 	}
 	
 	protected void validation() {
@@ -62,6 +67,11 @@ public class FileCleaner implements ICleaner {
 		}
 		
 		return this.removeFilesAfterHours(days * 24);
+	}
+	
+	public ICleaner withFileNameRegex(String regex) {
+		this.fileNameRegex = regex;
+		return this;
 	}
 	
 	protected Long getSeed() {
