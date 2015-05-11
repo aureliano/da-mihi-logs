@@ -12,6 +12,8 @@ import org.apache.log4j.Logger;
 import com.github.aureliano.damihilogs.config.input.InputFileConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
+import com.github.aureliano.damihilogs.helper.FileHelper;
+import com.github.aureliano.damihilogs.inout.CompressMetadata;
 
 public class FileDataReader extends AbstractDataReader {
 
@@ -80,6 +82,12 @@ public class FileDataReader extends AbstractDataReader {
 		
 		if (this.fileInputConfiguration.getStartPosition() == null) {
 			this.fileInputConfiguration.withStartPosition(0);
+		}
+		
+		CompressMetadata decompressConfiguration = this.fileInputConfiguration.getDecompressFileConfiguration();
+		if (decompressConfiguration != null) {
+			FileHelper.decompress(decompressConfiguration);
+			this.fileInputConfiguration.withFile(decompressConfiguration.getOutputFilePath());
 		}
 		
 		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());

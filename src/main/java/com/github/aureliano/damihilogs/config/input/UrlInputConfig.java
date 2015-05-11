@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.inout.CompressMetadata;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
@@ -44,6 +45,8 @@ public class UrlInputConfig implements IConfigInput {
 
 	private List<DataReadingListener> dataReadingListeners;
 	private List<ExecutionListener> inputExecutionListeners;
+	
+	private CompressMetadata decompressFileConfiguration;
 	
 	public UrlInputConfig() {
 		this.connectionSchema = ConnectionSchema.HTTP;
@@ -243,6 +246,15 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public CompressMetadata getDecompressFileConfiguration() {
+		return decompressFileConfiguration;
+	}
+	
+	public UrlInputConfig withDecompressFileConfiguration(CompressMetadata decompressFileConfiguration) {
+		this.decompressFileConfiguration = decompressFileConfiguration;
+		return this;
+	}
+	
 	@Override
 	public UrlInputConfig clone() {
 		return new UrlInputConfig()
@@ -264,7 +276,8 @@ public class UrlInputConfig implements IConfigInput {
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withDataReadingListeners(this.dataReadingListeners)
 			.withExceptionHandlers(this.exceptionHandlers)
-			.withExecutionListeners(this.inputExecutionListeners);
+			.withExecutionListeners(this.inputExecutionListeners)
+			.withDecompressFileConfiguration(this.decompressFileConfiguration);
 	}
 	
 	@Override

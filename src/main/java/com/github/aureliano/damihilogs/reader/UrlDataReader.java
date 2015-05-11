@@ -97,15 +97,7 @@ public class UrlDataReader extends AbstractDataReader {
 			}
 		}
 		
-		this.fileDataReader = (FileDataReader) new FileDataReader()
-			.withInputConfiguration(
-				new InputFileConfig()
-					.withFile(this.urlInputConfiguration.getOutputFile())
-					.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
-					.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
-					.withMatcher(this.urlInputConfiguration.getMatcher())
-					.withDataReadingListeners(this.urlInputConfiguration.getDataReadingListeners())
-			);
+		this.fileDataReader = (FileDataReader) this.createFileDataReader();
 	}
 
 	private void download() {
@@ -239,6 +231,23 @@ public class UrlDataReader extends AbstractDataReader {
 		};
 		
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+	}
+	
+	private IDataReader createFileDataReader() {
+		InputFileConfig config = new InputFileConfig()
+			.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
+			.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
+			.withMatcher(this.urlInputConfiguration.getMatcher())
+			.withDataReadingListeners(this.urlInputConfiguration.getDataReadingListeners())
+			.withDecompressFileConfiguration(this.urlInputConfiguration.getDecompressFileConfiguration());
+		
+		if (this.urlInputConfiguration.getDecompressFileConfiguration() == null) {
+			config.withFile(this.urlInputConfiguration.getOutputFile());
+		} else {
+			config.withFile(this.urlInputConfiguration.getDecompressFileConfiguration().getOutputFilePath());
+		}
+		
+		return new FileDataReader().withInputConfiguration(config);
 	}
 	
 	@Override

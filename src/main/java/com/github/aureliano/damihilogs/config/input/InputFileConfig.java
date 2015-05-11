@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.inout.CompressMetadata;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
@@ -26,6 +27,7 @@ public class InputFileConfig implements IConfigInput {
 	private IMatcher matcher;
 	private List<DataReadingListener> dataReadingListeners;
 	private List<ExecutionListener> inputExecutionListeners;
+	private CompressMetadata decompressFileConfiguration;
 
 	public InputFileConfig() {
 		this.encoding = "UTF-8";
@@ -144,6 +146,15 @@ public class InputFileConfig implements IConfigInput {
 		return this;
 	}
 	
+	public CompressMetadata getDecompressFileConfiguration() {
+		return decompressFileConfiguration;
+	}
+	
+	public InputFileConfig withDecompressFileConfiguration(CompressMetadata decompressFileConfiguration) {
+		this.decompressFileConfiguration = decompressFileConfiguration;
+		return this;
+	}
+	
 	@Override
 	public InputFileConfig clone() {
 		return new InputFileConfig()
@@ -158,7 +169,8 @@ public class InputFileConfig implements IConfigInput {
 			.withMetadata(DataHelper.copyProperties(this.metadata))
 			.withExceptionHandlers(this.exceptionHandlers)
 			.withDataReadingListeners(this.dataReadingListeners)
-			.withExecutionListeners(this.inputExecutionListeners);
+			.withExecutionListeners(this.inputExecutionListeners)
+			.withDecompressFileConfiguration(this.decompressFileConfiguration);
 	}
 	
 	@Override
