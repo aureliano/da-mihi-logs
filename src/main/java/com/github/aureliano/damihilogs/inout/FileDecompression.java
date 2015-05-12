@@ -58,7 +58,7 @@ public class FileDecompression {
 			ZipEntry entry = null;
 			
 			while ((entry = inputStream.getNextEntry()) != null) {
-				File file = new File(FileHelper.buildPath(outputFile.getPath(), entry.getName()));
+				File file = FileHelper.buildFile(outputFile.getPath(), entry.getName());
 				if (file.isDirectory()) {
 					continue;
 				} else if (entry.getName().contains(File.separator)) {

@@ -90,9 +90,9 @@ public final class LoggerHelper {
 		
 		String fileName = files[files.length - 1];
 		if (todayReference) {
-			return (FileHelper.getLastExecutionLogDataFileName(collectorId).equals(fileName)) ? new File(FileHelper.buildPath(LOG_DATA_DIR_PATH, fileName)) : null;
+			return (FileHelper.getLastExecutionLogDataFileName(collectorId).equals(fileName)) ? FileHelper.buildFile(LOG_DATA_DIR_PATH, fileName) : null;
 		} else {
-			return (fileName != null) ? new File(FileHelper.buildPath(LOG_DATA_DIR_PATH, fileName)) : null;
+			return (fileName != null) ? FileHelper.buildFile(LOG_DATA_DIR_PATH, fileName) : null;
 		}
 	}
 	

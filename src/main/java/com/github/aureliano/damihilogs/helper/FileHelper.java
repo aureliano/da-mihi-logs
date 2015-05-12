@@ -192,6 +192,10 @@ public final class FileHelper {
 		return builder.toString();
 	}
 	
+	public static File buildFile(String... tokens) {
+		return new File(buildPath(tokens));
+	}
+	
 	public static void createParentDirectory(File file, boolean chain) {
 		createDirectory(file.getParentFile(), chain);
 	}
