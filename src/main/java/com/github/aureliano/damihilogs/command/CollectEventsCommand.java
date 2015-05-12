@@ -152,9 +152,9 @@ public class CollectEventsCommand {
 		}
 		
 		if (inputConfig.isUseLastExecutionRecords()) {
-			Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
+			Properties properties = LoggerHelper.getLastExecutionLog(collectorId, true);
 			if (properties != null) {
-				dataReader.loadLastExecutionLog(LoggerHelper.getLastExecutionLog(collectorId));
+				dataReader.loadLastExecutionLog(properties);
 				this.addLogExecution(dataReader.getReadingProperties());
 			}
 		}

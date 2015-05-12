@@ -85,13 +85,17 @@ public class HtmlReporter implements ILoggerReporter {
 	}
 
 	private void generateHtmlCollectorPage(CollectorModel model) {
+		CollectorModel collectorExecution = ReportHelper.getLastCollectorExecution(model.getId());
+		if (collectorExecution == null) {
+			return;
+		}
+		
 		String collectorTemplate = ReportHelper.loadHtmlTemplate("report/collector-template.html");
 		
 		Chunk html = new Theme().makeChunk();
 		html.append(collectorTemplate);
 		
 		List<CollectorModel> collectors = new ArrayList<CollectorModel>();
-		CollectorModel collectorExecution = ReportHelper.getLastCollectorExecution(model.getId());
 		collectorExecution.withTextStatus(collectorExecution.getStatus() ? this.language.getLabel("status.ok") : this.language.getLabel("status.bad"));
 		collectors.add(collectorExecution);
 		

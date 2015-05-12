@@ -35,7 +35,7 @@ public final class ReportHelper {
 		for (String name : names) {
 			String n = name.replaceAll("_\\d{4}-\\d{2}-\\d{2}.log$", "");
 			if (uniqueNames.add(n)) {
-				Properties properties = LoggerHelper.getLastExecutionLog(n);
+				Properties properties = LoggerHelper.getLastExecutionLog(n, false);
 				Boolean statusOk = getStatus(properties.keySet());
 								
 				models.add(new CollectorModel()
@@ -49,7 +49,10 @@ public final class ReportHelper {
 	}
 	
 	public static CollectorModel getLastCollectorExecution(final String collectorId) {
-		Properties properties = LoggerHelper.getLastExecutionLog(collectorId);
+		Properties properties = LoggerHelper.getLastExecutionLog(collectorId, false);
+		if (properties.isEmpty()) {
+			return null;
+		}
 		String buildId = DATE_FORMATTER.format(new Date(Long.parseLong(properties.getProperty("profile.time.init"))));
 		
 		String content = FileHelper.readFile(LoggerHelper.getCurrentLogFile());

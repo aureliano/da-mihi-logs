@@ -56,8 +56,8 @@ public final class LoggerHelper {
 		return new File(LOG_DIR_PATH + File.separator + LOG_FILE_NAME);
 	}
 	
-	public static Properties getLastExecutionLog(final String collectorId) {
-		File file = getLastExecutionFileLog(collectorId);
+	public static Properties getLastExecutionLog(final String collectorId, boolean todayReference) {
+		File file = getLastExecutionFileLog(collectorId, todayReference);
 		
 		Properties properties = new Properties();
 		if (file == null) {
@@ -74,7 +74,7 @@ public final class LoggerHelper {
 		return properties;
 	}
 	
-	private static File getLastExecutionFileLog(final String collectorId) {
+	private static File getLastExecutionFileLog(final String collectorId, boolean todayReference) {
 		String[] files = new File(LOG_DATA_DIR_PATH).list(new FilenameFilter() {
 			
 			@Override
@@ -89,7 +89,11 @@ public final class LoggerHelper {
 		Arrays.sort(files);
 		
 		String fileName = files[files.length - 1];
-		return (fileName != null) ? new File(LOG_DATA_DIR_PATH + File.separator + fileName) : null;
+		if (todayReference) {
+			return (FileHelper.getLastExecutionLogDataFileName(collectorId).equals(fileName)) ? new File(FileHelper.buildPath(LOG_DATA_DIR_PATH, fileName)) : null;
+		} else {
+			return (fileName != null) ? new File(FileHelper.buildPath(LOG_DATA_DIR_PATH, fileName)) : null;
+		}
 	}
 	
 	public static File saveExecutionLogData(String collectorId, Properties p, boolean ordered) {
