@@ -29,7 +29,6 @@ public class CollectEventsCommand {
 
 	private EventCollectorConfiguration configuration;
 	private List<Map<String, Object>> logExecutions;
-	private String collectorId;
 	
 	private static final Logger logger = Logger.getLogger(CollectEventsCommand.class);
 	
@@ -38,13 +37,12 @@ public class CollectEventsCommand {
 		this.logExecutions = new ArrayList<Map<String,Object>>();
 	}
 	
-	public void execute(String collectorId) {
+	public void execute() {
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
 			logger.info("Using default event collector configuration.");
 		}
 		
-		this.collectorId = collectorId;
 		this.prepareExecution();
 		this.executeCollectors();
 	}
@@ -107,7 +105,7 @@ public class CollectEventsCommand {
 	
 	private void serialExecution(List<DataIterationCommand> commands) {
 		for (DataIterationCommand command : commands) {
-			Thread.currentThread().setName(String.format("Thread-%s-%s", this.collectorId, command.getId()));
+			Thread.currentThread().setName(String.format("Thread-%s-%s", this.configuration.getCollectorId(), command.getId()));
 			ExceptionHandlerHelper.executeHandlingException(command);
 		}
 	}
@@ -136,7 +134,7 @@ public class CollectEventsCommand {
 	private Thread createThread(DataIterationCommand command) {
 		Thread t = null;
 		if (command.getId() != null && !command.getId().equals("")) {
-			t = new Thread(command, String.format("Thread-%s-%s", this.collectorId, command.getId()));
+			t = new Thread(command, String.format("Thread-%s-%s", this.configuration.getCollectorId(), command.getId()));
 		} else {
 			throw new DaMihiLogsException("Executor with no id.");
 		}
@@ -152,7 +150,7 @@ public class CollectEventsCommand {
 		}
 		
 		if (inputConfig.isUseLastExecutionRecords()) {
-			Properties properties = LoggerHelper.getLastExecutionLog(collectorId, true);
+			Properties properties = LoggerHelper.getLastExecutionLog(this.configuration.getCollectorId(), true);
 			if (properties != null) {
 				dataReader.loadLastExecutionLog(properties);
 				this.addLogExecution(dataReader.getReadingProperties());

@@ -22,7 +22,6 @@ public class AppEventsCollector {
 	private static final Logger logger = Logger.getLogger(AppEventsCollector.class);
 	
 	private EventCollectorConfiguration configuration;
-	private String collectorId;
 	private CollectEventsCommand commandExecutor;
 	
 	public AppEventsCollector() {
@@ -62,7 +61,7 @@ public class AppEventsCollector {
 		
 		this.executeBeforeListeners();
 		this.commandExecutor = new CollectEventsCommand(this.configuration);
-		this.commandExecutor.execute(this.collectorId);
+		this.commandExecutor.execute();
 		
 		Properties executionLog = null;
 		if (this.configuration.isPersistExecutionLog()) {
@@ -73,7 +72,7 @@ public class AppEventsCollector {
 		this.executeCleaners();
 		
 		this.executeAfterListeners(executionLog);
-		logger.info("Events collector " + this.collectorId + " has just finished.");
+		logger.info("Events collector " + this.configuration.getCollectorId() + " has just finished.");
 	}
 
 	private synchronized void buildReports() {
@@ -97,11 +96,11 @@ public class AppEventsCollector {
 	}
 	
 	private void configureThreadName() {
-		if ((this.collectorId == null) || (this.collectorId.equals(""))) {
-			this.collectorId = ConfigHelper.newUniqueConfigurationName();
+		if ((this.configuration.getCollectorId() == null) || (this.configuration.getCollectorId().equals(""))) {
+			this.configuration.withCollectorId(ConfigHelper.newUniqueConfigurationName());
 		}
 		
-		Thread.currentThread().setName("Thread-" + this.collectorId);
+		Thread.currentThread().setName("Thread-" + this.configuration.getCollectorId());
 	}
 
 	private void configureLogger() {
@@ -118,7 +117,7 @@ public class AppEventsCollector {
 			}
 		}
 		
-		File log = LoggerHelper.saveExecutionLogData(this.collectorId, properties, true);
+		File log = LoggerHelper.saveExecutionLogData(this.configuration.getCollectorId(), properties, true);
 		logger.info("Execution log output saved at " + log.getPath());
 		
 		return properties;
@@ -126,14 +125,14 @@ public class AppEventsCollector {
 	
 	private void executeBeforeListeners() {
 		for (EventsCollectorListener listener : this.configuration.getEventsCollectorListeners()) {
-			BeforeCollectorsEvent event = new BeforeCollectorsEvent(this.collectorId, this.configuration);
+			BeforeCollectorsEvent event = new BeforeCollectorsEvent(this.configuration.getCollectorId(), this.configuration);
 			listener.beforeExecution(event);
 		}
 	}
 
 	private void executeAfterListeners(Properties executionLog) {
 		for (EventsCollectorListener listener : this.configuration.getEventsCollectorListeners()) {
-			AfterCollectorsEvent event = new AfterCollectorsEvent(this.collectorId, this.configuration, executionLog);
+			AfterCollectorsEvent event = new AfterCollectorsEvent(this.configuration.getCollectorId(), this.configuration, executionLog);
 			listener.afterExecution(event);
 		}
 	}
@@ -144,15 +143,6 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withConfiguration(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
-		return this;
-	}
-	
-	public String getCollectorId() {
-		return collectorId;
-	}
-	
-	public AppEventsCollector withCollectorId(String colectorId) {
-		this.collectorId = colectorId;
 		return this;
 	}
 }

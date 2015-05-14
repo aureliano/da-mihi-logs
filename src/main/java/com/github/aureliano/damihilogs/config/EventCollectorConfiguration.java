@@ -13,6 +13,7 @@ import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 
 public class EventCollectorConfiguration implements IConfiguration {
 
+	private String collectorId;
 	private List<IConfigInput> inputConfigs;
 	private List<IConfigOutput> outputConfigs;
 	private boolean persistExecutionLog;
@@ -147,5 +148,14 @@ public class EventCollectorConfiguration implements IConfiguration {
 	@Override
 	public EventCollectorConfiguration clone() {
 		throw new UnsupportedOperationException("Clone not supported.");
+	}
+	
+	public String getCollectorId() {
+		return collectorId;
+	}
+	
+	public EventCollectorConfiguration withCollectorId(String colectorId) {
+		this.collectorId = colectorId;
+		return this;
 	}
 }
