@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -18,6 +19,18 @@ public class DataHelperTest {
 		Properties p2 = DataHelper.copyProperties(p1);
 		Assert.assertNotSame(p1, p2);
 		Assert.assertEquals(p1, p2);
+	}
+	
+	@Test
+	public void testMapToProperties() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("test", true);
+		map.put("host", "127.0.0.1");
+		
+		Properties properties = DataHelper.mapToProperties(map);
+		
+		Assert.assertEquals("true", properties.getProperty("test"));
+		Assert.assertEquals("127.0.0.1", properties.getProperty("host"));
 	}
 	
 	@Test

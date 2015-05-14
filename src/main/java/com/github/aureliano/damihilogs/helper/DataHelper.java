@@ -25,6 +25,15 @@ public final class DataHelper {
 		return copy;
 	}
 	
+	public static Properties mapToProperties(Map<String, Object> map) {
+		Properties properties = new Properties();
+		for (String key : map.keySet()) {
+			properties.setProperty(key, map.get(key).toString());
+		}
+		
+		return properties;
+	}
+	
 	public static Properties sortProperties(Properties p) {
 		Properties properties = new Properties() {
 			private static final long serialVersionUID = 1L;
