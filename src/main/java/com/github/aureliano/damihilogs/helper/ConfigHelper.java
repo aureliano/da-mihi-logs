@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
@@ -16,6 +17,7 @@ import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.parser.EventCollectorConfigurationParser;
 
 public final class ConfigHelper {
 	
@@ -40,7 +42,7 @@ public final class ConfigHelper {
 	public static void inputConfigValidation(IConfigInput config) {
 		if (config == null) {
 			throw new DaMihiLogsException("Input configuration must be provided.");
-		} else if (config.getConfigurationId() == null || config.getConfigurationId().equals("")) {
+		} else if (StringHelper.isEmpty(config.getConfigurationId())) {
 			throw new DaMihiLogsException("Input configuration ID must be provided.");
 		}
 		
@@ -60,7 +62,7 @@ public final class ConfigHelper {
 	protected static void urlInputConfigValidation(UrlInputConfig config) {
 		if (config.getConnectionSchema() == null) {
 			throw new DaMihiLogsException("Connection schema not provided.");
-		} else if ((config.getHost() == null) || (config.getHost().equals(""))) {
+		} else if (StringHelper.isEmpty(config.getHost())) {
 			throw new DaMihiLogsException("Host not provided.");
 		} else if (config.getOutputFile() == null) {
 			throw new DaMihiLogsException("Output file not provided.");
@@ -70,7 +72,7 @@ public final class ConfigHelper {
 	}
 	
 	protected static void externalCommandConfigValidation(ExternalCommandInput config) {
-		if ((config.getCommand() == null) || (config.getCommand().equals(""))) {
+		if (StringHelper.isEmpty(config.getCommand())) {
 			throw new DaMihiLogsException("Command not provided.");
 		}
 	}

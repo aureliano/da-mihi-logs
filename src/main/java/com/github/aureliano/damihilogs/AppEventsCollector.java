@@ -13,6 +13,7 @@ import com.github.aureliano.damihilogs.event.AfterCollectorsEvent;
 import com.github.aureliano.damihilogs.event.BeforeCollectorsEvent;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
+import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.listener.EventsCollectorListener;
 import com.github.aureliano.damihilogs.profile.Profiler;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
@@ -96,7 +97,7 @@ public class AppEventsCollector {
 	}
 	
 	private void configureThreadName() {
-		if ((this.configuration.getCollectorId() == null) || (this.configuration.getCollectorId().equals(""))) {
+		if (StringHelper.isEmpty(this.configuration.getCollectorId())) {
 			this.configuration.withCollectorId(ConfigHelper.newUniqueConfigurationName());
 		}
 		

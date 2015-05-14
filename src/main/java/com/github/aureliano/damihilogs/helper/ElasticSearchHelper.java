@@ -92,7 +92,7 @@ public final class ElasticSearchHelper {
 	}
 	
 	public static String formatMappingType(String indexName, String content) {
-		if (content == null || content.equals("") || content.equals("{}")) {
+		if (StringHelper.isEmpty(content) || content.equals("{}")) {
 			return null;
 		}
 		

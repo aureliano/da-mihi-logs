@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.matcher;
 import java.util.regex.Pattern;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.helper.StringHelper;
 
 public class MultiLineMatcher implements IMatcher {
 
@@ -32,7 +33,7 @@ public class MultiLineMatcher implements IMatcher {
 			this.partialRegex = "";
 		}
 		
-		if ((this.prefixRegex == null) || (this.prefixRegex.equals(""))) {
+		if (StringHelper.isEmpty(this.prefixRegex)) {
 			throw new DaMihiLogsException("Regular expression must be passed to " + this.getClass().getSimpleName());
 		}
 		

@@ -114,7 +114,7 @@ public final class LoggerHelper {
 				}
 			}
 			
-			if ((collectorId == null) || (collectorId.equals(""))) {
+			if (StringHelper.isEmpty(collectorId)) {
 				collectorId = DEFAULT_COLLECTOR_ID_NAME;
 			}
 			

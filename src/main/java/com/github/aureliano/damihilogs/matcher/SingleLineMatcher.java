@@ -2,6 +2,8 @@ package com.github.aureliano.damihilogs.matcher;
 
 import java.util.regex.Pattern;
 
+import com.github.aureliano.damihilogs.helper.StringHelper;
+
 public class SingleLineMatcher implements IMatcher {
 
 	private String prefixRegex;
@@ -17,7 +19,7 @@ public class SingleLineMatcher implements IMatcher {
 		this.prefixRegex = prefixRegex;
 		this.suffixRegex = ".+$";
 		
-		if ((this.prefixRegex == null) || (this.prefixRegex.equals(""))) {
+		if (StringHelper.isEmpty(this.prefixRegex)) {
 			this.prefixRegex = "^(.+)";
 			this.suffixRegex = "$";
 		}

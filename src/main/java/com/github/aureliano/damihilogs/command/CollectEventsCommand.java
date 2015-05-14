@@ -18,6 +18,7 @@ import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.ExceptionHandlerHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
+import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.DataReaderFactory;
@@ -66,7 +67,7 @@ public class CollectEventsCommand {
 		
 		for (short i = 0; i < this.configuration.getInputConfigs().size(); i++) {
 			IConfigInput inputConfig = this.configuration.getInputConfigs().get(i);
-			if ((inputConfig.getConfigurationId() == null) || (inputConfig.getConfigurationId().equals(""))) {
+			if (StringHelper.isEmpty(inputConfig.getConfigurationId())) {
 				inputConfig.withConfigurationId(ConfigHelper.newUniqueConfigurationName());
 			}
 			
@@ -133,7 +134,7 @@ public class CollectEventsCommand {
 	
 	private Thread createThread(DataIterationCommand command) {
 		Thread t = null;
-		if (command.getId() != null && !command.getId().equals("")) {
+		if (!StringHelper.isEmpty(command.getId())) {
 			t = new Thread(command, String.format("Thread-%s-%s", this.configuration.getCollectorId(), command.getId()));
 		} else {
 			throw new DaMihiLogsException("Executor with no id.");
