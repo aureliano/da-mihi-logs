@@ -15,4 +15,8 @@ public final class StringHelper {
 	public static String toString(Object object) {
 		return ((object == null) ? "null" : object.toString());
 	}
+	
+	public static String parse(Object object) {
+		return ((object == null) ? null : object.toString());
+	}
 }

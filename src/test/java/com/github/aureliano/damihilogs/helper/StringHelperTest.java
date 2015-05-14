@@ -19,4 +19,11 @@ public class StringHelperTest {
 		Assert.assertEquals("text", StringHelper.toString("text"));
 		Assert.assertEquals("23", StringHelper.toString(23));
 	}
+	
+	@Test
+	public void testParse() {
+		Assert.assertEquals("30", StringHelper.parse(30));
+		Assert.assertEquals("", StringHelper.parse(""));
+		Assert.assertNull(StringHelper.parse(null));
+	}
 }
