@@ -19,4 +19,8 @@ public final class StringHelper {
 	public static String parse(Object object) {
 		return ((object == null) ? null : object.toString());
 	}
+	
+	public static String capitalize(String text) {
+		return Character.toUpperCase(text.charAt(0)) + text.substring(1).toLowerCase();
+	}
 }

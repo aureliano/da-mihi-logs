@@ -26,4 +26,12 @@ public class StringHelperTest {
 		Assert.assertEquals("", StringHelper.parse(""));
 		Assert.assertNull(StringHelper.parse(null));
 	}
+	
+	@Test
+	public void testCapitalize() {
+		Assert.assertEquals("House", StringHelper.capitalize("house"));
+		Assert.assertEquals("House", StringHelper.capitalize("HOUSE"));
+		Assert.assertEquals("House", StringHelper.capitalize("HoUSE"));
+		Assert.assertEquals("House of torments", StringHelper.capitalize("house OF tormentS"));
+	}
 }
