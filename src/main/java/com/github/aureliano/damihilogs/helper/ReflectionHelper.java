@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.reflections.ReflectionUtils;
 
 import com.github.aureliano.damihilogs.es.annotations.IndexableId;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -78,5 +79,18 @@ public class ReflectionHelper {
     	} catch (Exception ex) {
     		throw new DaMihiLogsException(ex);
     	}
+    }
+    
+    public static Object newInstance(Class<?> clazz) {
+    	try {
+    		return clazz.newInstance();
+    	} catch (Exception ex) {
+    		throw new DaMihiLogsException(ex);
+    	}
+    }
+    
+    public static Object newInstance(String fullClassName) {
+    	Class<?> clazz = ReflectionUtils.forName(fullClassName);
+    	return newInstance(clazz);
     }
 }
