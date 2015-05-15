@@ -30,19 +30,6 @@ public class ReporterConverterTest {
 	}
 	
 	@Test
-	public void testCreateHtmlReporterErrorOutputDir() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "html");
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property outputDir was expected in report configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
 	public void testCreateHtmlReporterErrorLanguage() {
 		String language = "test";
 		Map<String, Object> map = new HashMap<String, Object>();

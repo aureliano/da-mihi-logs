@@ -33,15 +33,14 @@ public class ReporterConverter implements IConfigurationConverter<ILoggerReporte
 	}
 
 	private ILoggerReporter createHtmlReporter(Map<String, Object> data) {
-		String value = StringHelper.parse(data.get("outputDir"));
-		if (StringHelper.isEmpty(value)) {
-			throw new DaMihiLogsException("Property outputDir was expected in report configuration.");
-		}
-		
 		HtmlReporter reporter = new HtmlReporter()
 			.withPageTitle(StringHelper.parse(data.get("title")))
-			.withDescription(StringHelper.parse(data.get("description")))
-			.withOutputDir(new File(value));
+			.withDescription(StringHelper.parse(data.get("description")));
+		
+		String value = StringHelper.parse(data.get("outputDir"));
+		if (!StringHelper.isEmpty(value)) {
+			reporter.withOutputDir(new File(value));
+		}
 		
 		value = StringHelper.parse(data.get("language"));
 		if (!StringHelper.isEmpty(value)) {
