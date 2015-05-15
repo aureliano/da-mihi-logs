@@ -69,4 +69,14 @@ public class ReflectionHelper {
         ParameterizedType type = (ParameterizedType) method.getGenericReturnType();
         return (Class<?>) type.getActualTypeArguments()[0];
     }
+    
+    public static Object callMethod(Object object, String methodName, Class<?>[] parametersType, Object[] methodParameters) {
+    	Class<?> clazz = object.getClass();
+    	try {
+    		Method method = clazz.getMethod(methodName, parametersType);
+    		return method.invoke(object, methodParameters);
+    	} catch (Exception ex) {
+    		throw new DaMihiLogsException(ex);
+    	}
+    }
 }
