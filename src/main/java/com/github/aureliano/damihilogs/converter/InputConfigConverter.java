@@ -43,13 +43,13 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		String type = StringHelper.parse(this._getAsHash(data, this.id).get("type"));
 		
 		if ("file".equals(type)) {
-			return this.createFileConfig(this._getAsHash(map, "properties"));
+			return this.createFileConfig(this._getAsHash(map, "properties")).withConfigurationId(this.id);
 		} else if ("externalCommand".equals(type)) {
-			return this.createExternalCommandConfig(this._getAsHash(map, "properties"));
+			return this.createExternalCommandConfig(this._getAsHash(map, "properties")).withConfigurationId(this.id);
 		} else if ("standard".equals(type)) {
-			return this.createStandardConfig(this._getAsHash(map, "properties"));
+			return this.createStandardConfig(this._getAsHash(map, "properties")).withConfigurationId(this.id);
 		} else if ("url".equals(type)) {
-			return this.createUrlConfig(this._getAsHash(map, "properties"));
+			return this.createUrlConfig(this._getAsHash(map, "properties")).withConfigurationId(this.id);
 		} else {
 			throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(INPUT_CONFIG_TYPES));
 		}
