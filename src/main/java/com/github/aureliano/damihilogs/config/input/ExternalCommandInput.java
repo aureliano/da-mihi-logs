@@ -9,7 +9,6 @@ import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
-import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 
 public class ExternalCommandInput implements IConfigInput {
 
@@ -28,7 +27,6 @@ public class ExternalCommandInput implements IConfigInput {
 		this.parameters = new ArrayList<String>();
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
-		this.matcher = new SingleLineMatcher();
 		
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
