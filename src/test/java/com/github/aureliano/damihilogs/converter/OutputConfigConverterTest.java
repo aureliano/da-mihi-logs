@@ -47,7 +47,7 @@ public class OutputConfigConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", new String[] { DefaultDataWritingListener.class.getName() });
+		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
 		properties.put("metadata", metadata);
 		
 		properties.put("parser", PlainTextParser.class.getName());
@@ -84,7 +84,7 @@ public class OutputConfigConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", new String[] { DefaultDataWritingListener.class.getName() });
+		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
 		properties.put("metadata", metadata);
 		
 		properties.put("parser", PlainTextParser.class.getName());
@@ -125,7 +125,7 @@ public class OutputConfigConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", new String[] { DefaultDataWritingListener.class.getName() });
+		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
 		properties.put("metadata", metadata);
 		
 		properties.put("parser", PlainTextParser.class.getName());

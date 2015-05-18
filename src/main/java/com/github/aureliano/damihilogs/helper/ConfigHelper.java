@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.helper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
@@ -16,8 +17,8 @@ import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.converter.ConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.parser.EventCollectorConfigurationParser;
 
 public final class ConfigHelper {
 	
@@ -30,6 +31,13 @@ public final class ConfigHelper {
 
 	private ConfigHelper() {
 		super();
+	}
+	
+	public static EventCollectorConfiguration loadConfiguration(String path) {
+		String text = FileHelper.readFile(path);
+		Map<String, Object> data = DataHelper.jsonStringToObject(text, Map.class);
+		
+		return new ConfigurationConverter().convert(data);
 	}
 
 	public static void copyMetadata(IConfiguration from, IConfiguration to) {

@@ -54,9 +54,9 @@ public class InputConfigConverterTest {
 		metadata.setProperty("goal", "CAM");
 		
 		properties.put("matcher", SingleLineMatcher.class.getName());
-		properties.put("exceptionHandlers", new String[] { DefaultExceptionHandler.class.getName(), DefaultExceptionHandler.class.getName() });
-		properties.put("dataReadingListeners", new String[] { DefaultDataReadingListener.class.getName() });
-		properties.put("executionListeners", new String[] { DefaultExecutionListener.class.getName() });
+		properties.put("exceptionHandlers", Arrays.asList(DefaultExceptionHandler.class.getName(), DefaultExceptionHandler.class.getName()));
+		properties.put("dataReadingListeners", Arrays.asList(DefaultDataReadingListener.class.getName()));
+		properties.put("executionListeners", Arrays.asList(DefaultExecutionListener.class.getName()));
 		properties.put("metadata", metadata);
 		
 		properties.put("file", "src/test/resources");
@@ -101,7 +101,7 @@ public class InputConfigConverterTest {
 		Map<String, Object> properties = new HashMap<String, Object>();
 		
 		properties.put("command", "ls");
-		properties.put("parameters", new String[] { "-la" });
+		properties.put("parameters", Arrays.asList("-la"));
 		
 		data.put("type", "externalCommand");
 		data.put("properties", properties);

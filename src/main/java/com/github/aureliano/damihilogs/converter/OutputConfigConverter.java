@@ -1,6 +1,7 @@
 package com.github.aureliano.damihilogs.converter;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -110,7 +111,7 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 		}
 		
 		if (data.get("dataWritingListeners") != null) {
-			String[] listeners = (String[]) data.get("dataWritingListeners");
+			List<String> listeners = (List<String>) data.get("dataWritingListeners");
 			for (String listener : listeners) {
 				conf.addDataWritingListener((DataWritingListener) ReflectionHelper.newInstance(listener));
 			}

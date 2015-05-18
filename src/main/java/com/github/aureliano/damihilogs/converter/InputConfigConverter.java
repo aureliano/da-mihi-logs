@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.converter;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -24,7 +25,7 @@ import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class InputConfigConverter implements IConfigurationConverter<IConfigInput> {
 
-	protected static final String[] INPUT_CONFIG_TYPES = new String[] { "externalCommand", "file", "Standard", "url" };
+	protected static final String[] INPUT_CONFIG_TYPES = new String[] { "externalCommand", "file", "standard", "url" };
 	
 	private String id;
 	
@@ -114,7 +115,7 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		conf.withCommand(StringHelper.parse(data.get("command")));
 		
 		if (data.get("parameters") != null) {
-			String[] parameters = (String[]) data.get("parameters");
+			List<String> parameters = (List<String>) data.get("parameters");
 			for (String parameter : parameters) {
 				conf.addParameter(parameter);
 			}
@@ -201,21 +202,21 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		}
 		
 		if (data.get("exceptionHandlers") != null) {
-			String[] handlers = (String[]) data.get("exceptionHandlers");
+			List<String> handlers = (List<String>) data.get("exceptionHandlers");
 			for (String handler : handlers) {
 				conf.addExceptionHandler((IExceptionHandler) ReflectionHelper.newInstance(handler));
 			}
 		}
 		
 		if (data.get("dataReadingListeners") != null) {
-			String[] listeners = (String[]) data.get("dataReadingListeners");
+			List<String> listeners = (List<String>) data.get("dataReadingListeners");
 			for (String listener : listeners) {
 				conf.addDataReadingListener((DataReadingListener) ReflectionHelper.newInstance(listener));
 			}
 		}
 		
 		if (data.get("executionListeners") != null) {
-			String[] listeners = (String[]) data.get("executionListeners");
+			List<String> listeners = (List<String>) data.get("executionListeners");
 			for (String listener : listeners) {
 				conf.addExecutionListener((ExecutionListener) ReflectionHelper.newInstance(listener));
 			}
