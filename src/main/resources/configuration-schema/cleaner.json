@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Remove files from a specified directory.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "anyOf": [
+      	{ "$ref": "fileCleaner" },
+      	{ "$ref": "logCleaner" }
+      ]
+    }
+  }
+}

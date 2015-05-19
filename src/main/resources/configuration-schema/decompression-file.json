@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Decompression file configuration.",
+  "type": "object",
+  "properties": {
+    "decompressionType": {
+      "anyOf": ["zip", "gzip"]
+    },
+    "inputFilePath": {
+      "type": "string",
+      "description": "The input file path to be decompressed."
+    },
+    "outputFilePath": {
+      "type": "string",
+      "description": "The output file path where decompressed file will be saved."
+    }
+  },
+  "required": ["decompressionType","inputFilePath", "outputFilePath"]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Remove generated files from log directory.",
+  "type": "object",
+  "properties": {
+    "removeLogDataConfig": {
+      "$ref": "cleaningConfig",
+      "description": "Remove files from log/data directory."
+    },
+    "removeLogEchoConfig": {
+      "$ref": "cleaningConfig",
+      "description": "Remove files from log/echo directory."
+    }
+  },
+  "required": ["removeLogDataConfig", "removeLogEchoConfig"]
+}

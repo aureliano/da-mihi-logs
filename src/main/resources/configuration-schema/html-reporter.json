@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Generate HTML reports.",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": {
+      	"anyOf": ["english", "portuguese"]
+      },
+      "description": "Which idiom will be used to render pages.",
+      "default": "english"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title for the index page.",
+      "default": "Execution Log Collectors Report"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description for the index page.",
+      "default": "Management of log events collection."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Directory path where files will be saved."
+    }
+  },
+  "required": ["outputDir"]
+}

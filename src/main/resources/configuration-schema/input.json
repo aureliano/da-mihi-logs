@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Input configuration.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "anyOf": [
+      	{ "$ref": "externalCommand" },
+      	{ "$ref": "file" },
+      	{ "$ref": "standard" },
+      	{ "$ref": "url" }
+      ]
+    }
+  }
+}

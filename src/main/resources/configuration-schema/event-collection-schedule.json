@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Scheduling execution configuration.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "anyOf": [
+        { "$ref": "executeOnceAtSpecificTime" },
+        { "$ref": "executePeriodicallyAtSpecificTime" },
+        { "$ref": "executePeriodically" }
+      ]
+    }
+  }
+}

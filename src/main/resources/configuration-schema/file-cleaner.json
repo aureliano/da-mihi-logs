@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Remove files from a directory.",
+  "type": "object",
+  "properties": {
+    "directory": {
+      "type": "string",
+      "description": "Directory path which will be cleaned."
+    },
+    "removeConfig": {
+      "$ref": "cleaningConfig"
+    }
+  },
+  "required": ["directory", "removeConfig"]
+}

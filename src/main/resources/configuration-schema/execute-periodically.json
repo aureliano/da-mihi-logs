@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schedule a task to execute periodically",
+  "type": "object",
+  "properties": {
+    "delay": {
+      "type": "integer",
+      "description": "The time to delay first execution."
+    },
+    "period": {
+      "type": "integer",
+      "description": "The period between successive executions."
+    },
+    "timeUnit": {
+      "type": {
+        "anyOf": ["days", "hours", "minutes", "seconds", "milliseconds", "microseconds", "nanoseconds"],
+        "description": "The time unit of the initialDelay and period parameters"
+  	   }
+    }
+  },
+  "required": ["delay", "period", "timeUnit"]
+}

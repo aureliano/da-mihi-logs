@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "type": {
+      "anyOf": [
+      	{ "$ref": "elasticSearch" },
+      	{ "$ref": "file" },
+      	{ "$ref": "standard" }
+      ]
+    }
+  }
+}

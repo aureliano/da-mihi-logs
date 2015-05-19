@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Output configuration for standard.",
+  "type": "object",
+  "properties": {
+    "parser": {
+      "type": "string",
+      "description": "Full qualified name of class parser used to convert an event into an business object.",
+      "default": "com.github.aureliano.damihilogs.parser.PlainTextParser"
+    },
+    "filter": {
+      "type": "string",
+      "description": "Full qualified name of class filter used to filter events before writing.",
+      "default": "com.github.aureliano.damihilogs.filter.DefaultEmptyFilter"
+    },
+    "formatter": {
+      "type": "string",
+      "description": "Full qualified name of class formatter used to format data output.",
+      "default": "com.github.aureliano.damihilogs.formatter.PlainTextFormatter"
+    },
+    "dataWritingListeners": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will listen events when writing data."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
+    }
+  }
+}

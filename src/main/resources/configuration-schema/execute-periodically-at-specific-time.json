@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Schedule a task to execute periodically at specified time.",
+  "type": "object",
+  "properties": {
+    "hour": {
+      "type": "integer",
+      "description": "The hour which it has to execute: 0-23"
+    },
+    "minute": {
+      "type": "integer",
+      "description": "The minute which it has to execute: 0-59"
+    },
+    "second": {
+      "type": "integer",
+      "description": "The second which it has to execute: 0-59"
+    }
+  },
+  "required": ["hour", "minute", "second"]
+}

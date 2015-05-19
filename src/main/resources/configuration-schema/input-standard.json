@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Input configuration for standard.",
+  "type": "object",
+  "properties": {
+    "matcher": {
+      "type": "string",
+      "description": "Full qualified name of class matcher used to get text from input.",
+      "default": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher"
+    },
+    "useLastExecutionLog": {
+      "type": "boolean",
+      "description": "Whether to use data from earlier execution.",
+      "default": "false"
+    },
+    "exceptionHandlers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will handle exceptions."
+    },
+    "dataReadingListeners": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will listen events when reading data."
+    },
+    "executionListeners": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will listen events when data reading is done. That means, between read and write."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
+    }
+  }
+}

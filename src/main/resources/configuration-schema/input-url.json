@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Input configuration for URL.",
+  "type": "object",
+  "properties": {
+    "matcher": {
+      "type": "string",
+      "description": "Full qualified name of class matcher used to get text from input.",
+      "default": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher"
+    },
+    "useLastExecutionLog": {
+      "type": "boolean",
+      "description": "Whether to use data from earlier execution.",
+      "default": "false"
+    },
+    "exceptionHandlers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will handle exceptions."
+    },
+    "dataReadingListeners": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will listen events when reading data."
+    },
+    "executionListeners": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Full qualified name of the class that will listen events when data reading is done. That means, between read and write."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
+    },
+    "connectionSchema": {
+      "type": {
+        "anyOf": ["http", "https"],
+        "description": "The HTTP connection schema.",
+        "default": "http"
+  	   }
+    },
+    "host": {
+      "type": "string",
+      "description": "The server host name to establish connection."
+    },
+    "port": {
+      "type": "integer",
+      "description": "The port number."
+    },
+    "path": {
+      "type": "string",
+      "description": "The path of the resource. Example: foo/bar/download.log"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URL parameters."
+    },
+    "readTimeOut": {
+      "type": "integer",
+      "description": "The time in milliseconds to wait connection."
+    },
+    "byteOffSet": {
+      "type": "integer",
+      "description": "The byte off set to download."
+    },
+    "outputFile": {
+      "type": "string",
+      "description": "The path where download data will be saved and read afterwards."
+    },
+    "appendIfOutputFileExist": {
+      "type": "boolean",
+      "description": "Append download bytes to file if already exists.",
+      "default": "false"
+    },
+    "fileStartPosition": {
+      "type": "integer",
+      "description": "The line number of the file from where reading will start."
+    },
+    "user": {
+      "type": "string",
+      "description": "The user name in order to authenticate on server."
+    },
+    "password": {
+      "type": "string",
+      "description": "The password in order to authenticate on server."
+    },
+    "decompressFile": {
+      "$ref": "decompressionFile"
+    }
+  },
+  "required": ["connectionSchema", "host", "outputFile"]
+}

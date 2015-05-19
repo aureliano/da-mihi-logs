@@ -1,0 +1,63 @@
+{
+  "id": "https://github.com/aureliano/da-mihi-logs/tree/master/src/main/resources/configuration-schema/event-collector-configuration.json",
+  "eventCollectionSchedule": {
+    "id": "event-collection-schedule.json",
+    "executeOnceAtSpecificTime": {
+      "id": "execute-once-at-specific-time.json"
+    },
+    "executePeriodicallyAtSpecificTime": {
+      "id": "execute-periodically-at-specific-time.json"
+    },
+    "executePeriodically": {
+      "id": "execute-periodically.json"
+    }
+  },
+  "reporter": {
+    "id": "reporter.json",
+    "htmlReporter": {
+      "id": "html-reporter.json"
+    }
+  },
+  "cleaner": {
+    "id": "cleaner.json",
+    "fileCleaner": {
+      "id": "file-cleaner.json"
+    },
+    "logCleaner": {
+      "id": "log-cleaner.json"
+    },
+    "cleaningConfig": {
+      "id": "cleaning-config.json"
+    }
+  },
+  "input": {
+    "id": "input.json",
+    "externalCommand": {
+      "id": "input-external-command.json"
+    },
+    "file": {
+      "id": "input-file.json"
+    },
+    "standard": {
+      "id": "input-standard.json"
+    },
+    "url": {
+      "id": "input-url.json"
+    },
+    "decompressionFile": {
+      "id": "decompression-file.json"
+    }
+  },
+  "output": {
+    "id": "output.json",
+    "elasticSearch": {
+      "id": "output-elastic-search.json"
+    },
+    "file": {
+      "id": "output-file.json"
+    },
+    "standard": {
+      "id": "output-standard.json"
+    }
+  }
+}
