@@ -1,0 +1,34 @@
+Usage: [java -jar] da-mihi-logs-x.x.x.jar [FILE]
+Required JVM 1.6 or higher.
+
+Takes one or more event inputs and dispatches them to appropriate outputs. If you want to know about configuration schema you can type help [SCHEMA_NAME] instead of [FILE]. Example:
+da-mihi-logs-x.x.x.jar help [SCHEMA_NAME]
+Where SCHEMA_NAME can be one of:
+${schemaNames}
+
+It is also possible to see nested schemas. Just put a minus signal between schema names. Example:
+da-mihi-logs-x.x.x.jar help [SCHEMA_NAME]-[NESTED-SCHEMA_NAME]
+da-mihi-logs-x.x.x.jar help input-file
+
+Example: java -jar da-mihi-logs-x.x.x.jar $HOME/configuration.json
+
+How much more memory your application uses it is recommended to set XMX and XMS JVM parameters.
+-Xms
+  The -Xms option sets the initial and minimum Java heap size. The Java heap (the heap) is the part of the memory where blocks of memory are allocated to objects and freed during garbage collection.
+  Note: The -Xms option does not limit the total amount of memory that the JVM can use.
+  Format: -Xms:size[g|G|m|M|k|K]
+  Combine -Xms with a memory value and add a unit.
+
+-Xmx
+  The -Xmx option sets the maximum Java heap size. The Java heap is the part of the memory where blocks of memory are allocated to objects and freed during garbage collection. Depending upon the kind of operating system you are running, the maximum value you can set for the Java heap can vary.
+  Note: The -Xmx option does not limit the total amount of memory that the JVM can use.
+  Format: -Xmx:size[g|G|m|M|k|K]
+  Combine the -Xmx option with a memory value.
+
+Example: java -Xms:512m -Xmx:1g da-mihi-logs-x.x.x.jar $HOME/configuration.json
+http://docs.oracle.com/cd/E15289_01/doc.40/e15062/optionx.htm
+
+WARNING! Be careful about using external command inputs. When calling external commands a new Java process is started with the same configuration as the main process. That means same initial/maximum memory allocation etc.
+
+Report errors to https://github.com/aureliano/da-mihi-logs/issues
+Visit https://github.com/aureliano/da-mihi-logs/wiki for more detailed insights.
