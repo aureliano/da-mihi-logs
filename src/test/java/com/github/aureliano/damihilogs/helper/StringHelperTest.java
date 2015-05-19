@@ -34,4 +34,10 @@ public class StringHelperTest {
 		Assert.assertEquals("House", StringHelper.capitalize("HoUSE"));
 		Assert.assertEquals("House of torments", StringHelper.capitalize("house OF tormentS"));
 	}
+	
+	@Test
+	public void testJoin() {
+		Assert.assertEquals("12345", StringHelper.join(new Object[] {1, 2, 3, 4, 5}));
+		Assert.assertEquals("1, 2, 3, 4, 5", StringHelper.join(new Object[] {1, 2, 3, 4, 5}, ", "));
+	}
 }
