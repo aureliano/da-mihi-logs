@@ -28,7 +28,6 @@ public class UrlInputConfig implements IConfigInput {
 	
 	private File outputFile;
 	private Boolean appendIfOutputFileExist;
-	private Boolean alwaysDownloadCompleteFile;
 	private Integer fileStartPosition;
 	
 	private String user;
@@ -55,7 +54,6 @@ public class UrlInputConfig implements IConfigInput {
 		this.readTimeout = DEFAULT_READ_TIMEOUT;
 		this.byteOffSet = 0;
 		this.appendIfOutputFileExist = false;
-		this.alwaysDownloadCompleteFile = false;
 		this.noCheckCertificate = false;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
@@ -154,15 +152,6 @@ public class UrlInputConfig implements IConfigInput {
 	public UrlInputConfig withAppendIfOutputFileExist(Boolean appendIfOutputFileExist) {
 		this.appendIfOutputFileExist = appendIfOutputFileExist;
 		return this;
-	}
-	
-	public UrlInputConfig withAlwaysDownloadCompleteFile(Boolean alwaysDownloadCompleteFile) {
-		this.alwaysDownloadCompleteFile = alwaysDownloadCompleteFile;
-		return this;
-	}
-	
-	public Boolean isAlwaysDownloadCompleteFile() {
-		return alwaysDownloadCompleteFile;
 	}
 	
 	public Integer getFileStartPosition() {
