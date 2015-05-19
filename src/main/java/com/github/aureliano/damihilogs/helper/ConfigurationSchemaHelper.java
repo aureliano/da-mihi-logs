@@ -9,7 +9,6 @@ import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 public final class ConfigurationSchemaHelper {
 
 	private static final String CONFIGURATION_SCHEMA_DIR = "configuration-schema";
-	private static final String ROOT_SCHEMA_FILE = "event-collector-configuration.json";
 	public static final String SCHEMA_NAME_SEPARATOR = "-";
 	
 	private ConfigurationSchemaHelper() {
@@ -40,11 +39,13 @@ public final class ConfigurationSchemaHelper {
 	}
 	
 	public static String fetchSchema(String path) {
+		Map<String, Object> rootSchema = loadRootSchema();
 		String schemaPath = null;
+		
 		if ("root".equals(path)) {
-			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, ROOT_SCHEMA_FILE);
+			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, rootSchema.get("id").toString());
 		} else {
-			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, findSchemaId(path));
+			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, findSchemaId(rootSchema, path));
 		}
 		
 		try {
@@ -54,8 +55,7 @@ public final class ConfigurationSchemaHelper {
 		}
 	}
 	
-	private static String findSchemaId(String path) {
-		Map<String, Object> rootSchema = loadRootSchema();
+	private static String findSchemaId(Map<String, Object> rootSchema, String path) {
 		Map<String, Object> map = null;
 		
 		for (String key : path.split(SCHEMA_NAME_SEPARATOR)) {

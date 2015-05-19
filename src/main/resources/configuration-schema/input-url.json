@@ -4,6 +4,11 @@
   "type": "object",
   "properties": {
     "matcher": {
+    "id": {
+      "type": "string",
+      "description": "Input configuration id.",
+      "default": "Auto-generated id."
+    },
       "type": "string",
       "description": "Full qualified name of class matcher used to get text from input.",
       "default": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher"

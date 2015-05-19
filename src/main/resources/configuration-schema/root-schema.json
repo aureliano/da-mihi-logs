@@ -1,5 +1,5 @@
 {
-  "id": "https://github.com/aureliano/da-mihi-logs/tree/master/src/main/resources/configuration-schema/event-collector-configuration.json",
+  "id": "event-collector-configuration.json",
   "eventCollectionSchedule": {
     "id": "event-collection-schedule.json",
     "executeOnceAtSpecificTime": {
