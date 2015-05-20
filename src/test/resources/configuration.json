@@ -49,66 +49,58 @@
   "inputs": {
     "in-cmd": {
       "type": "externalCommand",
-      "properties": {
-        "metadata": {
-          "server": "server-host"
-        },
+      "metadata": {
+        "server": "server-host"
+      },
 
-        "command": "ls",
-        "parameters": ["-la"]
-      }
+      "command": "ls",
+      "parameters": ["-la"]
     },
     "in-file": {
       "type": "file",
-      "properties": {
-        "metadata": {
-          "server": "banânia"
-        },
+      "metadata": {
+        "server": "banânia"
+      },
 
-        "file": "target/test/file",
-        "startPosition": 1984,
-        "encoding": "ISO-8859-1",
-        "tailFile": true,
-        "tailDelay": 5000,
-        "tailInterval": 120000000
-      }
+      "file": "target/test/file",
+      "startPosition": 1984,
+      "encoding": "ISO-8859-1",
+      "tailFile": true,
+      "tailDelay": 5000,
+      "tailInterval": 120000000
     },
     "in-strd": {
       "type": "standard",
-      "properties": {
-        "matcher": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher",
-        "useLastExecutionLog": true,
-        "exceptionHandlers": ["com.github.aureliano.damihilogs.exception.DefaultExceptionHandler"],
-        "dataReadingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataReadingListener"],
-        "executionListeners": ["com.github.aureliano.damihilogs.listener.DefaultExecutionListener"],
-        "metadata": {
-          "server": "bananistão"
-        }
+      "matcher": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher",
+      "useLastExecutionLog": true,
+      "exceptionHandlers": ["com.github.aureliano.damihilogs.exception.DefaultExceptionHandler"],
+      "dataReadingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataReadingListener"],
+      "executionListeners": ["com.github.aureliano.damihilogs.listener.DefaultExecutionListener"],
+      "metadata": {
+        "server": "bananistão"
       }
     },
     "in-url": {
       "type": "url",
-      "properties": {
-        "metadata": {
-          "country": "banânia",
-          "leader": "babalorixá"
-        },
+      "metadata": {
+        "country": "banânia",
+        "leader": "babalorixá"
+      },
 
-        "connectionSchema": "https",
-        "host": "localhost",
-        "port": 8081,
-        "path": "system",
-        "readTimeOut": 5000,
-        "byteOffSet": 0,
-        "outputFile": "src/test/resources/compressed.gz",
-        "user": "user_name",
-        "password": "user_pass",
+      "connectionSchema": "https",
+      "host": "localhost",
+      "port": 8081,
+      "path": "system",
+      "readTimeOut": 5000,
+      "byteOffSet": 0,
+      "outputFile": "src/test/resources/compressed.gz",
+      "user": "user_name",
+      "password": "user_pass",
 
-        "decompressFile": {
-          "type": "gzip",
-          "inputFilePath": "src/test/resources/compressed.gz",
-          "outputFilePath": "target/test/output"
-        }
+      "decompressFile": {
+        "type": "gzip",
+        "inputFilePath": "src/test/resources/compressed.gz",
+        "outputFilePath": "target/test/output"
       }
     }
   },
@@ -116,40 +108,34 @@
   "outputs": [
     {
       "type": "elasticSearch",
-      "properties": {
-        "metadata": {
-          "crusader": "Jacques de Moley"
-        },
+      "metadata": {
+        "crusader": "Jacques de Moley"
+      },
 
-        "host": "127.0.0.1",
-        "port": 9200,
-        "printElasticSearchLog": "true",
-        "index": "my-index",
-        "type": "new-type"
-      }
+      "host": "127.0.0.1",
+      "port": 9200,
+      "printElasticSearchLog": "true",
+      "index": "my-index",
+      "mappingType": "new-type"
     },
     {
       "type": "file",
-      "properties": {
-        "metadata": {
-          "crusader": "Hugo de Payens"
-        },
-        
-        "file": "src/test/resources/server.log",
-        "append": "true",
-        "encoding": "ISO-8859-1"
-      }
+      "metadata": {
+        "crusader": "Hugo de Payens"
+      },
+      
+      "file": "src/test/resources/server.log",
+      "append": "true",
+      "encoding": "ISO-8859-1"
     },
     {
       "type": "standard",
-      "properties": {
-        "parser": "com.github.aureliano.damihilogs.parser.PlainTextParser",
-        "filter": "com.github.aureliano.damihilogs.filter.DefaultEmptyFilter",
-        "formatter": "com.github.aureliano.damihilogs.formatter.PlainTextFormatter",
-        "dataWritingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataWritingListener"],
-        "metadata": {
-          "inquisitor": "Bernardus Guidonis"
-        }
+      "parser": "com.github.aureliano.damihilogs.parser.PlainTextParser",
+      "filter": "com.github.aureliano.damihilogs.filter.DefaultEmptyFilter",
+      "formatter": "com.github.aureliano.damihilogs.formatter.PlainTextFormatter",
+      "dataWritingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataWritingListener"],
+      "metadata": {
+        "inquisitor": "Bernardus Guidonis"
       }
     }
   ]

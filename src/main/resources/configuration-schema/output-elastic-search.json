@@ -48,10 +48,10 @@
       "type": "string",
       "description": "The ElasticSearch index name."
     },
-    "type": {
+    "mappingType": {
       "type": "string",
       "description": "The index's mapping type."
     }
   },
-  "required": ["index", "type"]
+  "required": ["index", "mappingType"]
 }

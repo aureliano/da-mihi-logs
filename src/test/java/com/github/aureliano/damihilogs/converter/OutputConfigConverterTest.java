@@ -41,26 +41,24 @@ public class OutputConfigConverterTest {
 	@Test
 	public void testCreateOutputFile() {
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
-		properties.put("metadata", metadata);
+		data.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
+		data.put("metadata", metadata);
 		
-		properties.put("parser", PlainTextParser.class.getName());
-		properties.put("filter", DefaultEmptyFilter.class.getName());
-		properties.put("formatter", PlainTextFormatter.class.getName());
+		data.put("parser", PlainTextParser.class.getName());
+		data.put("filter", DefaultEmptyFilter.class.getName());
+		data.put("formatter", PlainTextFormatter.class.getName());
 		
-		properties.put("file", "src/test/resources");
-		properties.put("append", true);
-		properties.put("useBuffer", false);
-		properties.put("encoding", "ISO-8859-1");
+		data.put("file", "src/test/resources");
+		data.put("append", true);
+		data.put("useBuffer", false);
+		data.put("encoding", "ISO-8859-1");
 		
 		data.put("type", "file");
-		data.put("properties", properties);
 		
 		FileOutputConfig conf = (FileOutputConfig) this.converter.convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());
@@ -80,27 +78,25 @@ public class OutputConfigConverterTest {
 	@Test
 	public void testCreateOutputES() {
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
-		properties.put("metadata", metadata);
+		data.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
+		data.put("metadata", metadata);
 		
-		properties.put("parser", PlainTextParser.class.getName());
-		properties.put("filter", DefaultEmptyFilter.class.getName());
-		properties.put("formatter", PlainTextFormatter.class.getName());
+		data.put("parser", PlainTextParser.class.getName());
+		data.put("filter", DefaultEmptyFilter.class.getName());
+		data.put("formatter", PlainTextFormatter.class.getName());
 		
-		properties.put("host", "127.0.0.1");
-		properties.put("port", 9200);
-		properties.put("printElasticSearchLog", true);
-		properties.put("index", "my-index");
-		properties.put("type", "new-type");
+		data.put("host", "127.0.0.1");
+		data.put("port", 9200);
+		data.put("printElasticSearchLog", true);
+		data.put("index", "my-index");
+		data.put("mappingType", "new-type");
 		
 		data.put("type", "elasticSearch");
-		data.put("properties", properties);
 		
 		ElasticSearchOutputConfig conf = (ElasticSearchOutputConfig) this.converter.convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());
@@ -121,21 +117,19 @@ public class OutputConfigConverterTest {
 	@Test
 	public void testCreateOutputStandard() {
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
-		properties.put("metadata", metadata);
+		data.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
+		data.put("metadata", metadata);
 		
-		properties.put("parser", PlainTextParser.class.getName());
-		properties.put("filter", DefaultEmptyFilter.class.getName());
-		properties.put("formatter", PlainTextFormatter.class.getName());
+		data.put("parser", PlainTextParser.class.getName());
+		data.put("filter", DefaultEmptyFilter.class.getName());
+		data.put("formatter", PlainTextFormatter.class.getName());
 		
 		data.put("type", "standard");
-		data.put("properties", properties);
 		
 		StandardOutputConfig conf = (StandardOutputConfig) this.converter.convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());

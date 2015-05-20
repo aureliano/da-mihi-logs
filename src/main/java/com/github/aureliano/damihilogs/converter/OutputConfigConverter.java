@@ -35,11 +35,11 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 		String type = StringHelper.parse(data.get("type"));
 		
 		if ("elasticSearch".equals(type)) {
-			return this.createElasticSearchConfig(DataHelper.getAsHash(data, "properties"));
+			return this.createElasticSearchConfig(data);
 		} else if ("file".equals(type)) {
-			return this.createFileConfig(DataHelper.getAsHash(data, "properties"));
+			return this.createFileConfig(data);
 		} else if ("standard".equals(type)) {
-			return this.createStandardConfig(DataHelper.getAsHash(data, "properties"));
+			return this.createStandardConfig(data);
 		} else {
 			throw new DaMihiLogsException("Output config type '" + type + "' not supported. Expected one of: " + Arrays.toString(OUTPUT_CONFIG_TYPES));
 		}
@@ -66,7 +66,7 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 		return conf
 			.withHost(StringHelper.parse(data.get("host")))
 			.withIndex(StringHelper.parse(data.get("index")))
-			.withMappingType(StringHelper.parse(data.get("type")));
+			.withMappingType(StringHelper.parse(data.get("mappingType")));
 	}
 
 	private FileOutputConfig createFileConfig(Map<String, Object> data) {

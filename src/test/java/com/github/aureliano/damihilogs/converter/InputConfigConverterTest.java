@@ -46,33 +46,31 @@ public class InputConfigConverterTest {
 	public void testCreateInputFile() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		Map<String, Object> decompress = new HashMap<String, Object>();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		properties.put("matcher", SingleLineMatcher.class.getName());
-		properties.put("exceptionHandlers", Arrays.asList(DefaultExceptionHandler.class.getName(), DefaultExceptionHandler.class.getName()));
-		properties.put("dataReadingListeners", Arrays.asList(DefaultDataReadingListener.class.getName()));
-		properties.put("executionListeners", Arrays.asList(DefaultExecutionListener.class.getName()));
-		properties.put("metadata", metadata);
+		data.put("matcher", SingleLineMatcher.class.getName());
+		data.put("exceptionHandlers", Arrays.asList(DefaultExceptionHandler.class.getName(), DefaultExceptionHandler.class.getName()));
+		data.put("dataReadingListeners", Arrays.asList(DefaultDataReadingListener.class.getName()));
+		data.put("executionListeners", Arrays.asList(DefaultExecutionListener.class.getName()));
+		data.put("metadata", metadata);
 		
-		properties.put("file", "src/test/resources");
-		properties.put("startPosition", 15);
-		properties.put("encoding", "ISO-8859-1");
-		properties.put("tailFile", true);
-		properties.put("tailDelay", 50);
-		properties.put("tailInterval", 100);
+		data.put("file", "src/test/resources");
+		data.put("startPosition", 15);
+		data.put("encoding", "ISO-8859-1");
+		data.put("tailFile", true);
+		data.put("tailDelay", 50);
+		data.put("tailInterval", 100);
 		
 		decompress.put("type", "zip");
 		decompress.put("inputFilePath", "path/to/zip");
 		decompress.put("outputFilePath", "path/to/extraction");
-		properties.put("decompressFile", decompress);
+		data.put("decompressFile", decompress);
 		
 		data.put("type", "file");
-		data.put("properties", properties);
 		map.put("input", data);
 		
 		InputFileConfig conf = (InputFileConfig) this.converter.convert(map);
@@ -98,13 +96,11 @@ public class InputConfigConverterTest {
 	public void testCreateExternalCommand() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		
-		properties.put("command", "ls");
-		properties.put("parameters", Arrays.asList("-la"));
+		data.put("command", "ls");
+		data.put("parameters", Arrays.asList("-la"));
 		
 		data.put("type", "externalCommand");
-		data.put("properties", properties);
 		map.put("input", data);
 		
 		ExternalCommandInput conf = (ExternalCommandInput) this.converter.convert(map);
@@ -116,7 +112,6 @@ public class InputConfigConverterTest {
 	public void testCreateUrl() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		Map<String, Object> properties = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		Map<String, Object> decompress = new HashMap<String, Object>();
 		
@@ -126,21 +121,20 @@ public class InputConfigConverterTest {
 		decompress.put("type", "zip");
 		decompress.put("inputFilePath", "path/to/zip");
 		decompress.put("outputFilePath", "path/to/extraction");
-		properties.put("decompressFile", decompress);
+		data.put("decompressFile", decompress);
 		
-		properties.put("metadata", metadata);
-		properties.put("connectionSchema", "http");
-		properties.put("host", "localhost");
-		properties.put("port", "80");
-		properties.put("path", "test/ok");
-		properties.put("readTimeOut", 1000);
-		properties.put("byteOffSet", 45789);
-		properties.put("outputFile", "src/test/resources");
-		properties.put("user", "usr");
-		properties.put("password", "pwd");
+		data.put("metadata", metadata);
+		data.put("connectionSchema", "http");
+		data.put("host", "localhost");
+		data.put("port", "80");
+		data.put("path", "test/ok");
+		data.put("readTimeOut", 1000);
+		data.put("byteOffSet", 45789);
+		data.put("outputFile", "src/test/resources");
+		data.put("user", "usr");
+		data.put("password", "pwd");
 		
 		data.put("type", "url");
-		data.put("properties", properties);
 		map.put("input", data);
 		
 		UrlInputConfig conf = (UrlInputConfig) this.converter.convert(map);
