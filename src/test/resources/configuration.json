@@ -46,8 +46,9 @@
   ],
   "eventsCollectorListeners": ["com.github.aureliano.damihilogs.listener.DefaultEventsCollectorListener"],
 
-  "inputs": {
-    "in-cmd": {
+  "inputs": [
+    {
+      "id": "in-cmd",
       "type": "externalCommand",
       "metadata": {
         "server": "server-host"
@@ -56,7 +57,8 @@
       "command": "ls",
       "parameters": ["-la"]
     },
-    "in-file": {
+    {
+      "id": "in-file",
       "type": "file",
       "metadata": {
         "server": "banânia"
@@ -69,7 +71,8 @@
       "tailDelay": 5000,
       "tailInterval": 120000000
     },
-    "in-strd": {
+    {
+      "id": "in-strd",
       "type": "standard",
       "matcher": "com.github.aureliano.damihilogs.matcher.SingleLineMatcher",
       "useLastExecutionLog": true,
@@ -80,7 +83,8 @@
         "server": "bananistão"
       }
     },
-    "in-url": {
+    {
+      "id": "in-url",
       "type": "url",
       "metadata": {
         "country": "banânia",
@@ -103,7 +107,7 @@
         "outputFilePath": "target/test/output"
       }
     }
-  },
+  ],
 
   "outputs": [
     {

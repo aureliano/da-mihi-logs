@@ -29,13 +29,11 @@ public class InputConfigConverterTest {
 	
 	@Test
 	public void testCreateInputError() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("type", "invalid");
-		map.put("input", data);
 		
 		try {
-			this.converter.convert(map);
+			this.converter.convert(data);
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input config type 'invalid' not supported. Expected one of: " + Arrays.toString(InputConfigConverter.INPUT_CONFIG_TYPES), ex.getMessage());
@@ -44,7 +42,6 @@ public class InputConfigConverterTest {
 	
 	@Test
 	public void testCreateInputFile() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		Map<String, Object> decompress = new HashMap<String, Object>();
@@ -52,6 +49,7 @@ public class InputConfigConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
+		data.put("id", "test-123");
 		data.put("matcher", SingleLineMatcher.class.getName());
 		data.put("exceptionHandlers", Arrays.asList(DefaultExceptionHandler.class.getName(), DefaultExceptionHandler.class.getName()));
 		data.put("dataReadingListeners", Arrays.asList(DefaultDataReadingListener.class.getName()));
@@ -71,9 +69,8 @@ public class InputConfigConverterTest {
 		data.put("decompressFile", decompress);
 		
 		data.put("type", "file");
-		map.put("input", data);
 		
-		InputFileConfig conf = (InputFileConfig) this.converter.convert(map);
+		InputFileConfig conf = (InputFileConfig) this.converter.convert(data);
 		Assert.assertTrue(conf.getMatcher() instanceof SingleLineMatcher);
 		Assert.assertEquals(2, conf.getExceptionHandlers().size());
 		Assert.assertEquals(1, conf.getDataReadingListeners().size());
@@ -81,6 +78,7 @@ public class InputConfigConverterTest {
 		Assert.assertEquals("test", conf.getMetadata("test"));
 		Assert.assertEquals("CAM", conf.getMetadata("goal"));
 		
+		Assert.assertEquals("test-123", conf.getConfigurationId());
 		Assert.assertEquals("src/test/resources", conf.getFile().getPath());
 		Assert.assertEquals(new Integer(15), conf.getStartPosition());
 		Assert.assertEquals("ISO-8859-1", conf.getEncoding());
@@ -94,23 +92,22 @@ public class InputConfigConverterTest {
 	
 	@Test
 	public void testCreateExternalCommand() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
-		
+
+		data.put("id", "test-123");
 		data.put("command", "ls");
 		data.put("parameters", Arrays.asList("-la"));
 		
 		data.put("type", "externalCommand");
-		map.put("input", data);
 		
-		ExternalCommandInput conf = (ExternalCommandInput) this.converter.convert(map);
+		ExternalCommandInput conf = (ExternalCommandInput) this.converter.convert(data);
+		Assert.assertEquals("test-123", conf.getConfigurationId());
 		Assert.assertEquals("ls", conf.getCommand());
 		Assert.assertEquals(Arrays.asList("-la"), conf.getParameters());
 	}
 	
 	@Test
 	public void testCreateUrl() {
-		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> data = new HashMap<String, Object>();
 		Properties metadata = new Properties();
 		Map<String, Object> decompress = new HashMap<String, Object>();
@@ -122,7 +119,8 @@ public class InputConfigConverterTest {
 		decompress.put("inputFilePath", "path/to/zip");
 		decompress.put("outputFilePath", "path/to/extraction");
 		data.put("decompressFile", decompress);
-		
+
+		data.put("id", "test-123");
 		data.put("metadata", metadata);
 		data.put("connectionSchema", "http");
 		data.put("host", "localhost");
@@ -135,13 +133,13 @@ public class InputConfigConverterTest {
 		data.put("password", "pwd");
 		
 		data.put("type", "url");
-		map.put("input", data);
 		
-		UrlInputConfig conf = (UrlInputConfig) this.converter.convert(map);
+		UrlInputConfig conf = (UrlInputConfig) this.converter.convert(data);
 		
 		Assert.assertEquals("test", conf.getMetadata("test"));
 		Assert.assertEquals("CAM", conf.getMetadata("goal"));
-		
+
+		Assert.assertEquals("test-123", conf.getConfigurationId());
 		Assert.assertEquals(ConnectionSchema.HTTP, conf.getConnectionSchema());
 		Assert.assertEquals("localhost", conf.getHost());
 		Assert.assertEquals(80, conf.getPort());

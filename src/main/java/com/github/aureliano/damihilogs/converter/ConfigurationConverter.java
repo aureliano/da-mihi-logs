@@ -2,7 +2,6 @@ package com.github.aureliano.damihilogs.converter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -126,19 +125,16 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private List<IConfigInput> convertInputs(Map<String, Object> data) {
-		Map<String, Object> map = DataHelper.getAsHash(data, "inputs");
-		if (map == null) {
+		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("inputs");
+		if (list == null) {
 			return Collections.emptyList();
 		}
 		
 		List<IConfigInput> inputs = new ArrayList<IConfigInput>();
 		InputConfigConverter converter = new InputConfigConverter();
 		
-		for (Object key : map.keySet()) {
-			Map<String, Object> inputMap = new HashMap<String, Object>();
-			inputMap.put(key.toString(), DataHelper.getAsHash(map, key.toString()));
-			
-			inputs.add(converter.convert(inputMap));
+		for (Map<String, Object> outputMap : list) {
+			inputs.add(converter.convert(outputMap));
 		}
 		
 		return inputs;

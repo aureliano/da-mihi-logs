@@ -27,8 +27,6 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 
 	protected static final String[] INPUT_CONFIG_TYPES = new String[] { "externalCommand", "file", "standard", "url" };
 	
-	private String id;
-	
 	public InputConfigConverter() {
 		super();
 	}
@@ -39,18 +37,16 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			return null;
 		}
 		
-		this.id = StringHelper.parse(data.keySet().iterator().next());
-		Map<String, Object> map = (Map<String, Object>) data.get(this.id);
-		String type = StringHelper.parse(DataHelper.getAsHash(data, this.id).get("type"));
+		String type = StringHelper.parse(data.get("type"));
 		
 		if ("file".equals(type)) {
-			return this.createFileConfig(map).withConfigurationId(this.id);
+			return this.createFileConfig(data);
 		} else if ("externalCommand".equals(type)) {
-			return this.createExternalCommandConfig(map).withConfigurationId(this.id);
+			return this.createExternalCommandConfig(data);
 		} else if ("standard".equals(type)) {
-			return this.createStandardConfig(map).withConfigurationId(this.id);
+			return this.createStandardConfig(data);
 		} else if ("url".equals(type)) {
-			return this.createUrlConfig(map).withConfigurationId(this.id);
+			return this.createUrlConfig(data);
 		} else {
 			throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(INPUT_CONFIG_TYPES));
 		}
@@ -194,6 +190,8 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 	}
 	
 	private void configureObject(IConfigInput conf, Map<String, Object> data) {
+		conf.withConfigurationId(StringHelper.parse(data.get("id")));
+		
 		String value = StringHelper.parse(data.get("matcher"));
 		if (!StringHelper.isEmpty(value)) {
 			conf.withMatcher((IMatcher) ReflectionHelper.newInstance(value));
