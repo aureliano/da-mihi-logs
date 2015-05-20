@@ -31,7 +31,11 @@ public class Application {
 				throw new DaMihiLogsException("You must provide only one JSON configuration file.");
 			}
 		} else {
-			this.withConfigurationFile(args[0]).execute();;
+			if ((args[0].equals("-h")) || (args[0].equals("--help")) || (args[0].equals("help"))) {
+				this.printHelp();
+			} else {
+				this.withConfigurationFile(args[0]).execute();
+			}
 		}
 	}
 	
