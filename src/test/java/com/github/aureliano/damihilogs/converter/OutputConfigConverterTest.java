@@ -56,6 +56,7 @@ public class OutputConfigConverterTest {
 		
 		properties.put("file", "src/test/resources");
 		properties.put("append", true);
+		properties.put("useBuffer", false);
 		properties.put("encoding", "ISO-8859-1");
 		
 		data.put("type", "file");
@@ -73,6 +74,7 @@ public class OutputConfigConverterTest {
 		Assert.assertEquals("src/test/resources", conf.getFile().getPath());
 		Assert.assertEquals("ISO-8859-1", conf.getEncoding());
 		Assert.assertTrue(conf.isAppend());
+		Assert.assertFalse(conf.isUseBuffer());
 	}
 	
 	@Test

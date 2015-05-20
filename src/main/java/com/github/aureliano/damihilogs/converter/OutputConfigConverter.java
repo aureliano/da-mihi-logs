@@ -83,6 +83,11 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 			conf.withAppend(Boolean.parseBoolean(value.toLowerCase()));
 		}
 		
+		value = StringHelper.parse(data.get("useBuffer"));
+		if (!StringHelper.isEmpty(value)) {
+			conf.withUseBuffer(Boolean.parseBoolean(value.toLowerCase()));
+		}
+		
 		value = StringHelper.parse(data.get("encoding"));
 		if (!StringHelper.isEmpty(value)) {
 			conf.withEncoding(value);

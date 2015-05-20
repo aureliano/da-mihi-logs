@@ -38,6 +38,11 @@
       "description": "Whether to append content to output file or not.",
       "default": "false"
     },
+    "useBuffer": {
+      "type": "boolean",
+      "description": "Whether to use buffering in order to improve writing process. You might need some times to get data put to file instantly though.",
+      "default": "true"
+    },
     "encoding": {
       "type": "string",
       "description": "Force writing UTF-8 to output file.",

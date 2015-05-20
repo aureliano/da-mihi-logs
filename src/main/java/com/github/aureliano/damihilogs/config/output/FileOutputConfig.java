@@ -16,6 +16,7 @@ public class FileOutputConfig implements IConfigOutput {
 	private File file;
 	private boolean append;
 	private String encoding;
+	private boolean useBuffer;
 	private IParser<?> parser;
 	private IEventFielter filter;
 	private Properties metadata;
@@ -24,6 +25,7 @@ public class FileOutputConfig implements IConfigOutput {
 	
 	public FileOutputConfig() {
 		this.append = false;
+		this.useBuffer = true;
 		this.encoding = "UTF-8";
 		this.metadata = new Properties();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
@@ -63,6 +65,15 @@ public class FileOutputConfig implements IConfigOutput {
 
 	public FileOutputConfig withEncoding(String encoding) {
 		this.encoding = encoding;
+		return this;
+	}
+	
+	public boolean isUseBuffer() {
+		return useBuffer;
+	}
+	
+	public FileOutputConfig withUseBuffer(boolean useBuffer) {
+		this.useBuffer = useBuffer;
 		return this;
 	}
 
@@ -117,6 +128,7 @@ public class FileOutputConfig implements IConfigOutput {
 		return new FileOutputConfig()
 			.withAppend(this.append)
 			.withEncoding(this.encoding)
+			.withUseBuffer(this.useBuffer)
 			.withFile(this.file)
 			.withParser(this.parser)
 			.withFilter(this.filter)

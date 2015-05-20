@@ -15,6 +15,7 @@ import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 public class FileDataWriter extends AbstractDataWriter {
 	
 	private PrintWriter writer;
+	private FileOutputConfig fileOutputConfiguration;
 	
 	private static final Logger logger = Logger.getLogger(FileDataWriter.class);
 	
@@ -34,8 +35,11 @@ public class FileDataWriter extends AbstractDataWriter {
 
 		boolean accept = super.getFilter().accept(data);
 		if (accept) {
-			String text = super.outputConfiguration.getOutputFormatter().format(data);
+			String text = this.fileOutputConfiguration.getOutputFormatter().format(data);
 			this.writer.println(text);
+			if (!this.fileOutputConfiguration.isUseBuffer()) {
+				this.writer.flush();
+			}
 		}
 		
 		super.executeAfterWritingMethodListeners(data, accept);
@@ -58,20 +62,20 @@ public class FileDataWriter extends AbstractDataWriter {
 			return;
 		}
 		
-		FileOutputConfig fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;
+		this.fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;
 		
-		logger.info("Outputing data to " + fileOutputConfiguration.getFile().getPath());
-		logger.debug("Data encondig: " + fileOutputConfiguration.getEncoding());
-		logger.debug("Append data to file? " + fileOutputConfiguration.isAppend());
+		logger.info("Outputing data to " + this.fileOutputConfiguration.getFile().getPath());
+		logger.debug("Data encondig: " + this.fileOutputConfiguration.getEncoding());
+		logger.debug("Append data to file? " + this.fileOutputConfiguration.isAppend());
 		
 		if (super.getOutputConfiguration().getOutputFormatter() == null) {
 			super.getOutputConfiguration().withOutputFormatter(new PlainTextFormatter());
 		}
 		
 		try {
-			FileOutputStream stream = new FileOutputStream(fileOutputConfiguration.getFile(), fileOutputConfiguration.isAppend());
+			FileOutputStream stream = new FileOutputStream(this.fileOutputConfiguration.getFile(), this.fileOutputConfiguration.isAppend());
 			BufferedOutputStream buffer = new BufferedOutputStream(stream);
-			OutputStreamWriter osw = new OutputStreamWriter(buffer, fileOutputConfiguration.getEncoding());
+			OutputStreamWriter osw = new OutputStreamWriter(buffer, this.fileOutputConfiguration.getEncoding());
 			this.writer = new PrintWriter(osw);
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);

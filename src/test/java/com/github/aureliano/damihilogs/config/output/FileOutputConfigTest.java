@@ -11,6 +11,7 @@ public class FileOutputConfigTest {
 		Assert.assertNull(c.getFile());
 		Assert.assertEquals("UTF-8", c.getEncoding());
 		Assert.assertFalse(c.isAppend());
+		Assert.assertTrue(c.isUseBuffer());
 	}
 	
 	@Test
@@ -29,6 +30,7 @@ public class FileOutputConfigTest {
 	public void testClone() {
 		FileOutputConfig c1 = new FileOutputConfig()
 			.withAppend(true)
+			.withUseBuffer(false)
 			.withEncoding("ISO-8859-1")
 			.withFile("/there/is/not/file")
 			.putMetadata("test", "my test");
@@ -37,6 +39,7 @@ public class FileOutputConfigTest {
 		Assert.assertEquals(c1.getFile(), c2.getFile());
 		Assert.assertEquals(c1.getEncoding(), c2.getEncoding());
 		Assert.assertEquals(c1.isAppend(), c2.isAppend());
+		Assert.assertEquals(c1.isUseBuffer(), c2.isUseBuffer());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
 }
