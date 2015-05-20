@@ -14,7 +14,7 @@ import com.github.aureliano.damihilogs.report.ReportLanguage;
 
 public class ReporterConverter implements IConfigurationConverter<ILoggerReporter> {
 	
-	protected static final String[] REPORT_TYPES = { "html" };
+	protected static final String[] REPORT_TYPES = { "htmlReporter" };
 	protected static final List<String> LANGUAGES = loadLanguages();
 	
 	public ReporterConverter() {
@@ -25,7 +25,7 @@ public class ReporterConverter implements IConfigurationConverter<ILoggerReporte
 	public ILoggerReporter convert(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("html".equals(type)) {
+		if ("htmlReporter".equals(type)) {
 			return this.createHtmlReporter(data);
 		} else {
 			throw new DaMihiLogsException("Report type '" + type + "' not supported. Expected one of: " + Arrays.toString(REPORT_TYPES));

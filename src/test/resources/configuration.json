@@ -13,7 +13,7 @@
   },
   "reporters": [
     {
-      "type": "html",
+      "type": "htmlReporter",
       "language": "portuguese",
       "title": "Da mihi logs",
       "description": "Test configuration",
@@ -22,7 +22,7 @@
   ],
   "cleaners": [
     {
-      "type": "file",
+      "type": "fileCleaner",
       "directory": "target/cleaner",
       "fileNameRegex": "\\w+",
       "removeFilesAfter": {
@@ -31,7 +31,7 @@
       }
     },
     {
-      "type": "log",
+      "type": "logCleaner",
       "removeLogDataFilesAfter": {
         "fileNameRegex": "[\\w\\d]+\\.log",
         "timeUnit": "hours",

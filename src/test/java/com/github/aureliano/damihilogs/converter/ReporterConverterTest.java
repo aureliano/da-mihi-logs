@@ -33,7 +33,7 @@ public class ReporterConverterTest {
 	public void testCreateHtmlReporterErrorLanguage() {
 		String language = "test";
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "html");
+		map.put("type", "htmlReporter");
 		map.put("outputDir", "src/test/resources");
 		map.put("language", language);
 		
@@ -48,7 +48,7 @@ public class ReporterConverterTest {
 	@Test
 	public void testCreateHtmlReporter() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "html");
+		map.put("type", "htmlReporter");
 		map.put("outputDir", "src/test/resources");
 		
 		HtmlReporter reporter = (HtmlReporter) this.converter.convert(map);

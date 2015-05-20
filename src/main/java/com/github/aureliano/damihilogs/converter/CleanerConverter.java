@@ -14,7 +14,7 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 
 public class CleanerConverter implements IConfigurationConverter<ICleaner> {
 
-	protected static final String[] CLEANER_TYPES = { "file", "log" };
+	protected static final String[] CLEANER_TYPES = { "fileCleaner", "logCleaner" };
 	protected static final List<String> TIME_UNITS = Arrays.asList("DAYS", "HOURS", "MINUTES", "SECONDS");
 	
 	public CleanerConverter() {
@@ -25,9 +25,9 @@ public class CleanerConverter implements IConfigurationConverter<ICleaner> {
 	public ICleaner convert(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("file".equals(type)) {
+		if ("fileCleaner".equals(type)) {
 			return this.createFileCleaner(data);
-		} else if ("log".equals(type)) {
+		} else if ("logCleaner".equals(type)) {
 			return this.createLogCleaner(data);
 		} else {
 			throw new DaMihiLogsException("Cleaner type '" + type + "' not supported. Expected one of: " + Arrays.toString(CLEANER_TYPES));
