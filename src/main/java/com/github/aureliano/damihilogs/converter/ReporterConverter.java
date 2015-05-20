@@ -33,11 +33,18 @@ public class ReporterConverter implements IConfigurationConverter<ILoggerReporte
 	}
 
 	private ILoggerReporter createHtmlReporter(Map<String, Object> data) {
-		HtmlReporter reporter = new HtmlReporter()
-			.withPageTitle(StringHelper.parse(data.get("title")))
-			.withDescription(StringHelper.parse(data.get("description")));
+		HtmlReporter reporter = new HtmlReporter();
+		String value = StringHelper.parse(data.get("title"));
+		if (!StringHelper.isEmpty(value)) {
+			reporter.withPageTitle(value);
+		}
 		
-		String value = StringHelper.parse(data.get("outputDir"));
+		value = StringHelper.parse(data.get("description"));
+		if (!StringHelper.isEmpty(value)) {
+			reporter.withDescription(value);
+		}
+		
+		value = StringHelper.parse(data.get("outputDir"));
 		if (!StringHelper.isEmpty(value)) {
 			reporter.withOutputDir(new File(value));
 		}

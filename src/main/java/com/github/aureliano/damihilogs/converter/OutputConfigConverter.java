@@ -83,7 +83,12 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 			conf.withAppend(Boolean.parseBoolean(value.toLowerCase()));
 		}
 		
-		return conf.withEncoding(StringHelper.parse(data.get("encoding")));
+		value = StringHelper.parse(data.get("encoding"));
+		if (!StringHelper.isEmpty(value)) {
+			conf.withEncoding(value);
+		}
+		
+		return conf;
 	}
 
 	private StandardOutputConfig createStandardConfig(Map<String, Object> data) {

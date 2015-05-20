@@ -73,7 +73,10 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			conf.withStartPosition(Integer.parseInt(value));
 		}
 		
-		conf.withEncoding(StringHelper.parse(data.get("encoding")));
+		value = StringHelper.parse(data.get("encoding"));
+		if (!StringHelper.isEmpty(value)) {
+			conf.withEncoding(value);
+		}
 		
 		value = StringHelper.parse(data.get("tailFile"));
 		if (!StringHelper.isEmpty(value)) {
