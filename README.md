@@ -27,5 +27,8 @@ After installation from source code all you have to do is add this dependency ta
 </dependency>
 ```
 
+### Command line
+In order to comply with those who want a basic usage - not to get involved with Java coding - or just testing there is a command line interface available on $PROJECT_HOME/target path after installation. Read more at [doc page](https://github.com/aureliano/da-mihi-logs/wiki/Command-line-application).
+
 =======
 License - [MIT](https://github.com/aureliano/da-mihi-logs/blob/master/LICENSE)
