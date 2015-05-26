@@ -5,7 +5,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.event.AfterCollectorsEvent;
 import com.github.aureliano.damihilogs.event.AfterInputEvent;
@@ -30,7 +30,7 @@ public class AppEventsCollectorTest {
 	public void testExecute() {		
 		new AppEventsCollector()
 			.withConfiguration(new EventCollectorConfiguration()
-				.addInputConfig(new InputFileConfig()
+				.addInputConfig(new FileInputConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10)
 					.addDataReadingListener(this.getDataReadingListener())

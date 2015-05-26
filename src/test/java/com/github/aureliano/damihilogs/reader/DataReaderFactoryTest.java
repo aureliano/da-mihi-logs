@@ -10,7 +10,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -69,7 +69,7 @@ public class DataReaderFactoryTest {
 	
 	@Test
 	public void testCreateDataReader() {
-		Assert.assertTrue(DataReaderFactory.createDataReader(new InputFileConfig()) instanceof FileDataReader);
+		Assert.assertTrue(DataReaderFactory.createDataReader(new FileInputConfig()) instanceof FileDataReader);
 		Assert.assertTrue(DataReaderFactory.createDataReader(new StandardInputConfig()) instanceof StandardDataReader);
 		Assert.assertTrue(DataReaderFactory.createDataReader(new UrlInputConfig()) instanceof UrlDataReader);
 		Assert.assertTrue(DataReaderFactory.createDataReader(new ExternalCommandInput()) instanceof ExternalCommandDataReader);

@@ -22,7 +22,7 @@ import javax.net.ssl.X509TrustManager;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
@@ -49,7 +49,7 @@ public class UrlDataReader extends AbstractDataReader {
 	@Override
 	public void endResources() {
 		logger.debug(" >>> Finalizing url data reader.");
-		logger.info("Downloaded file: " + ((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+		logger.info("Downloaded file: " + ((FileInputConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
 		this.fileDataReader.endResources();
 	}
 
@@ -234,7 +234,7 @@ public class UrlDataReader extends AbstractDataReader {
 	}
 	
 	private IDataReader createFileDataReader() {
-		InputFileConfig config = new InputFileConfig()
+		FileInputConfig config = new FileInputConfig()
 			.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
 			.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
 			.withMatcher(this.urlInputConfiguration.getMatcher())
@@ -259,7 +259,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
-				((InputFileConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+				((FileInputConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
 		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
 		return super.readingProperties;

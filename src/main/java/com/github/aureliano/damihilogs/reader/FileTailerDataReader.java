@@ -8,13 +8,13 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
-	private InputFileConfig fileTailerConfiguration;
+	private FileInputConfig fileTailerConfiguration;
 	
 	private RandomAccessFile randomAccessFile;
 	private long fileLength;
@@ -123,7 +123,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 		
 		this.initializeRandomAccessFile();
 		if (this.fileTailerConfiguration == null) {
-			this.fileTailerConfiguration = (InputFileConfig) super.inputConfiguration;
+			this.fileTailerConfiguration = (FileInputConfig) super.inputConfiguration;
 		}
 		
 		logger.info("Reading data from " + this.fileTailerConfiguration.getFile().getPath());
@@ -173,7 +173,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
-		this.fileTailerConfiguration = (InputFileConfig) super.inputConfiguration;
+		this.fileTailerConfiguration = (FileInputConfig) super.inputConfiguration;
 		
 		String key = "input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line";
 		String value = properties.getProperty(key);

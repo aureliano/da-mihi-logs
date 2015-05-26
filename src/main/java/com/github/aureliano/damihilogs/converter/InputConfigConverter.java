@@ -9,7 +9,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -53,7 +53,7 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 	}
 
 	private IConfigInput createFileConfig(Map<String, Object> data) {
-		InputFileConfig conf = new InputFileConfig();
+		FileInputConfig conf = new FileInputConfig();
 		
 		this.configureObject(conf, data);
 		String value = StringHelper.parse(data.get("file"));

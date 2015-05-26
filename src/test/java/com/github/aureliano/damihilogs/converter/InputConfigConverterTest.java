@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
@@ -70,7 +70,7 @@ public class InputConfigConverterTest {
 		
 		data.put("type", "file");
 		
-		InputFileConfig conf = (InputFileConfig) this.converter.convert(data);
+		FileInputConfig conf = (FileInputConfig) this.converter.convert(data);
 		Assert.assertTrue(conf.getMatcher() instanceof SingleLineMatcher);
 		Assert.assertEquals(2, conf.getExceptionHandlers().size());
 		Assert.assertEquals(1, conf.getDataReadingListeners().size());

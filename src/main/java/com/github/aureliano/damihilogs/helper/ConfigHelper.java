@@ -10,7 +10,7 @@ import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
@@ -54,8 +54,8 @@ public final class ConfigHelper {
 			throw new DaMihiLogsException("Input configuration ID must be provided.");
 		}
 		
-		if (config instanceof InputFileConfig) {
-			inputFileConfigValidation((InputFileConfig) config);
+		if (config instanceof FileInputConfig) {
+			inputFileConfigValidation((FileInputConfig) config);
 		} else if (config instanceof StandardInputConfig) {
 			standardInputConfigValidation((StandardInputConfig) config);
 		} else if (config instanceof UrlInputConfig) {
@@ -118,12 +118,12 @@ public final class ConfigHelper {
 		outputFileConfigFileValidation(config);
 	}
 
-	protected static void inputFileConfigValidation(InputFileConfig config) {
+	protected static void inputFileConfigValidation(FileInputConfig config) {
 		inputFileConfigFileValidation(config);
 		inputFileConfigStartPositionValidation(config);
 	}
 	
-	protected static void inputFileConfigFileValidation(InputFileConfig config) {
+	protected static void inputFileConfigFileValidation(FileInputConfig config) {
 		if (config.getFile() == null) {
 			throw new DaMihiLogsException("Input file not provided.");
 		}
@@ -135,7 +135,7 @@ public final class ConfigHelper {
 		}
 	}
 	
-	protected static void inputFileConfigStartPositionValidation(InputFileConfig config) {
+	protected static void inputFileConfigStartPositionValidation(FileInputConfig config) {
 		if ((config.getStartPosition() == null) || (config.getStartPosition() < 0)) {
 			throw new DaMihiLogsException("Start position must be greater or equal to zero (>= 0).");
 		}

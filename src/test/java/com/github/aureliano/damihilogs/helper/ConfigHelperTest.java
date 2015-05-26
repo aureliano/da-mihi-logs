@@ -17,7 +17,7 @@ import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
@@ -88,26 +88,26 @@ public class ConfigHelperTest {
 	@Test
 	public void testInputFileConfigValidationFile() {
 		try {
-			ConfigHelper.inputFileConfigValidation(new InputFileConfig());
+			ConfigHelper.inputFileConfigValidation(new FileInputConfig());
 			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
-		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
-		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
+		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
+		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
 	}
 	
 	@Test
 	public void testInputFileConfigValidationStartPosition() {
 		try {
-			ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
+			ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
 			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
 		}
 		
-		ConfigHelper.inputFileConfigValidation(new InputFileConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
+		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
 	}
 	
 	@Test
@@ -241,8 +241,8 @@ public class ConfigHelperTest {
 		for (IConfigInput input : inputs) {
 			if (input instanceof ExternalCommandInput) {
 				this._testInputExternalCommand((ExternalCommandInput) input);
-			} else if (input instanceof InputFileConfig) {
-				this._testInputFile((InputFileConfig) input);
+			} else if (input instanceof FileInputConfig) {
+				this._testInputFile((FileInputConfig) input);
 			} else if (input instanceof StandardInputConfig) {
 				this._testInputStandard((StandardInputConfig) input);
 			} else if (input instanceof UrlInputConfig) {
@@ -264,7 +264,7 @@ public class ConfigHelperTest {
 		Assert.assertEquals("-la", input.getParameters().get(0));
 	}
 	
-	private void _testInputFile(InputFileConfig input) {
+	private void _testInputFile(FileInputConfig input) {
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());

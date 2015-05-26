@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.event;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 
 public class BeforeReadingEventTest {
 
@@ -16,8 +16,8 @@ public class BeforeReadingEventTest {
 	public void testGetInputConfiguration() {
 		Assert.assertNull(new BeforeReadingEvent(null, 0).getInputConfiguration());
 		
-		BeforeReadingEvent event = new BeforeReadingEvent(new InputFileConfig().withEncoding("ISO-8859-1").withStartPosition(31).withFile("/there/is/not/file"), 0);
-		InputFileConfig cfg = (InputFileConfig) event.getInputConfiguration();
+		BeforeReadingEvent event = new BeforeReadingEvent(new FileInputConfig().withEncoding("ISO-8859-1").withStartPosition(31).withFile("/there/is/not/file"), 0);
+		FileInputConfig cfg = (FileInputConfig) event.getInputConfiguration();
 		
 		Assert.assertEquals("ISO-8859-1", cfg.getEncoding());
 		Assert.assertEquals(new Integer(31), cfg.getStartPosition());

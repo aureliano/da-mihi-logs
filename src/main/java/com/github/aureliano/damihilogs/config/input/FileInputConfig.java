@@ -12,7 +12,7 @@ import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
-public class InputFileConfig implements IConfigInput {
+public class FileInputConfig implements IConfigInput {
 
 	private File file;
 	private Integer startPosition;
@@ -29,7 +29,7 @@ public class InputFileConfig implements IConfigInput {
 	private List<ExecutionListener> inputExecutionListeners;
 	private CompressMetadata decompressFileConfiguration;
 
-	public InputFileConfig() {
+	public FileInputConfig() {
 		this.encoding = "UTF-8";
 		this.tailFile = false;
 		this.tailDelay = 1000L;
@@ -48,7 +48,7 @@ public class InputFileConfig implements IConfigInput {
 	}
 	
 	@Override
-	public InputFileConfig withConfigurationId(String id) {
+	public FileInputConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
@@ -57,7 +57,7 @@ public class InputFileConfig implements IConfigInput {
 		return matcher;
 	}
 	
-	public InputFileConfig withMatcher(IMatcher matcher) {
+	public FileInputConfig withMatcher(IMatcher matcher) {
 		this.matcher = matcher;
 		return this;
 	}
@@ -66,12 +66,12 @@ public class InputFileConfig implements IConfigInput {
 		return file;
 	}
 
-	public InputFileConfig withFile(File file) {
+	public FileInputConfig withFile(File file) {
 		this.file = file;
 		return this;
 	}
 
-	public InputFileConfig withFile(String path) {
+	public FileInputConfig withFile(String path) {
 		this.file = new File(path);
 		return this;
 	}
@@ -80,7 +80,7 @@ public class InputFileConfig implements IConfigInput {
 		return startPosition;
 	}
 	
-	public InputFileConfig withStartPosition(Integer startPosition) {
+	public FileInputConfig withStartPosition(Integer startPosition) {
 		this.startPosition = startPosition;
 		return this;
 	}
@@ -89,7 +89,7 @@ public class InputFileConfig implements IConfigInput {
 		return encoding;
 	}
 	
-	public InputFileConfig withEncoding(String encoding) {
+	public FileInputConfig withEncoding(String encoding) {
 		this.encoding = encoding;
 		return this;
 	}
@@ -98,7 +98,7 @@ public class InputFileConfig implements IConfigInput {
 		return this.tailFile;
 	}
 	
-	public InputFileConfig withTailFile(Boolean tailFile) {
+	public FileInputConfig withTailFile(Boolean tailFile) {
 		this.tailFile = tailFile;
 		return this;
 	}
@@ -107,7 +107,7 @@ public class InputFileConfig implements IConfigInput {
 		return tailDelay;
 	}
 	
-	public InputFileConfig withTailDelay(Long tailDelay) {
+	public FileInputConfig withTailDelay(Long tailDelay) {
 		this.tailDelay = tailDelay;
 		return this;
 	}
@@ -116,7 +116,7 @@ public class InputFileConfig implements IConfigInput {
 		return tailInterval;
 	}
 	
-	public InputFileConfig withTailInterval(Long tailInterval) {
+	public FileInputConfig withTailInterval(Long tailInterval) {
 		this.tailInterval = tailInterval;
 		return this;
 	}
@@ -127,7 +127,7 @@ public class InputFileConfig implements IConfigInput {
 	}
 
 	@Override
-	public InputFileConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
+	public FileInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
@@ -136,12 +136,12 @@ public class InputFileConfig implements IConfigInput {
 		return dataReadingListeners;
 	}
 
-	public InputFileConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+	public FileInputConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
 		this.dataReadingListeners = dataReadingListeners;
 		return this;
 	}
 	
-	public InputFileConfig addDataReadingListener(DataReadingListener listener) {
+	public FileInputConfig addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}
@@ -150,14 +150,14 @@ public class InputFileConfig implements IConfigInput {
 		return decompressFileConfiguration;
 	}
 	
-	public InputFileConfig withDecompressFileConfiguration(CompressMetadata decompressFileConfiguration) {
+	public FileInputConfig withDecompressFileConfiguration(CompressMetadata decompressFileConfiguration) {
 		this.decompressFileConfiguration = decompressFileConfiguration;
 		return this;
 	}
 	
 	@Override
-	public InputFileConfig clone() {
-		return new InputFileConfig()
+	public FileInputConfig clone() {
+		return new FileInputConfig()
 			.withEncoding(this.encoding)
 			.withFile(this.file)
 			.withStartPosition(this.startPosition)
@@ -174,7 +174,7 @@ public class InputFileConfig implements IConfigInput {
 	}
 	
 	@Override
-	public InputFileConfig putMetadata(String key, String value) {
+	public FileInputConfig putMetadata(String key, String value) {
 		this.metadata.put(key, value);
 		return this;
 	}
@@ -184,12 +184,12 @@ public class InputFileConfig implements IConfigInput {
 		return this.metadata.getProperty(key);
 	}
 	
-	protected InputFileConfig withMetadata(Properties properties) {
+	protected FileInputConfig withMetadata(Properties properties) {
 		this.metadata = properties;
 		return this;
 	}
 	
-	protected InputFileConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
+	protected FileInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
 		this.exceptionHandlers = handlers;
 		return this;
 	}
@@ -200,7 +200,7 @@ public class InputFileConfig implements IConfigInput {
 	}
 
 	@Override
-	public InputFileConfig addExceptionHandler(IExceptionHandler handler) {
+	public FileInputConfig addExceptionHandler(IExceptionHandler handler) {
 		this.exceptionHandlers.add(handler);
 		return this;
 	}
@@ -216,13 +216,13 @@ public class InputFileConfig implements IConfigInput {
 	}
 
 	@Override
-	public InputFileConfig withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
+	public FileInputConfig withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
 		this.inputExecutionListeners = inputExecutionListeners;
 		return this;
 	}
 
 	@Override
-	public InputFileConfig addExecutionListener(ExecutionListener listener) {
+	public FileInputConfig addExecutionListener(ExecutionListener listener) {
 		this.inputExecutionListeners.add(listener);
 		return this;
 	}

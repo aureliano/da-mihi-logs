@@ -5,11 +5,11 @@ import org.junit.Test;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 
-public class InputFileConfigTest {
+public class FileInputConfigTest {
 
 	@Test
 	public void testGetDefaults() {
-		InputFileConfig c = new InputFileConfig();
+		FileInputConfig c = new FileInputConfig();
 		Assert.assertNull(c.getFile());
 		Assert.assertEquals("UTF-8", c.getEncoding());
 		Assert.assertNull(c.getStartPosition());
@@ -20,7 +20,7 @@ public class InputFileConfigTest {
 	
 	@Test
 	public void testConfiguration() {
-		InputFileConfig c = new InputFileConfig()
+		FileInputConfig c = new FileInputConfig()
 			.withStartPosition(10)
 			.withEncoding("ISO-8859-1")
 			.withFile("/there/is/not/file")
@@ -38,7 +38,7 @@ public class InputFileConfigTest {
 	
 	@Test
 	public void testClone() {
-		InputFileConfig c1 = (InputFileConfig) new InputFileConfig()
+		FileInputConfig c1 = (FileInputConfig) new FileInputConfig()
 			.withStartPosition(10)
 			.withEncoding("ISO-8859-1")
 			.withFile("/there/is/not/file")
@@ -51,7 +51,7 @@ public class InputFileConfigTest {
 				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
 			});
 		
-		InputFileConfig c2 = c1.clone();
+		FileInputConfig c2 = c1.clone();
 		
 		Assert.assertEquals(c1.getConfigurationId(), c2.getConfigurationId());
 		Assert.assertEquals(c1.getEncoding(), c2.getEncoding());

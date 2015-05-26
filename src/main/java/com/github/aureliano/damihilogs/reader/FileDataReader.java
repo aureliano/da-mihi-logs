@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.input.InputFileConfig;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.FileHelper;
@@ -17,7 +17,7 @@ import com.github.aureliano.damihilogs.inout.CompressMetadata;
 
 public class FileDataReader extends AbstractDataReader {
 
-	private InputFileConfig fileInputConfiguration;
+	private FileInputConfig fileInputConfiguration;
 	private BufferedReader bufferedReader;
 	
 	private static final Logger logger = Logger.getLogger(FileDataReader.class);
@@ -77,7 +77,7 @@ public class FileDataReader extends AbstractDataReader {
 		}
 		
 		if (this.fileInputConfiguration == null) {
-			this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
+			this.fileInputConfiguration = (FileInputConfig) super.inputConfiguration;
 		}
 		
 		if (this.fileInputConfiguration.getStartPosition() == null) {
@@ -131,7 +131,7 @@ public class FileDataReader extends AbstractDataReader {
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
-		this.fileInputConfiguration = (InputFileConfig) super.inputConfiguration;
+		this.fileInputConfiguration = (FileInputConfig) super.inputConfiguration;
 		
 		String key = "input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line";
 		String value = properties.getProperty(key);
