@@ -88,26 +88,26 @@ public class ConfigHelperTest {
 	@Test
 	public void testFileInputConfigValidationFile() {
 		try {
-			ConfigHelper.inputFileConfigValidation(new FileInputConfig());
+			ConfigHelper.fileInputConfigValidation(new FileInputConfig());
 			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Input file not provided.", ex.getMessage());
 		}
 		
-		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
-		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
+		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
+		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
 	}
 	
 	@Test
 	public void testFileInputConfigValidationStartPosition() {
 		try {
-			ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
+			ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
 			Assert.fail("Expected to got an exception");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
 		}
 		
-		ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
+		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
 	}
 	
 	@Test

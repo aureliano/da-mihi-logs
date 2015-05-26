@@ -55,7 +55,7 @@ public final class ConfigHelper {
 		}
 		
 		if (config instanceof FileInputConfig) {
-			inputFileConfigValidation((FileInputConfig) config);
+			fileInputConfigValidation((FileInputConfig) config);
 		} else if (config instanceof StandardInputConfig) {
 			standardInputConfigValidation((StandardInputConfig) config);
 		} else if (config instanceof UrlInputConfig) {
@@ -118,12 +118,12 @@ public final class ConfigHelper {
 		outputFileConfigFileValidation(config);
 	}
 
-	protected static void inputFileConfigValidation(FileInputConfig config) {
-		inputFileConfigFileValidation(config);
-		inputFileConfigStartPositionValidation(config);
+	protected static void fileInputConfigValidation(FileInputConfig config) {
+		fileInputConfigFileValidation(config);
+		fileInputConfigStartPositionValidation(config);
 	}
 	
-	protected static void inputFileConfigFileValidation(FileInputConfig config) {
+	protected static void fileInputConfigFileValidation(FileInputConfig config) {
 		if (config.getFile() == null) {
 			throw new DaMihiLogsException("Input file not provided.");
 		}
@@ -135,7 +135,7 @@ public final class ConfigHelper {
 		}
 	}
 	
-	protected static void inputFileConfigStartPositionValidation(FileInputConfig config) {
+	protected static void fileInputConfigStartPositionValidation(FileInputConfig config) {
 		if ((config.getStartPosition() == null) || (config.getStartPosition() < 0)) {
 			throw new DaMihiLogsException("Start position must be greater or equal to zero (>= 0).");
 		}
