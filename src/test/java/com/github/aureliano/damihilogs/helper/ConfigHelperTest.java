@@ -86,7 +86,7 @@ public class ConfigHelperTest {
 	}
 	
 	@Test
-	public void testInputFileConfigValidationFile() {
+	public void testFileInputConfigValidationFile() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new FileInputConfig());
 			Assert.fail("Expected to got an exception");
@@ -99,7 +99,7 @@ public class ConfigHelperTest {
 	}
 	
 	@Test
-	public void testInputFileConfigValidationStartPosition() {
+	public void testFileInputConfigValidationStartPosition() {
 		try {
 			ConfigHelper.inputFileConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
 			Assert.fail("Expected to got an exception");
