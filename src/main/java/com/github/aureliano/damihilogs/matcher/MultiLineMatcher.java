@@ -8,7 +8,7 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 public class MultiLineMatcher implements IMatcher {
 
 	private String prefixRegex;
-	private String partialRegex;
+	private String midleRegex;
 	private String suffixRegex;
 	
 	private int maxMatchAttempts;
@@ -25,12 +25,12 @@ public class MultiLineMatcher implements IMatcher {
 		this(prefixRegex, partialRegex, DEFAULT_MAX_MATCH_ATTEMPTS);
 	}
 	
-	public MultiLineMatcher(String prefixRegex, String partialRegex, int maxMatchAttempts) {
+	public MultiLineMatcher(String prefixRegex, String midleRegex, int maxMatchAttempts) {
 		this.prefixRegex = prefixRegex;
-		this.partialRegex = partialRegex;
+		this.midleRegex = midleRegex;
 		
-		if (this.partialRegex == null) {
-			this.partialRegex = "";
+		if (this.midleRegex == null) {
+			this.midleRegex = "";
 		}
 		
 		if (StringHelper.isEmpty(this.prefixRegex)) {
@@ -38,7 +38,7 @@ public class MultiLineMatcher implements IMatcher {
 		}
 		
 		this.suffixRegex = String.format("([\\W\\w\\d](?!%s))+", this.prefixRegex);
-		this.pattern = Pattern.compile(this.prefixRegex + this.partialRegex);
+		this.pattern = Pattern.compile(this.prefixRegex + this.midleRegex);
 		this.matchAttemptsCounter = 0;
 		this.maxMatchAttempts = maxMatchAttempts;
 	}
@@ -55,7 +55,7 @@ public class MultiLineMatcher implements IMatcher {
 
 	@Override
 	public boolean matches(String text) {
-		boolean matches = text.matches(this.prefixRegex + this.partialRegex + this.suffixRegex);
+		boolean matches = text.matches(this.prefixRegex + this.midleRegex + this.suffixRegex);
 		if (!matches) {
 			this.matchAttemptsCounter = 0;
 		}
