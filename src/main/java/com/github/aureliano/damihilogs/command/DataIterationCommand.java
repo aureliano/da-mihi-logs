@@ -3,8 +3,8 @@ package com.github.aureliano.damihilogs.command;
 import java.util.List;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.event.AfterInputEvent;
 import com.github.aureliano.damihilogs.event.BeforeInputEvent;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
@@ -37,8 +37,8 @@ public class DataIterationCommand implements Runnable {
 	
 	public void execute() {
 		for (IDataWriter dw : this.dataWriters) {
-			IConfigOutput c = dw.getOutputConfiguration();
-			ConfigHelper.copyMetadata(this.dataReader.getInputConfiguration(), c);
+			IConfiguration c = dw.getConfiguration();
+			ConfigHelper.copyMetadata(this.dataReader.getConfiguration(), c);
 		}
 		
 		this.executeBeforeInputExecutionListener();
@@ -83,7 +83,7 @@ public class DataIterationCommand implements Runnable {
 	}
 	
 	private void executeBeforeInputExecutionListener() {
-		IConfigInput inputConfiguration = this.dataReader.getInputConfiguration();
+		IConfigInput inputConfiguration = (IConfigInput) this.dataReader.getConfiguration();
 		List<ExecutionListener> listeners = inputConfiguration.getExecutionListeners();
 		
 		for (ExecutionListener listener : listeners) {
@@ -92,7 +92,7 @@ public class DataIterationCommand implements Runnable {
 	}
 
 	private void executeAfterInputExecutionListener() {
-		IConfigInput inputConfiguration = this.dataReader.getInputConfiguration();
+		IConfigInput inputConfiguration = (IConfigInput) this.dataReader.getConfiguration();
 		List<ExecutionListener> listeners = inputConfiguration.getExecutionListeners();
 		
 		for (ExecutionListener listener : listeners) {

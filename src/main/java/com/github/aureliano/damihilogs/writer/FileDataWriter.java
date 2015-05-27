@@ -68,8 +68,8 @@ public class FileDataWriter extends AbstractDataWriter {
 		logger.debug("Data encondig: " + this.fileOutputConfiguration.getEncoding());
 		logger.debug("Append data to file? " + this.fileOutputConfiguration.isAppend());
 		
-		if (super.getOutputConfiguration().getOutputFormatter() == null) {
-			super.getOutputConfiguration().withOutputFormatter(new PlainTextFormatter());
+		if (super.getConfiguration().getOutputFormatter() == null) {
+			super.getConfiguration().withOutputFormatter(new PlainTextFormatter());
 		}
 		
 		try {

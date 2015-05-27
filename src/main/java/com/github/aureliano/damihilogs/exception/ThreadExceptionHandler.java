@@ -20,7 +20,7 @@ public class ThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
 	
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex) {
-		IConfigInput inputConfig = this.command.getDataReader().getInputConfiguration();
+		IConfigInput inputConfig = (IConfigInput) this.command.getDataReader().getConfiguration();
 		List<IExceptionHandler> handlers = inputConfig.getExceptionHandlers();
 		
 		for (IExceptionHandler handler : handlers) {

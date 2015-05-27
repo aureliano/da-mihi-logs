@@ -66,8 +66,17 @@
 
       "file": "target/test/file",
       "startPosition": 1984,
+      "encoding": "ISO-8859-1"
+    },
+    {
+      "id": "in-file-tailer",
+      "type": "fileTailer",
+      "metadata": {
+        "server": "banânia"
+      },
+
+      "file": "target/test/file",
       "encoding": "ISO-8859-1",
-      "tailFile": true,
       "tailDelay": 5000,
       "tailInterval": 120000000
     },

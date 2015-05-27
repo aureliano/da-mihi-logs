@@ -3,13 +3,9 @@ package com.github.aureliano.damihilogs.reader;
 import java.util.Map;
 import java.util.Properties;
 
-import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.IExecutor;
 
-public interface IDataReader {
-
-	public abstract IConfigInput getInputConfiguration();
-	
-	public abstract IDataReader withInputConfiguration(IConfigInput config);
+public interface IDataReader extends IExecutor {
 	
 	public abstract String nextData();
 	

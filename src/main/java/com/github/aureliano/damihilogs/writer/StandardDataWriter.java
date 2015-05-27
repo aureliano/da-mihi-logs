@@ -20,15 +20,15 @@ public class StandardDataWriter extends AbstractDataWriter {
 		
 		boolean accept = super.getFilter().accept(data);
 		if (accept) {
-			System.out.println(super.getOutputConfiguration().getOutputFormatter().format(data));
+			System.out.println(super.getConfiguration().getOutputFormatter().format(data));
 		}
 		
 		super.executeAfterWritingMethodListeners(data, accept);
 	}
 	
 	private void initialize() {
-		if (super.getOutputConfiguration().getOutputFormatter() == null) {
-			super.getOutputConfiguration().withOutputFormatter(new PlainTextFormatter());
+		if (super.getConfiguration().getOutputFormatter() == null) {
+			super.getConfiguration().withOutputFormatter(new PlainTextFormatter());
 		}
 	}
 	

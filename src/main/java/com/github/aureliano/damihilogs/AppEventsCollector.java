@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.command.CollectEventsCommand;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.event.AfterCollectorsEvent;
 import com.github.aureliano.damihilogs.event.BeforeCollectorsEvent;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
@@ -144,6 +145,14 @@ public class AppEventsCollector {
 	
 	public AppEventsCollector withConfiguration(EventCollectorConfiguration configuration) {
 		this.configuration = configuration;
+		return this;
+	}
+	
+	public AppEventsCollector registrateExecutor(Class<? extends IConfiguration> configuration, Class<? extends IExecutor> executor) {
+		ExecutorRegistrationService
+			.instance()
+			.addExecutor(configuration, executor);
+		
 		return this;
 	}
 }

@@ -29,12 +29,14 @@ public class AppEventsCollectorTest {
 	@Test
 	public void testExecute() {		
 		new AppEventsCollector()
+			.registrateExecutor(CustomInputConfig.class, CustomDataReader.class)
 			.withConfiguration(new EventCollectorConfiguration()
 				.addInputConfig(new FileInputConfig()
 					.withFile("src/test/resources/datalog.log")
 					.withStartPosition(10)
 					.addDataReadingListener(this.getDataReadingListener())
 					.addExecutionListener(this.getExecutionListener()))
+				.addInputConfig(new CustomInputConfig())
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {

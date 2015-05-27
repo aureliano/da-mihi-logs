@@ -20,7 +20,7 @@ public final class ExceptionHandlerHelper {
 	}
 	
 	public static void executeHandlingException(DataIterationCommand command) {
-		IConfigInput inputConfig = command.getDataReader().getInputConfiguration();
+		IConfigInput inputConfig = (IConfigInput) command.getDataReader().getConfiguration();
 		List<IExceptionHandler> handlers = inputConfig.getExceptionHandlers();
 		
 		Thread thread = Thread.currentThread();
@@ -38,7 +38,7 @@ public final class ExceptionHandlerHelper {
 	}
 	
 	public static void configureCommandLogExecutionForException(DataIterationCommand command, Throwable exception) {
-		IConfigInput inputConfig = command.getDataReader().getInputConfiguration();
+		IConfigInput inputConfig = (IConfigInput) command.getDataReader().getConfiguration();
 		Map<String, Object> logExecution = command.getLogExecution();
 		
 		if (logExecution == null) {

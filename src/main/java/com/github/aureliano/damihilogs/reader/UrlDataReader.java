@@ -49,7 +49,7 @@ public class UrlDataReader extends AbstractDataReader {
 	@Override
 	public void endResources() {
 		logger.debug(" >>> Finalizing url data reader.");
-		logger.info("Downloaded file: " + ((FileInputConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+		logger.info("Downloaded file: " + ((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
 		this.fileDataReader.endResources();
 	}
 
@@ -247,7 +247,7 @@ public class UrlDataReader extends AbstractDataReader {
 			config.withFile(this.urlInputConfiguration.getDecompressFileConfiguration().getOutputFilePath());
 		}
 		
-		return new FileDataReader().withInputConfiguration(config);
+		return new FileDataReader().withConfiguration(config);
 	}
 	
 	@Override
@@ -259,7 +259,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
-				((FileInputConfig) this.fileDataReader.getInputConfiguration()).getFile().getPath());
+				((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
 		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
 		return super.readingProperties;

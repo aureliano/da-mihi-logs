@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
@@ -24,6 +26,8 @@ public final class ConfigHelper {
 	
 	private static final List<String> AVAILABLE_EXECUTOR_NAMES = new ArrayList<String>();
 	private static final List<String> UNAVAILABLE_EXECUTOR_NAMES = new ArrayList<String>();
+	
+	private static final Logger logger = Logger.getLogger(ConfigHelper.class);
 	
 	static {
 		populateExecutorNamesMap();
@@ -63,7 +67,7 @@ public final class ConfigHelper {
 		} else if (config instanceof ExternalCommandInput) {
 			externalCommandConfigValidation((ExternalCommandInput) config);
 		} else {
-			throw new DaMihiLogsException("Validation not implemented for " + config.getClass().getName() + " type");
+			logger.info("Ignoring config validation for custom configuration: " + config.getClass().getName());
 		}
 	}
 
@@ -178,5 +182,11 @@ public final class ConfigHelper {
 		}
 		
 		Collections.shuffle(AVAILABLE_EXECUTOR_NAMES);
+	}
+	
+	protected static void resetExecutorNamesMap() {
+		AVAILABLE_EXECUTOR_NAMES.clear();
+		UNAVAILABLE_EXECUTOR_NAMES.clear();
+		populateExecutorNamesMap();
 	}
 }

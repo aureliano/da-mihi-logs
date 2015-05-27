@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.writer;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.event.AfterWritingEvent;
 import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
@@ -16,13 +17,13 @@ public abstract class AbstractDataWriter implements IDataWriter {
 	}
 	
 	@Override
-	public IConfigOutput getOutputConfiguration() {
+	public IConfigOutput getConfiguration() {
 		return outputConfiguration;
 	}
 
 	@Override
-	public IDataWriter withOutputConfiguration(IConfigOutput config) {
-		this.outputConfiguration = config;
+	public IDataWriter withConfiguration(IConfiguration configuration) {
+		this.outputConfiguration = (IConfigOutput) configuration;
 		return this;
 	}
 

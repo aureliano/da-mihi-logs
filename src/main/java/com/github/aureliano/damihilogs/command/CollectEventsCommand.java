@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.github.aureliano.damihilogs.ExecutorRegistrationService;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
@@ -21,9 +22,7 @@ import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
-import com.github.aureliano.damihilogs.reader.DataReaderFactory;
 import com.github.aureliano.damihilogs.reader.IDataReader;
-import com.github.aureliano.damihilogs.writer.DataWriterFactory;
 import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class CollectEventsCommand {
@@ -73,10 +72,6 @@ public class CollectEventsCommand {
 			
 			ConfigHelper.inputConfigValidation(inputConfig);
 			ConfigHelper.copyMetadata(this.configuration, inputConfig);
-			
-			if (inputConfig.getConfigurationId() == null) {
-				inputConfig.withConfigurationId("configuration_id_" + (i + 1));
-			}
 			
 			logger.info("Start execution for input " + inputConfig.getConfigurationId());
 			commands.add(new DataIterationCommand(
@@ -144,7 +139,7 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		IDataReader dataReader = DataReaderFactory.createDataReader(inputConfig);
+		IDataReader dataReader = (IDataReader) ExecutorRegistrationService.instance().createExecutor(inputConfig);
 		
 		if (inputConfig.getMatcher() == null) {
 			inputConfig.withMatcher(new SingleLineMatcher());
@@ -174,7 +169,7 @@ public class CollectEventsCommand {
 				outputConfig.withFilter(new DefaultEmptyFilter());
 			}
 			
-			IDataWriter dataWriter = DataWriterFactory.createDataWriter(outputConfig);
+			IDataWriter dataWriter = (IDataWriter) ExecutorRegistrationService.instance().createExecutor(outputConfig);
 			dataWriters.add(dataWriter);
 		}
 		

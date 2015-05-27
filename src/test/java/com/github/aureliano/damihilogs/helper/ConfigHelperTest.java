@@ -16,6 +16,7 @@ import com.github.aureliano.damihilogs.clean.LogCleaner;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
@@ -188,6 +189,7 @@ public class ConfigHelperTest {
 		}
 		
 		Assert.assertTrue(names.size() == 85);
+		ConfigHelper.resetExecutorNamesMap();
 	}
 	
 	private void _testMainConfiguration(EventCollectorConfiguration configuration) {
@@ -243,6 +245,8 @@ public class ConfigHelperTest {
 				this._testInputExternalCommand((ExternalCommandInput) input);
 			} else if (input instanceof FileInputConfig) {
 				this._testInputFile((FileInputConfig) input);
+			} else if (input instanceof FileTailerInputConfig) {
+				this._testInputFileTailer((FileTailerInputConfig) input);
 			} else if (input instanceof StandardInputConfig) {
 				this._testInputStandard((StandardInputConfig) input);
 			} else if (input instanceof UrlInputConfig) {
@@ -275,7 +279,18 @@ public class ConfigHelperTest {
 		Assert.assertEquals("target/test/file", input.getFile().getPath());
 		Assert.assertEquals(new Integer(1984), input.getStartPosition());
 		Assert.assertEquals("ISO-8859-1", input.getEncoding());
-		Assert.assertTrue(input.isTailFile());
+	}
+	
+	private void _testInputFileTailer(FileTailerInputConfig input) {
+		Assert.assertNull(input.getMatcher());
+		Assert.assertFalse(input.isUseLastExecutionRecords());
+		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
+		Assert.assertTrue(input.getDataReadingListeners().isEmpty());
+		Assert.assertTrue(input.getExecutionListeners().isEmpty());
+		Assert.assertEquals("banânia", input.getMetadata("server"));
+		
+		Assert.assertEquals("target/test/file", input.getFile().getPath());
+		Assert.assertEquals("ISO-8859-1", input.getEncoding());
 		Assert.assertEquals(new Long(5000), input.getTailDelay());
 		Assert.assertEquals(new Long(120000000), input.getTailInterval());
 	}
