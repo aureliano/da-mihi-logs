@@ -17,9 +17,6 @@ public class FileInputConfig implements IConfigInput {
 	private File file;
 	private Integer startPosition;
 	private String encoding;
-	private Boolean tailFile;
-	private Long tailDelay;
-	private Long tailInterval;
 	private String id;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
@@ -31,9 +28,6 @@ public class FileInputConfig implements IConfigInput {
 
 	public FileInputConfig() {
 		this.encoding = "UTF-8";
-		this.tailFile = false;
-		this.tailDelay = 1000L;
-		this.tailInterval = 0L;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
@@ -93,33 +87,6 @@ public class FileInputConfig implements IConfigInput {
 		this.encoding = encoding;
 		return this;
 	}
-
-	public Boolean isTailFile() {
-		return this.tailFile;
-	}
-	
-	public FileInputConfig withTailFile(Boolean tailFile) {
-		this.tailFile = tailFile;
-		return this;
-	}
-	
-	public Long getTailDelay() {
-		return tailDelay;
-	}
-	
-	public FileInputConfig withTailDelay(Long tailDelay) {
-		this.tailDelay = tailDelay;
-		return this;
-	}
-	
-	public Long getTailInterval() {
-		return tailInterval;
-	}
-	
-	public FileInputConfig withTailInterval(Long tailInterval) {
-		this.tailInterval = tailInterval;
-		return this;
-	}
 	
 	@Override
 	public Boolean isUseLastExecutionRecords() {
@@ -161,9 +128,6 @@ public class FileInputConfig implements IConfigInput {
 			.withEncoding(this.encoding)
 			.withFile(this.file)
 			.withStartPosition(this.startPosition)
-			.withTailDelay(this.tailDelay)
-			.withTailFile(this.tailFile)
-			.withTailInterval(this.tailInterval)
 			.withConfigurationId(this.id)
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))

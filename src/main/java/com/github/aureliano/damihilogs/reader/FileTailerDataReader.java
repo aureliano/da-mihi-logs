@@ -8,13 +8,13 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.input.FileInputConfig;
+import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
-	private FileInputConfig fileTailerConfiguration;
+	private FileTailerInputConfig fileTailerConfiguration;
 	
 	private RandomAccessFile randomAccessFile;
 	private long fileLength;
@@ -123,7 +123,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 		
 		this.initializeRandomAccessFile();
 		if (this.fileTailerConfiguration == null) {
-			this.fileTailerConfiguration = (FileInputConfig) super.inputConfiguration;
+			this.fileTailerConfiguration = (FileTailerInputConfig) super.inputConfiguration;
 		}
 		
 		logger.info("Reading data from " + this.fileTailerConfiguration.getFile().getPath());
@@ -173,16 +173,12 @@ public class FileTailerDataReader extends AbstractDataReader {
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) {
-		this.fileTailerConfiguration = (FileInputConfig) super.inputConfiguration;
+		this.fileTailerConfiguration = (FileTailerInputConfig) super.inputConfiguration;
 		
 		String key = "input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line";
 		String value = properties.getProperty(key);
 		if (value != null) {
 			super.readingProperties.put(key, value);
-			if ((this.fileTailerConfiguration.isUseLastExecutionRecords()) &&
-					(this.fileTailerConfiguration.getStartPosition() == null)) {
-				this.fileTailerConfiguration.withStartPosition(Integer.parseInt(value));
-			}
 		}
 		
 		ConfigHelper.inputConfigValidation(this.fileTailerConfiguration);

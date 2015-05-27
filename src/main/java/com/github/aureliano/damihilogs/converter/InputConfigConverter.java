@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
@@ -41,6 +42,8 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		
 		if ("file".equals(type)) {
 			return this.createFileConfig(data);
+		} else if ("fileTailer".equals(type)) {
+			return this.createFileTailerConfig(data);
 		} else if ("externalCommand".equals(type)) {
 			return this.createExternalCommandConfig(data);
 		} else if ("standard".equals(type)) {
@@ -73,10 +76,31 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		if (!StringHelper.isEmpty(value)) {
 			conf.withEncoding(value);
 		}
+
+		if (data.get("decompressFile") != null) {
+			Map<String, Object> map = DataHelper.getAsHash(data, "decompressFile");
+			value = StringHelper.parse(map.get("type"));
+			conf.withDecompressFileConfiguration(new CompressMetadata()
+				.withCompressionType(SupportedCompressionType.valueOf(value.toUpperCase()))
+				.withInputFilePath(StringHelper.parse(map.get("inputFilePath")))
+				.withOutputFilePath(StringHelper.parse(map.get("outputFilePath"))));
+		}
 		
-		value = StringHelper.parse(data.get("tailFile"));
+		return conf;
+	}
+
+	private IConfigInput createFileTailerConfig(Map<String, Object> data) {
+		FileTailerInputConfig conf = new FileTailerInputConfig();
+		
+		this.configureObject(conf, data);
+		String value = StringHelper.parse(data.get("file"));
 		if (!StringHelper.isEmpty(value)) {
-			conf.withTailFile(Boolean.parseBoolean(value.toLowerCase()));
+			conf.withFile(new File(value));
+		}
+		
+		value = StringHelper.parse(data.get("encoding"));
+		if (!StringHelper.isEmpty(value)) {
+			conf.withEncoding(value);
 		}
 		
 		value = StringHelper.parse(data.get("tailDelay"));
@@ -93,15 +117,6 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 				throw new DaMihiLogsException("Property tailInterval was expected to match \\d+ pattern in input file configuration.");
 			}
 			conf.withTailInterval(Long.parseLong(value));
-		}
-
-		if (data.get("decompressFile") != null) {
-			Map<String, Object> map = DataHelper.getAsHash(data, "decompressFile");
-			value = StringHelper.parse(map.get("type"));
-			conf.withDecompressFileConfiguration(new CompressMetadata()
-				.withCompressionType(SupportedCompressionType.valueOf(value.toUpperCase()))
-				.withInputFilePath(StringHelper.parse(map.get("inputFilePath")))
-				.withOutputFilePath(StringHelper.parse(map.get("outputFilePath"))));
 		}
 		
 		return conf;

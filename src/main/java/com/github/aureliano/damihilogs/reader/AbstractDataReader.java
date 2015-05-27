@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.event.AfterReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
@@ -25,13 +26,13 @@ public abstract class AbstractDataReader implements IDataReader {
 	}
 	
 	@Override
-	public IConfigInput getInputConfiguration() {
+	public IConfigInput getConfiguration() {
 		return this.inputConfiguration;
 	}
-
+	
 	@Override
-	public IDataReader withInputConfiguration(IConfigInput config) {
-		this.inputConfiguration = config;
+	public IDataReader withConfiguration(IConfiguration configuration) {
+		this.inputConfiguration = (IConfigInput) configuration;
 		return this;
 	}
 
