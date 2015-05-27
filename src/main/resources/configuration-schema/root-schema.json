@@ -38,6 +38,9 @@
     "file": {
       "id": "input-file.json"
     },
+    "fileTailer": {
+      "id": "input-file-tailer.json"
+    },
     "standard": {
       "id": "input-standard.json"
     },
