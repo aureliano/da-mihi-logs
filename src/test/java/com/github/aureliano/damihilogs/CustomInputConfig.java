@@ -7,6 +7,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
@@ -14,29 +15,50 @@ import com.github.aureliano.damihilogs.matcher.IMatcher;
 public class CustomInputConfig implements IConfigInput {
 
 	private String id;
+	private Boolean useLastExecutionRecords;
+	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
+	private IMatcher matcher;
+	private List<DataReadingListener> dataReadingListeners;
+	private List<ExecutionListener> inputExecutionListeners;
+	
+	private Integer myNewProperty;
 	
 	public CustomInputConfig() {
-		super();
+		this.useLastExecutionRecords = false;
+		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		
+		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
 	}
 	
 	@Override
 	public CustomInputConfig clone() {
-		return new CustomInputConfig();
+		return new CustomInputConfig()
+			.withConfigurationId(this.id)
+			.withMatcher(this.matcher)
+			.withMetadata(DataHelper.copyProperties(this.metadata))
+			.withExceptionHandlers(this.exceptionHandlers)
+			.withDataReadingListeners(this.dataReadingListeners)
+			.withExecutionListeners(this.inputExecutionListeners)
+			.withMyNewProperty(this.myNewProperty);
 	}
 	
 	@Override
 	public IConfiguration putMetadata(String key, String value) {
+		this.metadata.put(key, value);
 		return this;
 	}
 
 	@Override
 	public String getMetadata(String key) {
-		return null;
+		return this.metadata.getProperty(key);
 	}
 
 	@Override
 	public Properties getMetadata() {
-		return new Properties();
+		return this.metadata;
 	}
 
 	@Override
@@ -45,68 +67,94 @@ public class CustomInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public IConfigInput withConfigurationId(String id) {
+	public CustomInputConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
 
 	@Override
 	public IMatcher getMatcher() {
-		return null;
+		return this.matcher;
 	}
 
 	@Override
-	public IConfigInput withMatcher(IMatcher matcher) {
+	public CustomInputConfig withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
 		return this;
 	}
 
 	@Override
 	public Boolean isUseLastExecutionRecords() {
-		return false;
+		return this.useLastExecutionRecords;
 	}
 
 	@Override
-	public IConfigInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
+	public CustomInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
+		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
 
 	@Override
-	public IConfigInput addExceptionHandler(IExceptionHandler handler) {
+	public CustomInputConfig addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
 		return this;
 	}
 
 	@Override
 	public List<IExceptionHandler> getExceptionHandlers() {
-		return new ArrayList<IExceptionHandler>();
+		return this.exceptionHandlers;
 	}
 
 	@Override
 	public List<DataReadingListener> getDataReadingListeners() {
-		return new ArrayList<DataReadingListener>();
+		return this.dataReadingListeners;
 	}
 
 	@Override
-	public IConfigInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+	public CustomInputConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+		this.dataReadingListeners = dataReadingListeners;
 		return this;
 	}
 
 	@Override
-	public IConfigInput addDataReadingListener(DataReadingListener listener) {
+	public CustomInputConfig addDataReadingListener(DataReadingListener listener) {
+		this.dataReadingListeners.add(listener);
 		return this;
 	}
 
 	@Override
 	public List<ExecutionListener> getExecutionListeners() {
-		return new ArrayList<ExecutionListener>();
+		return this.inputExecutionListeners;
 	}
 
 	@Override
-	public IConfigInput withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
+	public CustomInputConfig withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
+		this.inputExecutionListeners = inputExecutionListeners;
 		return this;
 	}
 
 	@Override
-	public IConfigInput addExecutionListener(ExecutionListener listener) {
+	public CustomInputConfig addExecutionListener(ExecutionListener listener) {
+		this.inputExecutionListeners.add(listener);
+		return this;
+	}
+	
+	private CustomInputConfig withMetadata(Properties properties) {
+		this.metadata = properties;
+		return this;
+	}
+	
+	private CustomInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
+		this.exceptionHandlers = handlers;
+		return this;
+	}
+
+	public Integer getMyNewProperty() {
+		return this.myNewProperty;
+	}
+
+	public CustomInputConfig withMyNewProperty(Integer myNewProperty) {
+		this.myNewProperty = myNewProperty;
 		return this;
 	}
 }
