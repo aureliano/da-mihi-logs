@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.X509Certificate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -252,17 +253,18 @@ public class UrlDataReader extends AbstractDataReader {
 	
 	@Override
 	public Map<String, Object> executionLog() {
+		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> fileDataReaderLog = this.fileDataReader.executionLog();
 		
 		for (String key : fileDataReaderLog.keySet()) {
-			super.readingProperties.put(key, fileDataReaderLog.get(key));
+			map.put(key, fileDataReaderLog.get(key));
 		}
 		
-		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
+		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
 				((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
-		super.readingProperties.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
+		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
 		
-		return super.readingProperties;
+		return map;
 	}
 
 	@Override
@@ -272,7 +274,6 @@ public class UrlDataReader extends AbstractDataReader {
 		String key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line";
 		String value = properties.getProperty(key);
 		if (value != null) {
-			super.readingProperties.put(key, value);
 			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) && 
 					(this.urlInputConfiguration.getFileStartPosition() == null)) {
 				this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
@@ -282,7 +283,6 @@ public class UrlDataReader extends AbstractDataReader {
 		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file";
 		value = properties.getProperty(key);
 		if (value != null) {
-			super.readingProperties.put(key, value);
 			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) &&
 					(this.urlInputConfiguration.getOutputFile() == null)) {
 				this.urlInputConfiguration.withOutputFile(value);
@@ -292,7 +292,6 @@ public class UrlDataReader extends AbstractDataReader {
 		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset";
 		value = properties.getProperty(key);
 		if (value != null) {
-			super.readingProperties.put(key, value);
 			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
 				this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
 			}

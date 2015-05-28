@@ -1,8 +1,5 @@
 package com.github.aureliano.damihilogs.reader;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.event.AfterReadingEvent;
@@ -17,12 +14,9 @@ public abstract class AbstractDataReader implements IDataReader {
 	protected String unprocessedLine;
 	protected boolean markedToStop;
 	
-	protected Map<String, Object> readingProperties;
-	
 	public AbstractDataReader() {
 		this.lineCounter = 0;
 		this.markedToStop = false;
-		this.readingProperties = new HashMap<String, Object>();
 	}
 	
 	@Override
@@ -39,11 +33,6 @@ public abstract class AbstractDataReader implements IDataReader {
 	@Override
 	public boolean keepReading() {
 		return !this.markedToStop;
-	}
-	
-	@Override
-	public Map<String, Object> getReadingProperties() {
-		return this.readingProperties;
 	}
 	
 	protected String prepareLogEvent(String line) {

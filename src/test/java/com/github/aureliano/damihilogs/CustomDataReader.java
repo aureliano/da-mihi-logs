@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -33,10 +34,12 @@ public class CustomDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
+		Map<String, Object> map = new HashMap<String, Object>();
 		String id = super.inputConfiguration.getConfigurationId();
-		super.readingProperties.put("input.config." + id + ".my.new.property", this.newValue);
 		
-		return super.readingProperties;
+		map.put("input.config." + id + ".my.new.property", this.newValue);
+		
+		return map;
 	}
 
 	@Override
@@ -51,7 +54,6 @@ public class CustomDataReader extends AbstractDataReader {
 		
 		String value = properties.getProperty(key);
 		if (value != null) {
-			super.readingProperties.put(key, value);
 			if ((configuration.isUseLastExecutionRecords()) &&
 					(configuration.getMyNewProperty() == null)) {
 				configuration.withMyNewProperty(Integer.parseInt(value));

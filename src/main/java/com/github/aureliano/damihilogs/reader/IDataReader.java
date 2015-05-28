@@ -16,6 +16,4 @@ public interface IDataReader extends IExecutor {
 	public abstract boolean keepReading();
 	
 	public abstract void loadLastExecutionLog(Properties properties);
-	
-	public abstract Map<String, Object> getReadingProperties();
 }

@@ -76,6 +76,27 @@ public class DataIterationCommand implements Runnable {
 		return this.dataReader.executionLog();
 	}
 	
+	/*private Map<String, Object> newdataIteration() {
+		this.dataReader.initializeResources();
+		String line = this.dataReader.readNextLine();
+		this.dataReader.markToStop(line == null);
+		
+		while (this.dataReader.keepReading()) {
+			this.dataReader.executeBeforeDataReadingListener();
+			Object data = this.dataReader.nextData();
+			this.dataReader.executeAfterDataReadingListener();
+			
+			if (data != null) {
+				// TODO: Write process.
+				this.write(this.dataWriters, data);
+			}
+		}
+		
+		this.dataReader.finalizeResources();
+		
+		return this.dataReader.executionLog();;
+	}*/
+	
 	private void write(List<IDataWriter> dataWriters, String data) {
 		for (IDataWriter dataWriter : dataWriters) {
 			dataWriter.write(data);

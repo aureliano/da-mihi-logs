@@ -149,7 +149,6 @@ public class CollectEventsCommand {
 			Properties properties = LoggerHelper.getLastExecutionLog(this.configuration.getCollectorId(), true);
 			if (properties != null) {
 				dataReader.loadLastExecutionLog(properties);
-				this.addLogExecution(dataReader.getReadingProperties());
 			}
 		}
 		return dataReader;

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -124,9 +125,10 @@ public class FileDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		super.readingProperties.put("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
-		return super.readingProperties;
+		return map;
 	}
 
 	@Override
@@ -136,7 +138,6 @@ public class FileDataReader extends AbstractDataReader {
 		String key = "input.config." + this.fileInputConfiguration.getConfigurationId() + ".last.line";
 		String value = properties.getProperty(key);
 		if (value != null) {
-			super.readingProperties.put(key, value);
 			if ((this.fileInputConfiguration.isUseLastExecutionRecords()) &&
 					(this.fileInputConfiguration.getStartPosition() == null)) {
 				this.fileInputConfiguration.withStartPosition(Integer.parseInt(value));

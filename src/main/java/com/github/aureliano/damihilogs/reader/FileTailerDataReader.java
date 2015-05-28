@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.reader;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -10,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.helper.ConfigHelper;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
@@ -166,21 +166,12 @@ public class FileTailerDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		super.readingProperties.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
-		return super.readingProperties;
+		return map;
 	}
 
 	@Override
-	public void loadLastExecutionLog(Properties properties) {
-		this.fileTailerConfiguration = (FileTailerInputConfig) super.inputConfiguration;
-		
-		String key = "input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line";
-		String value = properties.getProperty(key);
-		if (value != null) {
-			super.readingProperties.put(key, value);
-		}
-		
-		ConfigHelper.inputConfigValidation(this.fileTailerConfiguration);
-	}
+	public void loadLastExecutionLog(Properties properties) { }
 }
