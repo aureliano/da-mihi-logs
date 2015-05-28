@@ -28,7 +28,7 @@ public class CustomDataReader extends AbstractDataReader {
 		data = super.prepareLogEvent(line);
 		super.executeAfterReadingMethodListeners(data);
 		
-		return data;
+		return "{\"property\":" + data + "}";
 	}
 
 	@Override
