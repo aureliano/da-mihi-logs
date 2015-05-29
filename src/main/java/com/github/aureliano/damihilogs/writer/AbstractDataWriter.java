@@ -4,9 +4,8 @@ import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.event.AfterWritingEvent;
 import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
-import com.github.aureliano.damihilogs.filter.IEventFielter;
+import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
-import com.github.aureliano.damihilogs.parser.IParser;
 
 public abstract class AbstractDataWriter implements IDataWriter {
 
@@ -28,22 +27,30 @@ public abstract class AbstractDataWriter implements IDataWriter {
 	}
 
 	@Override
-	public IParser<?> getParser() {
-		return this.outputConfiguration.getParser();
+	public Object parseEvent(String event) {
+		return this.outputConfiguration.getParser().parse(event);
 	}
 	
 	@Override
-	public IEventFielter getFilter() {
-		return this.outputConfiguration.getFilter();
+	public boolean applyFilter(Object data) {
+		return this.outputConfiguration.getFilter().accept(data);
 	}
-
-	protected void executeBeforeWritingMethodListeners(Object data) {
+	
+	@Override
+	public Object formatData(Object data) {
+		IOutputFormatter formatter = this.outputConfiguration.getOutputFormatter();
+		return (formatter == null) ? data : formatter.format(data);
+	}
+	
+	@Override
+	public void executeBeforeWritingListeners(Object data) {
 		for (DataWritingListener listener : this.outputConfiguration.getDataWritingListeners()) {
 			listener.beforeDataWriting(new BeforeWritingEvent(this.outputConfiguration, data));
 		}
 	}
-
-	protected void executeAfterWritingMethodListeners(Object data, boolean accepeted) {
+	
+	@Override
+	public void executeAfterWritingListeners(Object data, boolean accepeted) {
 		for (DataWritingListener listener : this.outputConfiguration.getDataWritingListeners()) {
 			listener.afterDataWriting(new AfterWritingEvent(this.outputConfiguration, accepeted, data));
 		}

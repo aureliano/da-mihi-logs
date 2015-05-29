@@ -7,23 +7,15 @@ public class StandardDataWriter extends AbstractDataWriter {
 	public StandardDataWriter() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
-	public void write(String content) {
-		this.initialize();
-		
-		Object data = super.getParser().parse(content);
-		super.executeBeforeWritingMethodListeners(data);
-		if (data == null) {
-			return;
-		}
-		
-		boolean accept = super.getFilter().accept(data);
-		if (accept) {
-			System.out.println(super.getConfiguration().getOutputFormatter().format(data));
-		}
-		
-		super.executeAfterWritingMethodListeners(data, accept);
+	public void write(Object data) {
+		System.out.println(data);
 	}
 	
 	private void initialize() {
@@ -33,5 +25,5 @@ public class StandardDataWriter extends AbstractDataWriter {
 	}
 	
 	@Override
-	public void endResources() { }
+	public void finalizeResources() { }
 }

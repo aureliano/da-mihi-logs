@@ -17,6 +17,7 @@ public class DataIterationCommand implements Runnable {
 	private IDataReader dataReader;
 	private List<IDataWriter> dataWriters;
 	private String id;
+	private boolean writersInitialized;
 	
 	private Map<String, Object> logExecution;
 	
@@ -28,6 +29,7 @@ public class DataIterationCommand implements Runnable {
 		this.dataReader = dataReader;
 		this.dataWriters = dataWriters;
 		this.id = id;
+		this.writersInitialized = false;
 	}
 
 	@Override
@@ -71,8 +73,11 @@ public class DataIterationCommand implements Runnable {
 			this.dataReader.executeAfterReadingListeners(data);
 			
 			if (data != null) {
-				// TODO: Write process.
-				this.write(this.dataWriters, data);
+				if (!this.writersInitialized) {
+					this.initializeDataWriters();
+				}
+				
+				this.write(data);
 			}
 		}
 		
@@ -82,10 +87,31 @@ public class DataIterationCommand implements Runnable {
 		return this.dataReader.executionLog();
 	}
 	
-	private void write(List<IDataWriter> dataWriters, String data) {
-		for (IDataWriter dataWriter : dataWriters) {
-			dataWriter.write(data);
+	private void write(String event) {
+		for (IDataWriter dataWriter : this.dataWriters) {
+			Object data = dataWriter.parseEvent(event);
+			if (data == null) {
+				continue;
+			}
+			
+			dataWriter.executeBeforeWritingListeners(data);
+			boolean shouldWrite = dataWriter.applyFilter(data);
+			
+			if (shouldWrite) {
+				data = dataWriter.formatData(data);
+				dataWriter.write(data);
+			}
+			
+			dataWriter.executeAfterWritingListeners(data, shouldWrite);
 		}
+	}
+	
+	private void initializeDataWriters() {
+		for (IDataWriter dataWriter : this.dataWriters) {
+			dataWriter.initializeResources();
+		}
+		
+		this.writersInitialized = true;
 	}
 	
 	private void executeBeforeInputExecutionListener() {
@@ -108,7 +134,7 @@ public class DataIterationCommand implements Runnable {
 	
 	private void finalizeResources(List<IDataWriter> dataWriters) {
 		for (IDataWriter dataWriter : dataWriters) {
-			dataWriter.endResources();
+			dataWriter.finalizeResources();
 		}
 	}
 	

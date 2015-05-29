@@ -14,31 +14,19 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 	public ElasticSearchDataWriter() {
 		super();
 	}
-
+	
 	@Override
-	public void write(String content) {
+	public void initializeResources() {
 		this.initialize();
-
-		Object data = super.getParser().parse(content);
-		this.executeBeforeWritingMethodListeners(data);
-		if (data == null) {
-			return;
-		}
-		
-		if (super.outputConfiguration.getOutputFormatter() != null) {
-			data = super.outputConfiguration.getOutputFormatter().format(data);
-		}
-		
-		boolean accept = super.getFilter().accept(data);
-		if (accept) {
-			this.elasticSearchClient.index(data);
-		}
-		
-		this.executeAfterWritingMethodListeners(data, accept);
 	}
 
 	@Override
-	public void endResources() {
+	public void write(Object data) {
+		this.elasticSearchClient.index(data);
+	}
+
+	@Override
+	public void finalizeResources() {
 		if (this.elasticSearchClient == null) {
 			return;
 		}
@@ -47,10 +35,6 @@ public class ElasticSearchDataWriter extends AbstractDataWriter {
 	}
 	
 	private void initialize() {
-		if (this.elasticSearchClient != null) {
-			return;
-		}
-		
 		logger.debug(" >>> Starting new ElasticSearch client instance.");
 		this.elasticSearchClient = new ElasticSearchClient().withConfiguration((IElasticSearchConfiguration) this.outputConfiguration);
 		this.elasticSearchClient.startUp();

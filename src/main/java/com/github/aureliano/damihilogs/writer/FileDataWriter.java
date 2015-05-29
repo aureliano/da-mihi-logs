@@ -22,31 +22,23 @@ public class FileDataWriter extends AbstractDataWriter {
 	public FileDataWriter() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
-	public void write(String content) {
-		this.initialize();
+	public void write(Object data) {
+		this.writer.println(data);
 		
-		Object data = super.getParser().parse(content);
-		super.executeBeforeWritingMethodListeners(data);
-		if (data == null) {
-			return;
+		if (!this.fileOutputConfiguration.isUseBuffer()) {
+			this.writer.flush();
 		}
-
-		boolean accept = super.getFilter().accept(data);
-		if (accept) {
-			String text = this.fileOutputConfiguration.getOutputFormatter().format(data);
-			this.writer.println(text);
-			if (!this.fileOutputConfiguration.isUseBuffer()) {
-				this.writer.flush();
-			}
-		}
-		
-		super.executeAfterWritingMethodListeners(data, accept);
 	}
 	
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		if (this.writer == null) {
 			return;
 		}
@@ -58,10 +50,6 @@ public class FileDataWriter extends AbstractDataWriter {
 	}
 	
 	private void initialize() {
-		if (this.writer != null) {
-			return;
-		}
-		
 		this.fileOutputConfiguration = (FileOutputConfig) super.outputConfiguration;
 		
 		logger.info("Outputing data to " + this.fileOutputConfiguration.getFile().getPath());
