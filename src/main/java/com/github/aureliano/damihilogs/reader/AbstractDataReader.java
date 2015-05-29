@@ -67,17 +67,33 @@ public abstract class AbstractDataReader implements IDataReader {
 		return logEvent;
 	}
 	
-	protected void executeBeforeReadingMethodListeners() {
+	@Override
+	public String readNextLine() {
+		String line = null;
+		if (this.unprocessedLine != null) {
+			line = this.unprocessedLine;
+			this.unprocessedLine = null;
+		} else {
+			line = this.readLine();
+			if (line != null) {
+				this.lineCounter++;
+			}
+		}
+		
+		return line;
+	}
+	
+	@Override
+	public void executeBeforeReadingListeners() {
 		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 			listener.beforeDataReading(new BeforeReadingEvent(this.inputConfiguration, this.lineCounter));
 		}
 	}
 	
-	protected void executeAfterReadingMethodListeners(Object data) {
+	@Override
+	public void executeAfterReadingListeners(String data) {
 		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
 			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
 		}
 	}
-	
-	protected abstract String readNextLine();
 }

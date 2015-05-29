@@ -28,28 +28,34 @@ public class FileDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public String nextData() {
+	public void initializeResources() {
 		this.initialize();
-		
 		this.prepareReading();
-		String line = this.readNextLine();
+	}
+
+	@Override
+	public String nextData() {
+		String line = super.readNextLine();
 		
 		if (line == null) {
 			super.markedToStop = true;
 			return null;
 		}
 		
-		String data = null;		
-		super.executeBeforeReadingMethodListeners();
-		
-		data = super.prepareLogEvent(line);
-		super.executeAfterReadingMethodListeners(data);
-		
-		return data;
+		return super.prepareLogEvent(line);
+	}
+
+	@Override
+	public String readLine() {
+		try {
+			return this.bufferedReader.readLine();
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
 	}
 	
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
@@ -58,66 +64,6 @@ public class FileDataReader extends AbstractDataReader {
 		try {
 			this.bufferedReader.close();
 			this.bufferedReader = null;
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
-	
-	private void prepareReading() {		
-		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter + 1) {
-			String line = this.readNextLine();
-			if (line == null) {
-				return;
-			}
-		}
-	}
-	
-	private void initialize() {
-		if (this.bufferedReader != null) {
-			return;
-		}
-		
-		if (this.fileInputConfiguration == null) {
-			this.fileInputConfiguration = (FileInputConfig) super.inputConfiguration;
-		}
-		
-		if (this.fileInputConfiguration.getStartPosition() == null) {
-			this.fileInputConfiguration.withStartPosition(0);
-		}
-		
-		CompressMetadata decompressConfiguration = this.fileInputConfiguration.getDecompressFileConfiguration();
-		if (decompressConfiguration != null) {
-			FileHelper.decompress(decompressConfiguration);
-			this.fileInputConfiguration.withFile(decompressConfiguration.getOutputFilePath());
-		}
-		
-		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
-		logger.debug("Starting from line " + this.fileInputConfiguration.getStartPosition());
-		logger.debug("Data encondig: " + this.fileInputConfiguration.getEncoding());
-		
-		try {
-			this.bufferedReader = new BufferedReader(
-				new InputStreamReader(new FileInputStream(
-					this.fileInputConfiguration.getFile()), this.fileInputConfiguration.getEncoding()));
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
-	
-	protected String readNextLine() {
-		try {
-			String line = null;
-			if (super.unprocessedLine != null) {
-				line = super.unprocessedLine;
-				super.unprocessedLine = null;
-			} else {
-				line = this.bufferedReader.readLine();
-				if (line != null) {
-					super.lineCounter++;
-				}
-			}
-			
-			return line;
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
 		}
@@ -145,5 +91,40 @@ public class FileDataReader extends AbstractDataReader {
 		}
 		
 		ConfigHelper.inputConfigValidation(this.fileInputConfiguration);
+	}
+	
+	private void prepareReading() {		
+		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter + 1) {
+			String line = super.readNextLine();
+			if (line == null) {
+				return;
+			}
+		}
+	}
+	
+	private void initialize() {
+		this.fileInputConfiguration = (FileInputConfig) super.inputConfiguration;
+		
+		if (this.fileInputConfiguration.getStartPosition() == null) {
+			this.fileInputConfiguration.withStartPosition(0);
+		}
+		
+		CompressMetadata decompressConfiguration = this.fileInputConfiguration.getDecompressFileConfiguration();
+		if (decompressConfiguration != null) {
+			FileHelper.decompress(decompressConfiguration);
+			this.fileInputConfiguration.withFile(decompressConfiguration.getOutputFilePath());
+		}
+		
+		logger.info("Reading data from " + this.fileInputConfiguration.getFile().getPath());
+		logger.debug("Starting from line " + this.fileInputConfiguration.getStartPosition());
+		logger.debug("Data encondig: " + this.fileInputConfiguration.getEncoding());
+		
+		try {
+			this.bufferedReader = new BufferedReader(
+				new InputStreamReader(new FileInputStream(
+					this.fileInputConfiguration.getFile()), this.fileInputConfiguration.getEncoding()));
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
 	}
 }

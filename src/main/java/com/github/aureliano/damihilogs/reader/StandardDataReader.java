@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.reader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -21,61 +22,35 @@ public class StandardDataReader extends AbstractDataReader {
 	public StandardDataReader() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
 	public String nextData() {
-		this.initialize();
-		String line = this.readNextLine();
+		String line = super.readNextLine();
 		
 		if (line == null) {
 			super.markedToStop = true;
 			return null;
 		}
 		
-		String data = null;		
-		super.executeBeforeReadingMethodListeners();
-		
-		data = super.prepareLogEvent(line);
-		super.executeAfterReadingMethodListeners(data);
-		
-		return data;
+		return super.prepareLogEvent(line);
 	}
 	
-	protected String readNextLine() {
+	@Override
+	public String readLine() {
 		try {
-			String line = null;
-			if (super.unprocessedLine != null) {
-				line = super.unprocessedLine;
-				super.unprocessedLine = null;
-			} else {
-				line = this.bufferedReader.readLine();
-				if (line != null) {
-					line = new String(line.getBytes(), ((StandardInputConfig) super.inputConfiguration).getEncoding());
-					super.lineCounter++;
-				}
-			}
-			
-			return line;
+			return this.bufferedReader.readLine();
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
 		}
 	}
-	
-	private void initialize() {
-		if (this.bufferedReader != null) {
-			return;
-		}
-		
-		logger.info("Reading data from Standard Input.");
-		logger.debug("Data encondig: " + ((StandardInputConfig) super.inputConfiguration).getEncoding());
-		
-		System.out.println("Listening standard input. Type text and then press Enter to process event or Ctrl + C to quit.");
-		
-		this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-	}
 
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
@@ -99,4 +74,19 @@ public class StandardDataReader extends AbstractDataReader {
 
 	@Override
 	public void loadLastExecutionLog(Properties properties) { }
+	
+	private void initialize() {
+		StandardInputConfig configuration = (StandardInputConfig) super.inputConfiguration;
+		
+		logger.info("Reading data from Standard Input.");
+		logger.debug("Data encondig: " + configuration.getEncoding());
+		
+		System.out.println("Listening standard input. Type text and then press Enter to process event or Ctrl + C to quit.");
+		
+		try {
+			this.bufferedReader = new BufferedReader(new InputStreamReader(System.in, configuration.getEncoding()));
+		} catch (UnsupportedEncodingException ex) {
+			throw new DaMihiLogsException(ex);
+		}
+	}
 }

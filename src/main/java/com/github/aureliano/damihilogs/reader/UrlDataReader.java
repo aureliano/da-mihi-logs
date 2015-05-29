@@ -46,34 +46,82 @@ public class UrlDataReader extends AbstractDataReader {
 	public UrlDataReader() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		logger.debug(" >>> Finalizing url data reader.");
 		logger.info("Downloaded file: " + ((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
-		this.fileDataReader.endResources();
+		this.fileDataReader.finalizeResources();
 	}
 
 	@Override
 	public String nextData() {
-		this.initialize();
-		
 		String data = this.fileDataReader.nextData();
 		super.markedToStop = this.fileDataReader.markedToStop;
 		
 		return data;
 	}
+	
+	@Override
+	public String readLine() {
+		return this.fileDataReader.readLine();
+	}
+	
+	@Override
+	public Map<String, Object> executionLog() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> fileDataReaderLog = this.fileDataReader.executionLog();
+		
+		for (String key : fileDataReaderLog.keySet()) {
+			map.put(key, fileDataReaderLog.get(key));
+		}
+		
+		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
+				((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
+		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
+		
+		return map;
+	}
 
 	@Override
-	protected String readNextLine() {
-		return this.fileDataReader.readNextLine();
+	public void loadLastExecutionLog(Properties properties) {
+		this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
+		
+		String key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line";
+		String value = properties.getProperty(key);
+		if (value != null) {
+			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) && 
+					(this.urlInputConfiguration.getFileStartPosition() == null)) {
+				this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
+			}
+		}
+		
+		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file";
+		value = properties.getProperty(key);
+		if (value != null) {
+			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) &&
+					(this.urlInputConfiguration.getOutputFile() == null)) {
+				this.urlInputConfiguration.withOutputFile(value);
+			}
+		}
+		
+		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset";
+		value = properties.getProperty(key);
+		if (value != null) {
+			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
+				this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
+			}
+		}
+		
+		ConfigHelper.inputConfigValidation(this.urlInputConfiguration);
 	}
 	
 	private void initialize() {
-		if (this.connection != null) {
-			return;
-		}
-		
 		if (this.urlInputConfiguration == null) {
 			this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
 		}
@@ -99,6 +147,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		this.fileDataReader = (FileDataReader) this.createFileDataReader();
+		this.fileDataReader.initializeResources();
 	}
 
 	private void download() {
@@ -249,54 +298,5 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		return new FileDataReader().withConfiguration(config);
-	}
-	
-	@Override
-	public Map<String, Object> executionLog() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String, Object> fileDataReaderLog = this.fileDataReader.executionLog();
-		
-		for (String key : fileDataReaderLog.keySet()) {
-			map.put(key, fileDataReaderLog.get(key));
-		}
-		
-		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file",
-				((FileInputConfig) this.fileDataReader.getConfiguration()).getFile().getPath());
-		map.put("input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset", this.bytesRead);
-		
-		return map;
-	}
-
-	@Override
-	public void loadLastExecutionLog(Properties properties) {
-		this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
-		
-		String key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".last.line";
-		String value = properties.getProperty(key);
-		if (value != null) {
-			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) && 
-					(this.urlInputConfiguration.getFileStartPosition() == null)) {
-				this.urlInputConfiguration.withFileStartPosition(Integer.parseInt(value));
-			}
-		}
-		
-		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".download.output.file";
-		value = properties.getProperty(key);
-		if (value != null) {
-			if ((this.urlInputConfiguration.isUseLastExecutionRecords()) &&
-					(this.urlInputConfiguration.getOutputFile() == null)) {
-				this.urlInputConfiguration.withOutputFile(value);
-			}
-		}
-		
-		key = "input.config." + this.urlInputConfiguration.getConfigurationId() + ".byte.offset";
-		value = properties.getProperty(key);
-		if (value != null) {
-			if (this.urlInputConfiguration.isUseLastExecutionRecords()) {
-				this.urlInputConfiguration.withByteOffSet(Integer.parseInt(value));
-			}
-		}
-		
-		ConfigHelper.inputConfigValidation(this.urlInputConfiguration);
 	}
 }

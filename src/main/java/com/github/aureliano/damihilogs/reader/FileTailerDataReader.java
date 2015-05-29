@@ -26,10 +26,14 @@ public class FileTailerDataReader extends AbstractDataReader {
 	public FileTailerDataReader() {
 		this.fileLength = this.filePointer = this.initialTimeMillis = 0;
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
 	public String nextData() {
-		this.initialize();
 		String data = this.readNextData();
 		
 		if (data != null) {
@@ -61,37 +65,29 @@ public class FileTailerDataReader extends AbstractDataReader {
 		return null;
 	}
 
-	private String readNextData() {
-		String line = null;
-		String data = null;
+	@Override
+	public Map<String, Object> executionLog() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
 		
+		return map;
+	}
+	
+	@Override
+	public String readLine() {
 		try {
-			line = this.readNextLine();
-			if (line == null) {
-				return null;
-			}
-			
-			super.executeBeforeReadingMethodListeners();
-			
-			data = super.prepareLogEvent(line);
-			super.executeAfterReadingMethodListeners(data);
-			
-			this.filePointer = this.randomAccessFile.getFilePointer() + 1;
-			
-			return data;
+			String line = this.randomAccessFile.readLine();
+			return new String(line.getBytes(), this.fileTailerConfiguration.getEncoding());
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
 		}
 	}
 
-	private void rotateFile() {
-		logger.debug("File got smaller! Maybe file rotation? Reseting and reading from beginning.");
-		this.fileLength = this.currentFileLength();
-		this.filePointer = super.lineCounter = 0;
-	}
+	@Override
+	public void loadLastExecutionLog(Properties properties) { }
 
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.randomAccessFile == null) {
 			return;
@@ -104,6 +100,29 @@ public class FileTailerDataReader extends AbstractDataReader {
 			throw new DaMihiLogsException(ex);
 		}
 	}
+
+	private String readNextData() {
+		String line = null;
+		
+		try {
+			line = super.readNextLine();
+			if (line == null) {
+				return null;
+			}
+			
+			this.filePointer = this.randomAccessFile.getFilePointer() + 1;
+			
+			return super.prepareLogEvent(line);
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
+	}
+
+	private void rotateFile() {
+		logger.debug("File got smaller! Maybe file rotation? Reseting and reading from beginning.");
+		this.fileLength = this.currentFileLength();
+		this.filePointer = super.lineCounter = 0;
+	}
 	
 	private boolean shouldExecute() {
 		long diff = System.currentTimeMillis() - this.initialTimeMillis;
@@ -115,10 +134,6 @@ public class FileTailerDataReader extends AbstractDataReader {
 	}
 	
 	private void initialize() {
-		if (this.initialTimeMillis > 0) {
-			return;
-		}
-		
 		this.initialTimeMillis = System.currentTimeMillis();
 		
 		this.initializeRandomAccessFile();
@@ -143,35 +158,4 @@ public class FileTailerDataReader extends AbstractDataReader {
 			throw new DaMihiLogsException(ex);
 		}
 	}
-	
-	protected String readNextLine() {		
-		try {
-			String line = null;
-			if (super.unprocessedLine != null) {
-				line = super.unprocessedLine;
-				super.unprocessedLine = null;
-			} else {
-				line = this.randomAccessFile.readLine();
-				if (line != null) {
-					line = new String(line.getBytes(), this.fileTailerConfiguration.getEncoding());
-					super.lineCounter++;
-				}
-			}
-			
-			return line;
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
-
-	@Override
-	public Map<String, Object> executionLog() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("input.config." + this.fileTailerConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
-		
-		return map;
-	}
-
-	@Override
-	public void loadLastExecutionLog(Properties properties) { }
 }

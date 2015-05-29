@@ -14,22 +14,22 @@ public class CustomDataReader extends AbstractDataReader {
 	public CustomDataReader() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		// Initialize any resource.
+	}
 
 	@Override
 	public String nextData() {
-		String line = this.readNextLine();
-		if (line == null) {
+		String event = super.readNextLine();
+		
+		if (event == null) {
 			super.markedToStop = true;
 			return null;
 		}
 		
-		String data = null;		
-		super.executeBeforeReadingMethodListeners();
-		
-		data = super.prepareLogEvent(line);
-		super.executeAfterReadingMethodListeners(data);
-		
-		return "{\"property\":" + data + "}";
+		return "{\"property\":" + super.prepareLogEvent(event) + "}";
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class CustomDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public void endResources() {
+	public void finalizeResources() {
 		// Finalize any resource you have open.
 	}
 
@@ -60,9 +60,9 @@ public class CustomDataReader extends AbstractDataReader {
 			}
 		}
 	}
-
+	
 	@Override
-	protected String readNextLine() {
+	public String readLine() {
 		if (this.newValue != null) {
 			return null;
 		}

@@ -63,28 +63,12 @@ public class DataIterationCommand implements Runnable {
 	}
 	
 	private Map<String, Object> dataIteration() {
-		while (this.dataReader.keepReading()) {
-			String data = this.dataReader.nextData();
-			if (data != null) {
-				this.write(this.dataWriters, data);
-			}
-		}
-		
-		this.dataReader.endResources();
-		this.endResources(this.dataWriters);
-		
-		return this.dataReader.executionLog();
-	}
-	
-	/*private Map<String, Object> newdataIteration() {
 		this.dataReader.initializeResources();
-		String line = this.dataReader.readNextLine();
-		this.dataReader.markToStop(line == null);
 		
 		while (this.dataReader.keepReading()) {
-			this.dataReader.executeBeforeDataReadingListener();
-			Object data = this.dataReader.nextData();
-			this.dataReader.executeAfterDataReadingListener();
+			this.dataReader.executeBeforeReadingListeners();
+			String data = this.dataReader.nextData();
+			this.dataReader.executeAfterReadingListeners(data);
 			
 			if (data != null) {
 				// TODO: Write process.
@@ -93,9 +77,10 @@ public class DataIterationCommand implements Runnable {
 		}
 		
 		this.dataReader.finalizeResources();
+		this.finalizeResources(this.dataWriters);
 		
-		return this.dataReader.executionLog();;
-	}*/
+		return this.dataReader.executionLog();
+	}
 	
 	private void write(List<IDataWriter> dataWriters, String data) {
 		for (IDataWriter dataWriter : dataWriters) {
@@ -121,7 +106,7 @@ public class DataIterationCommand implements Runnable {
 		}
 	}
 	
-	private void endResources(List<IDataWriter> dataWriters) {
+	private void finalizeResources(List<IDataWriter> dataWriters) {
 		for (IDataWriter dataWriter : dataWriters) {
 			dataWriter.endResources();
 		}

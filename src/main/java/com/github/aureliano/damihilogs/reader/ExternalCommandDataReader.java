@@ -23,24 +23,31 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	public ExternalCommandDataReader() {
 		super();
 	}
+	
+	@Override
+	public void initializeResources() {
+		this.initialize();
+	}
 
 	@Override
 	public String nextData() {
-		this.initialize();
-		String line = this.readNextLine();
+		String line = super.readNextLine();
 		
 		if (line == null) {
 			super.markedToStop = true;
 			return null;
 		}
 		
-		String data = null;
-		super.executeBeforeReadingMethodListeners();
-		
-		data = super.prepareLogEvent(line);
-		super.executeAfterReadingMethodListeners(data);
-		
-		return data;
+		return super.prepareLogEvent(line);
+	}
+	
+	@Override
+	public String readLine() {
+		try {
+			return this.bufferedReader.readLine();
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
 	}
 
 	@Override
@@ -49,7 +56,10 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public void endResources() {
+	public void loadLastExecutionLog(Properties properties) { }
+
+	@Override
+	public void finalizeResources() {
 		logger.debug(" >>> Flushing and closing stream reader.");
 		if (this.bufferedReader == null) {
 			return;
@@ -69,32 +79,8 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			throw new DaMihiLogsException(ex);
 		}
 	}
-
-	@Override
-	protected String readNextLine() {
-		try {
-			String line = null;
-			if (super.unprocessedLine != null) {
-				line = super.unprocessedLine;
-				super.unprocessedLine = null;
-			} else {
-				line = this.bufferedReader.readLine();
-				if (line != null) {
-					super.lineCounter++;
-				}
-			}
-			
-			return line;
-		} catch (IOException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
 	
 	private void initialize() {
-		if (this.bufferedReader != null) {
-			return;
-		}
-		
 		this.externalCommandInput = (ExternalCommandInput) super.inputConfiguration;
 		
 		logger.info("Execute command " + this.externalCommandInput.getCommand());
@@ -141,7 +127,4 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 		error.deleteCharAt(error.length() - 1);
 		return error.toString();
 	}
-
-	@Override
-	public void loadLastExecutionLog(Properties properties) { }
 }
