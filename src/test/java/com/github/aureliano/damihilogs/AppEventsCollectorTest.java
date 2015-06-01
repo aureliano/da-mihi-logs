@@ -30,6 +30,7 @@ public class AppEventsCollectorTest {
 	public void testExecute() {		
 		new AppEventsCollector()
 			.registrateExecutor(CustomInputConfig.class, CustomDataReader.class)
+			.registrateExecutor(CustomOutputConfig.class, CustomDataWriter.class)
 			.withConfiguration(new EventCollectorConfiguration()
 				.addInputConfig(new FileInputConfig()
 					.withFile("src/test/resources/datalog.log")
@@ -53,6 +54,7 @@ public class AppEventsCollectorTest {
 					})
 					.withOutputFormatter(new JsonFormatter())
 					.addDataWritingListener(this.getDataWriteListener()))
+				.addOutputConfig(new CustomOutputConfig())
 				.addEventsCollectorListeners(this.getEventsCollectorListener()))
 			.execute();
 	}

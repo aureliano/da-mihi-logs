@@ -101,7 +101,7 @@ public final class ConfigHelper {
 		} else if (config instanceof ElasticSearchOutputConfig) {
 			elasticSearchConfigValidation((ElasticSearchOutputConfig) config);
 		} else {
-			throw new DaMihiLogsException("Validation not implemented for " + config.getClass().getName() + " type");
+			logger.info("Ignoring config validation for custom configuration: " + config.getClass().getName());
 		}
 	}
 
