@@ -25,7 +25,12 @@ public class CustomOutputConfig implements IConfigOutput {
 	
 	@Override
 	public CustomOutputConfig clone() {
-		return new CustomOutputConfig();
+		return new CustomOutputConfig()
+			.withParser(this.parser)
+			.withFilter(this.filter)
+			.withOutputFormatter(this.outputFormatter)
+			.withDataWritingListeners(this.dataWritingListeners)
+			.withMetaData(this.metadata);
 	}
 
 	@Override
@@ -50,7 +55,7 @@ public class CustomOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withParser(IParser<?> parser) {
+	public CustomOutputConfig withParser(IParser<?> parser) {
 		this.parser = parser;
 		return this;
 	}
@@ -61,7 +66,7 @@ public class CustomOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withFilter(IEventFielter filter) {
+	public CustomOutputConfig withFilter(IEventFielter filter) {
 		this.filter = filter;
 		return this;
 	}
@@ -72,7 +77,7 @@ public class CustomOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withOutputFormatter(IOutputFormatter outputFormatter) {
+	public CustomOutputConfig withOutputFormatter(IOutputFormatter outputFormatter) {
 		this.outputFormatter = outputFormatter;
 		return this;
 	}
@@ -83,14 +88,19 @@ public class CustomOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public IConfigOutput withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
+	public CustomOutputConfig withDataWritingListeners(List<DataWritingListener> dataWritingListeners) {
 		this.dataWritingListeners = dataWritingListeners;
 		return this;
 	}
 
 	@Override
-	public IConfigOutput addDataWritingListener(DataWritingListener listener) {
+	public CustomOutputConfig addDataWritingListener(DataWritingListener listener) {
 		this.dataWritingListeners.add(listener);
+		return this;
+	}
+	
+	protected CustomOutputConfig withMetaData(Properties metadata) {
+		this.metadata = metadata;
 		return this;
 	}
 
