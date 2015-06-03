@@ -93,7 +93,7 @@ public abstract class AbstractDataReader implements IDataReader {
 	@Override
 	public void executeAfterReadingListeners(String data) {
 		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
-			listener.afterDataReading(new AfterReadingEvent(this.lineCounter, data));
+			listener.afterDataReading(new AfterReadingEvent(this.inputConfiguration, this.lineCounter, data));
 		}
 	}
 }
