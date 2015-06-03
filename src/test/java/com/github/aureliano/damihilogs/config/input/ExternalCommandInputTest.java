@@ -37,7 +37,7 @@ public class ExternalCommandInputTest {
 			.addParameter("-la")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
-				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			});
 		
 		ExternalCommandInput c2 = c1.clone();

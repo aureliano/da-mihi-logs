@@ -40,7 +40,7 @@ public class FileTailerInputConfigTest {
 			.withConfigurationId("input.file.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
-				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			});
 		
 		FileTailerInputConfig c2 = c1.clone();

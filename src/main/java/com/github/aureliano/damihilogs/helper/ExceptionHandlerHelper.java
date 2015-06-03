@@ -20,19 +20,10 @@ public final class ExceptionHandlerHelper {
 	}
 	
 	public static void executeHandlingException(DataIterationCommand command) {
-		IConfigInput inputConfig = (IConfigInput) command.getDataReader().getConfiguration();
-		List<IExceptionHandler> handlers = inputConfig.getExceptionHandlers();
-		
-		Thread thread = Thread.currentThread();
-		
-		for (IExceptionHandler handler : handlers) {
-			handler.captureException(thread, inputConfig);
-		}
-		
 		try {
 			command.execute();
 		} catch (Exception ex) {
-			logger.error(ex.getMessage(), ex);
+			handleException(command, ex);
 			ExceptionHandlerHelper.configureCommandLogExecutionForException(command, ex);
 		}
 	}
@@ -49,5 +40,20 @@ public final class ExceptionHandlerHelper {
 		String prefix = "input.config." + inputConfig.getConfigurationId() + ".";
 		logExecution.put(prefix + "exception", exception.getMessage());
 		logExecution.put(prefix + "stackTrace", Arrays.asList(exception.getStackTrace()));
+	}
+	
+	private static void handleException(DataIterationCommand command, Exception ex) {
+		IConfigInput inputConfig = (IConfigInput) command.getDataReader().getConfiguration();
+		List<IExceptionHandler> handlers = inputConfig.getExceptionHandlers();
+		
+		Thread thread = Thread.currentThread();
+		
+		for (IExceptionHandler handler : handlers) {
+			handler.captureException(thread, inputConfig, ex);
+		}
+		
+		if (handlers.isEmpty()) {
+			logger.error(ex.getMessage(), ex);
+		}
 	}
 }

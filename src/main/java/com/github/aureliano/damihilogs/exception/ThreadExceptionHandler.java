@@ -24,10 +24,12 @@ public class ThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
 		List<IExceptionHandler> handlers = inputConfig.getExceptionHandlers();
 		
 		for (IExceptionHandler handler : handlers) {
-			handler.captureException(thread, inputConfig);
+			handler.captureException(thread, inputConfig, ex);
 		}
 
-		logger.error(ex.getMessage(), ex);
+		if (handlers.isEmpty()) {
+			logger.error(ex.getMessage(), ex);
+		}
 		ExceptionHandlerHelper.configureCommandLogExecutionForException(this.command, ex);
 	}
 }

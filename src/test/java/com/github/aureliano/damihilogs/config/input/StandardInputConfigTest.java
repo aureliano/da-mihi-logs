@@ -24,7 +24,7 @@ public class StandardInputConfigTest {
 			.withConfigurationId("standard.input.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
-				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable throwable) { }
 			});
 		
 		StandardInputConfig c2 = c1.clone();

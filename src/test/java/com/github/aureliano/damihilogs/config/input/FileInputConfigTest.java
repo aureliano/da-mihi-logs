@@ -36,7 +36,7 @@ public class FileInputConfigTest {
 			.withConfigurationId("input.file.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
-				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			});
 		
 		FileInputConfig c2 = c1.clone();

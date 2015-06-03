@@ -74,7 +74,7 @@ public class UrlInputConfigTest {
 			.withConfigurationId("url.input.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
-				public void captureException(Runnable runnable, IConfigInput inputConfig) { }
+				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			});
 		
 		UrlInputConfig c2 = c1.clone();
