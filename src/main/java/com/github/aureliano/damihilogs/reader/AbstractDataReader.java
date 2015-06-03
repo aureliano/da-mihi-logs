@@ -40,7 +40,7 @@ public abstract class AbstractDataReader implements IDataReader {
 		StringBuilder buffer = new StringBuilder(line);
 		
 		for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
-			listener.stepLineParse(new StepParseEvent(counter + 1, line, buffer.toString()));
+			listener.stepLineParse(new StepParseEvent(this.inputConfiguration, (counter + 1), line, buffer.toString()));
 		}
 		
 		String logEvent = this.inputConfiguration.getMatcher().endMatch(buffer.toString());
@@ -57,7 +57,7 @@ public abstract class AbstractDataReader implements IDataReader {
 			buffer.append("\n").append(line);
 			
 			for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
-				listener.stepLineParse(new StepParseEvent((counter + 1), line, buffer.toString()));
+				listener.stepLineParse(new StepParseEvent(this.inputConfiguration, (counter + 1), line, buffer.toString()));
 			}
 			
 			logEvent = this.inputConfiguration.getMatcher().endMatch(buffer.toString());
