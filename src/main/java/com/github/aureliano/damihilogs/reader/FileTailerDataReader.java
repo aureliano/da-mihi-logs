@@ -136,10 +136,11 @@ public class FileTailerDataReader extends AbstractDataReader {
 	private void initialize() {
 		this.initialTimeMillis = System.currentTimeMillis();
 		
-		this.initializeRandomAccessFile();
 		if (this.fileTailerConfiguration == null) {
 			this.fileTailerConfiguration = (FileTailerInputConfig) super.inputConfiguration;
 		}
+		
+		this.initializeRandomAccessFile();
 		
 		logger.info("Reading data from " + this.fileTailerConfiguration.getFile().getPath());
 		logger.info("Delay milliseconds: " + this.fileTailerConfiguration.getTailDelay());
