@@ -27,6 +27,7 @@ public class FileInputConfig implements IConfigInput {
 	private CompressMetadata decompressFileConfiguration;
 
 	public FileInputConfig() {
+		this.startPosition = 0;
 		this.encoding = "UTF-8";
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();

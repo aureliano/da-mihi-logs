@@ -12,7 +12,7 @@ public class FileInputConfigTest {
 		FileInputConfig c = new FileInputConfig();
 		Assert.assertNull(c.getFile());
 		Assert.assertEquals("UTF-8", c.getEncoding());
-		Assert.assertNull(c.getStartPosition());
+		Assert.assertEquals(new Integer(0), c.getStartPosition());
 	}
 	
 	@Test

@@ -105,10 +105,6 @@ public class FileDataReader extends AbstractDataReader {
 	private void initialize() {
 		this.fileInputConfiguration = (FileInputConfig) super.inputConfiguration;
 		
-		if (this.fileInputConfiguration.getStartPosition() == null) {
-			this.fileInputConfiguration.withStartPosition(0);
-		}
-		
 		CompressMetadata decompressConfiguration = this.fileInputConfiguration.getDecompressFileConfiguration();
 		if (decompressConfiguration != null) {
 			FileHelper.decompress(decompressConfiguration);

@@ -49,7 +49,8 @@
     },
     "startPosition": {
       "type": "integer",
-      "description": "The line number of the file from where reading will start."
+      "description": "The line number of the file from where reading will start.",
+      "default": 0
     },
     "encoding": {
       "type": "string",
