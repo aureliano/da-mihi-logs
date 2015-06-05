@@ -20,11 +20,13 @@ public class FileTailerDataReader extends AbstractDataReader {
 	private long fileLength;
 	private long filePointer;
 	private long initialTimeMillis;
+	private boolean reachedEndOfFile;
 	
 	private static final Logger logger = Logger.getLogger(FileTailerDataReader.class);
 	
 	public FileTailerDataReader() {
 		this.fileLength = this.filePointer = this.initialTimeMillis = 0;
+		this.reachedEndOfFile = false;
 	}
 	
 	@Override
@@ -38,11 +40,13 @@ public class FileTailerDataReader extends AbstractDataReader {
 		
 		if (data != null) {
 			return data;
+		} else if (!this.reachedEndOfFile) {
+			return null;
 		}
 		
 		while (this.shouldExecute()) {
 			long currentFileLength = this.currentFileLength();
-			while (this.fileLength == currentFileLength && this.shouldExecute()) {
+			while ((this.fileLength == currentFileLength) && this.reachedEndOfFile && this.shouldExecute()) {
 				try {
 					Thread.sleep(this.fileTailerConfiguration.getTailDelay());
 					currentFileLength = this.currentFileLength();
@@ -77,6 +81,11 @@ public class FileTailerDataReader extends AbstractDataReader {
 	public String readLine() {
 		try {
 			String line = this.randomAccessFile.readLine();
+			if (line == null) {
+				reachedEndOfFile = true;
+				return null;
+			}
+			
 			return new String(line.getBytes(), this.fileTailerConfiguration.getEncoding());
 		} catch (IOException ex) {
 			throw new DaMihiLogsException(ex);
