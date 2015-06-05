@@ -125,6 +125,10 @@ public class FileTailerDataReader extends AbstractDataReader {
 	}
 	
 	private boolean shouldExecute() {
+		if (this.fileTailerConfiguration.getTailInterval() == null) {
+			return true;
+		}
+		
 		long diff = System.currentTimeMillis() - this.initialTimeMillis;
 		return (diff < this.fileTailerConfiguration.getTailInterval());
 	}

@@ -13,7 +13,7 @@ public class FileTailerInputConfigTest {
 		Assert.assertNull(c.getFile());
 		Assert.assertEquals("UTF-8", c.getEncoding());
 		Assert.assertEquals(new Long(1000), c.getTailDelay());
-		Assert.assertEquals(new Long(0), c.getTailInterval());
+		Assert.assertNull(c.getTailInterval());
 	}
 	
 	@Test

@@ -58,7 +58,7 @@
     },
     "tailInterval": {
       "type": "integer",
-      "description": "Time in milliseconds to tail (watch for changes) a file. Zero means forever."
+      "description": "Time in milliseconds to tail (watch for changes) a file. Null means forever."
     }
   },
   "required": ["file"]

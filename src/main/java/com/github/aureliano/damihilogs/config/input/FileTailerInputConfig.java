@@ -28,7 +28,6 @@ public class FileTailerInputConfig implements IConfigInput {
 	public FileTailerInputConfig() {
 		this.encoding = "UTF-8";
 		this.tailDelay = 1000L;
-		this.tailInterval = 0L;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
