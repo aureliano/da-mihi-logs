@@ -1,9 +1,11 @@
 package com.github.aureliano.damihilogs.clean;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.FileHelper;
+import com.github.aureliano.damihilogs.helper.TimeHelper;
 
 public class FileCleaner implements ICleaner {
 
@@ -37,36 +39,19 @@ public class FileCleaner implements ICleaner {
 	}
 
 	public FileCleaner removeFilesAfterSeconds(Integer seconds) {
-		if ((seconds == null) || (seconds < 1)) {
-			seconds = 1;
-		}
-		
-		this.seed = seconds.longValue() * 1000;
-		return this;
+		return this.setTimeSeed(TimeUnit.SECONDS, seconds);
 	}
 
 	public FileCleaner removeFilesAfterMinutes(Integer minutes) {
-		if ((minutes == null) || (minutes < 1)) {
-			minutes = 1;
-		}
-		
-		return this.removeFilesAfterSeconds(minutes * 60);
+		return this.setTimeSeed(TimeUnit.MINUTES, minutes);
 	}
 
 	public FileCleaner removeFilesAfterHours(Integer hours) {
-		if ((hours == null) || (hours < 1)) {
-			hours = 1;
-		}
-		
-		return this.removeFilesAfterMinutes(hours * 60);
+		return this.setTimeSeed(TimeUnit.HOURS, hours);
 	}
 
 	public FileCleaner removeFilesAfterDays(Integer days) {
-		if ((days == null) || (days < 1)) {
-			days = 1;
-		}
-		
-		return this.removeFilesAfterHours(days * 24);
+		return this.setTimeSeed(TimeUnit.DAYS, days);
 	}
 	
 	public FileCleaner withFileNameRegex(String regex) {
@@ -76,5 +61,14 @@ public class FileCleaner implements ICleaner {
 	
 	protected Long getSeed() {
 		return this.seed;
+	}
+	
+	private FileCleaner setTimeSeed(TimeUnit timeUnit, Number seed) {
+		if ((seed == null) || (seed.longValue() < 1)) {
+			seed = 1L;
+		}
+		
+		this.seed = TimeHelper.convertToMilliseconds(timeUnit, seed.longValue());
+		return this;
 	}
 }
