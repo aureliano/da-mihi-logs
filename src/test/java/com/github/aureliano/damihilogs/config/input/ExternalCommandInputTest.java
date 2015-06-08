@@ -51,6 +51,6 @@ public class ExternalCommandInputTest {
 	
 	@Test
 	public void testInputType() {
-		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInput().inputType());
+		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInput().type());
 	}
 }

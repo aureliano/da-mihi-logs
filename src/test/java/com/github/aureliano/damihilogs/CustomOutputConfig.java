@@ -105,7 +105,7 @@ public class CustomOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public String outputType() {
+	public String type() {
 		return "CUSTOM-OUTPUT";
 	}
 }

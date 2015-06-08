@@ -11,4 +11,6 @@ public interface IConfiguration {
 	public abstract String getMetadata(String key);
 	
 	public abstract Properties getMetadata();
+	
+	public abstract String type();
 }

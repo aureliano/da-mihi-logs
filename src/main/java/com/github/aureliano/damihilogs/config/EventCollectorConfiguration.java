@@ -158,4 +158,9 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.collectorId = colectorId;
 		return this;
 	}
+
+	@Override
+	public String type() {
+		return "EVENT_COLLECTOR";
+	}
 }

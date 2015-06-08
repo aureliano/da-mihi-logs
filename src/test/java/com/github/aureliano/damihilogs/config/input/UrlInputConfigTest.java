@@ -99,6 +99,6 @@ public class UrlInputConfigTest {
 	
 	@Test
 	public void testInputType() {
-		Assert.assertEquals(InputConfigTypes.URL.name(), new UrlInputConfig().inputType());
+		Assert.assertEquals(InputConfigTypes.URL.name(), new UrlInputConfig().type());
 	}
 }

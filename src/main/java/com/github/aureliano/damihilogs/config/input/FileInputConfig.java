@@ -193,7 +193,7 @@ public class FileInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String inputType() {
+	public String type() {
 		return InputConfigTypes.FILE.name();
 	}
 }

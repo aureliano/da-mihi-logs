@@ -205,7 +205,7 @@ public class FileTailerInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String inputType() {
+	public String type() {
 		return InputConfigTypes.FILE_TAILER.name();
 	}
 }

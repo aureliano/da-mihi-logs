@@ -324,7 +324,7 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String inputType() {
+	public String type() {
 		return InputConfigTypes.URL.name();
 	}
 }

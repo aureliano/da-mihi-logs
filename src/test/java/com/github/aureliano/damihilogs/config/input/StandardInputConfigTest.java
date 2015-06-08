@@ -37,6 +37,6 @@ public class StandardInputConfigTest {
 	
 	@Test
 	public void testInputType() {
-		Assert.assertEquals(InputConfigTypes.STANDARD.name(), new StandardInputConfig().inputType());
+		Assert.assertEquals(InputConfigTypes.STANDARD.name(), new StandardInputConfig().type());
 	}
 }

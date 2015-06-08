@@ -27,6 +27,4 @@ public interface IConfigOutput extends IConfiguration {
 	public abstract IConfigOutput addDataWritingListener(DataWritingListener listener);
 	
 	public abstract IConfigOutput withOutputFormatter(IOutputFormatter outputFormatter);
-	
-	public abstract String outputType();
 }

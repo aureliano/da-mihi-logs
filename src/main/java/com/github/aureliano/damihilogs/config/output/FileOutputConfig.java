@@ -32,7 +32,7 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
-	public String outputType() {
+	public String type() {
 		return "FILE";
 	}
 
