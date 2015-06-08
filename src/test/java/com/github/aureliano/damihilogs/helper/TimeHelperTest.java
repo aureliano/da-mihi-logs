@@ -6,7 +6,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-public class TimeUnitHelperTest {
+public class TimeHelperTest {
 
 	@Test
 	public void testConvertToMilliseconds() {
@@ -32,5 +32,21 @@ public class TimeUnitHelperTest {
 			Assert.assertEquals("Unsupported time unit. The smallest time unit supported is " +
 					TimeUnit.MILLISECONDS + " but got " + TimeUnit.NANOSECONDS, ex.getMessage());
 		}
+	}
+	
+	@Test
+	public void testIsValidTimeUnit() {
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("MILLISECONDS"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("milliseconds"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("Seconds"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("MinuteS"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("hours"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("DAYS"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("MICROSECONDS"));
+		Assert.assertTrue(TimeHelper.isValidTimeUnit("nanoseconds"));
+		
+		Assert.assertFalse(TimeHelper.isValidTimeUnit("months"));
+		Assert.assertFalse(TimeHelper.isValidTimeUnit("weeks"));
+		Assert.assertFalse(TimeHelper.isValidTimeUnit("years"));
 	}
 }

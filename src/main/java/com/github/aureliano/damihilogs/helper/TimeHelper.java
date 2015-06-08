@@ -21,6 +21,16 @@ public final class TimeHelper {
 		}
 	}
 	
+	public static boolean isValidTimeUnit(String timeUnit) {
+		for (TimeUnit type : TimeUnit.values()) {
+			if (type.name().equalsIgnoreCase(timeUnit)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	private static long fromSeconds(long seed) {
 		return seed * 1000;
 	}
