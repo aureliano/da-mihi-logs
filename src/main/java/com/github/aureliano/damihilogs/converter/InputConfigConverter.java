@@ -125,8 +125,8 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			if (!TimeHelper.isValidTimeUnit(value)) {
 				throw new DaMihiLogsException("Property timeUnit was expected to be one of: " + TimeUnit.values() + " but got " + value);
 			}
+			conf.withTimeUnit(TimeUnit.valueOf(value.toUpperCase()));
 		}
-		conf.withTimeUnit(TimeUnit.valueOf(value.toUpperCase()));
 		
 		return conf;
 	}
