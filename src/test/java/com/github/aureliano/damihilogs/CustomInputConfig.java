@@ -159,7 +159,7 @@ public class CustomInputConfig implements IConfigInput {
 	}
 
 	@Override
-	public String type() {
+	public String id() {
 		return "CUSTOM_INPUT_CONFIG";
 	}
 }

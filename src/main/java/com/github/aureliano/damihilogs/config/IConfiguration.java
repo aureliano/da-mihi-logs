@@ -12,5 +12,5 @@ public interface IConfiguration {
 	
 	public abstract Properties getMetadata();
 	
-	public abstract String type();
+	public abstract String id();
 }

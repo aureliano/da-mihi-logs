@@ -60,6 +60,6 @@ public class FileTailerInputConfigTest {
 	
 	@Test
 	public void testInputType() {
-		Assert.assertEquals(InputConfigTypes.FILE_TAILER.name(), new FileTailerInputConfig().type());
+		Assert.assertEquals(InputConfigTypes.FILE_TAILER.name(), new FileTailerInputConfig().id());
 	}
 }

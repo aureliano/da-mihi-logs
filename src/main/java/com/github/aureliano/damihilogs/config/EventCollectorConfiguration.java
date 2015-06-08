@@ -160,7 +160,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 
 	@Override
-	public String type() {
+	public String id() {
 		return "EVENT_COLLECTOR";
 	}
 }

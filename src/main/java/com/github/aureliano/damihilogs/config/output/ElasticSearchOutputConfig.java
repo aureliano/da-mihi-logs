@@ -89,7 +89,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	}
 
 	@Override
-	public String type() {
+	public String id() {
 		return "ELASTIC_SEARCH";
 	}
 
