@@ -11,6 +11,7 @@ import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -26,8 +27,6 @@ import com.github.aureliano.damihilogs.matcher.IMatcher;
 
 public class InputConfigConverter implements IConfigurationConverter<IConfigInput> {
 
-	protected static final String[] INPUT_CONFIG_TYPES = new String[] { "externalCommand", "file", "standard", "url" };
-	
 	public InputConfigConverter() {
 		super();
 	}
@@ -40,18 +39,18 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("file".equals(type)) {
+		if (InputConfigTypes.FILE.name().equalsIgnoreCase(type)) {
 			return this.createFileConfig(data);
-		} else if ("fileTailer".equals(type)) {
+		} else if (InputConfigTypes.FILE_TAILER.name().equalsIgnoreCase(type)) {
 			return this.createFileTailerConfig(data);
-		} else if ("externalCommand".equals(type)) {
+		} else if (InputConfigTypes.EXTERNAL_COMMAND.name().equalsIgnoreCase(type)) {
 			return this.createExternalCommandConfig(data);
-		} else if ("standard".equals(type)) {
+		} else if (InputConfigTypes.STANDARD.name().equalsIgnoreCase(type)) {
 			return this.createStandardConfig(data);
-		} else if ("url".equals(type)) {
+		} else if (InputConfigTypes.URL.name().equalsIgnoreCase(type)) {
 			return this.createUrlConfig(data);
 		} else {
-			throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(INPUT_CONFIG_TYPES));
+			throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(InputConfigTypes.values()));
 		}
 	}
 

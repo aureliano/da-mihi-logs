@@ -49,7 +49,7 @@
   "inputs": [
     {
       "id": "in-cmd",
-      "type": "externalCommand",
+      "type": "external_command",
       "metadata": {
         "server": "server-host"
       },
@@ -70,7 +70,7 @@
     },
     {
       "id": "in-file-tailer",
-      "type": "fileTailer",
+      "type": "file_tailer",
       "metadata": {
         "server": "banânia"
       },

@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
@@ -37,7 +38,7 @@ public class InputConfigConverterTest {
 			this.converter.convert(data);
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Input config type 'invalid' not supported. Expected one of: " + Arrays.toString(InputConfigConverter.INPUT_CONFIG_TYPES), ex.getMessage());
+			Assert.assertEquals("Input config type 'invalid' not supported. Expected one of: " + Arrays.toString(InputConfigTypes.values()), ex.getMessage());
 		}
 	}
 	
@@ -108,7 +109,7 @@ public class InputConfigConverterTest {
 		data.put("tailDelay", 50);
 		data.put("tailInterval", 100);
 		
-		data.put("type", "fileTailer");
+		data.put("type", InputConfigTypes.FILE_TAILER);
 		
 		FileTailerInputConfig conf = (FileTailerInputConfig) this.converter.convert(data);
 		Assert.assertTrue(conf.getMatcher() instanceof SingleLineMatcher);
@@ -133,7 +134,7 @@ public class InputConfigConverterTest {
 		data.put("command", "ls");
 		data.put("parameters", Arrays.asList("-la"));
 		
-		data.put("type", "externalCommand");
+		data.put("type", InputConfigTypes.EXTERNAL_COMMAND);
 		
 		ExternalCommandInput conf = (ExternalCommandInput) this.converter.convert(data);
 		Assert.assertEquals("test-123", conf.getConfigurationId());
@@ -167,7 +168,7 @@ public class InputConfigConverterTest {
 		data.put("user", "usr");
 		data.put("password", "pwd");
 		
-		data.put("type", "url");
+		data.put("type", InputConfigTypes.URL);
 		
 		UrlInputConfig conf = (UrlInputConfig) this.converter.convert(data);
 		
