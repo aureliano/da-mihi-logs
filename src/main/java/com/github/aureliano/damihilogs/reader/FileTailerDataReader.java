@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.helper.TimeHelper;
 
 public class FileTailerDataReader extends AbstractDataReader {
 
@@ -21,6 +22,9 @@ public class FileTailerDataReader extends AbstractDataReader {
 	private long filePointer;
 	private long initialTimeMillis;
 	private boolean reachedEndOfFile;
+	
+	private Long tailDelay;
+	private Long tailInterval;
 	
 	private static final Logger logger = Logger.getLogger(FileTailerDataReader.class);
 	
@@ -48,7 +52,7 @@ public class FileTailerDataReader extends AbstractDataReader {
 			long currentFileLength = this.currentFileLength();
 			while ((this.fileLength == currentFileLength) && this.reachedEndOfFile && this.shouldExecute()) {
 				try {
-					Thread.sleep(this.fileTailerConfiguration.getTailDelay());
+					Thread.sleep(this.tailDelay);
 					currentFileLength = this.currentFileLength();
 				} catch (InterruptedException ex) {
 					throw new DaMihiLogsException(ex);
@@ -134,12 +138,12 @@ public class FileTailerDataReader extends AbstractDataReader {
 	}
 	
 	private boolean shouldExecute() {
-		if (this.fileTailerConfiguration.getTailInterval() == null) {
+		if (this.tailInterval == null) {
 			return true;
 		}
 		
 		long diff = System.currentTimeMillis() - this.initialTimeMillis;
-		return (diff < this.fileTailerConfiguration.getTailInterval());
+		return (diff < this.tailInterval);
 	}
 	
 	private long currentFileLength() {
@@ -155,9 +159,15 @@ public class FileTailerDataReader extends AbstractDataReader {
 		
 		this.initializeRandomAccessFile();
 		
+		this.tailDelay = TimeHelper.convertToMilliseconds(this.fileTailerConfiguration.getTimeUnit(), this.fileTailerConfiguration.getTailDelay());
+		if (this.fileTailerConfiguration.getTailInterval() != null) {
+			this.tailInterval = TimeHelper.convertToMilliseconds(
+				this.fileTailerConfiguration.getTimeUnit(), this.fileTailerConfiguration.getTailInterval());
+		}
+		
 		logger.info("Reading data from " + this.fileTailerConfiguration.getFile().getPath());
-		logger.info("Delay milliseconds: " + this.fileTailerConfiguration.getTailDelay());
-		logger.info("Tail about " + this.fileTailerConfiguration.getTailInterval() + " milliseconds.");
+		logger.info("Delay milliseconds: " + tailDelay);
+		logger.info("Tail about " + this.tailInterval + " milliseconds.");
 		logger.info("Data encondig: " + this.fileTailerConfiguration.getEncoding());
 	}
 	
