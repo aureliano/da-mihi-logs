@@ -59,6 +59,13 @@
     "tailInterval": {
       "type": "integer",
       "description": "Time in milliseconds to tail (watch for changes) a file. Null means forever."
+    },
+    "timeUnit": {
+      "type": {
+        "anyOf": ["days", "hours", "minutes", "seconds", "milliseconds"],
+        "description": "The time unit of the initialDelay and period parameters"
+  	   },
+  	   "default": "milliseconds"
     }
   },
   "required": ["file"]

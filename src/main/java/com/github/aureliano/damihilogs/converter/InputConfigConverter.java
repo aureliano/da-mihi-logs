@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
@@ -19,6 +20,7 @@ import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.helper.TimeHelper;
 import com.github.aureliano.damihilogs.inout.CompressMetadata;
 import com.github.aureliano.damihilogs.inout.SupportedCompressionType;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -117,6 +119,14 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			}
 			conf.withTailInterval(Long.parseLong(value));
 		}
+		
+		value = StringHelper.parse(data.get("timeUnit"));
+		if (!StringHelper.isEmpty(value)) {
+			if (!TimeHelper.isValidTimeUnit(value)) {
+				throw new DaMihiLogsException("Property timeUnit was expected to be one of: " + TimeUnit.values() + " but got " + value);
+			}
+		}
+		conf.withTimeUnit(TimeUnit.valueOf(value.toUpperCase()));
 		
 		return conf;
 	}
