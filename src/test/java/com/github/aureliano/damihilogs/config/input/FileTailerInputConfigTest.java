@@ -1,5 +1,7 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,6 +16,7 @@ public class FileTailerInputConfigTest {
 		Assert.assertEquals("UTF-8", c.getEncoding());
 		Assert.assertEquals(new Long(1000), c.getTailDelay());
 		Assert.assertNull(c.getTailInterval());
+		Assert.assertEquals(TimeUnit.MILLISECONDS, c.getTimeUnit());
 	}
 	
 	@Test
@@ -37,6 +40,7 @@ public class FileTailerInputConfigTest {
 			.withFile("/there/is/not/file")
 			.withTailDelay(new Long(2000))
 			.withTailInterval(new Long(10000))
+			.withTimeUnit(TimeUnit.SECONDS)
 			.withConfigurationId("input.file.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {

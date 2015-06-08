@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
@@ -17,6 +18,7 @@ public class FileTailerInputConfig implements IConfigInput {
 	private String encoding;
 	private Long tailDelay;
 	private Long tailInterval;
+	private TimeUnit timeUnit;
 	private String id;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
@@ -28,6 +30,7 @@ public class FileTailerInputConfig implements IConfigInput {
 	public FileTailerInputConfig() {
 		this.encoding = "UTF-8";
 		this.tailDelay = 1000L;
+		this.timeUnit = TimeUnit.MILLISECONDS;
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
@@ -97,6 +100,15 @@ public class FileTailerInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public TimeUnit getTimeUnit() {
+		return timeUnit;
+	}
+	
+	public FileTailerInputConfig withTimeUnit(TimeUnit timeUnit) {
+		this.timeUnit = timeUnit;
+		return this;
+	}
+	
 	@Override
 	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
@@ -129,6 +141,7 @@ public class FileTailerInputConfig implements IConfigInput {
 			.withFile(this.file)
 			.withTailDelay(this.tailDelay)
 			.withTailInterval(this.tailInterval)
+			.withTimeUnit(this.timeUnit)
 			.withConfigurationId(this.id)
 			.withMatcher(this.matcher)
 			.withMetadata(DataHelper.copyProperties(this.metadata))
