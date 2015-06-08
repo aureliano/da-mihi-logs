@@ -191,4 +191,9 @@ public class FileInputConfig implements IConfigInput {
 		this.inputExecutionListeners.add(listener);
 		return this;
 	}
+
+	@Override
+	public String inputType() {
+		return InputConfigTypes.FILE.name();
+	}
 }

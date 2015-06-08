@@ -322,4 +322,9 @@ public class UrlInputConfig implements IConfigInput {
 		this.inputExecutionListeners.add(listener);
 		return this;
 	}
+
+	@Override
+	public String inputType() {
+		return InputConfigTypes.URL.name();
+	}
 }

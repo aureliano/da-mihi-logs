@@ -157,4 +157,9 @@ public class CustomInputConfig implements IConfigInput {
 		this.myNewProperty = myNewProperty;
 		return this;
 	}
+
+	@Override
+	public String inputType() {
+		return "CUSTOM_INPUT_CONFIG";
+	}
 }

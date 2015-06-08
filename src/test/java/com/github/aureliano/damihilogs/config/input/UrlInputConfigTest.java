@@ -96,4 +96,9 @@ public class UrlInputConfigTest {
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 	}
+	
+	@Test
+	public void testInputType() {
+		Assert.assertEquals(InputConfigTypes.URL.name(), new UrlInputConfig().inputType());
+	}
 }

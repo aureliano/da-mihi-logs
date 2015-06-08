@@ -166,4 +166,9 @@ public class ExternalCommandInput implements IConfigInput {
 		this.inputExecutionListeners.add(listener);
 		return this;
 	}
+
+	@Override
+	public String inputType() {
+		return InputConfigTypes.EXTERNAL_COMMAND.name();
+	}
 }

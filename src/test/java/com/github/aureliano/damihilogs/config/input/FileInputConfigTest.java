@@ -48,4 +48,9 @@ public class FileInputConfigTest {
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 	}
+	
+	@Test
+	public void testInputType() {
+		Assert.assertEquals(InputConfigTypes.FILE.name(), new FileInputConfig().inputType());
+	}
 }
