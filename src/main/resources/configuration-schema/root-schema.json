@@ -1,14 +1,14 @@
 {
   "id": "event-collector-configuration.json",
-  "eventCollectionSchedule": {
+  "event_collection_schedule": {
     "id": "event-collection-schedule.json",
-    "executeOnceAtSpecificTime": {
+    "execute_once_at_specific_time": {
       "id": "execute-once-at-specific-time.json"
     },
-    "executePeriodicallyAtSpecificTime": {
+    "execute_periodically_at_specific_time": {
       "id": "execute-periodically-at-specific-time.json"
     },
-    "executePeriodically": {
+    "execute_periodically": {
       "id": "execute-periodically.json"
     }
   },

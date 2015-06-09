@@ -5,9 +5,9 @@
   "properties": {
     "type": {
       "anyOf": [
-        { "$ref": "executeOnceAtSpecificTime" },
-        { "$ref": "executePeriodicallyAtSpecificTime" },
-        { "$ref": "executePeriodically" }
+        { "$ref": "execute_once_at_specific_time" },
+        { "$ref": "execute_periodically_at_specific_time" },
+        { "$ref": "execute_periodically" }
       ]
     }
   }

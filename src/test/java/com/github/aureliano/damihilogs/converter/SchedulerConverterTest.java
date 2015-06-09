@@ -14,6 +14,7 @@ import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.schedule.ExecuteOnceAtSpecificTimeSchedule;
 import com.github.aureliano.damihilogs.schedule.ExecutePeriodicallyAtSpecificTimeSchedule;
 import com.github.aureliano.damihilogs.schedule.ExecutePeriodicallySchedule;
+import com.github.aureliano.damihilogs.schedule.SchedulerTypes;
 
 public class SchedulerConverterTest {
 
@@ -31,14 +32,14 @@ private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyy
 			this.converter.convert(new HashMap<String, Object>());
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Scheduling type 'null' not supported. Expected one of: " + Arrays.toString(SchedulerConverter.SCHEDULING_TYPES), ex.getMessage());
+			Assert.assertEquals("Scheduling type 'null' not supported. Expected one of: " + Arrays.toString(SchedulerTypes.values()), ex.getMessage());
 		}
 	}
 	
 	@Test
 	public void testConvertExecuteOnceAtSpecificTimeScheduleError() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executeOnceAtSpecificTime");
+		map.put("type", "execute_once_at_specific_time");
 		
 		try {
 			this.converter.convert(map);
@@ -52,7 +53,7 @@ private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyy
 	public void testConvertExecuteOnceAtSpecificTimeSchedule() {
 		Date date = new Date();
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executeOnceAtSpecificTime");
+		map.put("type", "execute_once_at_specific_time");
 		map.put("startupTime", DATE_FORMATTER.format(date));
 		
 		ExecuteOnceAtSpecificTimeSchedule scheduling = (ExecuteOnceAtSpecificTimeSchedule) this.converter.convert(map);
@@ -60,51 +61,9 @@ private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyy
 	}
 	
 	@Test
-	public void testConvertPeriodicallyAtSpecificTimeScheduleErrorHour() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodicallyAtSpecificTime");
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property hour was expected to match \\d+ pattern in scheduler configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testConvertPeriodicallyAtSpecificTimeScheduleErrorMinute() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodicallyAtSpecificTime");
-		map.put("hour", 10);
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property minute was expected to match \\d+ pattern in scheduler configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testConvertPeriodicallyAtSpecificTimeScheduleErrorSecond() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodicallyAtSpecificTime");
-		map.put("hour", 10);
-		map.put("minute", 45);
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property second was expected to match \\d+ pattern in scheduler configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
 	public void testConvertExecutePeriodicallyAtSpecificTimeSchedule() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodicallyAtSpecificTime");
+		map.put("type", "execute_periodically_at_specific_time");
 		map.put("hour", 10);
 		map.put("minute", 45);
 		map.put("second", 15);
@@ -116,51 +75,9 @@ private static final SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyy
 	}
 	
 	@Test
-	public void testConvertExecutePeriodicallyScheduleErrorDelay() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodically");
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property delay was expected to match \\d+ pattern in scheduler configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testConvertExecutePeriodicallyScheduleErrorPeriod() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodically");
-		map.put("delay", 1);
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property period was expected to match \\d+ pattern in scheduler configuration.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testConvertExecutePeriodicallyScheduleErrorTimeUnit() {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodically");
-		map.put("delay", 1);
-		map.put("period", 2);
-		
-		try {
-			this.converter.convert(map);
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property timeUnit was expected to be one of: " + SchedulerConverter.TIME_UNITS + " but got null", ex.getMessage());
-		}
-	}
-	
-	@Test
 	public void testConvertExecutePeriodicallySchedule() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "executePeriodically");
+		map.put("type", "execute_periodically");
 		map.put("delay", 1);
 		map.put("period", 2);
 		map.put("timeUnit", TimeUnit.HOURS.name().toLowerCase());

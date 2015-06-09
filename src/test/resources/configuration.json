@@ -6,7 +6,7 @@
     "test": "something"
   },
   "scheduler": {
-    "type": "executePeriodically",
+    "type": "execute_periodically",
     "delay": "1",
     "period": "10",
     "timeUnit": "minutes"
