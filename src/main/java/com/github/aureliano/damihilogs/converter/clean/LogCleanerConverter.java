@@ -14,6 +14,9 @@ import com.github.aureliano.damihilogs.helper.TimeHelper;
 
 public class LogCleanerConverter implements IConfigurationConverter<ICleaner> {
 
+	private static final String LOG_DATA_METHOD = "removeLogDataFilesAfter";
+	private static final String LOG_ECHO_METHOD = "removeLogEchoFilesAfter";
+	
 	public LogCleanerConverter() {
 		super();
 	}
@@ -21,17 +24,17 @@ public class LogCleanerConverter implements IConfigurationConverter<ICleaner> {
 	@Override
 	public ICleaner convert(Map<String, Object> data) {
 		LogCleaner cleaner = new LogCleaner();
-		if (data.get("removeLogDataFilesAfter") != null) {
-			this.configureDataLogCleaner(cleaner, (Map<String, Object>) data.get("removeLogDataFilesAfter"));
+		if (data.get(LOG_DATA_METHOD) != null) {
+			this.configureLogCleaner(cleaner, (Map<String, Object>) data.get(LOG_DATA_METHOD), LOG_DATA_METHOD);
 		}
-		if (data.get("removeLogEchoFilesAfter") != null) {
-			this.configureEchoLogCleaner(cleaner, (Map<String, Object>) data.get("removeLogEchoFilesAfter"));
+		if (data.get(LOG_ECHO_METHOD) != null) {
+			this.configureLogCleaner(cleaner, (Map<String, Object>) data.get(LOG_ECHO_METHOD), LOG_ECHO_METHOD);
 		}
 		
 		return cleaner;
 	}
 	
-	private void configureDataLogCleaner(LogCleaner cleaner, Map<String, Object> data) {
+	private void configureLogCleaner(LogCleaner cleaner, Map<String, Object> data, String method) {
 		String value = StringHelper.parse(data.get("fileNameRegex"));
 		cleaner.withDataFileNameRegex(value);
 		
@@ -44,7 +47,7 @@ public class LogCleanerConverter implements IConfigurationConverter<ICleaner> {
 			String time = StringHelper.parse(data.get("value"));
 			
 			if (StringHelper.isEmpty(time) || !time.matches("\\d+")) {
-				throw new DaMihiLogsException("Property removeLogDataFilesAfter => value was expected to match \\d+ pattern in cleaner configuration.");
+				throw new DaMihiLogsException("Property " + method + " => value was expected to match \\d+ pattern in cleaner configuration.");
 			}
 			
 			if (value.equalsIgnoreCase(TimeUnit.MILLISECONDS.name())
@@ -55,39 +58,7 @@ public class LogCleanerConverter implements IConfigurationConverter<ICleaner> {
 						TimeUnit.MINUTES + " but got " + value);
 			}
 			
-			String methodName = "removeLogDataFilesAfter" + StringHelper.capitalize(value.toLowerCase());
-			Class<?>[] types = new Class<?>[] { Integer.class };
-			Integer[] parameters = new Integer[] {Integer.parseInt(time)};
-			
-			ReflectionHelper.callMethod(cleaner, methodName, types, parameters);
-		}
-	}
-	
-	private void configureEchoLogCleaner(LogCleaner cleaner, Map<String, Object> data) {
-		String value = StringHelper.parse(data.get("fileNameRegex"));
-		cleaner.withDataFileNameRegex(value);
-		
-		value = StringHelper.parse(data.get("timeUnit"));
-		if (!StringHelper.isEmpty(value)) {
-			if (!TimeHelper.isValidTimeUnit(value)) {
-				throw new DaMihiLogsException("Property timeUnit was expected to be one of: " + Arrays.toString(TimeUnit.values()) + " but got " + value);
-			}
-			
-			String time = StringHelper.parse(data.get("value"));
-			
-			if (StringHelper.isEmpty(time) || !time.matches("\\d+")) {
-				throw new DaMihiLogsException("Property removeLogEchoFilesAfter => value was expected to match \\d+ pattern in cleaner configuration.");
-			}
-			
-			if (value.equalsIgnoreCase(TimeUnit.MILLISECONDS.name())
-					|| value.equalsIgnoreCase(TimeUnit.MICROSECONDS.name())
-					|| value.equalsIgnoreCase(TimeUnit.NANOSECONDS.name())) {
-
-				throw new DaMihiLogsException("Unsupported time unit. The smallest time unit supported for cleaner is " +
-						TimeUnit.MINUTES + " but got " + value);
-			}
-			
-			String methodName = "removeLogEchoFilesAfter" + StringHelper.capitalize(value.toLowerCase());
+			String methodName = method + StringHelper.capitalize(value.toLowerCase());
 			Class<?>[] types = new Class<?>[] { Integer.class };
 			Integer[] parameters = new Integer[] {Integer.parseInt(time)};
 			
