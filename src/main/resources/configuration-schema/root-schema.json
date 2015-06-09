@@ -20,10 +20,10 @@
   },
   "cleaner": {
     "id": "cleaner.json",
-    "fileCleaner": {
+    "file": {
       "id": "file-cleaner.json"
     },
-    "logCleaner": {
+    "log": {
       "id": "log-cleaner.json"
     },
     "cleaningConfig": {

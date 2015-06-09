@@ -7,6 +7,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.clean.CleanerTypes;
 import com.github.aureliano.damihilogs.clean.FileCleaner;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.clean.LogCleaner;
@@ -26,14 +27,14 @@ public class CleanerConverterTest {
 			this.converter.convert(new HashMap<String, Object>());
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Cleaner type 'null' not supported. Expected one of: " + Arrays.toString(CleanerConverter.CLEANER_TYPES), ex.getMessage());
+			Assert.assertEquals("Cleaner type 'null' not supported. Expected one of: " + Arrays.toString(CleanerTypes.values()), ex.getMessage());
 		}
 	}
 	
 	@Test
 	public void testCreateCleanerConverterErrorTimeUnit() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "fileCleaner");
+		map.put("type", "file");
 		map.put("removeFilesAfter", new HashMap<String, Object>());
 		
 		try {
@@ -49,7 +50,7 @@ public class CleanerConverterTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> after = new HashMap<String, Object>();
 		after.put("timeUnit", "HOURS");
-		map.put("type", "fileCleaner");
+		map.put("type", "file");
 		map.put("removeFilesAfter", after);
 		
 		try {
@@ -67,7 +68,7 @@ public class CleanerConverterTest {
 		after.put("value", 5);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "fileCleaner");
+		map.put("type", "file");
 		map.put("removeFilesAfter", after);
 		
 		ICleaner cleaner = this.converter.convert(map);
@@ -77,7 +78,7 @@ public class CleanerConverterTest {
 	@Test
 	public void testCreateLogCleanerConverterErrorTimeUnit() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "logCleaner");
+		map.put("type", "log");
 		map.put("removeLogDataFilesAfter", new HashMap<String, Object>());
 		
 		try {
@@ -109,7 +110,7 @@ public class CleanerConverterTest {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> after = new HashMap<String, Object>();
 		after.put("timeUnit", "HOURS");
-		map.put("type", "logCleaner");
+		map.put("type", "log");
 		map.put("removeLogDataFilesAfter", after);
 		
 		try {
@@ -144,7 +145,7 @@ public class CleanerConverterTest {
 		after.put("value", 5);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "logCleaner");
+		map.put("type", "log");
 		map.put("removeFilesAfter", after);
 		
 		ICleaner cleaner = this.converter.convert(map);

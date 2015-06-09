@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.clean.CleanerTypes;
 import com.github.aureliano.damihilogs.clean.FileCleaner;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.clean.LogCleaner;
@@ -14,7 +15,6 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 
 public class CleanerConverter implements IConfigurationConverter<ICleaner> {
 
-	protected static final String[] CLEANER_TYPES = { "fileCleaner", "logCleaner" };
 	protected static final List<String> TIME_UNITS = Arrays.asList("DAYS", "HOURS", "MINUTES", "SECONDS");
 	
 	public CleanerConverter() {
@@ -25,12 +25,12 @@ public class CleanerConverter implements IConfigurationConverter<ICleaner> {
 	public ICleaner convert(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("fileCleaner".equals(type)) {
+		if (CleanerTypes.FILE.name().equalsIgnoreCase(type)) {
 			return this.createFileCleaner(data);
-		} else if ("logCleaner".equals(type)) {
+		} else if (CleanerTypes.LOG.name().equalsIgnoreCase(type)) {
 			return this.createLogCleaner(data);
 		} else {
-			throw new DaMihiLogsException("Cleaner type '" + type + "' not supported. Expected one of: " + Arrays.toString(CLEANER_TYPES));
+			throw new DaMihiLogsException("Cleaner type '" + type + "' not supported. Expected one of: " + Arrays.toString(CleanerTypes.values()));
 		}
 	}
 

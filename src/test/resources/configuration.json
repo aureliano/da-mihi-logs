@@ -22,7 +22,7 @@
   ],
   "cleaners": [
     {
-      "type": "fileCleaner",
+      "type": "file",
       "directory": "target/cleaner",
       "fileNameRegex": "\\w+",
       "removeFilesAfter": {
@@ -31,7 +31,7 @@
       }
     },
     {
-      "type": "logCleaner",
+      "type": "log",
       "removeLogDataFilesAfter": {
         "fileNameRegex": "[\\w\\d]+\\.log",
         "timeUnit": "hours",
