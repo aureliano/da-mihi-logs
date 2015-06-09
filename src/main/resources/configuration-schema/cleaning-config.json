@@ -13,7 +13,7 @@
         "description": "The time unit of the removeAfter parameter"
       }
     },
-    "removeAfter": {
+    "value": {
       "type": "integer",
       "description": "The time which files will be preserved from deletion. For example, you may want to delete files which creation time is higher than 1 hour."
     }
