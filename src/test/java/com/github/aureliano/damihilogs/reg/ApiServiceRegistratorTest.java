@@ -1,9 +1,10 @@
-package com.github.aureliano.damihilogs;
+package com.github.aureliano.damihilogs.reg;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.CustomDataReader;
+import com.github.aureliano.damihilogs.CustomInputConfig;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
@@ -21,11 +22,11 @@ import com.github.aureliano.damihilogs.writer.ElasticSearchDataWriter;
 import com.github.aureliano.damihilogs.writer.FileDataWriter;
 import com.github.aureliano.damihilogs.writer.StandardDataWriter;
 
-public class ExecutorRegistrationServiceTest {
+public class ApiServiceRegistratorTest {
 
 	@Test
-	public void testDefaultExecutorRegistrations() {
-		ExecutorRegistrationService service = ExecutorRegistrationService.instance();
+	public void testCoreExecutorRegistrations() {
+		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 		Assert.assertTrue(service.createExecutor(new FileInputConfig()) instanceof FileDataReader);
 		Assert.assertTrue(service.createExecutor(new FileTailerInputConfig()) instanceof FileTailerDataReader);
 		Assert.assertTrue(service.createExecutor(new StandardInputConfig()) instanceof StandardDataReader);
@@ -38,8 +39,18 @@ public class ExecutorRegistrationServiceTest {
 
 	@Test
 	public void testCustomExecutorRegistrations() {
-		ExecutorRegistrationService service = ExecutorRegistrationService.instance();
-		service.addExecutor(CustomInputConfig.class, CustomDataReader.class);
+		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+		service.registrate(
+			new ServiceRegistration()
+				.withConfiguration(CustomInputConfig.class)
+				.withExecutor(CustomDataReader.class));
+		Assert.assertTrue(service.createExecutor(new CustomInputConfig()) instanceof CustomDataReader);
+	}
+
+	@Test
+	public void testCustomExecutorRegistrations2() {
+		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+		service.registrate(CustomInputConfig.class, CustomDataReader.class);
 		Assert.assertTrue(service.createExecutor(new CustomInputConfig()) instanceof CustomDataReader);
 	}
 }

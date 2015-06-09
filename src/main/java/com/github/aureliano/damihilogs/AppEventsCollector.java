@@ -17,6 +17,7 @@ import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.listener.EventsCollectorListener;
 import com.github.aureliano.damihilogs.profile.Profiler;
+import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 
 public class AppEventsCollector {
@@ -149,10 +150,7 @@ public class AppEventsCollector {
 	}
 	
 	public AppEventsCollector registrateExecutor(Class<? extends IConfiguration> configuration, Class<? extends IExecutor> executor) {
-		ExecutorRegistrationService
-			.instance()
-			.addExecutor(configuration, executor);
-		
+		ApiServiceRegistrator.instance().registrate(configuration, executor);
 		return this;
 	}
 }

@@ -7,7 +7,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.ExecutorRegistrationService;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
@@ -23,6 +22,7 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reader.IDataReader;
+import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
 import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class CollectEventsCommand {
@@ -139,7 +139,7 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		IDataReader dataReader = (IDataReader) ExecutorRegistrationService.instance().createExecutor(inputConfig);
+		IDataReader dataReader = (IDataReader) ApiServiceRegistrator.instance().createExecutor(inputConfig);
 		
 		if (inputConfig.getMatcher() == null) {
 			inputConfig.withMatcher(new SingleLineMatcher());
@@ -168,7 +168,7 @@ public class CollectEventsCommand {
 				outputConfig.withFilter(new DefaultEmptyFilter());
 			}
 			
-			IDataWriter dataWriter = (IDataWriter) ExecutorRegistrationService.instance().createExecutor(outputConfig);
+			IDataWriter dataWriter = (IDataWriter) ApiServiceRegistrator.instance().createExecutor(outputConfig);
 			dataWriters.add(dataWriter);
 		}
 		
