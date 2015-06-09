@@ -8,6 +8,7 @@ import java.util.Properties;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
@@ -20,8 +21,6 @@ import com.github.aureliano.damihilogs.parser.IParser;
 
 public class OutputConfigConverter implements IConfigurationConverter<IConfigOutput> {
 
-	protected static final String[] OUTPUT_CONFIG_TYPES = new String[] { "elasticSearch", "file", "Standard" };
-	
 	public OutputConfigConverter() {
 		super();
 	}
@@ -34,14 +33,14 @@ public class OutputConfigConverter implements IConfigurationConverter<IConfigOut
 		
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("elasticSearch".equals(type)) {
+		if (OutputConfigTypes.ELASTIC_SEARCH.name().equalsIgnoreCase(type)) {
 			return this.createElasticSearchConfig(data);
-		} else if ("file".equals(type)) {
+		} else if (OutputConfigTypes.FILE_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return this.createFileConfig(data);
-		} else if ("standard".equals(type)) {
+		} else if (OutputConfigTypes.STANDARD_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return this.createStandardConfig(data);
 		} else {
-			throw new DaMihiLogsException("Output config type '" + type + "' not supported. Expected one of: " + Arrays.toString(OUTPUT_CONFIG_TYPES));
+			throw new DaMihiLogsException("Output config type '" + type + "' not supported. Expected one of: " + Arrays.toString(OutputConfigTypes.values()));
 		}
 	}
 

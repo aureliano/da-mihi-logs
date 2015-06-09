@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
@@ -34,7 +35,7 @@ public class OutputConfigConverterTest {
 			this.converter.convert(map);
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output config type 'invalid' not supported. Expected one of: " + Arrays.toString(OutputConfigConverter.OUTPUT_CONFIG_TYPES), ex.getMessage());
+			Assert.assertEquals("Output config type 'invalid' not supported. Expected one of: " + Arrays.toString(OutputConfigTypes.values()), ex.getMessage());
 		}
 	}
 	
