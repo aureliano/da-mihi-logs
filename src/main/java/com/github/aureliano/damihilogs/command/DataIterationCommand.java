@@ -8,9 +8,9 @@ import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.event.AfterInputEvent;
 import com.github.aureliano.damihilogs.event.BeforeInputEvent;
 import com.github.aureliano.damihilogs.executor.reader.IDataReader;
+import com.github.aureliano.damihilogs.executor.writer.IDataWriter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
-import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class DataIterationCommand implements Runnable {
 

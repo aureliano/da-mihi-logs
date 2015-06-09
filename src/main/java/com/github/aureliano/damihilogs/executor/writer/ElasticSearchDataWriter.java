@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.writer;
+package com.github.aureliano.damihilogs.executor.writer;
 
 import org.apache.log4j.Logger;
 

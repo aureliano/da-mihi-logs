@@ -18,9 +18,9 @@ import com.github.aureliano.damihilogs.executor.reader.FileDataReader;
 import com.github.aureliano.damihilogs.executor.reader.FileTailerDataReader;
 import com.github.aureliano.damihilogs.executor.reader.StandardDataReader;
 import com.github.aureliano.damihilogs.executor.reader.UrlDataReader;
-import com.github.aureliano.damihilogs.writer.ElasticSearchDataWriter;
-import com.github.aureliano.damihilogs.writer.FileDataWriter;
-import com.github.aureliano.damihilogs.writer.StandardDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.ElasticSearchDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.FileDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.StandardDataWriter;
 
 public class ApiServiceRegistratorTest {
 

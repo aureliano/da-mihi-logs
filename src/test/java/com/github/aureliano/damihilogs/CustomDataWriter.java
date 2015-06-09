@@ -1,6 +1,6 @@
 package com.github.aureliano.damihilogs;
 
-import com.github.aureliano.damihilogs.writer.AbstractDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.AbstractDataWriter;
 
 public class CustomDataWriter extends AbstractDataWriter {
 

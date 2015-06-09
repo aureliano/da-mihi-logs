@@ -15,6 +15,7 @@ import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.exception.ThreadExceptionHandler;
 import com.github.aureliano.damihilogs.executor.reader.IDataReader;
+import com.github.aureliano.damihilogs.executor.writer.IDataWriter;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.ExceptionHandlerHelper;
@@ -23,7 +24,6 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
-import com.github.aureliano.damihilogs.writer.IDataWriter;
 
 public class CollectEventsCommand {
 

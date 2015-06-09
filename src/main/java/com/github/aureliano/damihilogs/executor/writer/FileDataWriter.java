@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.writer;
+package com.github.aureliano.damihilogs.executor.writer;
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
