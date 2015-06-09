@@ -5,9 +5,9 @@
   "properties": {
     "type": {
       "anyOf": [
-      	{ "$ref": "externalCommand" },
+      	{ "$ref": "external_command" },
       	{ "$ref": "file" },
-      	{ "$ref": "fileTailer" },
+      	{ "$ref": "file_tailer" },
       	{ "$ref": "standard" },
       	{ "$ref": "url" }
       ]

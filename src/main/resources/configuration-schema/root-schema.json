@@ -32,13 +32,13 @@
   },
   "input": {
     "id": "input.json",
-    "externalCommand": {
+    "external_command": {
       "id": "input-external-command.json"
     },
     "file": {
       "id": "input-file.json"
     },
-    "fileTailer": {
+    "file_tailer": {
       "id": "input-file-tailer.json"
     },
     "standard": {
