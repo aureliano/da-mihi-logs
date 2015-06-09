@@ -3,7 +3,6 @@ package com.github.aureliano.damihilogs.reg;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.github.aureliano.damihilogs.IExecutor;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
@@ -14,6 +13,7 @@ import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+import com.github.aureliano.damihilogs.executor.IExecutor;
 import com.github.aureliano.damihilogs.executor.reader.ExternalCommandDataReader;
 import com.github.aureliano.damihilogs.executor.reader.FileDataReader;
 import com.github.aureliano.damihilogs.executor.reader.FileTailerDataReader;

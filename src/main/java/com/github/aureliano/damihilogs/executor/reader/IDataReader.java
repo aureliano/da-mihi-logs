@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.executor.reader;
 import java.util.Map;
 import java.util.Properties;
 
-import com.github.aureliano.damihilogs.IExecutor;
+import com.github.aureliano.damihilogs.executor.IExecutor;
 
 public interface IDataReader extends IExecutor {
 	

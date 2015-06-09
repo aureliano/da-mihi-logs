@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs;
+package com.github.aureliano.damihilogs.executor;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
 

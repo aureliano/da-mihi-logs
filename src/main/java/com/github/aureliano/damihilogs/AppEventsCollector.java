@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.event.AfterCollectorsEvent;
 import com.github.aureliano.damihilogs.event.BeforeCollectorsEvent;
+import com.github.aureliano.damihilogs.executor.IExecutor;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;

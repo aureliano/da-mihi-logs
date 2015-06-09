@@ -1,8 +1,8 @@
 package com.github.aureliano.damihilogs.reg;
 
-import com.github.aureliano.damihilogs.IExecutor;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
+import com.github.aureliano.damihilogs.executor.IExecutor;
 
 public class ServiceRegistration {
 

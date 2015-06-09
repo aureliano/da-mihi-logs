@@ -1,6 +1,6 @@
 package com.github.aureliano.damihilogs.executor.writer;
 
-import com.github.aureliano.damihilogs.IExecutor;
+import com.github.aureliano.damihilogs.executor.IExecutor;
 
 public interface IDataWriter extends IExecutor {
 	
