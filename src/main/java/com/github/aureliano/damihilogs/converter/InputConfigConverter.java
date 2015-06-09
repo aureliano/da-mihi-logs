@@ -39,9 +39,9 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			return null;
 		}
 		
-		String type = StringHelper.parse(data.get("type"));
+		String type = StringHelper.parse(data.get("type"));;
 		
-		if (InputConfigTypes.FILE_INPUT.name().equalsIgnoreCase(type)) {
+		if (InputConfigTypes.FILE_INPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return this.createFileConfig(data);
 		} else if (InputConfigTypes.FILE_TAILER.name().equalsIgnoreCase(type)) {
 			return this.createFileTailerConfig(data);
