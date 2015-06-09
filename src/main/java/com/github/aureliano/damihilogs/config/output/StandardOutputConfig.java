@@ -25,7 +25,7 @@ public class StandardOutputConfig implements IConfigOutput {
 
 	@Override
 	public String id() {
-		return "STANDARD";
+		return "STANDARD_OUTPUT";
 	}
 
 	@Override

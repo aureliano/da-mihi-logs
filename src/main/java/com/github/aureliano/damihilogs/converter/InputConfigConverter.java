@@ -47,7 +47,7 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 			return this.createFileTailerConfig(data);
 		} else if (InputConfigTypes.EXTERNAL_COMMAND.name().equalsIgnoreCase(type)) {
 			return this.createExternalCommandConfig(data);
-		} else if (InputConfigTypes.STANDARD.name().equalsIgnoreCase(type)) {
+		} else if (InputConfigTypes.STANDARD_INPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return this.createStandardConfig(data);
 		} else if (InputConfigTypes.URL.name().equalsIgnoreCase(type)) {
 			return this.createUrlConfig(data);

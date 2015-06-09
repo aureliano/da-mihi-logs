@@ -153,6 +153,6 @@ public class StandardInputConfig implements IConfigInput {
 
 	@Override
 	public String id() {
-		return InputConfigTypes.STANDARD.name();
+		return InputConfigTypes.STANDARD_INPUT.name();
 	}
 }
