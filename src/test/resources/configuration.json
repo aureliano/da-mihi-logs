@@ -120,7 +120,7 @@
 
   "outputs": [
     {
-      "type": "elasticSearch",
+      "type": "elastic_search",
       "metadata": {
         "crusader": "Jacques de Moley"
       },

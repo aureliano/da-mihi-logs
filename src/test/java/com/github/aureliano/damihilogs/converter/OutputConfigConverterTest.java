@@ -97,7 +97,7 @@ public class OutputConfigConverterTest {
 		data.put("index", "my-index");
 		data.put("mappingType", "new-type");
 		
-		data.put("type", "elasticSearch");
+		data.put("type", OutputConfigTypes.ELASTIC_SEARCH);
 		
 		ElasticSearchOutputConfig conf = (ElasticSearchOutputConfig) this.converter.convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());
@@ -130,7 +130,7 @@ public class OutputConfigConverterTest {
 		data.put("filter", DefaultEmptyFilter.class.getName());
 		data.put("formatter", PlainTextFormatter.class.getName());
 		
-		data.put("type", "standard");
+		data.put("type", OutputConfigTypes.STANDARD_OUTPUT);
 		
 		StandardOutputConfig conf = (StandardOutputConfig) this.converter.convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());
