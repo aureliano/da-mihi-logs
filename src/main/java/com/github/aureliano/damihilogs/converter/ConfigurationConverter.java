@@ -10,7 +10,6 @@ import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
-import com.github.aureliano.damihilogs.converter.clean.CleanerConverter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
@@ -96,19 +95,7 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private List<ICleaner> convertCleaner(Map<String, Object> data) {
-		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("cleaners");
-		if (list == null) {
-			return Collections.emptyList();
-		}
-		
-		List<ICleaner> cleaners = new ArrayList<ICleaner>(list.size());
-		CleanerConverter converter = new CleanerConverter();
-		
-		for (Map<String, Object> map : list) {
-			cleaners.add(converter.convert(map));
-		}
-		
-		return cleaners;
+		return (List<ICleaner>) ConversionApplyer.apply(ConverterType.CLEAN, data);
 	}
 	
 	private List<EventsCollectorListener> convertEventsCollectorListeners(Map<String, Object> data) {
