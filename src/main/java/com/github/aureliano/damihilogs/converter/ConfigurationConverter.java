@@ -10,6 +10,7 @@ import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.converter.clean.CleanerConverter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
