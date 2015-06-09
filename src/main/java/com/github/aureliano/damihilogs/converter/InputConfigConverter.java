@@ -41,7 +41,7 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		
 		String type = StringHelper.parse(data.get("type"));
 		
-		if (InputConfigTypes.FILE.name().equalsIgnoreCase(type)) {
+		if (InputConfigTypes.FILE_INPUT.name().equalsIgnoreCase(type)) {
 			return this.createFileConfig(data);
 		} else if (InputConfigTypes.FILE_TAILER.name().equalsIgnoreCase(type)) {
 			return this.createFileTailerConfig(data);
