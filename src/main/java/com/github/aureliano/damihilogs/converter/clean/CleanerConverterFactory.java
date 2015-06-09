@@ -7,9 +7,9 @@ import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
-public final class CleanerFactory {
+public final class CleanerConverterFactory {
 
-	private CleanerFactory() {
+	private CleanerConverterFactory() {
 		super();
 	}
 	

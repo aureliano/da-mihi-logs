@@ -15,6 +15,6 @@ public class CleanerConverter implements IConfigurationConverter<ICleaner> {
 	@Override
 	public ICleaner convert(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
-		return CleanerFactory.createConverter(type).convert(data);
+		return CleanerConverterFactory.createConverter(type).convert(data);
 	}
 }

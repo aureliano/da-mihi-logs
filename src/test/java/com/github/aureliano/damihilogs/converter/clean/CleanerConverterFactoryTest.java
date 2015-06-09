@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.clean.CleanerTypes;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
-public class CleanerFactoryTest {
+public class CleanerConverterFactoryTest {
 	
 	@Test
 	public void testCreateConverterNonexistent() {
@@ -17,7 +17,7 @@ public class CleanerFactoryTest {
 		String errorMessage = "Cleaner type '" + type + "' not supported. Expected one of: " + Arrays.toString(CleanerTypes.values());
 		
 		try {
-			CleanerFactory.createConverter(type);
+			CleanerConverterFactory.createConverter(type);
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals(errorMessage, ex.getMessage());
@@ -26,9 +26,9 @@ public class CleanerFactoryTest {
 
 	@Test
 	public void testCreateConverter() {
-		Assert.assertTrue(CleanerFactory.createConverter(CleanerTypes.FILE.name()) instanceof FileCleanerConverter);
-		Assert.assertTrue(CleanerFactory.createConverter(CleanerTypes.FILE.name().toLowerCase()) instanceof FileCleanerConverter);
-		Assert.assertTrue(CleanerFactory.createConverter(CleanerTypes.LOG.name()) instanceof LogCleanerConverter);
-		Assert.assertTrue(CleanerFactory.createConverter(CleanerTypes.LOG.name().toLowerCase()) instanceof LogCleanerConverter);
+		Assert.assertTrue(CleanerConverterFactory.createConverter(CleanerTypes.FILE.name()) instanceof FileCleanerConverter);
+		Assert.assertTrue(CleanerConverterFactory.createConverter(CleanerTypes.FILE.name().toLowerCase()) instanceof FileCleanerConverter);
+		Assert.assertTrue(CleanerConverterFactory.createConverter(CleanerTypes.LOG.name()) instanceof LogCleanerConverter);
+		Assert.assertTrue(CleanerConverterFactory.createConverter(CleanerTypes.LOG.name().toLowerCase()) instanceof LogCleanerConverter);
 	}
 }
