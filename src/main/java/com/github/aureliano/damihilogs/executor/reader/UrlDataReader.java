@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.reader;
+package com.github.aureliano.damihilogs.executor.reader;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

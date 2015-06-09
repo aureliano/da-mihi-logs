@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.reader;
+package com.github.aureliano.damihilogs.executor.reader;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;

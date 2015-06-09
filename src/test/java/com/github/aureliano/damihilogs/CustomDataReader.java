@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 
-import com.github.aureliano.damihilogs.reader.AbstractDataReader;
+import com.github.aureliano.damihilogs.executor.reader.AbstractDataReader;
 
 public class CustomDataReader extends AbstractDataReader {
 
