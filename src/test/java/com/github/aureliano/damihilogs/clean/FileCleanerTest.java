@@ -19,7 +19,7 @@ public class FileCleanerTest {
 	@Test
 	public void testValidation() {
 		try {
-			new FileCleaner(null).validation();
+			new FileCleaner(null).validate();
 			Assert.fail();
 		} catch (DaMihiLogsException ex) {
 			Assert.assertEquals("Time seed for clean task not provided.", ex.getMessage());
@@ -28,7 +28,7 @@ public class FileCleanerTest {
 		try {
 			FileCleaner c = new FileCleaner(null);
 			c.removeFilesAfterDays(1);
-			c.validation();
+			c.validate();
 			
 			Assert.fail();
 		} catch (DaMihiLogsException ex) {
@@ -38,7 +38,7 @@ public class FileCleanerTest {
 		try {
 			FileCleaner c = new FileCleaner(new File("/non/existing/folder"));
 			c.removeFilesAfterDays(1);
-			c.validation();
+			c.validate();
 			
 			Assert.fail();
 		} catch (DaMihiLogsException ex) {
@@ -47,7 +47,7 @@ public class FileCleanerTest {
 		
 		FileCleaner c = new FileCleaner(new File("src/test/resources"));
 		c.removeFilesAfterDays(1);
-		c.validation();
+		c.validate();
 	}
 	
 	@Test

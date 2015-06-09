@@ -53,7 +53,8 @@ public class AppEventsCollector {
 	
 	private void _execute() {
 		this.configureThreadName();
-		this.configureLogger();		
+		this.configureLogger();	
+		this.validateCleaners();
 		
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
@@ -96,6 +97,12 @@ public class AppEventsCollector {
 			} catch (Exception ex) {
 				logger.error("An exception ocurred when executing cleaner.", ex);
 			}
+		}
+	}
+	
+	private void validateCleaners() {
+		for (ICleaner cleaner : this.configuration.getCleaners()) {
+			cleaner.validate();
 		}
 	}
 	

@@ -69,4 +69,10 @@ public class LogCleaner implements ICleaner {
 		this.dataCleaner.clean();
 		this.echoCleaner.clean();
 	}
+	
+	@Override
+	public void validate() {
+		this.dataCleaner.validate();
+		this.echoCleaner.validate();
+	}
 }

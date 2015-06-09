@@ -19,7 +19,6 @@ public class FileCleaner implements ICleaner {
 
 	@Override
 	public void clean() {
-		this.validation();
 		if (this.fileNameRegex == null) {
 			this.fileNameRegex = "";
 		}
@@ -27,7 +26,8 @@ public class FileCleaner implements ICleaner {
 		FileHelper.deleteAllFiles(this.directory, (System.currentTimeMillis() - this.seed), this.fileNameRegex);
 	}
 	
-	protected void validation() {
+	@Override
+	public void validate() {
 		if (this.seed == null) {
 			throw new DaMihiLogsException("Time seed for clean task not provided.");
 		} else if (this.directory == null) {
