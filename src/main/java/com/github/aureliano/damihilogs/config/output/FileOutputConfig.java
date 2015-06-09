@@ -33,7 +33,7 @@ public class FileOutputConfig implements IConfigOutput {
 
 	@Override
 	public String id() {
-		return "FILE_OUTPUT";
+		return OutputConfigTypes.FILE_OUTPUT.name();
 	}
 
 	public File getFile() {

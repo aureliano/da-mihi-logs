@@ -40,4 +40,9 @@ public class ElasticSearchOutputConfigTest {
 		Assert.assertEquals(c1.isPrintElasticSearchLog(), c2.isPrintElasticSearchLog());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
+	
+	@Test
+	public void testOutputType() {
+		Assert.assertEquals(OutputConfigTypes.ELASTIC_SEARCH.name(), new ElasticSearchOutputConfig().id());
+	}
 }

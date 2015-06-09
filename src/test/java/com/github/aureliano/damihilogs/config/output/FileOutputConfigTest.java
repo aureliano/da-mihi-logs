@@ -42,4 +42,9 @@ public class FileOutputConfigTest {
 		Assert.assertEquals(c1.isUseBuffer(), c2.isUseBuffer());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 	}
+	
+	@Test
+	public void testOutputType() {
+		Assert.assertEquals(OutputConfigTypes.FILE_OUTPUT.name(), new FileOutputConfig().id());
+	}
 }
