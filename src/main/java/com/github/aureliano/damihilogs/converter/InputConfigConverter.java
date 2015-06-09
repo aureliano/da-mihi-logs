@@ -123,7 +123,7 @@ public class InputConfigConverter implements IConfigurationConverter<IConfigInpu
 		value = StringHelper.parse(data.get("timeUnit"));
 		if (!StringHelper.isEmpty(value)) {
 			if (!TimeHelper.isValidTimeUnit(value)) {
-				throw new DaMihiLogsException("Property timeUnit was expected to be one of: " + TimeUnit.values() + " but got " + value);
+				throw new DaMihiLogsException("Property timeUnit was expected to be one of: " + Arrays.toString(TimeUnit.values()) + " but got " + value);
 			}
 			conf.withTimeUnit(TimeUnit.valueOf(value.toUpperCase()));
 		}
