@@ -5,7 +5,7 @@
   "properties": {
     "type": {
       "anyOf": [
-      	{ "$ref": "elasticSearch" },
+      	{ "$ref": "elastic_search" },
       	{ "$ref": "file" },
       	{ "$ref": "standard" }
       ]

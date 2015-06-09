@@ -53,7 +53,7 @@
   },
   "output": {
     "id": "output.json",
-    "elasticSearch": {
+    "elastic_search": {
       "id": "output-elastic-search.json"
     },
     "file": {
