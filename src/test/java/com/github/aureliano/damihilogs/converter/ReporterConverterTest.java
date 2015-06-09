@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.report.HtmlReporter;
 import com.github.aureliano.damihilogs.report.ReportLanguage;
+import com.github.aureliano.damihilogs.report.ReporterTypes;
 
 public class ReporterConverterTest {
 
@@ -25,7 +26,7 @@ public class ReporterConverterTest {
 			this.converter.convert(new HashMap<String, Object>());
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Report type 'null' not supported. Expected one of: " + Arrays.toString(ReporterConverter.REPORT_TYPES), ex.getMessage());
+			Assert.assertEquals("Report type 'null' not supported. Expected one of: " + Arrays.toString(ReporterTypes.values()), ex.getMessage());
 		}
 	}
 	
@@ -33,7 +34,7 @@ public class ReporterConverterTest {
 	public void testCreateHtmlReporterErrorLanguage() {
 		String language = "test";
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "htmlReporter");
+		map.put("type", ReporterTypes.HTML);
 		map.put("outputDir", "src/test/resources");
 		map.put("language", language);
 		
@@ -41,14 +42,14 @@ public class ReporterConverterTest {
 			this.converter.convert(map);
 			Assert.fail("An exception was expected.");
 		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Property language was expected to be one of: " + ReporterConverter.LANGUAGES + " but got " + language, ex.getMessage());
+			Assert.assertEquals("Property language was expected to be one of: " + Arrays.toString(ReportLanguage.values()) + " but got " + language, ex.getMessage());
 		}
 	}
 	
 	@Test
 	public void testCreateHtmlReporter() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("type", "htmlReporter");
+		map.put("type", "html");
 		map.put("outputDir", "src/test/resources");
 		
 		HtmlReporter reporter = (HtmlReporter) this.converter.convert(map);

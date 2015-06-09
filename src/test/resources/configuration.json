@@ -13,7 +13,7 @@
   },
   "reporters": [
     {
-      "type": "htmlReporter",
+      "type": "html",
       "language": "portuguese",
       "title": "Da mihi logs",
       "description": "Test configuration",

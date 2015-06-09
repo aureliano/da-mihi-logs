@@ -11,11 +11,11 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.report.HtmlReporter;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.report.ReportLanguage;
+import com.github.aureliano.damihilogs.report.ReporterTypes;
 
 public class ReporterConverter implements IConfigurationConverter<ILoggerReporter> {
 	
-	protected static final String[] REPORT_TYPES = { "htmlReporter" };
-	protected static final List<String> LANGUAGES = loadLanguages();
+	private static final List<String> LANGUAGES = loadLanguages();
 	
 	public ReporterConverter() {
 		super();
@@ -25,10 +25,10 @@ public class ReporterConverter implements IConfigurationConverter<ILoggerReporte
 	public ILoggerReporter convert(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		
-		if ("htmlReporter".equals(type)) {
+		if (ReporterTypes.HTML.name().equalsIgnoreCase(type)) {
 			return this.createHtmlReporter(data);
 		} else {
-			throw new DaMihiLogsException("Report type '" + type + "' not supported. Expected one of: " + Arrays.toString(REPORT_TYPES));
+			throw new DaMihiLogsException("Report type '" + type + "' not supported. Expected one of: " + Arrays.toString(ReporterTypes.values()));
 		}
 	}
 
@@ -52,7 +52,7 @@ public class ReporterConverter implements IConfigurationConverter<ILoggerReporte
 		value = StringHelper.parse(data.get("language"));
 		if (!StringHelper.isEmpty(value)) {
 			if (!LANGUAGES.contains(value.toUpperCase())) {
-				throw new DaMihiLogsException("Property language was expected to be one of: " + LANGUAGES + " but got " + value);
+				throw new DaMihiLogsException("Property language was expected to be one of: " + Arrays.toString(ReportLanguage.values()) + " but got " + value);
 			}
 			reporter.withLanguage(ReportLanguage.valueOf(value.toUpperCase()));
 		}
