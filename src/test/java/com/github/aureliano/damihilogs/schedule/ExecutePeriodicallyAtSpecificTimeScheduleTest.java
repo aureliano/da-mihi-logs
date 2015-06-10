@@ -122,4 +122,9 @@ public class ExecutePeriodicallyAtSpecificTimeScheduleTest {
 	public void testValidation() {
 		this.scheduler.validation();
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME.name(), new ExecutePeriodicallyAtSpecificTimeSchedule().id());
+	}
 }

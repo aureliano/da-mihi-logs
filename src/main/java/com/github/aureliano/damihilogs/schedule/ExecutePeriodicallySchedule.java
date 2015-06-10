@@ -56,4 +56,9 @@ public class ExecutePeriodicallySchedule extends EventCollectionSchedule {
 		this.timeUnit = timeUnit;
 		return this;
 	}
+
+	@Override
+	public String id() {
+		return SchedulerTypes.EXECUTE_PERIODICALLY.name();
+	}
 }

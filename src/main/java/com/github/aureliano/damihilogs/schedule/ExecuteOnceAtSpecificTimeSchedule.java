@@ -38,4 +38,9 @@ public class ExecuteOnceAtSpecificTimeSchedule extends EventCollectionSchedule {
 	public Date getStartupTime() {
 		return startupTime;
 	}
+
+	@Override
+	public String id() {
+		return SchedulerTypes.EXECUTE_ONCE_AT_SPECIFIC_TIME.name();
+	}
 }

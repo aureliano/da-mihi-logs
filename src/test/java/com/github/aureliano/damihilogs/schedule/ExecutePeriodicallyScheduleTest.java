@@ -77,4 +77,9 @@ public class ExecutePeriodicallyScheduleTest {
 	public void testValidation() {
 		this.scheduler.validation();
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(SchedulerTypes.EXECUTE_PERIODICALLY.name(), new ExecutePeriodicallySchedule().id());
+	}
 }

@@ -12,4 +12,6 @@ public abstract class EventCollectionSchedule {
 	}
 	
 	public abstract void prepareSchedulingForExecution(Runnable runnable);
+	
+	public abstract String id();
 }

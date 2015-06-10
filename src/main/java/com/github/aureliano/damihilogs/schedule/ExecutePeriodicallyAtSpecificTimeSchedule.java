@@ -76,4 +76,9 @@ public class ExecutePeriodicallyAtSpecificTimeSchedule extends EventCollectionSc
 		this.second = second;
 		return this;
 	}
+
+	@Override
+	public String id() {
+		return SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME.name();
+	}
 }

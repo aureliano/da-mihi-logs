@@ -35,4 +35,9 @@ public class ExecuteOnceAtSpecificTimeScheduleTest {
 		c.add(Calendar.DAY_OF_MONTH, 2);
 		e.withStartupTime(c.getTime()).validation();
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(SchedulerTypes.EXECUTE_ONCE_AT_SPECIFIC_TIME.name(), new ExecuteOnceAtSpecificTimeSchedule().id());
+	}
 }
