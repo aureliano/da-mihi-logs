@@ -44,6 +44,11 @@ public class HtmlReporter implements ILoggerReporter {
 		logger.info("Report generated into " + this.outputDir.getPath());
 	}
 	
+	@Override
+	public String id() {
+		return ReporterTypes.HTML.name();
+	}
+	
 	protected void validateOutputDir() {
 		if (this.outputDir == null) {
 			throw new DaMihiLogsException("Report output dir not provided.");

@@ -13,4 +13,6 @@ public interface ILoggerReporter {
 	public abstract ILoggerReporter withLanguage(ReportLanguage language);
 	
 	public abstract ReportLanguage getLanguage();
+	
+	public abstract String id();
 }

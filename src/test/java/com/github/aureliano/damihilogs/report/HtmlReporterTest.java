@@ -55,6 +55,11 @@ public class HtmlReporterTest {
 		}
 	}
 	
+	@Test
+	public void testId() {
+		Assert.assertEquals(ReporterTypes.HTML.name(), new HtmlReporter().id());
+	}
+	
 	private String loadHtmlIndexReport() {
 		return this.readFile(OUTPUT_DIR.getPath() + File.separator + "index.html");
 	}
