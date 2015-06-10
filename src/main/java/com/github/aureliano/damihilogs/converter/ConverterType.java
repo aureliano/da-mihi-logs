@@ -4,5 +4,5 @@ public enum ConverterType {
 
 	EVENT_COLLECTOR,
 	SCHEDULER,
-	CLEAN;
+	CLEANER;
 }

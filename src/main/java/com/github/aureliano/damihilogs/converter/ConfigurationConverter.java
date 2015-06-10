@@ -95,7 +95,7 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private List<ICleaner> convertCleaner(Map<String, Object> data) {
-		return (List<ICleaner>) ConversionApplyer.apply(ConverterType.CLEAN, data);
+		return (List<ICleaner>) ConversionApplyer.apply(ConverterType.CLEANER, data);
 	}
 	
 	private List<EventsCollectorListener> convertEventsCollectorListeners(Map<String, Object> data) {

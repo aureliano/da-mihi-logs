@@ -16,7 +16,7 @@ public final class ConversionApplyer {
 	
 	public static List<?> apply(ConverterType type, Map<String, Object> data) {
 		switch (type) {
-			case CLEAN : return new CleanerConverter().convert(data);
+			case CLEANER : return new CleanerConverter().convert(data);
 			case SCHEDULER : return DataHelper.encapsulateIntoList(new SchedulerConverter().convert(data));
 			default : throw new DaMihiLogsException("Unsupported converter type.");
 		}
