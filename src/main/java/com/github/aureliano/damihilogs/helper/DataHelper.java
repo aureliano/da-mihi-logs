@@ -1,8 +1,10 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -81,5 +83,21 @@ public final class DataHelper {
 		}
 		
 		return (Map<String, Object>) map;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T encapsulateIntoList(Object data) {
+		if (data == null) {
+			return null;
+		}
+		
+		Class<?> clazz = data.getClass();
+		if (List.class.isAssignableFrom(clazz)) {
+			return (T) data;
+		} else {
+			List<Object> list = new ArrayList<Object>();
+			list.add(data);
+			return (T) list;
+		}
 	}
 }

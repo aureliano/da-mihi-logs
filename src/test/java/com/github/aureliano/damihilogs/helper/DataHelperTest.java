@@ -1,10 +1,12 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import org.junit.Test;
 
@@ -73,5 +75,20 @@ public class DataHelperTest {
 		Assert.assertEquals(map.get("Monteiro Lobato"), "Brazil");
 		Assert.assertEquals(map.get("Liev Tolstói"), "Russia");
 		Assert.assertEquals(map.get("Jules Verne"), "France");
+	}
+	
+	@Test
+	public void testEncapsulateIntoList() {
+		List<String> l = DataHelper.encapsulateIntoList("test");
+		Assert.assertTrue(l instanceof ArrayList);
+		Assert.assertTrue(l.size() == 1);
+		Assert.assertEquals("test", l.get(0));
+		
+		List<String> l2 = DataHelper.encapsulateIntoList(l);
+		Assert.assertSame(l, l2);
+		Assert.assertTrue(l2.size() == 1);
+		Assert.assertEquals("test", l2.get(0));
+		
+		Assert.assertNull(DataHelper.encapsulateIntoList(null));
 	}
 }
