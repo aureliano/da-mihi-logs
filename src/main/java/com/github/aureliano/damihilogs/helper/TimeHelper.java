@@ -1,8 +1,15 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
+
 public final class TimeHelper {
+	
+	private static final SimpleDateFormat DATE_TIME_FORMATTER = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	private TimeHelper() {
 		super();
@@ -29,6 +36,14 @@ public final class TimeHelper {
 		}
 		
 		return false;
+	}
+	
+	public static Date parseToDateTime(String dateTime) {
+		try {
+			return DATE_TIME_FORMATTER.parse(dateTime);
+		} catch (ParseException ex) {
+			throw new DaMihiLogsException(ex);
+		}
 	}
 	
 	private static long fromSeconds(long seed) {

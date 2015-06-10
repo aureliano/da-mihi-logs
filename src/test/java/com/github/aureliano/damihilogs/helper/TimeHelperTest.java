@@ -1,5 +1,7 @@
 package com.github.aureliano.damihilogs.helper;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.Assert;
@@ -48,5 +50,19 @@ public class TimeHelperTest {
 		Assert.assertFalse(TimeHelper.isValidTimeUnit("months"));
 		Assert.assertFalse(TimeHelper.isValidTimeUnit("weeks"));
 		Assert.assertFalse(TimeHelper.isValidTimeUnit("years"));
+	}
+	
+	@Test
+	public void testParseToDateTime() {
+		Date date = TimeHelper.parseToDateTime("2015-06-10 09:27:35");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		
+		Assert.assertEquals(2015, calendar.get(Calendar.YEAR));
+		Assert.assertEquals(Calendar.JUNE, calendar.get(Calendar.MONTH));
+		Assert.assertEquals(10, calendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(9, calendar.get(Calendar.HOUR_OF_DAY));
+		Assert.assertEquals(27, calendar.get(Calendar.MINUTE));
+		Assert.assertEquals(35, calendar.get(Calendar.SECOND));
 	}
 }
