@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.converter;
+package com.github.aureliano.damihilogs.converter.report;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -6,30 +6,24 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.report.HtmlReporter;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.report.ReportLanguage;
-import com.github.aureliano.damihilogs.report.ReporterTypes;
 
-public class ReporterConverter implements IConfigurationConverter<ILoggerReporter> {
-	
+public class HtmlReporterConverter implements IConfigurationConverter<ILoggerReporter> {
+
 	private static final List<String> LANGUAGES = loadLanguages();
 	
-	public ReporterConverter() {
+	public HtmlReporterConverter() {
 		super();
 	}
-
+	
 	@Override
 	public ILoggerReporter convert(Map<String, Object> data) {
-		String type = StringHelper.parse(data.get("type"));
-		
-		if (ReporterTypes.HTML.name().equalsIgnoreCase(type)) {
-			return this.createHtmlReporter(data);
-		} else {
-			throw new DaMihiLogsException("Report type '" + type + "' not supported. Expected one of: " + Arrays.toString(ReporterTypes.values()));
-		}
+		return this.createHtmlReporter(data);
 	}
 
 	private ILoggerReporter createHtmlReporter(Map<String, Object> data) {

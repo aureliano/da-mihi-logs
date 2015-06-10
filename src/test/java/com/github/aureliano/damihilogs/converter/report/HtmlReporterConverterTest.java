@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.converter;
+package com.github.aureliano.damihilogs.converter.report;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,22 +12,12 @@ import com.github.aureliano.damihilogs.report.HtmlReporter;
 import com.github.aureliano.damihilogs.report.ReportLanguage;
 import com.github.aureliano.damihilogs.report.ReporterTypes;
 
-public class ReporterConverterTest {
+public class HtmlReporterConverterTest {
 
-	private ReporterConverter converter;
+	private HtmlReporterConverter converter;
 	
-	public ReporterConverterTest() {
-		this.converter = new ReporterConverter();
-	}
-	
-	@Test
-	public void testCreateHtmlReporterErrorNonExistent() {
-		try {
-			this.converter.convert(new HashMap<String, Object>());
-			Assert.fail("An exception was expected.");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Report type 'null' not supported. Expected one of: " + Arrays.toString(ReporterTypes.values()), ex.getMessage());
-		}
+	public HtmlReporterConverterTest() {
+		this.converter = new HtmlReporterConverter();
 	}
 	
 	@Test

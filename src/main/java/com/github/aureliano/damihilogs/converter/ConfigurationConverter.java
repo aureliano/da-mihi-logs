@@ -79,19 +79,7 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private List<ILoggerReporter> convertReporter(Map<String, Object> data) {
-		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("reporters");
-		if (list == null) {
-			return Collections.emptyList();
-		}
-		
-		List<ILoggerReporter> reporters = new ArrayList<ILoggerReporter>(list.size());
-		ReporterConverter converter = new ReporterConverter();
-		
-		for (Map<String, Object> map : list) {
-			reporters.add(converter.convert(map));
-		}
-		
-		return reporters;
+		return (List<ILoggerReporter>) ConversionApplyer.apply(ConverterType.REPORTER, data);
 	}
 	
 	private List<ICleaner> convertCleaner(Map<String, Object> data) {
