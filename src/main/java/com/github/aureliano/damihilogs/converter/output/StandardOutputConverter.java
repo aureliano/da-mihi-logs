@@ -13,7 +13,7 @@ public class StandardOutputConverter extends AbstractOutputConverter<StandardOut
 	@Override
 	public StandardOutputConfig convert(Map<String, Object> data) {
 		StandardOutputConfig conf = new StandardOutputConfig();
-		this.configureObject(conf, data);
+		super.configureObject(conf, data);
 		
 		return conf;
 	}

@@ -16,7 +16,7 @@ public class ElasticSearchOutputConverter extends AbstractOutputConverter<Elasti
 	public ElasticSearchOutputConfig convert(Map<String, Object> data) {
 		ElasticSearchOutputConfig conf = new ElasticSearchOutputConfig();
 		
-		this.configureObject(conf, data);
+		super.configureObject(conf, data);
 		
 		String value = StringHelper.parse(data.get("port"));
 		if (!StringHelper.isEmpty(value)) {

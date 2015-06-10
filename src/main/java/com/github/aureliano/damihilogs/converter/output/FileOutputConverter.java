@@ -15,7 +15,7 @@ public class FileOutputConverter extends AbstractOutputConverter<FileOutputConfi
 	public FileOutputConfig convert(Map<String, Object> data) {
 		FileOutputConfig conf = new FileOutputConfig();
 		
-		this.configureObject(conf, data);
+		super.configureObject(conf, data);
 		String value = StringHelper.parse(data.get("file"));
 		if (!StringHelper.isEmpty(value)) {
 			conf.withFile(value);
