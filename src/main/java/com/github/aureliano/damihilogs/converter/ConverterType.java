@@ -6,5 +6,6 @@ public enum ConverterType {
 	SCHEDULER,
 	CLEANER,
 	REPORTER,
+	INPUT,
 	OUTPUT;
 }

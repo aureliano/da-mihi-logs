@@ -101,19 +101,7 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private List<IConfigInput> convertInputs(Map<String, Object> data) {
-		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("inputs");
-		if (list == null) {
-			return Collections.emptyList();
-		}
-		
-		List<IConfigInput> inputs = new ArrayList<IConfigInput>();
-		InputConfigConverter converter = new InputConfigConverter();
-		
-		for (Map<String, Object> outputMap : list) {
-			inputs.add(converter.convert(outputMap));
-		}
-		
-		return inputs;
+		return (List<IConfigInput>) ConversionApplyer.apply(ConverterType.INPUT, data);
 	}
 	
 	private List<IConfigOutput> convertOutputs(Map<String, Object> data) {
