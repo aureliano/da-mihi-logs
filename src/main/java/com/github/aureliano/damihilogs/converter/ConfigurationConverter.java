@@ -70,12 +70,12 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	}
 	
 	private EventCollectionSchedule convertScheduler(Map<String, Object> data) {
-		Map<String, Object> map = DataHelper.getAsHash(data, "scheduler");
-		if (map == null) {
+		List<?> result = ConversionApplyer.apply(ConverterType.SCHEDULER, data);
+		if ((result != null) && (!result.isEmpty())) {
+			return (EventCollectionSchedule) result.get(0);
+		} else {
 			return null;
 		}
-		
-		return new SchedulerConverter().convert(map);
 	}
 	
 	private List<ILoggerReporter> convertReporter(Map<String, Object> data) {
