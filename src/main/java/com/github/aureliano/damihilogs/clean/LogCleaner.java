@@ -75,4 +75,9 @@ public class LogCleaner implements ICleaner {
 		this.dataCleaner.validate();
 		this.echoCleaner.validate();
 	}
+
+	@Override
+	public String id() {
+		return CleanerTypes.LOG.name();
+	}
 }

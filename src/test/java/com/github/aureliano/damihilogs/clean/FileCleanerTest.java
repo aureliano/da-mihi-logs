@@ -126,4 +126,9 @@ public class FileCleanerTest {
 		c.removeFilesAfterDays(expected);
 		Assert.assertEquals(new Long((long) expected * DAY_IN_MILLIS), c.getSeed());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(CleanerTypes.FILE.name(), new FileCleaner(null).id());
+	}
 }

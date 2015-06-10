@@ -71,4 +71,9 @@ public class FileCleaner implements ICleaner {
 		this.seed = TimeHelper.convertToMilliseconds(timeUnit, seed.longValue());
 		return this;
 	}
+
+	@Override
+	public String id() {
+		return CleanerTypes.FILE.name();
+	}
 }
