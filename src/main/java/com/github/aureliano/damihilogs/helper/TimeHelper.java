@@ -46,6 +46,10 @@ public final class TimeHelper {
 		}
 	}
 	
+	public static String formatDateTime(Date dateTime) {
+		return DATE_TIME_FORMATTER.format(dateTime);
+	}
+	
 	private static long fromSeconds(long seed) {
 		return seed * 1000;
 	}

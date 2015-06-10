@@ -65,4 +65,18 @@ public class TimeHelperTest {
 		Assert.assertEquals(27, calendar.get(Calendar.MINUTE));
 		Assert.assertEquals(35, calendar.get(Calendar.SECOND));
 	}
+	
+	@Test
+	public void testFormatDateTime() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.YEAR, 2015);
+		calendar.set(Calendar.MONTH, Calendar.JUNE);
+		calendar.set(Calendar.DAY_OF_MONTH, 10);
+		calendar.set(Calendar.HOUR_OF_DAY, 9);
+		calendar.set(Calendar.MINUTE, 27);
+		calendar.set(Calendar.SECOND, 35);
+		
+		String dateTime = TimeHelper.formatDateTime(calendar.getTime());
+		Assert.assertEquals("2015-06-10 09:27:35", dateTime);
+	}
 }
