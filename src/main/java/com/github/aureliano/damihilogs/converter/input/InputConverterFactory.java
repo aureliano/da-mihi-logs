@@ -3,8 +3,10 @@ package com.github.aureliano.damihilogs.converter.input;
 import java.util.Arrays;
 
 import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
+import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
 
 public class InputConverterFactory {
 
@@ -24,7 +26,13 @@ public class InputConverterFactory {
 		} else if (InputConfigTypes.URL.name().equalsIgnoreCase(type)) {
 			return new UrlInputConverter();
 		} else {
-			throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(InputConfigTypes.values()));
+			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+			IConfigurationConverter<?> converter = service.createConverter(type);
+			
+			if (converter == null) {
+				throw new DaMihiLogsException("Input config type '" + type + "' not supported. Expected one of: " + Arrays.toString(InputConfigTypes.values()));
+			}
+			return (AbstractInputConverter<?>) converter;
 		}
 	}
 }

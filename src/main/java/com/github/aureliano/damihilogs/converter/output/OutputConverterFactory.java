@@ -3,8 +3,10 @@ package com.github.aureliano.damihilogs.converter.output;
 import java.util.Arrays;
 
 import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
+import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
 
 public final class OutputConverterFactory {
 
@@ -20,7 +22,13 @@ public final class OutputConverterFactory {
 		} else if (OutputConfigTypes.STANDARD_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return new StandardOutputConverter();
 		} else {
-			throw new DaMihiLogsException("Output config type '" + type + "' not supported. Expected one of: " + Arrays.toString(OutputConfigTypes.values()));
+			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+			IConfigurationConverter<?> converter = service.createConverter(type);
+			
+			if (converter == null) {
+				throw new DaMihiLogsException("Output config type '" + type + "' not supported. Expected one of: " + Arrays.toString(OutputConfigTypes.values()));
+			}
+			return (AbstractOutputConverter<?>) converter;
 		}
 	}
 }
