@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.converter.output;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
 public class FileOutputConverter extends AbstractOutputConverter<FileOutputConfig> {
@@ -37,5 +38,10 @@ public class FileOutputConverter extends AbstractOutputConverter<FileOutputConfi
 		}
 		
 		return conf;
+	}
+	
+	@Override
+	public String id() {
+		return OutputConfigTypes.FILE_OUTPUT.name();
 	}
 }

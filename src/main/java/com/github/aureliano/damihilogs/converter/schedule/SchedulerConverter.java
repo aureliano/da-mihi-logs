@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.converter.schedule;
 
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.converter.ConverterType;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
@@ -22,5 +23,10 @@ public class SchedulerConverter implements IConfigurationConverter<EventCollecti
 		
 		String type = StringHelper.parse(map.get("type"));
 		return SchedulerConverterFactory.createConverter(type).convert(map);
+	}
+	
+	@Override
+	public String id() {
+		return ConverterType.SCHEDULER.name();
 	}
 }

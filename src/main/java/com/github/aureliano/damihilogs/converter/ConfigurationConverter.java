@@ -47,6 +47,11 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 		return configuration;
 	}
 	
+	@Override
+	public String id() {
+		return ConverterType.EVENT_COLLECTOR.name();
+	}
+	
 	private void propagateConversion(EventCollectorConfiguration configuration, Map<String, Object> data) {
 		for (ILoggerReporter reporter : this.convertReporter(data)) {
 			configuration.addReporter(reporter);

@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.report.HtmlReporter;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
 import com.github.aureliano.damihilogs.report.ReportLanguage;
+import com.github.aureliano.damihilogs.report.ReporterTypes;
 
 public class HtmlReporterConverter implements IConfigurationConverter<ILoggerReporter> {
 
@@ -52,6 +53,11 @@ public class HtmlReporterConverter implements IConfigurationConverter<ILoggerRep
 		}
 		
 		return reporter;
+	}
+	
+	@Override
+	public String id() {
+		return ReporterTypes.HTML.name();
 	}
 
 	private static List<String> loadLanguages() {

@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.converter.output;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -35,5 +36,10 @@ public class ElasticSearchOutputConverter extends AbstractOutputConverter<Elasti
 			.withHost(StringHelper.parse(data.get("host")))
 			.withIndex(StringHelper.parse(data.get("index")))
 			.withMappingType(StringHelper.parse(data.get("mappingType")));
+	}
+	
+	@Override
+	public String id() {
+		return OutputConfigTypes.ELASTIC_SEARCH.name();
 	}
 }

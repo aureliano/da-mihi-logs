@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.helper.TimeHelper;
@@ -56,5 +57,10 @@ public class FileTailerInputConverter extends AbstractInputConverter<FileTailerI
 		}
 		
 		return conf;
+	}
+	
+	@Override
+	public String id() {
+		return InputConfigTypes.FILE_TAILER.name();
 	}
 }

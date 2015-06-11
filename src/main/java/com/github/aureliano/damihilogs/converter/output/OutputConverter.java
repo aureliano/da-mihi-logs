@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.converter.ConverterType;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -34,5 +35,10 @@ public class OutputConverter implements IConfigurationConverter<List<IConfigOutp
 	private IConfigOutput convertOutput(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		return (IConfigOutput) OutputConverterFactory.createConverter(type).convert(data);
+	}
+	
+	@Override
+	public String id() {
+		return ConverterType.OUTPUT.name();
 	}
 }

@@ -7,6 +7,7 @@ import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 import com.github.aureliano.damihilogs.schedule.ExecutePeriodicallyAtSpecificTimeSchedule;
+import com.github.aureliano.damihilogs.schedule.SchedulerTypes;
 
 public class ExecutePeriodicallyAtSpecificTimeScheduleConverter implements IConfigurationConverter<EventCollectionSchedule> {
 
@@ -43,5 +44,10 @@ public class ExecutePeriodicallyAtSpecificTimeScheduleConverter implements IConf
 		}
 		
 		return scheduling;
+	}
+	
+	@Override
+	public String id() {
+		return SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME.name();
 	}
 }

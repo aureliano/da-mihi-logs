@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.converter.ConverterType;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.report.ILoggerReporter;
@@ -29,6 +30,11 @@ public class ReporterConverter implements IConfigurationConverter<List<ILoggerRe
 		}
 		
 		return reporters;
+	}
+	
+	@Override
+	public String id() {
+		return ConverterType.REPORTER.name();
 	}
 
 	private ILoggerReporter convertReporter(Map<String, Object> data) {

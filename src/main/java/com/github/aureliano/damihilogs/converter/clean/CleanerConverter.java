@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.clean.ICleaner;
+import com.github.aureliano.damihilogs.converter.ConverterType;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -34,5 +35,10 @@ public class CleanerConverter implements IConfigurationConverter<List<ICleaner>>
 	private ICleaner convertCleaner(Map<String, Object> data) {
 		String type = StringHelper.parse(data.get("type"));
 		return CleanerConverterFactory.createConverter(type).convert(data);
+	}
+
+	@Override
+	public String id() {
+		return ConverterType.CLEANER.name();
 	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
+import com.github.aureliano.damihilogs.converter.ConverterType;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -29,6 +30,11 @@ public class InputConverter implements IConfigurationConverter<List<IConfigInput
 		}
 		
 		return inputs;
+	}
+	
+	@Override
+	public String id() {
+		return ConverterType.INPUT.name();
 	}
 
 	private IConfigInput convertInput(Map<String, Object> data) {

@@ -10,6 +10,7 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.helper.TimeHelper;
 import com.github.aureliano.damihilogs.schedule.EventCollectionSchedule;
 import com.github.aureliano.damihilogs.schedule.ExecutePeriodicallySchedule;
+import com.github.aureliano.damihilogs.schedule.SchedulerTypes;
 
 public class ExecutePeriodicallyScheduleConverter implements IConfigurationConverter<EventCollectionSchedule> {
 
@@ -46,5 +47,10 @@ public class ExecutePeriodicallyScheduleConverter implements IConfigurationConve
 		}
 		
 		return scheduling;
+	}
+	
+	@Override
+	public String id() {
+		return SchedulerTypes.EXECUTE_PERIODICALLY.name();
 	}
 }

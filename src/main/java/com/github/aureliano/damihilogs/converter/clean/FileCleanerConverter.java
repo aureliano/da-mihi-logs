@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.damihilogs.clean.CleanerTypes;
 import com.github.aureliano.damihilogs.clean.FileCleaner;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
@@ -63,5 +64,10 @@ public class FileCleanerConverter implements IConfigurationConverter<ICleaner> {
 		}
 		
 		return cleaner;
+	}
+	
+	@Override
+	public String id() {
+		return CleanerTypes.FILE.name();
 	}
 }

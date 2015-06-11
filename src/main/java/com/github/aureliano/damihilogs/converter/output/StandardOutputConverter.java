@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.converter.output;
 
 import java.util.Map;
 
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 
 public class StandardOutputConverter extends AbstractOutputConverter<StandardOutputConfig> {
@@ -16,5 +17,10 @@ public class StandardOutputConverter extends AbstractOutputConverter<StandardOut
 		super.configureObject(conf, data);
 		
 		return conf;
+	}
+	
+	@Override
+	public String id() {
+		return OutputConfigTypes.STANDARD_OUTPUT.name();
 	}
 }

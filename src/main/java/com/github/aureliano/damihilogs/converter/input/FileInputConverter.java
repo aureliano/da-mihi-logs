@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
@@ -49,5 +50,10 @@ public class FileInputConverter extends AbstractInputConverter<FileInputConfig> 
 		}
 		
 		return conf;
+	}
+	
+	@Override
+	public String id() {
+		return InputConfigTypes.FILE_INPUT.name();
 	}
 }

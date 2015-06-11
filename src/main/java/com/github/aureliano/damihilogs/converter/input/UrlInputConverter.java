@@ -3,6 +3,7 @@ package com.github.aureliano.damihilogs.converter.input;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.DataHelper;
@@ -74,5 +75,10 @@ public class UrlInputConverter extends AbstractInputConverter<UrlInputConfig> {
 			.withHost(StringHelper.parse(data.get("host")));
 		
 		return conf;
+	}
+	
+	@Override
+	public String id() {
+		return InputConfigTypes.URL.name();
 	}
 }
