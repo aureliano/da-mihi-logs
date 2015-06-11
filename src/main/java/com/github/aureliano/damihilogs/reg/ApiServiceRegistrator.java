@@ -73,12 +73,21 @@ public final class ApiServiceRegistrator {
 	
 	public IConfigurationConverter<?> createConverter(String id) {
 		ServiceRegistration registration = this.registrations.get(id);
-		
-		if (registration.getConverter() == null) {
-			throw new DaMihiLogsException("There isn't a converter registered with ID " + id);
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
 		}
 		
-		return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		registration = this.registrations.get(id.toUpperCase());
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		}
+		
+		registration = this.registrations.get(id.toLowerCase());
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		}
+		
+		return null;
 	}
 	
 	public static ApiServiceRegistrator instance() {
