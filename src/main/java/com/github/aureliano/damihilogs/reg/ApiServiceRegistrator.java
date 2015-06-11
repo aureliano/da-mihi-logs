@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.executor.IExecutor;
 import com.github.aureliano.damihilogs.executor.reader.ExternalCommandDataReader;
@@ -40,6 +41,12 @@ public final class ApiServiceRegistrator {
 		this.registrate(this.createService(configuration, executor));
 	}
 	
+	public void registrate(Class<? extends IConfiguration> configuration,
+			Class<? extends IExecutor> executor, Class<? extends IConfigurationConverter<?>> converter) {
+		
+		this.registrate(this.createService(configuration, executor, converter));
+	}
+	
 	public void registrate(ServiceRegistration registration) {
 		if (StringHelper.isEmpty(registration.getId())) {
 			if (registration.getConfiguration() != null) {
@@ -60,12 +67,18 @@ public final class ApiServiceRegistrator {
 			throw new DaMihiLogsException("There isn't an executor (reader/writer) registered with ID " + configuration.id());
 		}
 		
-		try {
-			IExecutor executor = (IExecutor) registration.getExecutor().newInstance();
-			return executor.withConfiguration(configuration);
-		} catch (Exception ex) {
-			throw new DaMihiLogsException(ex);
+		IExecutor executor = (IExecutor) ReflectionHelper.newInstance(registration.getExecutor());
+		return executor.withConfiguration(configuration);
+	}
+	
+	public IConfigurationConverter<?> createConverter(String id) {
+		ServiceRegistration registration = this.registrations.get(id);
+		
+		if (registration.getConverter() == null) {
+			throw new DaMihiLogsException("There isn't a converter registered with ID " + id);
 		}
+		
+		return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
 	}
 	
 	public static ApiServiceRegistrator instance() {
@@ -87,9 +100,18 @@ public final class ApiServiceRegistrator {
 		this.registrate(this.createService(ElasticSearchOutputConfig.class, ElasticSearchDataWriter.class));
 	}
 	
-	private ServiceRegistration createService(Class<? extends IConfiguration> configuration, Class<? extends IExecutor> executor) {
+	private ServiceRegistration createService(Class<? extends IConfiguration> configuration,
+			Class<? extends IExecutor> executor) {
+		
+		return this.createService(configuration, executor, null);
+	}
+	
+	private ServiceRegistration createService(Class<? extends IConfiguration> configuration,
+			Class<? extends IExecutor> executor, Class<? extends IConfigurationConverter<?>> converter) {
+		
 		return new ServiceRegistration()
 			.withConfiguration(configuration)
-			.withExecutor(executor);
+			.withExecutor(executor)
+			.withConverter(converter);
 	}
 }

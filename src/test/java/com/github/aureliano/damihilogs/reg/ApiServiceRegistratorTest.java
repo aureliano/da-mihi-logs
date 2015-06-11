@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import com.github.aureliano.damihilogs.CustomDataReader;
 import com.github.aureliano.damihilogs.CustomInputConfig;
+import com.github.aureliano.damihilogs.CustomInputConfigConverter;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
@@ -52,5 +53,20 @@ public class ApiServiceRegistratorTest {
 		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 		service.registrate(CustomInputConfig.class, CustomDataReader.class);
 		Assert.assertTrue(service.createExecutor(new CustomInputConfig()) instanceof CustomDataReader);
+	}
+
+	@Test
+	public void testCustomExecutorRegistrations3() {
+		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+		service.registrate(CustomInputConfig.class, CustomDataReader.class, CustomInputConfigConverter.class);
+		Assert.assertTrue(service.createExecutor(new CustomInputConfig()) instanceof CustomDataReader);
+	}
+	
+	@Test
+	public void testCreateConverter() {
+		ApiServiceRegistrator service = ApiServiceRegistrator.instance();
+		service.registrate(CustomInputConfig.class, CustomDataReader.class, CustomInputConfigConverter.class);
+		
+		Assert.assertTrue(service.createConverter(new CustomInputConfigConverter().id()) instanceof CustomInputConfigConverter);
 	}
 }
