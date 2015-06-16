@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
+import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
 import com.github.aureliano.damihilogs.inout.SupportedCompressionType;
 import com.github.aureliano.damihilogs.listener.DefaultDataReadingListener;
@@ -62,5 +63,10 @@ public class FileInputConverterTest {
 		Assert.assertEquals(SupportedCompressionType.ZIP, conf.getDecompressFileConfiguration().getCompressionType());
 		Assert.assertEquals("path/to/zip", conf.getDecompressFileConfiguration().getInputFilePath());
 		Assert.assertEquals("path/to/extraction", conf.getDecompressFileConfiguration().getOutputFilePath());
+	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(InputConfigTypes.FILE_INPUT.name(), new FileInputConverter().id());
 	}
 }

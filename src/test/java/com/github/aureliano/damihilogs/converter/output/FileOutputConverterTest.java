@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 import com.github.aureliano.damihilogs.listener.DefaultDataWritingListener;
@@ -51,5 +52,10 @@ public class FileOutputConverterTest {
 		Assert.assertEquals("ISO-8859-1", conf.getEncoding());
 		Assert.assertTrue(conf.isAppend());
 		Assert.assertFalse(conf.isUseBuffer());
+	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(OutputConfigTypes.FILE_OUTPUT.name(), new FileOutputConverter().id());
 	}
 }

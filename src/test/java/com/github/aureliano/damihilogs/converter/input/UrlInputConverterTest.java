@@ -57,4 +57,9 @@ public class UrlInputConverterTest {
 		Assert.assertEquals("usr", conf.getUser());
 		Assert.assertEquals("pwd", conf.getPassword());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(InputConfigTypes.URL.name(), new UrlInputConverter().id());
+	}
 }

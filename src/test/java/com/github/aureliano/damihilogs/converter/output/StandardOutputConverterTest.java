@@ -43,4 +43,9 @@ public class StandardOutputConverterTest {
 		Assert.assertTrue(conf.getFilter() instanceof DefaultEmptyFilter);
 		Assert.assertTrue(conf.getOutputFormatter() instanceof PlainTextFormatter);
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(OutputConfigTypes.STANDARD_OUTPUT.name(), new StandardOutputConverter().id());
+	}
 }

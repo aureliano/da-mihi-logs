@@ -53,4 +53,9 @@ public class FileTailerInputConverterTest {
 		Assert.assertEquals(new Long(50), conf.getTailDelay());
 		Assert.assertEquals(new Long(100), conf.getTailInterval());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(InputConfigTypes.FILE_TAILER.name(), new FileTailerInputConverter().id());
+	}
 }

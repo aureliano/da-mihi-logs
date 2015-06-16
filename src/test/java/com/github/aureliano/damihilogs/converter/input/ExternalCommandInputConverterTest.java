@@ -27,4 +27,9 @@ public class ExternalCommandInputConverterTest {
 		Assert.assertEquals("ls", conf.getCommand());
 		Assert.assertEquals(Arrays.asList("-la"), conf.getParameters());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInputConverter().id());
+	}
 }

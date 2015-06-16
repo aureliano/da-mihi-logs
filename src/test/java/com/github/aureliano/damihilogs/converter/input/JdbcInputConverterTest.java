@@ -45,4 +45,9 @@ public class JdbcInputConverterTest {
 		Assert.assertEquals("jdbc:sgdb://host:1/test", conf.getConnection().getUrl());
 		Assert.assertEquals("select * from anywhere", conf.getConnection().getSql());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(InputConfigTypes.JDBC_INPUT.name(), new JdbcInputConverter().id());
+	}
 }

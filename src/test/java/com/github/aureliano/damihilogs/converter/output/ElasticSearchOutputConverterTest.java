@@ -55,4 +55,9 @@ public class ElasticSearchOutputConverterTest {
 		Assert.assertEquals("my-index", conf.getIndex());
 		Assert.assertEquals("new-type", conf.getMappingType());
 	}
+	
+	@Test
+	public void testId() {
+		Assert.assertEquals(OutputConfigTypes.ELASTIC_SEARCH.name(), new ElasticSearchOutputConverter().id());
+	}
 }
