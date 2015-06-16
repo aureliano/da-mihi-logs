@@ -25,6 +25,8 @@ public class InputConverterFactory {
 			return new StandardInputConverter();
 		} else if (InputConfigTypes.URL.name().equalsIgnoreCase(type)) {
 			return new UrlInputConverter();
+		} else if (InputConfigTypes.JDBC_INPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
+			return new JdbcInputConverter();
 		} else {
 			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 			IConfigurationConverter<?> converter = service.createConverter(type);
