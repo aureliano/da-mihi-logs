@@ -34,18 +34,6 @@ public class FileDataReader extends AbstractDataReader {
 	}
 
 	@Override
-	public String nextData() {
-		String line = super.readNextLine();
-		
-		if (line == null) {
-			super.markedToStop = true;
-			return null;
-		}
-		
-		return super.prepareLogEvent(line);
-	}
-
-	@Override
 	public String readLine() {
 		try {
 			return this.bufferedReader.readLine();

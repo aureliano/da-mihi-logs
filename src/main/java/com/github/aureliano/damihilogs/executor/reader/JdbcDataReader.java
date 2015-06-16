@@ -38,18 +38,6 @@ public class JdbcDataReader extends AbstractDataReader {
 	}
 	
 	@Override
-	public String nextData() {
-		String line = super.readNextLine();
-		
-		if (line == null) {
-			super.markedToStop = true;
-			return null;
-		}
-		
-		return super.prepareLogEvent(line);
-	}
-	
-	@Override
 	public String readLine() {
 		try {
 			if (!this.resultSet.next()) {

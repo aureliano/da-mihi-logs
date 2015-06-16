@@ -28,18 +28,6 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	public void initializeResources() {
 		this.initialize();
 	}
-
-	@Override
-	public String nextData() {
-		String line = super.readNextLine();
-		
-		if (line == null) {
-			super.markedToStop = true;
-			return null;
-		}
-		
-		return super.prepareLogEvent(line);
-	}
 	
 	@Override
 	public String readLine() {

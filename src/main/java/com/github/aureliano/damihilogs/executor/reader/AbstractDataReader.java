@@ -20,6 +20,18 @@ public abstract class AbstractDataReader implements IDataReader {
 	}
 	
 	@Override
+	public String nextData() {
+		String line = this.readNextLine();
+		
+		if (line == null) {
+			this.markedToStop = true;
+			return null;
+		}
+		
+		return this.prepareLogEvent(line);
+	}
+	
+	@Override
 	public IConfigInput getConfiguration() {
 		return this.inputConfiguration;
 	}
