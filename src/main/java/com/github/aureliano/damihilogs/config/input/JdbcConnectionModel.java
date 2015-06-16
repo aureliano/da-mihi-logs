@@ -78,7 +78,7 @@ public class JdbcConnectionModel {
 		return this;
 	}
 	
-	public String getOtionalUrl() {
+	public String getOptionalUrl() {
 		return url;
 	}
 	
