@@ -47,6 +47,9 @@
     "url": {
       "id": "input-url.json"
     },
+    "jdbc": {
+      "id": "input-jdbc.json"
+    },
     "decompressionFile": {
       "id": "decompression-file.json"
     }
