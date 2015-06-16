@@ -23,7 +23,6 @@ public class JdbcInputConfig implements IConfigInput {
 	
 	public JdbcInputConfig() {
 		this.useLastExecutionRecords = false;
-		this.connection = new JdbcConnectionModel();
 		this.metadata = new Properties();
 		
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
@@ -149,7 +148,7 @@ public class JdbcInputConfig implements IConfigInput {
 			.withDataReadingListeners(this.dataReadingListeners)
 			.withExecutionListeners(this.inputExecutionListeners)
 			.withUseLastExecutionRecords(this.useLastExecutionRecords)
-			.withConnection(this.connection.clone());
+			.withConnection((this.connection == null) ? null : this.connection.clone());
 	}
 	
 	protected JdbcInputConfig withMetadata(Properties properties) {
