@@ -48,11 +48,11 @@ public class JdbcConnectionModel {
 		return this;
 	}
 	
-	public String getOptionalUrl() {
+	public String getUrl() {
 		return url;
 	}
 	
-	public JdbcConnectionModel withOptionalUrl(String url) {
+	public JdbcConnectionModel withUrl(String url) {
 		this.url = url;
 		return this;
 	}
@@ -64,6 +64,6 @@ public class JdbcConnectionModel {
 			.withPassword(this.password)
 			.withSql(this.sql)
 			.withDriver(this.driver)
-			.withOptionalUrl(this.url);
+			.withUrl(this.url);
 	}
 }
