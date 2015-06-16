@@ -26,7 +26,6 @@ public class JdbcInputConfigTest {
 	public void testClone() {
 		JdbcInputConfig c1 = new JdbcInputConfig()
 			.withConfigurationId("Px_t")
-			.withConfigurationId("input.file.config")
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
 				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
