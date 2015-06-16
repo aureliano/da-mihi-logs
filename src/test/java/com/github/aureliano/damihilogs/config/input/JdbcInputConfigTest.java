@@ -16,10 +16,7 @@ public class JdbcInputConfigTest {
 	public void testConfiguration() {
 		JdbcInputConfig c = new JdbcInputConfig().withConnection(this.createConnection());
 		
-		Assert.assertEquals("test", c.getConnection().getDatabase());
-		Assert.assertEquals("127.0.0.1", c.getConnection().getHost());
 		Assert.assertEquals("Px", c.getConnection().getPassword());
-		Assert.assertEquals(new Integer(5432), c.getConnection().getPort());
 		Assert.assertEquals("org.postgresql.Driver", c.getConnection().getDriver());
 		Assert.assertEquals("tomas_torquemada", c.getConnection().getUser());
 		Assert.assertEquals("select * from spanish where really_converted is false", c.getConnection().getSql());
@@ -44,10 +41,7 @@ public class JdbcInputConfigTest {
 	
 	private JdbcConnectionModel createConnection() {
 		return new JdbcConnectionModel()
-			.withDatabase("test")
-			.withHost("127.0.0.1")
 			.withPassword("Px")
-			.withPort(5432)
 			.withDriver("org.postgresql.Driver")
 			.withUser("tomas_torquemada")
 			.withSql("select * from spanish where really_converted is false");

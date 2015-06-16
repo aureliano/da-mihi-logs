@@ -4,9 +4,6 @@ public class JdbcConnectionModel {
 
 	private String user;
 	private String password;
-	private String host;
-	private String database;
-	private Integer port;
 	private String driver;
 	private String sql;
 	private String url;
@@ -30,33 +27,6 @@ public class JdbcConnectionModel {
 
 	public JdbcConnectionModel withPassword(String password) {
 		this.password = password;
-		return this;
-	}
-	
-	public String getHost() {
-		return host;
-	}
-	
-	public JdbcConnectionModel withHost(String host) {
-		this.host = host;
-		return this;
-	}
-	
-	public String getDatabase() {
-		return database;
-	}
-	
-	public JdbcConnectionModel withDatabase(String database) {
-		this.database = database;
-		return this;
-	}
-
-	public Integer getPort() {
-		return port;
-	}
-
-	public JdbcConnectionModel withPort(Integer port) {
-		this.port = port;
 		return this;
 	}
 	
@@ -92,9 +62,6 @@ public class JdbcConnectionModel {
 		return new JdbcConnectionModel()
 			.withUser(this.user)
 			.withPassword(this.password)
-			.withHost(this.host)
-			.withDatabase(this.database)
-			.withPort(this.port)
 			.withSql(this.sql)
 			.withDriver(this.driver)
 			.withOptionalUrl(this.url);
