@@ -64,6 +64,9 @@
     },
     "standard": {
       "id": "output-standard.json"
+    },
+    "jdbc": {
+      "id": "input-jdbc.json"
     }
   }
 }
