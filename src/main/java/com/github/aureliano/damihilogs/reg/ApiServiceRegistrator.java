@@ -12,6 +12,7 @@ import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.converter.IConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
@@ -24,6 +25,7 @@ import com.github.aureliano.damihilogs.executor.reader.StandardDataReader;
 import com.github.aureliano.damihilogs.executor.reader.UrlDataReader;
 import com.github.aureliano.damihilogs.executor.writer.ElasticSearchDataWriter;
 import com.github.aureliano.damihilogs.executor.writer.FileDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.JdbcDataWriter;
 import com.github.aureliano.damihilogs.executor.writer.StandardDataWriter;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
@@ -110,6 +112,7 @@ public final class ApiServiceRegistrator {
 		this.registrate(this.createService(StandardOutputConfig.class, StandardDataWriter.class));
 		this.registrate(this.createService(FileOutputConfig.class, FileDataWriter.class));
 		this.registrate(this.createService(ElasticSearchOutputConfig.class, ElasticSearchDataWriter.class));
+		this.registrate(this.createService(JdbcOutputConfig.class, JdbcDataWriter.class));
 	}
 	
 	private ServiceRegistration createService(Class<? extends IConfiguration> configuration,

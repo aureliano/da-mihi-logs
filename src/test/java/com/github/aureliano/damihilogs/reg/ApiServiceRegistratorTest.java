@@ -14,6 +14,7 @@ import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
+import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.executor.reader.ExternalCommandDataReader;
 import com.github.aureliano.damihilogs.executor.reader.FileDataReader;
@@ -23,6 +24,7 @@ import com.github.aureliano.damihilogs.executor.reader.StandardDataReader;
 import com.github.aureliano.damihilogs.executor.reader.UrlDataReader;
 import com.github.aureliano.damihilogs.executor.writer.ElasticSearchDataWriter;
 import com.github.aureliano.damihilogs.executor.writer.FileDataWriter;
+import com.github.aureliano.damihilogs.executor.writer.JdbcDataWriter;
 import com.github.aureliano.damihilogs.executor.writer.StandardDataWriter;
 
 public class ApiServiceRegistratorTest {
@@ -39,6 +41,7 @@ public class ApiServiceRegistratorTest {
 		Assert.assertTrue(service.createExecutor(new StandardOutputConfig()) instanceof StandardDataWriter);
 		Assert.assertTrue(service.createExecutor(new FileOutputConfig()) instanceof FileDataWriter);
 		Assert.assertTrue(service.createExecutor(new ElasticSearchOutputConfig()) instanceof ElasticSearchDataWriter);
+		Assert.assertTrue(service.createExecutor(new JdbcOutputConfig()) instanceof JdbcDataWriter);
 	}
 
 	@Test
