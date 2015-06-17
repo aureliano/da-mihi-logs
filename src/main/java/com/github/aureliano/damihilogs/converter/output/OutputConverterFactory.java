@@ -21,6 +21,8 @@ public final class OutputConverterFactory {
 			return new FileOutputConverter();
 		} else if (OutputConfigTypes.STANDARD_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return new StandardOutputConverter();
+		} else if (OutputConfigTypes.JDBC_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
+			return new JdbcOutputConverter();
 		} else {
 			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 			IConfigurationConverter<?> converter = service.createConverter(type);
