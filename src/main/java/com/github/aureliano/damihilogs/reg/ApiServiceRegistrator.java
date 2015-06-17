@@ -65,7 +65,7 @@ public final class ApiServiceRegistrator {
 	public IExecutor createExecutor(IConfiguration configuration) {
 		ServiceRegistration registration = this.registrations.get(configuration.id());
 		
-		if (registration.getExecutor() == null) {
+		if ((registration == null) || (registration.getExecutor() == null)) {
 			throw new DaMihiLogsException("There isn't an executor (reader/writer) registered with ID " + configuration.id());
 		}
 		
