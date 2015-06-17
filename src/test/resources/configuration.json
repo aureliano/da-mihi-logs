@@ -165,6 +165,24 @@
       "metadata": {
         "inquisitor": "Bernardus Guidonis"
       }
+    },
+    {
+      "type": "jdbc",
+      "parser": "com.github.aureliano.damihilogs.parser.PlainTextParser",
+      "filter": "com.github.aureliano.damihilogs.filter.DefaultEmptyFilter",
+      "formatter": "com.github.aureliano.damihilogs.formatter.PlainTextFormatter",
+      "dataWritingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataWritingListener"],
+      "metadata": {
+        "philosopher": "Socrates"
+      },
+      
+      "connection": {
+        "user": "tomas_torquemada",
+        "password": "Px",
+        "driver": "org.postgresql.Driver",
+        "sql": "select * from spanish where really_converted is false",
+        "url": "jdbc:postgresql://127.0.0.1:5432/europe"
+      }
     }
   ]
 }

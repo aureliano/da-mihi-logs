@@ -25,6 +25,7 @@ import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
+import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
@@ -360,6 +361,8 @@ public class ConfigHelperTest {
 				this._testOutputFile((FileOutputConfig) output);
 			} else if (output instanceof StandardOutputConfig) {
 				this._testOutputStandard((StandardOutputConfig) output);
+			} else if (output instanceof JdbcOutputConfig) {
+				this._testOutputJdbc((JdbcOutputConfig) output);
 			}
 		}
 	}
@@ -396,5 +399,19 @@ public class ConfigHelperTest {
 		Assert.assertTrue(output.getOutputFormatter() instanceof PlainTextFormatter);
 		Assert.assertTrue(output.getDataWritingListeners().size() == 1);
 		Assert.assertEquals("Bernardus Guidonis", output.getMetadata("inquisitor"));
+	}
+
+	private void _testOutputJdbc(JdbcOutputConfig output) {
+		Assert.assertTrue(output.getParser() instanceof PlainTextParser);
+		Assert.assertTrue(output.getFilter() instanceof DefaultEmptyFilter);
+		Assert.assertTrue(output.getOutputFormatter() instanceof PlainTextFormatter);
+		Assert.assertTrue(output.getDataWritingListeners().size() == 1);
+		Assert.assertEquals("Socrates", output.getMetadata("philosopher"));
+		
+		Assert.assertEquals("org.postgresql.Driver", output.getConnection().getDriver());
+		Assert.assertEquals("Px", output.getConnection().getPassword());
+		Assert.assertEquals("select * from spanish where really_converted is false", output.getConnection().getSql());
+		Assert.assertEquals("jdbc:postgresql://127.0.0.1:5432/europe", output.getConnection().getUrl());
+		Assert.assertEquals("tomas_torquemada", output.getConnection().getUser());
 	}
 }
