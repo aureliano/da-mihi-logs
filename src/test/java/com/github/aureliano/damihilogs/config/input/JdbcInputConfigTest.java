@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcInputConfigTest {
 

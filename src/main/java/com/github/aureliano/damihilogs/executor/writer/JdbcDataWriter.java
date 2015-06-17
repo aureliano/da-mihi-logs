@@ -8,11 +8,11 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.JdbcHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcDataWriter extends AbstractDataWriter {
 

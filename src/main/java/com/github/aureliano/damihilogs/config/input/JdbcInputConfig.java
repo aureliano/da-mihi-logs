@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;

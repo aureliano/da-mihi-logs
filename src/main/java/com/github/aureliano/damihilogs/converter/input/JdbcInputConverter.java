@@ -3,10 +3,10 @@ package com.github.aureliano.damihilogs.converter.input;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcInputConverter extends AbstractInputConverter<JdbcInputConfig> {
 

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.listener.DataWritingListener;
 import com.github.aureliano.damihilogs.parser.IParser;
 

@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.config.output;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcOutputConfigTest {
 

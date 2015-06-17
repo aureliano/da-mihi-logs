@@ -2,11 +2,11 @@ package com.github.aureliano.damihilogs.converter.output;
 
 import java.util.Map;
 
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcOutputConverter extends AbstractOutputConverter<JdbcOutputConfig> {
 

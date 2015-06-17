@@ -12,11 +12,11 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.aureliano.damihilogs.config.input.JdbcConnectionModel;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.data.ObjectMapperSingleton;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcDataReader extends AbstractDataReader {
 
