@@ -8,9 +8,11 @@ public class JdbcHelperTest {
 
 	@Test
 	public void testGetTableNameFromSql() {
+		Assert.assertNull(JdbcHelper.getTableNameFromSql(""));
 		String table = JdbcHelper.getTableNameFromSql("insert into anywhere values(1)");
 		Assert.assertEquals("anywhere", table);
 		
-		Assert.assertNull(JdbcHelper.getTableNameFromSql(""));
+		table = JdbcHelper.getTableNameFromSql("INSERT into anywhere values(1)");
+		Assert.assertEquals("anywhere", table);
 	}
 }

@@ -61,7 +61,7 @@ public final class JdbcHelper {
 	}
 
 	public static String getTableNameFromSql(String sql) {
-		Matcher matcher = Pattern.compile("insert\\s+into\\s+(\\w+)").matcher(sql);
+		Matcher matcher = Pattern.compile("insert\\s+into\\s+(\\w+)").matcher(sql.toLowerCase());
 		return matcher.find() ? matcher.group(1) : null;
 	}
 }
