@@ -66,4 +66,47 @@ public class JdbcConnectionModel {
 			.withDriver(this.driver)
 			.withUrl(this.url);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((driver == null) ? 0 : driver.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((url == null) ? 0 : url.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		JdbcConnectionModel other = (JdbcConnectionModel) obj;
+		if (driver == null) {
+			if (other.driver != null)
+				return false;
+		} else if (!driver.equals(other.driver))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (url == null) {
+			if (other.url != null)
+				return false;
+		} else if (!url.equals(other.url))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
 }
