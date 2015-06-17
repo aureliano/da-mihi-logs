@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Output configuration for file.",
+  "title": "Output configuration for jdbc.",
   "type": "object",
   "properties": {
     "parser": {
