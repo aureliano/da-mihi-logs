@@ -47,7 +47,7 @@ public class JdbcDataReader extends AbstractDataReader {
 			Map<String, Object> row = new HashMap<String, Object>();
 			
 			for (short i = 0; i < this.columns; i++) {
-				row.put(this.columnNames[i], this.resultSet.getObject(i));
+				row.put(this.columnNames[i], this.resultSet.getObject(i + 1));
 			}
 			
 			return this.parseToJson(row);
@@ -120,7 +120,7 @@ public class JdbcDataReader extends AbstractDataReader {
 			
 			this.columnNames = new String[this.columns];
 			for (short i = 0; i < this.columns; i++) {
-				this.columnNames[i] = metaData.getColumnLabel(i);
+				this.columnNames[i] = metaData.getColumnLabel(i + 1);
 			}
 		} catch (SQLException ex) {
 			throw new DaMihiLogsException(ex);
