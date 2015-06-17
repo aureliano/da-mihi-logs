@@ -115,6 +115,21 @@
         "inputFilePath": "src/test/resources/compressed.gz",
         "outputFilePath": "target/test/output"
       }
+    },
+    {
+      "id": "in-jdbc",
+      "type": "jdbc",
+      "metadata": {
+        "philosopher": "Socrates"
+      },
+      
+      "connection": {
+        "user": "tomas_torquemada",
+        "password": "Px",
+        "driver": "org.postgresql.Driver",
+        "sql": "select * from spanish where really_converted is false",
+        "url": "jdbc:postgresql://127.0.0.1:5432/europe"
+      }
     }
   ],
 

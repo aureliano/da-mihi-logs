@@ -19,6 +19,7 @@ import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
+import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
@@ -251,10 +252,12 @@ public class ConfigHelperTest {
 				this._testInputStandard((StandardInputConfig) input);
 			} else if (input instanceof UrlInputConfig) {
 				this._testInputUrl((UrlInputConfig) input);
+			} else if (input instanceof JdbcInputConfig) {
+				this._testInputJdbc((JdbcInputConfig) input);
 			}
 		}
 	}
-	
+
 	private void _testInputExternalCommand(ExternalCommandInput input) {
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
@@ -325,6 +328,21 @@ public class ConfigHelperTest {
 		Assert.assertEquals(SupportedCompressionType.GZIP, input.getDecompressFileConfiguration().getCompressionType());
 		Assert.assertEquals("src/test/resources/compressed.gz", input.getDecompressFileConfiguration().getInputFilePath());
 		Assert.assertEquals("target/test/output", input.getDecompressFileConfiguration().getOutputFilePath());
+	}
+	
+	private void _testInputJdbc(JdbcInputConfig input) {
+		Assert.assertNull(input.getMatcher());
+		Assert.assertFalse(input.isUseLastExecutionRecords());
+		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
+		Assert.assertTrue(input.getDataReadingListeners().isEmpty());
+		Assert.assertTrue(input.getExecutionListeners().isEmpty());
+		Assert.assertEquals("Socrates", input.getMetadata("philosopher"));
+		
+		Assert.assertEquals("org.postgresql.Driver", input.getConnection().getDriver());
+		Assert.assertEquals("Px", input.getConnection().getPassword());
+		Assert.assertEquals("select * from spanish where really_converted is false", input.getConnection().getSql());
+		Assert.assertEquals("jdbc:postgresql://127.0.0.1:5432/europe", input.getConnection().getUrl());
+		Assert.assertEquals("tomas_torquemada", input.getConnection().getUser());
 	}
 	
 	private void _testOutputs(EventCollectorConfiguration configuration) {
