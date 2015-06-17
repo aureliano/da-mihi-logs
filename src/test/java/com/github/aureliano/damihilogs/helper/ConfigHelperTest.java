@@ -259,6 +259,7 @@ public class ConfigHelperTest {
 	}
 
 	private void _testInputExternalCommand(ExternalCommandInput input) {
+		Assert.assertEquals("in-cmd", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
@@ -272,6 +273,7 @@ public class ConfigHelperTest {
 	}
 	
 	private void _testInputFile(FileInputConfig input) {
+		Assert.assertEquals("in-file", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
@@ -285,6 +287,7 @@ public class ConfigHelperTest {
 	}
 	
 	private void _testInputFileTailer(FileTailerInputConfig input) {
+		Assert.assertEquals("in-file-tailer", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
@@ -299,6 +302,7 @@ public class ConfigHelperTest {
 	}
 	
 	private void _testInputStandard(StandardInputConfig input) {
+		Assert.assertEquals("in-strd", input.getConfigurationId());
 		Assert.assertTrue(input.getMatcher() instanceof SingleLineMatcher);
 		Assert.assertTrue(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().size() == 1);
@@ -308,6 +312,7 @@ public class ConfigHelperTest {
 	}
 	
 	private void _testInputUrl(UrlInputConfig input) {
+		Assert.assertEquals("in-url", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
@@ -331,6 +336,7 @@ public class ConfigHelperTest {
 	}
 	
 	private void _testInputJdbc(JdbcInputConfig input) {
+		Assert.assertEquals("in-jdbc", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());
 		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
