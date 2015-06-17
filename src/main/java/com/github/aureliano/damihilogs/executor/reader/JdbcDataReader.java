@@ -1,7 +1,5 @@
 package com.github.aureliano.damihilogs.executor.reader;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -15,13 +13,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.data.ObjectMapperSingleton;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.ConnectionPool;
 import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
 
 public class JdbcDataReader extends AbstractDataReader {
 
 	private JdbcConnectionModel schemaConnection;
-	private Connection connection;
 	private ResultSet resultSet;
 	private int columns;
 	private String[] columnNames;
@@ -67,8 +64,8 @@ public class JdbcDataReader extends AbstractDataReader {
 	@Override
 	public void finalizeResources() {
 		try {
+			logger.info(">>> Closing result set.");
 			this.resultSet.close();
-			this.connection.close();
 		} catch (SQLException ex) {
 			throw new DaMihiLogsException(ex);
 		}
@@ -76,44 +73,14 @@ public class JdbcDataReader extends AbstractDataReader {
 	
 	private void initialize() {
 		this.schemaConnection = ((JdbcInputConfig) super.inputConfiguration).getConnection();
-		
-		logger.info("Connecting to //" + this.schemaConnection.getUrl());
-		logger.info("Querying: " + this.schemaConnection.getSql());
-		logger.debug("Driver: " + this.schemaConnection.getDriver());
-		logger.debug("User: " + this.schemaConnection.getUser());
-		
-		this.registrateDriver();
-		this.openDatabaseConnection();
 		this.prepareDataReading();
-	}
-	
-	private void registrateDriver() {
-		try {
-			Class.forName(this.schemaConnection.getDriver());
-		} catch (ClassNotFoundException ex) {
-			throw new DaMihiLogsException(ex);
-		}
-	}
-	
-	private void openDatabaseConnection() {
-		try {
-			if (!StringHelper.isEmpty(this.schemaConnection.getUser())) {
-				this.connection = DriverManager.getConnection(
-					this.schemaConnection.getUrl(),
-					this.schemaConnection.getUser(),
-					this.schemaConnection.getPassword()
-				);
-			} else {
-				this.connection = DriverManager.getConnection(this.schemaConnection.getUrl());
-			}
-		} catch (SQLException ex) {
-			throw new DaMihiLogsException(ex);
-		}
 	}
 	
 	private void prepareDataReading() {
 		try {
-			this.resultSet = this.connection.createStatement().executeQuery(this.schemaConnection.getSql());
+			logger.info("Executing query: " + this.schemaConnection.getSql());
+			this.resultSet = ConnectionPool.instance().getConnection(this.schemaConnection)
+					.createStatement().executeQuery(this.schemaConnection.getSql());
 			
 			ResultSetMetaData metaData = this.resultSet.getMetaData();
 			this.columns = metaData.getColumnCount();

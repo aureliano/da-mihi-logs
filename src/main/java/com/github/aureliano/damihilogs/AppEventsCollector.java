@@ -16,6 +16,7 @@ import com.github.aureliano.damihilogs.executor.IExecutor;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.LoggerHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
+import com.github.aureliano.damihilogs.jdbc.ConnectionPool;
 import com.github.aureliano.damihilogs.listener.EventsCollectorListener;
 import com.github.aureliano.damihilogs.profile.Profiler;
 import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
@@ -35,6 +36,11 @@ public class AppEventsCollector {
 	public void execute() {
 		if (this.configuration.getScheduler() == null) {
 			this._execute();
+			
+			if (ConnectionPool.isInitialized()) {
+				ConnectionPool.instance().closeConnections();
+			}
+			
 			return;
 		}
 		
