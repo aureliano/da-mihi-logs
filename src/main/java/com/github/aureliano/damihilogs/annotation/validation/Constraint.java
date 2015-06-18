@@ -6,14 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.github.aureliano.damihilogs.validation.IValidator;
-import com.github.aureliano.damihilogs.validation.NotNullValidator;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
-@Constraint(validatedBy = NotNullValidator.class)
-public @interface NotNull {
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Constraint {
 
 	public abstract Class<? extends IValidator> validatedBy();
-	
-	public abstract String message() default "Expected to find a not null value for field ?.";
 }
