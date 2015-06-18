@@ -26,22 +26,5 @@ public class NotNullValidator implements IValidator {
 		}
 		
 		return null;
-		
-		/*for (Method method : methods) {
-			Annotation[] annotations = method.getAnnotations();
-			for (Annotation annotation : annotations) {
-				if (annotation.annotationType().equals(NotNull.class)) {
-					Object returnedValue = ReflectionHelper.callMethod(configuration, method.getName(), null, null);
-					if (returnedValue == null) {
-						String message = ((NotNull) annotation).message();
-						validation.add(new ConstraintViolation()
-							.withValidator(NotNull.class)
-							.withMessage(message.replaceFirst("\\?", ));
-					}
-				}
-			}
-		}
-		
-		return validation;*/
 	}
 }
