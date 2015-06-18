@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.CustomInputConfig;
-import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 
 public class ConfigurationValidationTest {
@@ -16,10 +15,6 @@ public class ConfigurationValidationTest {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId(null);
 		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(configuration);
 		
-		Assert.assertEquals(1, violations.size());
-		ConstraintViolation constraint = violations.iterator().next();
-		
-		Assert.assertEquals("Expected to find a not null value for field configurationId.", constraint.getMessage());
-		Assert.assertEquals(NotNull.class, constraint.getValidator());
+		Assert.assertEquals(2, violations.size());
 	}
 }

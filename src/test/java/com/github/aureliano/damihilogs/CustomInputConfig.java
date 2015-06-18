@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
@@ -64,6 +65,7 @@ public class CustomInputConfig implements IConfigInput {
 
 	@Override
 	@NotNull
+	@Min(value = 3)
 	public String getConfigurationId() {
 		return this.id;
 	}
