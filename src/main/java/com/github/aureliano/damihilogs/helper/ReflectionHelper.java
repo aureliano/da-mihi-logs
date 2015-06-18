@@ -93,4 +93,9 @@ public class ReflectionHelper {
     	Class<?> clazz = ReflectionUtils.forName(fullClassName);
     	return newInstance(clazz);
     }
+    
+    public static String getSimpleAccessMethodName(Method method) {
+    	String name = method.getName().replaceFirst("^(get|set|with)", "");
+    	return Character.toLowerCase(name.charAt(0)) + name.substring(1);
+    }
 }
