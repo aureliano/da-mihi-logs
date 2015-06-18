@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.CustomInputConfig;
-import com.github.aureliano.damihilogs.annotation.NotNull;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 
 public class NotNullValidatorTest {

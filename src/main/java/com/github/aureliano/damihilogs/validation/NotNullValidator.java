@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.validation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import com.github.aureliano.damihilogs.annotation.NotNull;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 

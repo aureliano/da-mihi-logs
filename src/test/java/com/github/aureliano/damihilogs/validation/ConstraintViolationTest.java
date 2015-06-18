@@ -3,7 +3,7 @@ package com.github.aureliano.damihilogs.validation;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.annotation.NotNull;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 
 public class ConstraintViolationTest {
 
