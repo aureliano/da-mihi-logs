@@ -12,5 +12,5 @@ import com.github.aureliano.damihilogs.validation.AssertTrueValidator;
 @Constraint(validatedBy = AssertTrueValidator.class)
 public @interface AssertTrue {
 
-	public abstract String message() default "Expected field ? to be true but got ?.";
+	public abstract String message() default "Expected field #{0} to be true but got #{1}.";
 }
