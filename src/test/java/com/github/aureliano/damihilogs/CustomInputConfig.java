@@ -8,6 +8,7 @@ import com.github.aureliano.damihilogs.annotation.validation.AssertFalse;
 import com.github.aureliano.damihilogs.annotation.validation.AssertTrue;
 import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.annotation.validation.Size;
 import com.github.aureliano.damihilogs.config.IConfiguration;
@@ -71,6 +72,7 @@ public class CustomInputConfig implements IConfigInput {
 
 	@Override
 	@NotNull
+	@NotEmpty
 	@Min(value = 3)
 	@Max(value = 5)
 	@Size(min = 3, max = 5)
