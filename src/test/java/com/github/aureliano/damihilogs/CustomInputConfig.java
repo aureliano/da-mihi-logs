@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.AssertTrue;
 import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
@@ -27,6 +28,8 @@ public class CustomInputConfig implements IConfigInput {
 	private List<ExecutionListener> inputExecutionListeners;
 	
 	private Integer myNewProperty;
+	private Boolean ok;
+	private Boolean notOk;
 	
 	public CustomInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -99,6 +102,25 @@ public class CustomInputConfig implements IConfigInput {
 	@Override
 	public CustomInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
+		return this;
+	}
+
+	@AssertTrue
+	public Boolean isOk() {
+		return ok;
+	}
+	
+	public CustomInputConfig withOk(Boolean value) {
+		this.ok = value;
+		return this;
+	}
+
+	public Boolean isNotOk() {
+		return notOk;
+	}
+	
+	public CustomInputConfig withNotOk(Boolean value) {
+		this.notOk = value;
 		return this;
 	}
 
