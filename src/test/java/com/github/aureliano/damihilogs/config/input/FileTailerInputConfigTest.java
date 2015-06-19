@@ -1,11 +1,15 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class FileTailerInputConfigTest {
 
@@ -61,5 +65,24 @@ public class FileTailerInputConfigTest {
 	@Test
 	public void testInputType() {
 		Assert.assertEquals(InputConfigTypes.FILE_TAILER.name(), new FileTailerInputConfig().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		FileTailerInputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		this._testValidateFile();
+	}
+	
+	private void _testValidateFile() {
+		FileInputConfig c = new FileInputConfig();
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+	
+	private FileTailerInputConfig createValidConfiguration() {
+		return new FileTailerInputConfig().withFile("/path/to/file");
 	}
 }

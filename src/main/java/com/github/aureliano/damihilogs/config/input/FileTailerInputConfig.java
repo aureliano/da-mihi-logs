@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -59,6 +60,7 @@ public class FileTailerInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@NotNull
 	public File getFile() {
 		return file;
 	}
