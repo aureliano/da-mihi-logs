@@ -1,10 +1,15 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class JdbcInputConfigTest {
 
@@ -39,6 +44,22 @@ public class JdbcInputConfigTest {
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 	}
 	
+	@Test
+	public void testValidation() {
+		JdbcInputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		c.withConnection(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+	
+	private JdbcInputConfig createValidConfiguration() {
+		return new JdbcInputConfig().withConnection(new JdbcConnectionModel());
+	}
+
 	private JdbcConnectionModel createConnection() {
 		return new JdbcConnectionModel()
 			.withPassword("Px")
