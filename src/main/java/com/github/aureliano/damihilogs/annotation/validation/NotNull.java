@@ -12,5 +12,5 @@ import com.github.aureliano.damihilogs.validation.NotNullValidator;
 @Constraint(validatedBy = NotNullValidator.class)
 public @interface NotNull {
 	
-	public abstract String message() default "Expected to find a not null value for field ?.";
+	public abstract String message() default "Expected to find a not null value for field #{0}.";
 }

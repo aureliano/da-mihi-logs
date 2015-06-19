@@ -22,7 +22,7 @@ public class NotNullValidator implements IValidator {
 			String message = ((NotNull) annotation).message();
 			return new ConstraintViolation()
 				.withValidator(NotNull.class)
-				.withMessage(message.replaceFirst("\\?", property));
+				.withMessage(message.replaceFirst("#\\{0\\}", property));
 		}
 		
 		return null;
