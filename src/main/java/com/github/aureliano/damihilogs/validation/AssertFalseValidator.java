@@ -25,8 +25,8 @@ public class AssertFalseValidator implements IValidator {
 			return new ConstraintViolation()
 				.withValidator(AssertFalse.class)
 				.withMessage(message
-					.replaceFirst("\\?", property)
-					.replaceFirst("\\?", StringHelper.toString(returnedValue)));
+					.replaceFirst("#\\{0\\}", property)
+					.replaceFirst("#\\{1\\}", StringHelper.toString(returnedValue)));
 		}
 		
 		return null;

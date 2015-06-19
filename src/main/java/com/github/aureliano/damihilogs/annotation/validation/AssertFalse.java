@@ -12,5 +12,5 @@ import com.github.aureliano.damihilogs.validation.AssertFalseValidator;
 @Constraint(validatedBy = AssertFalseValidator.class)
 public @interface AssertFalse {
 
-	public abstract String message() default "Expected field ? to be false but got ?.";
+	public abstract String message() default "Expected field #{0} to be false but got #{1}.";
 }
