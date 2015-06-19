@@ -1,6 +1,5 @@
 package com.github.aureliano.damihilogs.helper;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,9 +15,9 @@ import com.github.aureliano.damihilogs.clean.LogCleaner;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
-import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
@@ -27,7 +26,6 @@ import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
-import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 import com.github.aureliano.damihilogs.inout.SupportedCompressionType;
@@ -66,121 +64,6 @@ public class ConfigHelperTest {
 		Assert.assertEquals("orange", s.getMetadata("fruit"));
 		Assert.assertEquals("blue", s.getMetadata("collor"));
 		Assert.assertEquals("Portuguese", s.getMetadata("idiom"));
-	}
-
-	@Test
-	public void testInputConfigValidation() {
-		try {
-			ConfigHelper.inputConfigValidation(null);
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Input configuration must be provided.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testOutputConfigValidation() {
-		try {
-			ConfigHelper.outputConfigValidation(null);
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output configuration must be provided.", ex.getMessage());
-		}
-	}
-	
-	@Test
-	public void testFileInputConfigValidationFile() {
-		try {
-			ConfigHelper.fileInputConfigValidation(new FileInputConfig());
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Input file not provided.", ex.getMessage());
-		}
-		
-		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile(new File("src/test/resources/empty-file.log")).withStartPosition(0));
-		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(25));
-	}
-	
-	@Test
-	public void testFileInputConfigValidationStartPosition() {
-		try {
-			ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(-1));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Start position must be greater or equal to zero (>= 0).", ex.getMessage());
-		}
-		
-		ConfigHelper.fileInputConfigValidation(new FileInputConfig().withFile("src/test/resources/empty-file.log").withStartPosition(0));
-	}
-	
-	@Test
-	public void testOutputFileConfigValidationFile() {
-		try {
-			ConfigHelper.outputConfigValidation(new FileOutputConfig());
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output file not provided.", ex.getMessage());
-		}
-		
-		ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile(new File("src/test/resources/empty-file.log")));
-		ConfigHelper.outputConfigValidation(new FileOutputConfig().withFile("src/test/resources/empty-file.log"));
-	}
-	
-	@Test
-	public void testUrlInputConfigValidation() {
-		try {
-			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(null));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Connection schema not provided.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.urlInputConfigValidation(new UrlInputConfig().withConnectionSchema(ConnectionSchema.HTTP));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Host not provided.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
-				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost"));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output file not provided.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
-				.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
-				.withOutputFile("src/test/resources"));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Output file 'src/test/resources' is a directory.", ex.getMessage());
-		}
-		
-		ConfigHelper.urlInputConfigValidation(new UrlInputConfig()
-			.withConnectionSchema(ConnectionSchema.HTTP).withHost("localhost")
-			.withOutputFile("src/test/resources/empty-file.log"));
-	}
-	
-	@Test
-	public void testExternalCommandConfigValidation() {
-		try {
-			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput());
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Command not provided.", ex.getMessage());
-		}
-		
-		try {
-			ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand(""));
-			Assert.fail("Expected to got an exception");
-		} catch (DaMihiLogsException ex) {
-			Assert.assertEquals("Command not provided.", ex.getMessage());
-		}
-		
-		ConfigHelper.externalCommandConfigValidation(new ExternalCommandInput().withCommand("ls -la"));
 	}
 	
 	@Test
