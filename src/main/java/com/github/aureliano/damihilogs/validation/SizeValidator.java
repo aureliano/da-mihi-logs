@@ -7,6 +7,7 @@ import java.util.Collection;
 import com.github.aureliano.damihilogs.annotation.validation.Size;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
+import com.github.aureliano.damihilogs.helper.StringHelper;
 
 public class SizeValidator implements IValidator {
 
@@ -31,6 +32,9 @@ public class SizeValidator implements IValidator {
 		
 		if (Collection.class.isAssignableFrom(returnedValue.getClass())) {
 			objectSize = ((Collection<?>) returnedValue).size();
+		} else if (StringHelper.isNumeric(returnedValue.toString())) {
+			Double d = Double.parseDouble(returnedValue.toString());
+			objectSize = d.intValue();
 		} else {
 			objectSize = returnedValue.toString().length();
 		}
