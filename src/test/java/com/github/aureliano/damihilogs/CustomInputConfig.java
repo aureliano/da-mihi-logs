@@ -135,6 +135,7 @@ public class CustomInputConfig implements IConfigInput {
 	@Override
 	@Min(value = 1)
 	@Max(value = 1)
+	@Size(min = 1, max = 1)
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
 	}

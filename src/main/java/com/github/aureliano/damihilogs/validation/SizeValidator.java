@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 import com.github.aureliano.damihilogs.annotation.validation.Size;
 import com.github.aureliano.damihilogs.config.IConfiguration;
@@ -26,16 +27,22 @@ public class SizeValidator implements IValidator {
 		String message = sizeAnnotation.message();
 		int minSize = sizeAnnotation.min();
 		int maxSize = sizeAnnotation.max();
+		int objectSize;
 		
-		if ((minSize > returnedValue.toString().length()) || (maxSize < returnedValue.toString().length())) {
-			int size = returnedValue.toString().length();
+		if (Collection.class.isAssignableFrom(returnedValue.getClass())) {
+			objectSize = ((Collection<?>) returnedValue).size();
+		} else {
+			objectSize = returnedValue.toString().length();
+		}
+		
+		if ((minSize > objectSize) || (maxSize < objectSize)) {
 			return new ConstraintViolation()
 				.withValidator(Size.class)
 				.withMessage(message
 					.replaceFirst("\\?", property)
 					.replaceFirst("\\?", String.valueOf(minSize))
 					.replaceFirst("\\?", String.valueOf(maxSize))
-					.replaceFirst("\\?", String.valueOf(size)));
+					.replaceFirst("\\?", String.valueOf(objectSize)));
 		}
 		
 		return null;
