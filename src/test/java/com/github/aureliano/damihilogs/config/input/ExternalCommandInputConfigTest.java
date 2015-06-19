@@ -10,11 +10,11 @@ import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
-public class ExternalCommandInputTest {
+public class ExternalCommandInputConfigTest {
 
 	@Test
 	public void testGetDefaults() {
-		ExternalCommandInput c = new ExternalCommandInput();
+		ExternalCommandInputConfig c = new ExternalCommandInputConfig();
 		Assert.assertNull(c.getConfigurationId());
 		Assert.assertNull(c.getCommand());
 		Assert.assertNotNull(c.getParameters());
@@ -23,7 +23,7 @@ public class ExternalCommandInputTest {
 	
 	@Test
 	public void testConfiguration() {
-		ExternalCommandInput c = new ExternalCommandInput()
+		ExternalCommandInputConfig c = new ExternalCommandInputConfig()
 			.withConfigurationId("external-command-config")
 			.withCommand("ls")
 			.addParameter("-la");
@@ -36,7 +36,7 @@ public class ExternalCommandInputTest {
 	
 	@Test
 	public void testClone() {
-		ExternalCommandInput c1 = new ExternalCommandInput()
+		ExternalCommandInputConfig c1 = new ExternalCommandInputConfig()
 			.withConfigurationId("external-command-config")
 			.withCommand("ls")
 			.addParameter("-la")
@@ -45,7 +45,7 @@ public class ExternalCommandInputTest {
 				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			});
 		
-		ExternalCommandInput c2 = c1.clone();
+		ExternalCommandInputConfig c2 = c1.clone();
 		Assert.assertEquals(c1.getCommand(), c2.getCommand());
 		Assert.assertEquals(c1.getConfigurationId(), c2.getConfigurationId());
 		Assert.assertEquals(c1.getParameters().size(), c2.getParameters().size());
@@ -56,12 +56,12 @@ public class ExternalCommandInputTest {
 	
 	@Test
 	public void testInputType() {
-		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInput().id());
+		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInputConfig().id());
 	}
 	
 	@Test
 	public void testValidation() {
-		ExternalCommandInput c = this.createValidConfiguration();
+		ExternalCommandInputConfig c = this.createValidConfiguration();
 		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
 		
 		c.withCommand(null);
@@ -75,7 +75,7 @@ public class ExternalCommandInputTest {
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 	}
 	
-	private ExternalCommandInput createValidConfiguration() {
-		return new ExternalCommandInput().withCommand("ls");
+	private ExternalCommandInputConfig createValidConfiguration() {
+		return new ExternalCommandInputConfig().withCommand("ls");
 	}
 }

@@ -9,16 +9,16 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class ExternalCommandDataReader extends AbstractDataReader {
 
 	private Process process;
 	private BufferedReader bufferedReader;
-	private ExternalCommandInput externalCommandInput;
+	private ExternalCommandInputConfig externalCommandInput;
 	
-	private static final Logger logger = Logger.getLogger(ExternalCommandInput.class);
+	private static final Logger logger = Logger.getLogger(ExternalCommandInputConfig.class);
 	
 	public ExternalCommandDataReader() {
 		super();
@@ -69,7 +69,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	}
 	
 	private void initialize() {
-		this.externalCommandInput = (ExternalCommandInput) super.inputConfiguration;
+		this.externalCommandInput = (ExternalCommandInputConfig) super.inputConfiguration;
 		
 		logger.info("Execute command " + this.externalCommandInput.getCommand());
 		logger.info("With parameters: " + this.externalCommandInput.getParameters());

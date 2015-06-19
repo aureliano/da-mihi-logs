@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.IConfiguration;
-import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
@@ -107,7 +107,7 @@ public final class ApiServiceRegistrator {
 		this.registrate(this.createService(FileTailerInputConfig.class, FileTailerDataReader.class));
 		this.registrate(this.createService(StandardInputConfig.class, StandardDataReader.class));
 		this.registrate(this.createService(UrlInputConfig.class, UrlDataReader.class));
-		this.registrate(this.createService(ExternalCommandInput.class, ExternalCommandDataReader.class));
+		this.registrate(this.createService(ExternalCommandInputConfig.class, ExternalCommandDataReader.class));
 		this.registrate(this.createService(JdbcInputConfig.class, JdbcDataReader.class));
 		this.registrate(this.createService(StandardOutputConfig.class, StandardDataWriter.class));
 		this.registrate(this.createService(FileOutputConfig.class, FileDataWriter.class));

@@ -6,7 +6,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.CustomDataReader;
 import com.github.aureliano.damihilogs.CustomInputConfig;
 import com.github.aureliano.damihilogs.CustomInputConfigConverter;
-import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
@@ -36,7 +36,7 @@ public class ApiServiceRegistratorTest {
 		Assert.assertTrue(service.createExecutor(new FileTailerInputConfig()) instanceof FileTailerDataReader);
 		Assert.assertTrue(service.createExecutor(new StandardInputConfig()) instanceof StandardDataReader);
 		Assert.assertTrue(service.createExecutor(new UrlInputConfig()) instanceof UrlDataReader);
-		Assert.assertTrue(service.createExecutor(new ExternalCommandInput()) instanceof ExternalCommandDataReader);
+		Assert.assertTrue(service.createExecutor(new ExternalCommandInputConfig()) instanceof ExternalCommandDataReader);
 		Assert.assertTrue(service.createExecutor(new JdbcInputConfig()) instanceof JdbcDataReader);
 		Assert.assertTrue(service.createExecutor(new StandardOutputConfig()) instanceof StandardDataWriter);
 		Assert.assertTrue(service.createExecutor(new FileOutputConfig()) instanceof FileDataWriter);

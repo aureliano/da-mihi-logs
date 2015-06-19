@@ -11,7 +11,7 @@ import com.github.aureliano.damihilogs.listener.DataReadingListener;
 import com.github.aureliano.damihilogs.listener.ExecutionListener;
 import com.github.aureliano.damihilogs.matcher.IMatcher;
 
-public class ExternalCommandInput implements IConfigInput {
+public class ExternalCommandInputConfig implements IConfigInput {
 
 	private String id;
 	private String command;
@@ -23,7 +23,7 @@ public class ExternalCommandInput implements IConfigInput {
 	private List<DataReadingListener> dataReadingListeners;
 	private List<ExecutionListener> inputExecutionListeners;
 	
-	public ExternalCommandInput() {
+	public ExternalCommandInputConfig() {
 		this.useLastExecutionRecords = false;
 		this.parameters = new ArrayList<String>();
 		this.metadata = new Properties();
@@ -37,7 +37,7 @@ public class ExternalCommandInput implements IConfigInput {
 		return matcher;
 	}
 	
-	public ExternalCommandInput withMatcher(IMatcher matcher) {
+	public ExternalCommandInputConfig withMatcher(IMatcher matcher) {
 		this.matcher = matcher;
 		return this;
 	}
@@ -48,7 +48,7 @@ public class ExternalCommandInput implements IConfigInput {
 	}
 
 	@Override
-	public ExternalCommandInput withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
+	public ExternalCommandInputConfig withUseLastExecutionRecords(Boolean useLastExecutionRecords) {
 		this.useLastExecutionRecords = useLastExecutionRecords;
 		return this;
 	}
@@ -57,19 +57,19 @@ public class ExternalCommandInput implements IConfigInput {
 		return dataReadingListeners;
 	}
 
-	public ExternalCommandInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+	public ExternalCommandInputConfig withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
 		this.dataReadingListeners = dataReadingListeners;
 		return this;
 	}
 	
-	public ExternalCommandInput addDataReadingListener(DataReadingListener listener) {
+	public ExternalCommandInputConfig addDataReadingListener(DataReadingListener listener) {
 		this.dataReadingListeners.add(listener);
 		return this;
 	}
 
 	@Override
-	public ExternalCommandInput clone() {
-		return new ExternalCommandInput()
+	public ExternalCommandInputConfig clone() {
+		return new ExternalCommandInputConfig()
 			.withConfigurationId(this.id)
 			.withCommand(this.command)
 			.withMatcher(this.matcher)
@@ -86,7 +86,7 @@ public class ExternalCommandInput implements IConfigInput {
 	}
 
 	@Override
-	public ExternalCommandInput withConfigurationId(String id) {
+	public ExternalCommandInputConfig withConfigurationId(String id) {
 		this.id = id;
 		return this;
 	}
@@ -96,7 +96,7 @@ public class ExternalCommandInput implements IConfigInput {
 		return command;
 	}
 	
-	public ExternalCommandInput withCommand(String command) {
+	public ExternalCommandInputConfig withCommand(String command) {
 		this.command = command;
 		return this;
 	}
@@ -105,18 +105,18 @@ public class ExternalCommandInput implements IConfigInput {
 		return parameters;
 	}
 	
-	public ExternalCommandInput withParameters(List<String> parameters) {
+	public ExternalCommandInputConfig withParameters(List<String> parameters) {
 		this.parameters = parameters;
 		return this;
 	}
 	
-	public ExternalCommandInput addParameter(String parameter) {
+	public ExternalCommandInputConfig addParameter(String parameter) {
 		this.parameters.add(parameter);
 		return this;
 	}
 	
 	@Override
-	public ExternalCommandInput putMetadata(String key, String value) {
+	public ExternalCommandInputConfig putMetadata(String key, String value) {
 		this.metadata.put(key, value);
 		return this;
 	}
@@ -126,12 +126,12 @@ public class ExternalCommandInput implements IConfigInput {
 		return this.metadata.getProperty(key);
 	}
 	
-	protected ExternalCommandInput withMetadata(Properties properties) {
+	protected ExternalCommandInputConfig withMetadata(Properties properties) {
 		this.metadata = properties;
 		return this;
 	}
 	
-	protected ExternalCommandInput withExceptionHandlers(List<IExceptionHandler> handlers) {
+	protected ExternalCommandInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
 		this.exceptionHandlers = handlers;
 		return this;
 	}
@@ -142,7 +142,7 @@ public class ExternalCommandInput implements IConfigInput {
 	}
 
 	@Override
-	public ExternalCommandInput addExceptionHandler(IExceptionHandler handler) {
+	public ExternalCommandInputConfig addExceptionHandler(IExceptionHandler handler) {
 		this.exceptionHandlers.add(handler);
 		return this;
 	}
@@ -158,13 +158,13 @@ public class ExternalCommandInput implements IConfigInput {
 	}
 
 	@Override
-	public ExternalCommandInput withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
+	public ExternalCommandInputConfig withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
 		this.inputExecutionListeners = inputExecutionListeners;
 		return this;
 	}
 
 	@Override
-	public ExternalCommandInput addExecutionListener(ExecutionListener listener) {
+	public ExternalCommandInputConfig addExecutionListener(ExecutionListener listener) {
 		this.inputExecutionListeners.add(listener);
 		return this;
 	}

@@ -14,7 +14,7 @@ import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.clean.LogCleaner;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
-import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileInputConfig;
 import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
@@ -126,8 +126,8 @@ public class ConfigHelperTest {
 	private void _testInputs(EventCollectorConfiguration configuration) {
 		List<IConfigInput> inputs = configuration.getInputConfigs();
 		for (IConfigInput input : inputs) {
-			if (input instanceof ExternalCommandInput) {
-				this._testInputExternalCommand((ExternalCommandInput) input);
+			if (input instanceof ExternalCommandInputConfig) {
+				this._testInputExternalCommand((ExternalCommandInputConfig) input);
 			} else if (input instanceof FileInputConfig) {
 				this._testInputFile((FileInputConfig) input);
 			} else if (input instanceof FileTailerInputConfig) {
@@ -142,7 +142,7 @@ public class ConfigHelperTest {
 		}
 	}
 
-	private void _testInputExternalCommand(ExternalCommandInput input) {
+	private void _testInputExternalCommand(ExternalCommandInputConfig input) {
 		Assert.assertEquals("in-cmd", input.getConfigurationId());
 		Assert.assertNull(input.getMatcher());
 		Assert.assertFalse(input.isUseLastExecutionRecords());

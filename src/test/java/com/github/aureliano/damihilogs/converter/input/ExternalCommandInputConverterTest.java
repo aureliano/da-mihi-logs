@@ -7,7 +7,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.config.input.ExternalCommandInput;
+import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
 import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
 
 public class ExternalCommandInputConverterTest {
@@ -22,7 +22,7 @@ public class ExternalCommandInputConverterTest {
 		
 		data.put("type", InputConfigTypes.EXTERNAL_COMMAND);
 		
-		ExternalCommandInput conf = new ExternalCommandInputConverter().convert(data);
+		ExternalCommandInputConfig conf = new ExternalCommandInputConverter().convert(data);
 		Assert.assertEquals("test-123", conf.getConfigurationId());
 		Assert.assertEquals("ls", conf.getCommand());
 		Assert.assertEquals(Arrays.asList("-la"), conf.getParameters());
