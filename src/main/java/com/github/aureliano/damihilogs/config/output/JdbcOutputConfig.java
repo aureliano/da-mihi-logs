@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
@@ -96,6 +97,7 @@ public class JdbcOutputConfig implements IConfigOutput {
 		return this;
 	}
 	
+	@NotNull
 	public JdbcConnectionModel getConnection() {
 		return connection;
 	}
