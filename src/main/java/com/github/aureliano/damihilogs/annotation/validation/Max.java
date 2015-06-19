@@ -12,7 +12,7 @@ import com.github.aureliano.damihilogs.validation.MaxValidator;
 @Constraint(validatedBy = MaxValidator.class)
 public @interface Max {
 
-	public abstract String message() default "Expected a maximum value of ? for field ? but got ?.";
+	public abstract String message() default "Expected a maximum value of #{0} for field #{1} but got #{2}.";
 	
 	public abstract int value();
 }

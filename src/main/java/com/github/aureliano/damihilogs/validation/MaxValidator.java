@@ -37,9 +37,9 @@ public class MaxValidator implements IValidator {
 			return new ConstraintViolation()
 				.withValidator(Max.class)
 				.withMessage(message
-					.replaceFirst("\\?", String.valueOf(maxSize))
-					.replaceFirst("\\?", property)
-					.replaceFirst("\\?", String.valueOf(objectSize)));
+					.replaceFirst("#\\{0\\}", String.valueOf(maxSize))
+					.replaceFirst("#\\{1\\}", property)
+					.replaceFirst("#\\{2\\}", String.valueOf(objectSize)));
 		}
 		
 		return null;
