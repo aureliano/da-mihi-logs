@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -90,6 +91,7 @@ public class ExternalCommandInput implements IConfigInput {
 		return this;
 	}
 	
+	@NotEmpty
 	public String getCommand() {
 		return command;
 	}

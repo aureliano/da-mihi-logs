@@ -1,9 +1,14 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class ExternalCommandInputTest {
 
@@ -52,5 +57,25 @@ public class ExternalCommandInputTest {
 	@Test
 	public void testInputType() {
 		Assert.assertEquals(InputConfigTypes.EXTERNAL_COMMAND.name(), new ExternalCommandInput().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		ExternalCommandInput c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		c.withCommand(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		c.withCommand("");
+		violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+	
+	private ExternalCommandInput createValidConfiguration() {
+		return new ExternalCommandInput().withCommand("ls");
 	}
 }
