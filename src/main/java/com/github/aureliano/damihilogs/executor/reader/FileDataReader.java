@@ -15,7 +15,6 @@ import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.FileHelper;
 import com.github.aureliano.damihilogs.inout.CompressMetadata;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 
 public class FileDataReader extends AbstractDataReader {
 
@@ -79,7 +78,7 @@ public class FileDataReader extends AbstractDataReader {
 			}
 		}
 		
-		ConfigurationValidation.applyValidation(this.fileInputConfiguration);
+		ConfigHelper.validateConfiguration(this.fileInputConfiguration);
 	}
 	
 	private void prepareReading() {		

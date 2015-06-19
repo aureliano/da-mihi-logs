@@ -24,7 +24,6 @@ import com.github.aureliano.damihilogs.helper.StringHelper;
 import com.github.aureliano.damihilogs.matcher.SingleLineMatcher;
 import com.github.aureliano.damihilogs.parser.PlainTextParser;
 import com.github.aureliano.damihilogs.reg.ApiServiceRegistrator;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 
 public class CollectEventsCommand {
 
@@ -60,7 +59,7 @@ public class CollectEventsCommand {
 	
 	private void executeCollectors() {		
 		for (IConfigOutput outputConfig : this.configuration.getOutputConfigs()) {
-			ConfigurationValidation.applyValidation(outputConfig);
+			ConfigHelper.validateConfiguration(outputConfig);
 		}
 		
 		List<DataIterationCommand> commands = new ArrayList<DataIterationCommand>();
@@ -71,7 +70,7 @@ public class CollectEventsCommand {
 				inputConfig.withConfigurationId(ConfigHelper.newUniqueConfigurationName());
 			}
 			
-			ConfigurationValidation.applyValidation(inputConfig);
+			ConfigHelper.validateConfiguration(inputConfig);
 			ConfigHelper.copyMetadata(this.configuration, inputConfig);
 			
 			logger.info("Start execution for input " + inputConfig.getConfigurationId());

@@ -28,7 +28,6 @@ import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.helper.ConfigHelper;
 import com.github.aureliano.damihilogs.helper.UrlHelper;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.google.common.io.BaseEncoding;
 
 public class UrlDataReader extends AbstractDataReader {
@@ -119,7 +118,7 @@ public class UrlDataReader extends AbstractDataReader {
 			}
 		}
 		
-		ConfigurationValidation.applyValidation(this.urlInputConfiguration);
+		ConfigHelper.validateConfiguration(this.urlInputConfiguration);
 	}
 	
 	private void initialize() {

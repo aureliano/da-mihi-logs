@@ -16,6 +16,7 @@ import com.github.aureliano.damihilogs.event.BeforeInputEvent;
 import com.github.aureliano.damihilogs.event.BeforeReadingEvent;
 import com.github.aureliano.damihilogs.event.BeforeWritingEvent;
 import com.github.aureliano.damihilogs.event.StepParseEvent;
+import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.JsonFormatter;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -37,7 +38,11 @@ public class AppEventsCollectorTest {
 					.withStartPosition(10)
 					.addDataReadingListener(this.getDataReadingListener())
 					.addExecutionListener(this.getExecutionListener()))
-				.addInputConfig(new CustomInputConfig())
+				.addInputConfig(new CustomInputConfig()
+					.withConfigurationId("crash")
+					.addExceptionHandler(new DefaultExceptionHandler())
+					.withOk(true)
+					.withNotOk(false))
 				.addOutputConfig(new StandardOutputConfig()
 					.withParser(new JsonEventParser())
 					.withFilter(new IEventFielter() {
