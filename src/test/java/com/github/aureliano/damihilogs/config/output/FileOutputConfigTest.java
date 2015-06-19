@@ -1,7 +1,13 @@
 package com.github.aureliano.damihilogs.config.output;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class FileOutputConfigTest {
 
@@ -46,5 +52,24 @@ public class FileOutputConfigTest {
 	@Test
 	public void testOutputType() {
 		Assert.assertEquals(OutputConfigTypes.FILE_OUTPUT.name(), new FileOutputConfig().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		FileOutputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		this._testValidateFile();
+	}
+	
+	private void _testValidateFile() {
+		FileOutputConfig c = new FileOutputConfig();
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+
+	private FileOutputConfig createValidConfiguration() {
+		return new FileOutputConfig().withFile("/path/to/file");
 	}
 }

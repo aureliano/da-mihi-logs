@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
 import com.github.aureliano.damihilogs.helper.DataHelper;
@@ -36,6 +37,7 @@ public class FileOutputConfig implements IConfigOutput {
 		return OutputConfigTypes.FILE_OUTPUT.name();
 	}
 
+	@NotNull
 	public File getFile() {
 		return file;
 	}
