@@ -15,6 +15,6 @@ public class ConfigurationValidationTest {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId(null);
 		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(configuration);
 		
-		Assert.assertEquals(5, violations.size());
+		Assert.assertEquals(6, violations.size());
 	}
 }

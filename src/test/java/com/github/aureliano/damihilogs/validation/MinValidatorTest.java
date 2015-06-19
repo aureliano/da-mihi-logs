@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.CustomInputConfig;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.config.IConfiguration;
+import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
 
 public class MinValidatorTest {
 
@@ -19,7 +20,7 @@ public class MinValidatorTest {
 	}
 	
 	@Test
-	public void testValidateWithError() throws SecurityException, NoSuchMethodException {
+	public void testValidateStringWithError() throws SecurityException, NoSuchMethodException {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId("");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Min.class);
@@ -40,12 +41,32 @@ public class MinValidatorTest {
 	}
 	
 	@Test
+	public void testValidateCollectionWithError() throws SecurityException, NoSuchMethodException {
+		IConfiguration configuration = new CustomInputConfig().withConfigurationId("ok!");
+		Method method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
+		Annotation annotation = method.getAnnotation(Min.class);
+		 
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		Assert.assertNotNull(constraint);
+		
+		Assert.assertEquals("Expected a minimum value of 1 for field exceptionHandlers but got 0.", constraint.getMessage());
+		Assert.assertEquals(Min.class, constraint.getValidator());
+	}
+	
+	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId("ok!");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Min.class);
 		 
 		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		Assert.assertNull(constraint);
+		
+		configuration = new CustomInputConfig().addExceptionHandler(new DefaultExceptionHandler());
+		method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
+		annotation = method.getAnnotation(Min.class);
+		
+		constraint = this.validator.validate(configuration, method, annotation);
 		Assert.assertNull(constraint);
 	}
 }
