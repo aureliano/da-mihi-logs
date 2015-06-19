@@ -1,9 +1,15 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.Min;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class FileInputConfigTest {
 
@@ -52,5 +58,37 @@ public class FileInputConfigTest {
 	@Test
 	public void testInputType() {
 		Assert.assertEquals(InputConfigTypes.FILE_INPUT.name(), new FileInputConfig().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		FileInputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		this._testValidateFile();
+		this._testValidateStartPosition();
+	}
+	
+	private void _testValidateFile() {
+		FileInputConfig c = new FileInputConfig();
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+	
+	private void _testValidateStartPosition() {
+		FileInputConfig c = this.createValidConfiguration().withStartPosition(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+		
+		c.withStartPosition(-1);
+		violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(Min.class, violations.iterator().next().getValidator());
+	}
+	
+	private FileInputConfig createValidConfiguration() {
+		return new FileInputConfig().withFile("/path/to/file").withStartPosition(5);
 	}
 }

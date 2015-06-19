@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.Min;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.inout.CompressMetadata;
@@ -57,6 +59,7 @@ public class FileInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@NotNull
 	public File getFile() {
 		return file;
 	}
@@ -71,6 +74,8 @@ public class FileInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	@NotNull
+	@Min(value = 0)
 	public Integer getStartPosition() {
 		return startPosition;
 	}
