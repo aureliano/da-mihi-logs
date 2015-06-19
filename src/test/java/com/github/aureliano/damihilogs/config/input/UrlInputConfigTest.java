@@ -1,9 +1,15 @@
 package com.github.aureliano.damihilogs.config.input;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class UrlInputConfigTest {
 
@@ -100,5 +106,45 @@ public class UrlInputConfigTest {
 	@Test
 	public void testInputType() {
 		Assert.assertEquals(InputConfigTypes.URL.name(), new UrlInputConfig().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		UrlInputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		this._testValidateConnectionSchema();
+		this._testValidateOutputFile();
+		this._testValidateHost();
+	
+	}
+
+	public void _testValidateConnectionSchema() {
+		UrlInputConfig c = this.createValidConfiguration().withConnectionSchema(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+	
+	private void _testValidateOutputFile() {
+		UrlInputConfig c = new UrlInputConfig()
+			.withHost("localhost").withConnectionSchema(ConnectionSchema.HTTP);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
+	}
+	
+	private void _testValidateHost() {
+		UrlInputConfig c = this.createValidConfiguration().withHost(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+
+	private UrlInputConfig createValidConfiguration() {
+		return new UrlInputConfig()
+			.withConnectionSchema(ConnectionSchema.HTTP)
+			.withHost("localhost")
+			.withOutputFile("/path/to/file");
 	}
 }

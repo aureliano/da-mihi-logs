@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.inout.CompressMetadata;
@@ -63,6 +65,7 @@ public class UrlInputConfig implements IConfigInput {
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
 	}
 
+	@NotNull
 	public ConnectionSchema getConnectionSchema() {
 		return connectionSchema;
 	}
@@ -72,6 +75,7 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@NotEmpty
 	public String getHost() {
 		return host;
 	}
@@ -131,6 +135,7 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	@NotNull
 	public File getOutputFile() {
 		return outputFile;
 	}
