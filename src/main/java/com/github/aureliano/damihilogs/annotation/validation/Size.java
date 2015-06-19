@@ -12,7 +12,7 @@ import com.github.aureliano.damihilogs.validation.SizeValidator;
 @Constraint(validatedBy = SizeValidator.class)
 public @interface Size {
 
-	public abstract String message() default "Expected field ? to have size between ? and ? but got ?.";
+	public abstract String message() default "Expected field #{0} to have size between #{1} and #{2} but got #{3}.";
 	
 	public abstract int min();
 	

@@ -39,10 +39,10 @@ public class SizeValidator implements IValidator {
 			return new ConstraintViolation()
 				.withValidator(Size.class)
 				.withMessage(message
-					.replaceFirst("\\?", property)
-					.replaceFirst("\\?", String.valueOf(minSize))
-					.replaceFirst("\\?", String.valueOf(maxSize))
-					.replaceFirst("\\?", String.valueOf(objectSize)));
+					.replaceFirst("#\\{0\\}", property)
+					.replaceFirst("#\\{1\\}", String.valueOf(minSize))
+					.replaceFirst("#\\{2\\}", String.valueOf(maxSize))
+					.replaceFirst("#\\{3\\}", String.valueOf(objectSize)));
 		}
 		
 		return null;
