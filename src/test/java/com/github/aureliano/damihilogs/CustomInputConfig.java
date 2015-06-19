@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.AssertFalse;
 import com.github.aureliano.damihilogs.annotation.validation.AssertTrue;
 import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
@@ -115,6 +116,7 @@ public class CustomInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@AssertFalse
 	public Boolean isNotOk() {
 		return notOk;
 	}
