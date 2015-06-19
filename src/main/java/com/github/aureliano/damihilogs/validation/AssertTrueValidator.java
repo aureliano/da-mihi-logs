@@ -21,7 +21,6 @@ public class AssertTrueValidator implements IValidator {
 		
 		String message = ((AssertTrue) annotation).message();
 		
-		
 		if (!Boolean.TRUE.equals(returnedValue)) {
 			return new ConstraintViolation()
 				.withValidator(AssertTrue.class)
