@@ -37,9 +37,9 @@ public class MinValidator implements IValidator {
 			return new ConstraintViolation()
 				.withValidator(Min.class)
 				.withMessage(message
-					.replaceFirst("\\?", String.valueOf(minSize))
-					.replaceFirst("\\?", property)
-					.replaceFirst("\\?", String.valueOf(objectSize)));
+					.replaceFirst("#\\{0\\}", String.valueOf(minSize))
+					.replaceFirst("#\\{1\\}", property)
+					.replaceFirst("#\\{2\\}", String.valueOf(objectSize)));
 		}
 		
 		return null;

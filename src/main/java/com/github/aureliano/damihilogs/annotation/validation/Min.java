@@ -12,7 +12,7 @@ import com.github.aureliano.damihilogs.validation.MinValidator;
 @Constraint(validatedBy = MinValidator.class)
 public @interface Min {
 
-	public abstract String message() default "Expected a minimum value of ? for field ? but got ?.";
+	public abstract String message() default "Expected a minimum value of #{0} for field #{1} but got #{2}.";
 	
 	public abstract int value();
 }
