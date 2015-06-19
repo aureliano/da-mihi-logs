@@ -1,7 +1,14 @@
 package com.github.aureliano.damihilogs.config.output;
 
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
+
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+import com.github.aureliano.damihilogs.annotation.validation.NotNull;
+import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
+import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
 public class ElasticSearchOutputConfigTest {
 
@@ -44,5 +51,41 @@ public class ElasticSearchOutputConfigTest {
 	@Test
 	public void testOutputType() {
 		Assert.assertEquals(OutputConfigTypes.ELASTIC_SEARCH.name(), new ElasticSearchOutputConfig().id());
+	}
+	
+	@Test
+	public void testValidation() {
+		ElasticSearchOutputConfig c = this.createValidConfiguration();
+		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		
+		this._testValidateIndex();
+		this._testValidateMappingType();
+	}
+
+	private void _testValidateIndex() {
+		ElasticSearchOutputConfig c = this.createValidConfiguration().withIndex(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		violations = ConfigurationValidation.applyValidation(c.withIndex(""));
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+
+	private void _testValidateMappingType() {
+		ElasticSearchOutputConfig c = this.createValidConfiguration().withMappingType(null);
+		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		violations = ConfigurationValidation.applyValidation(c.withMappingType(""));
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+
+	private ElasticSearchOutputConfig createValidConfiguration() {
+		return new ElasticSearchOutputConfig()
+			.withIndex("index").withMappingType("type");
 	}
 }

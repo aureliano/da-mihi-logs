@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.es.IElasticSearchConfiguration;
 import com.github.aureliano.damihilogs.filter.IEventFielter;
 import com.github.aureliano.damihilogs.formatter.IOutputFormatter;
@@ -56,6 +57,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	}
 
 	@Override
+	@NotEmpty
 	public String getIndex() {
 		return index;
 	}
@@ -67,6 +69,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 	}
 
 	@Override
+	@NotEmpty
 	public String getMappingType() {
 		return type;
 	}
