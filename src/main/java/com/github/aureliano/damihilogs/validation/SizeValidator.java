@@ -32,7 +32,7 @@ public class SizeValidator implements IValidator {
 		
 		if (Collection.class.isAssignableFrom(returnedValue.getClass())) {
 			objectSize = ((Collection<?>) returnedValue).size();
-		} else if (StringHelper.isNumeric(returnedValue.toString())) {
+		} else if (!(returnedValue instanceof String) && StringHelper.isNumeric(returnedValue.toString())) {
 			Double d = Double.parseDouble(returnedValue.toString());
 			objectSize = d.intValue();
 		} else {
