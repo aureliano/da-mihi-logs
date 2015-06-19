@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.CustomInputConfig;
 import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.config.IConfiguration;
+import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
 
 public class MaxValidatorTest {
 
@@ -19,7 +20,7 @@ public class MaxValidatorTest {
 	}
 	
 	@Test
-	public void testValidateWithError() throws SecurityException, NoSuchMethodException {
+	public void testValidateStringWithError() throws SecurityException, NoSuchMethodException {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId("123456");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Max.class);
@@ -32,12 +33,34 @@ public class MaxValidatorTest {
 	}
 	
 	@Test
+	public void testValidateCollectionWithError() throws SecurityException, NoSuchMethodException {
+		IConfiguration configuration = new CustomInputConfig()
+			.addExceptionHandler(new DefaultExceptionHandler())
+			.addExceptionHandler(new DefaultExceptionHandler());
+		Method method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
+		Annotation annotation = method.getAnnotation(Max.class);
+		 
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		Assert.assertNotNull(constraint);
+		
+		Assert.assertEquals("Expected a maximum value of 1 for field exceptionHandlers but got 2.", constraint.getMessage());
+		Assert.assertEquals(Max.class, constraint.getValidator());
+	}
+	
+	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("12345");
+		IConfiguration configuration = new CustomInputConfig().withConfigurationId("12345")
+				.addExceptionHandler(new DefaultExceptionHandler());
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Max.class);
 		 
 		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		Assert.assertNull(constraint);
+		
+		method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
+		annotation = method.getAnnotation(Max.class);
+		 
+		constraint = this.validator.validate(configuration, method, annotation);
 		Assert.assertNull(constraint);
 	}
 }
