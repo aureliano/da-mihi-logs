@@ -5,6 +5,7 @@ import java.util.List;
 public final class StringHelper {
 
 	public static final String EMPTY = "";
+	private static final String NUMBER_REGEX = "[+-]?\\d+\\.?\\d*";
 	
 	private StringHelper() {
 		super();
@@ -47,5 +48,9 @@ public final class StringHelper {
 	
 	public static String join(List<Object> objects, String separator) {
 		return join(objects.toArray(), separator);
+	}
+	
+	public static boolean isNumeric(String value) {
+		return (value == null) ? false : value.matches(NUMBER_REGEX);
 	}
 }

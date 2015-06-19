@@ -40,4 +40,15 @@ public class StringHelperTest {
 		Assert.assertEquals("12345", StringHelper.join(new Object[] {1, 2, 3, 4, 5}));
 		Assert.assertEquals("1, 2, 3, 4, 5", StringHelper.join(new Object[] {1, 2, 3, 4, 5}, ", "));
 	}
+	
+	@Test
+	public void testIsNumeric() {
+		Assert.assertTrue(StringHelper.isNumeric("1"));
+		Assert.assertTrue(StringHelper.isNumeric("45"));
+		Assert.assertTrue(StringHelper.isNumeric("-54"));
+		Assert.assertTrue(StringHelper.isNumeric("+54"));
+		Assert.assertTrue(StringHelper.isNumeric("25.97854"));
+		Assert.assertTrue(StringHelper.isNumeric("-3365.8787"));
+		Assert.assertTrue(StringHelper.isNumeric("+3365.8787"));
+	}
 }
