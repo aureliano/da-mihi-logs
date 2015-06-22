@@ -5,6 +5,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
@@ -13,6 +14,8 @@ import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class JdbcInputConfigTest {
 
+	ObjectValidator validator = ObjectValidator.instance();
+	
 	@Test
 	public void testInputType() {
 		Assert.assertEquals(InputConfigTypes.JDBC_INPUT.name(), new JdbcInputConfig().id());
@@ -46,19 +49,70 @@ public class JdbcInputConfigTest {
 	
 	@Test
 	public void testValidation() {
-		ObjectValidator validator = ObjectValidator.instance();
 		JdbcInputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(validator.validate(c).isEmpty());
+		Assert.assertTrue(this.validator.validate(c).isEmpty());
 		
-		c.withConnection(null);
-		Set<ConstraintViolation> violations = validator.validate(c);
+		this._testConnection();
+		this._testInvalidDriver();
+		this._testInvalidUser();
+		this._testInvalidUrl();
+	}
+	
+	private void _testConnection() {
+		JdbcInputConfig c = this.createValidConfiguration().withConnection(null);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
 	
+	private void _testInvalidDriver() {
+		JdbcInputConfig c = this.createValidConfiguration();
+		c.getConnection().withDriver(null);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		c.getConnection().withDriver("");
+		violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+	
+	private void _testInvalidUser() {
+		JdbcInputConfig c = this.createValidConfiguration();
+		c.getConnection().withUser(null);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		c.getConnection().withUser("");
+		violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+	
+	private void _testInvalidUrl() {
+		JdbcInputConfig c = this.createValidConfiguration();
+		c.getConnection().withUrl(null);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+		
+		c.getConnection().withUrl("");
+		violations = this.validator.validate(c);
+		
+		Assert.assertTrue(violations.size() == 1);
+		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
+	}
+	
 	private JdbcInputConfig createValidConfiguration() {
-		return new JdbcInputConfig().withConnection(new JdbcConnectionModel());
+		return new JdbcInputConfig().withConnection(this.createConnection());
 	}
 
 	private JdbcConnectionModel createConnection() {
@@ -66,6 +120,7 @@ public class JdbcInputConfigTest {
 			.withPassword("Px")
 			.withDriver("org.postgresql.Driver")
 			.withUser("tomas_torquemada")
+			.withUrl("url")
 			.withSql("select * from spanish where really_converted is false");
 	}
 }
