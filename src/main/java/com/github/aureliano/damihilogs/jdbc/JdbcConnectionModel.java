@@ -1,5 +1,7 @@
 package com.github.aureliano.damihilogs.jdbc;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+
 public class JdbcConnectionModel {
 
 	private String user;
@@ -12,6 +14,7 @@ public class JdbcConnectionModel {
 		super();
 	}
 	
+	@NotEmpty
 	public String getUser() {
 		return user;
 	}
@@ -39,6 +42,7 @@ public class JdbcConnectionModel {
 		return this;
 	}
 	
+	@NotEmpty
 	public String getDriver() {
 		return driver;
 	}
@@ -48,6 +52,7 @@ public class JdbcConnectionModel {
 		return this;
 	}
 	
+	@NotEmpty
 	public String getUrl() {
 		return url;
 	}
