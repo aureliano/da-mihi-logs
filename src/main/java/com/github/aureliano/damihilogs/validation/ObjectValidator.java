@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.Constraint;
-import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 
 public final class ObjectValidator implements IValidator {
@@ -39,7 +38,7 @@ public final class ObjectValidator implements IValidator {
 				}
 				
 				IValidator validator = (IValidator) ReflectionHelper.newInstance(constraintAnnotation.validatedBy());
-				Set<ConstraintViolation> res = validator.validate((IConfiguration) object, method, annotation);
+				Set<ConstraintViolation> res = validator.validate(object, method, annotation);
 				
 				this.addAll(violations, res);
 			}
