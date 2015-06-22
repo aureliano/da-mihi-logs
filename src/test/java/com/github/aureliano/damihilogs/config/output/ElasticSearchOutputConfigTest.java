@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
-import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 
