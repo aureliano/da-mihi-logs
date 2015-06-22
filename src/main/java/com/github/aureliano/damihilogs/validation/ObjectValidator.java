@@ -54,7 +54,7 @@ public final class ObjectValidator implements IValidator {
 	}
 	
 	private void addAll(Set<ConstraintViolation> violations, Set<ConstraintViolation> res) {
-		if (!res.isEmpty()) {
+		if ((res != null) && (!res.isEmpty())) {
 			for (ConstraintViolation violation : res) {
 				violations.add(violation);
 			}
