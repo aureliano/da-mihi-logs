@@ -2,10 +2,9 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-
-import com.github.aureliano.damihilogs.config.IConfiguration;
+import java.util.Set;
 
 public interface IValidator {
 
-	public abstract ConstraintViolation validate(IConfiguration configuration, Method method, Annotation annotation);
+	public abstract Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation);
 }

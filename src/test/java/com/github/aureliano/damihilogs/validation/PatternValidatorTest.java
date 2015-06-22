@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.CustomInputConfig;
 import com.github.aureliano.damihilogs.annotation.validation.Pattern;
 import com.github.aureliano.damihilogs.config.IConfiguration;
-import com.github.aureliano.damihilogs.exception.DefaultExceptionHandler;
 
 public class PatternValidatorTest {
 
@@ -25,7 +25,7 @@ public class PatternValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Pattern.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field configurationId to match [\\d\\w]{3,5} regular expression.", constraint.getMessage());
@@ -38,14 +38,14 @@ public class PatternValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Pattern.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		Set<ConstraintViolation> res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 		
-		configuration = new CustomInputConfig().addExceptionHandler(new DefaultExceptionHandler());
+		configuration = new CustomInputConfig().withConfigurationId("yeah_");
 		method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		annotation = method.getAnnotation(Pattern.class);
 		
-		constraint = this.validator.validate(configuration.withConfigurationId("yeah_"), method, annotation);
-		Assert.assertNull(constraint);
+		res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 	}
 }

@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class AssertFalseValidatorTest {
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field notOk to be false but got null.", constraint.getMessage());
@@ -37,7 +38,7 @@ public class AssertFalseValidatorTest {
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field notOk to be false but got true.", constraint.getMessage());
@@ -50,7 +51,7 @@ public class AssertFalseValidatorTest {
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		Set<ConstraintViolation> res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 	}
 }

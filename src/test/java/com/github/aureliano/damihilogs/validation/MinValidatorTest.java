@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class MinValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Min.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected a minimum value of 3 for field configurationId but got 0.", constraint.getMessage());
@@ -33,7 +34,7 @@ public class MinValidatorTest {
 		
 		configuration = new CustomInputConfig().withConfigurationId("ok");
 		
-		constraint = this.validator.validate(configuration, method, annotation);
+		constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected a minimum value of 3 for field configurationId but got 2.", constraint.getMessage());
@@ -46,7 +47,7 @@ public class MinValidatorTest {
 		Method method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
 		Annotation annotation = method.getAnnotation(Min.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected a minimum value of 1 for field exceptionHandlers but got 0.", constraint.getMessage());
@@ -59,14 +60,14 @@ public class MinValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Min.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		Set<ConstraintViolation> res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 		
 		configuration = new CustomInputConfig().addExceptionHandler(new DefaultExceptionHandler());
 		method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
 		annotation = method.getAnnotation(Min.class);
 		
-		constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 	}
 }

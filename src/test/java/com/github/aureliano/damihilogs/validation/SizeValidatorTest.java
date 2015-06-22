@@ -2,6 +2,7 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class SizeValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Size.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field configurationId to have size between 3 and 5 but got 2.", constraint.getMessage());
@@ -38,7 +39,7 @@ public class SizeValidatorTest {
 		Method method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
 		Annotation annotation = method.getAnnotation(Size.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field exceptionHandlers to have size between 1 and 1 but got 0.", constraint.getMessage());
@@ -51,7 +52,7 @@ public class SizeValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Size.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field configurationId to have size between 3 and 5 but got 9.", constraint.getMessage());
@@ -66,7 +67,7 @@ public class SizeValidatorTest {
 		Method method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
 		Annotation annotation = method.getAnnotation(Size.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
+		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation).iterator().next();
 		Assert.assertNotNull(constraint);
 		
 		Assert.assertEquals("Expected field exceptionHandlers to have size between 1 and 1 but got 2.", constraint.getMessage());
@@ -81,13 +82,13 @@ public class SizeValidatorTest {
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Size.class);
 		 
-		ConstraintViolation constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		Set<ConstraintViolation> res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 		
 		method = configuration.getClass().getMethod("getExceptionHandlers", new Class[] {});
 		annotation = method.getAnnotation(Size.class);
-		 
-		constraint = this.validator.validate(configuration, method, annotation);
-		Assert.assertNull(constraint);
+		
+		res = this.validator.validate(configuration, method, annotation);
+		Assert.assertTrue(res.isEmpty());
 	}
 }

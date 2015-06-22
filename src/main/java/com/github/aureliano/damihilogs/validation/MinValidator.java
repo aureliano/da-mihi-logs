@@ -3,9 +3,10 @@ package com.github.aureliano.damihilogs.validation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.Min;
-import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -16,9 +17,10 @@ public class MinValidator implements IValidator {
 	}
 
 	@Override
-	public ConstraintViolation validate(IConfiguration configuration, Method method, Annotation annotation) {
+	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
 		String property = ReflectionHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ReflectionHelper.callMethod(configuration, method.getName(), null, null);
+		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
+		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		
 		if (returnedValue == null) {
 			returnedValue = "";
@@ -38,14 +40,14 @@ public class MinValidator implements IValidator {
 		}
 		
 		if (minSize > objectSize) {
-			return new ConstraintViolation()
+			violations.add(new ConstraintViolation()
 				.withValidator(Min.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", String.valueOf(minSize))
 					.replaceFirst("#\\{1\\}", property)
-					.replaceFirst("#\\{2\\}", String.valueOf(objectSize)));
+					.replaceFirst("#\\{2\\}", String.valueOf(objectSize))));
 		}
 		
-		return null;
+		return violations;
 	}
 }

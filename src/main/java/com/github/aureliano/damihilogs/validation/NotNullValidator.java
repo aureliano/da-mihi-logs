@@ -2,9 +2,10 @@ package com.github.aureliano.damihilogs.validation;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
-import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 
 public class NotNullValidator implements IValidator {
@@ -14,17 +15,18 @@ public class NotNullValidator implements IValidator {
 	}
 
 	@Override
-	public ConstraintViolation validate(IConfiguration configuration, Method method, Annotation annotation) {
+	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
 		String property = ReflectionHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ReflectionHelper.callMethod(configuration, method.getName(), null, null);
+		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
+		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		
 		if (returnedValue == null) {
 			String message = ((NotNull) annotation).message();
-			return new ConstraintViolation()
+			violations.add(new ConstraintViolation()
 				.withValidator(NotNull.class)
-				.withMessage(message.replaceFirst("#\\{0\\}", property));
+				.withMessage(message.replaceFirst("#\\{0\\}", property)));
 		}
 		
-		return null;
+		return violations;
 	}
 }

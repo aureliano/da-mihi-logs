@@ -3,9 +3,10 @@ package com.github.aureliano.damihilogs.validation;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.Size;
-import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 import com.github.aureliano.damihilogs.helper.StringHelper;
 
@@ -16,14 +17,15 @@ public class SizeValidator implements IValidator {
 	}
 	
 	@Override
-	public ConstraintViolation validate(IConfiguration configuration, Method method, Annotation annotation) {
+	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
 		String property = ReflectionHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ReflectionHelper.callMethod(configuration, method.getName(), null, null);
+		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
 		
 		if (returnedValue == null) {
 			returnedValue = "";
 		}
 		
+		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		Size sizeAnnotation = (Size) annotation;
 		String message = sizeAnnotation.message();
 		int minSize = sizeAnnotation.min();
@@ -40,15 +42,15 @@ public class SizeValidator implements IValidator {
 		}
 		
 		if ((minSize > objectSize) || (maxSize < objectSize)) {
-			return new ConstraintViolation()
+			violations.add(new ConstraintViolation()
 				.withValidator(Size.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", property)
 					.replaceFirst("#\\{1\\}", String.valueOf(minSize))
 					.replaceFirst("#\\{2\\}", String.valueOf(maxSize))
-					.replaceFirst("#\\{3\\}", String.valueOf(objectSize)));
+					.replaceFirst("#\\{3\\}", String.valueOf(objectSize))));
 		}
 		
-		return null;
+		return violations;
 	}
 }

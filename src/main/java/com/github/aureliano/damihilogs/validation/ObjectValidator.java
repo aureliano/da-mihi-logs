@@ -9,11 +9,20 @@ import com.github.aureliano.damihilogs.annotation.validation.Constraint;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.helper.ReflectionHelper;
 
+public final class ObjectValidator implements IValidator {
 
-public final class ObjectValidation {
-
-	public ObjectValidation() {
+	private static ObjectValidator instance;
+	
+	private ObjectValidator() {
 		super();
+	}
+	
+	public static ObjectValidator instance() {
+		if (instance == null) {
+			instance = new ObjectValidator();
+		}
+		
+		return instance;
 	}
 
 	public Set<ConstraintViolation> validate(Object object) {
@@ -30,14 +39,25 @@ public final class ObjectValidation {
 				}
 				
 				IValidator validator = (IValidator) ReflectionHelper.newInstance(constraintAnnotation.validatedBy());
-				ConstraintViolation violation = validator.validate((IConfiguration) object, method, annotation);
+				Set<ConstraintViolation> res = validator.validate((IConfiguration) object, method, annotation);
 				
-				if (violation != null) {
-					violations.add(violation);
-				}
+				this.addAll(violations, res);
 			}
 		}
 		
 		return violations;
+	}
+	
+	@Override
+	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
+		throw new UnsupportedOperationException("Method not implemented.");
+	}
+	
+	private void addAll(Set<ConstraintViolation> violations, Set<ConstraintViolation> res) {
+		if (!res.isEmpty()) {
+			for (ConstraintViolation violation : res) {
+				violations.add(violation);
+			}
+		}
 	}
 }
