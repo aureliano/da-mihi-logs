@@ -10,6 +10,7 @@ import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
+import com.github.aureliano.damihilogs.annotation.validation.Pattern;
 import com.github.aureliano.damihilogs.annotation.validation.Size;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
@@ -76,6 +77,7 @@ public class CustomInputConfig implements IConfigInput {
 	@Min(value = 3)
 	@Max(value = 5)
 	@Size(min = 3, max = 5)
+	@Pattern(value = "[\\d\\w]{3,5}")
 	public String getConfigurationId() {
 		return this.id;
 	}
