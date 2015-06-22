@@ -8,11 +8,13 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class FileInputConfigTest {
 
+	ObjectValidator validator = ObjectValidator.instance();
+	
 	@Test
 	public void testGetDefaults() {
 		FileInputConfig c = new FileInputConfig();
@@ -63,7 +65,7 @@ public class FileInputConfigTest {
 	@Test
 	public void testValidation() {
 		FileInputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(this.validator.validate(c).isEmpty());
 		
 		this._testValidateFile();
 		this._testValidateStartPosition();
@@ -71,19 +73,19 @@ public class FileInputConfigTest {
 	
 	private void _testValidateFile() {
 		FileInputConfig c = new FileInputConfig();
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
 	
 	private void _testValidateStartPosition() {
 		FileInputConfig c = this.createValidConfiguration().withStartPosition(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 		
 		c.withStartPosition(-1);
-		violations = ConfigurationValidation.applyValidation(c);
+		violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(Min.class, violations.iterator().next().getValidator());
 	}

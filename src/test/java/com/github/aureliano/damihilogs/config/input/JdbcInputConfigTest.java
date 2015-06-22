@@ -8,8 +8,8 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.jdbc.JdbcConnectionModel;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class JdbcInputConfigTest {
 
@@ -46,11 +46,12 @@ public class JdbcInputConfigTest {
 	
 	@Test
 	public void testValidation() {
+		ObjectValidator validator = ObjectValidator.instance();
 		JdbcInputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(validator.validate(c).isEmpty());
 		
 		c.withConnection(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = validator.validate(c);
 		
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());

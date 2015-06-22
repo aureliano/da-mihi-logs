@@ -6,11 +6,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class ElasticSearchOutputConfigTest {
 
+	ObjectValidator validator = ObjectValidator.instance();
+	
 	@Test
 	public void testGetDefaults() {
 		ElasticSearchOutputConfig c = new ElasticSearchOutputConfig();
@@ -55,7 +57,7 @@ public class ElasticSearchOutputConfigTest {
 	@Test
 	public void testValidation() {
 		ElasticSearchOutputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(this.validator.validate(c).isEmpty());
 		
 		this._testValidateIndex();
 		this._testValidateMappingType();
@@ -63,22 +65,22 @@ public class ElasticSearchOutputConfigTest {
 
 	private void _testValidateIndex() {
 		ElasticSearchOutputConfig c = this.createValidConfiguration().withIndex(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 		
-		violations = ConfigurationValidation.applyValidation(c.withIndex(""));
+		violations = this.validator.validate(c.withIndex(""));
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 	}
 
 	private void _testValidateMappingType() {
 		ElasticSearchOutputConfig c = this.createValidConfiguration().withMappingType(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 		
-		violations = ConfigurationValidation.applyValidation(c.withMappingType(""));
+		violations = this.validator.validate(c.withMappingType(""));
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 	}

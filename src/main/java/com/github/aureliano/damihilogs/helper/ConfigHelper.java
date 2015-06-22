@@ -10,8 +10,8 @@ import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.IConfiguration;
 import com.github.aureliano.damihilogs.converter.ConfigurationConverter;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public final class ConfigHelper {
 	
@@ -27,7 +27,7 @@ public final class ConfigHelper {
 	}
 	
 	public static void validateConfiguration(IConfiguration configuration) {
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(configuration);
+		Set<ConstraintViolation> violations = ObjectValidator.instance().validate(configuration);
 		if (violations.isEmpty()) {
 			return;
 		}

@@ -6,10 +6,12 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class FileOutputConfigTest {
+	
+	ObjectValidator validator = ObjectValidator.instance();
 
 	@Test
 	public void testGetDefaults() {
@@ -57,14 +59,14 @@ public class FileOutputConfigTest {
 	@Test
 	public void testValidation() {
 		FileOutputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(this.validator.validate(c).isEmpty());
 		
 		this._testValidateFile();
 	}
 	
 	private void _testValidateFile() {
 		FileOutputConfig c = new FileOutputConfig();
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}

@@ -8,11 +8,13 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.annotation.validation.NotNull;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class UrlInputConfigTest {
 
+	ObjectValidator validator = ObjectValidator.instance();
+	
 	@Test
 	public void testGetDefaults() {
 		UrlInputConfig c = new UrlInputConfig();
@@ -111,7 +113,7 @@ public class UrlInputConfigTest {
 	@Test
 	public void testValidation() {
 		UrlInputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(this.validator.validate(c).isEmpty());
 		
 		this._testValidateConnectionSchema();
 		this._testValidateOutputFile();
@@ -121,7 +123,7 @@ public class UrlInputConfigTest {
 
 	public void _testValidateConnectionSchema() {
 		UrlInputConfig c = this.createValidConfiguration().withConnectionSchema(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
@@ -129,14 +131,14 @@ public class UrlInputConfigTest {
 	private void _testValidateOutputFile() {
 		UrlInputConfig c = new UrlInputConfig()
 			.withHost("localhost").withConnectionSchema(ConnectionSchema.HTTP);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
 	
 	private void _testValidateHost() {
 		UrlInputConfig c = this.createValidConfiguration().withHost(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = this.validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 	}

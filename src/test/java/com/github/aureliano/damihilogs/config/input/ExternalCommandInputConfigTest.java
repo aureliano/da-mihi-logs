@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
-import com.github.aureliano.damihilogs.validation.ConfigurationValidation;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
+import com.github.aureliano.damihilogs.validation.ObjectValidator;
 
 public class ExternalCommandInputConfigTest {
 
@@ -61,16 +61,17 @@ public class ExternalCommandInputConfigTest {
 	
 	@Test
 	public void testValidation() {
+		ObjectValidator validator = ObjectValidator.instance();
 		ExternalCommandInputConfig c = this.createValidConfiguration();
-		Assert.assertTrue(ConfigurationValidation.applyValidation(c).isEmpty());
+		Assert.assertTrue(validator.validate(c).isEmpty());
 		
 		c.withCommand(null);
-		Set<ConstraintViolation> violations = ConfigurationValidation.applyValidation(c);
+		Set<ConstraintViolation> violations = validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 		
 		c.withCommand("");
-		violations = ConfigurationValidation.applyValidation(c);
+		violations = validator.validate(c);
 		Assert.assertTrue(violations.size() == 1);
 		Assert.assertEquals(NotEmpty.class, violations.iterator().next().getValidator());
 	}
