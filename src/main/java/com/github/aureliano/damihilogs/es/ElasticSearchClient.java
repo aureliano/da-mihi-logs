@@ -4,7 +4,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.github.aureliano.damihilogs.es.annotations.Indexable;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.Indexable;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 import com.github.aureliano.damihilogs.http.HttpActionMetadata;
 

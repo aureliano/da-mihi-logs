@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.es.annotations;
+package com.github.aureliano.damihilogs.annotation.elasticsearch;
 
 public enum DateDetectionEnum {
 

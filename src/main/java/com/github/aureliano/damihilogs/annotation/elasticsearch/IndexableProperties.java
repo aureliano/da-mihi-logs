@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.es.annotations;
+package com.github.aureliano.damihilogs.annotation.elasticsearch;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;

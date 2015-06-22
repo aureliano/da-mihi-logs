@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.es.annotations;
+package com.github.aureliano.damihilogs.annotation.elasticsearch;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Id field of the object, it will not be include in the json unless has annotation {@link com.github.kzwang.osem.annotations.IndexableProperty}
+ * Id field of the object, it will not be include in the json unless has annotation {@link com.github.aureliano.damihilogs.annotation.elasticsearch.kzwang.osem.annotations.IndexableProperty}
  *
  * @see <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/mapping-id-field.html">_id field</a>
  */

@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.impl.PropertySerializerMap;
-import com.github.aureliano.damihilogs.es.annotations.IndexableComponent;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperties;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperty;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableComponent;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperties;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperty;
 
 /**
  * Override to use custom serializer for null value

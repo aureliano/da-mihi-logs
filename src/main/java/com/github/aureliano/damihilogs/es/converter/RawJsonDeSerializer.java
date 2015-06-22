@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * Deserializer used to convert JSON object to json string directly
- * used for JSON type {@link com.github.kzwang.osem.annotations.TypeEnum#JSON}
+ * used for JSON type {@link com.github.aureliano.damihilogs.annotation.elasticsearch.kzwang.osem.annotations.TypeEnum#JSON}
  */
 public class RawJsonDeSerializer extends JsonDeserializer<String> {
 

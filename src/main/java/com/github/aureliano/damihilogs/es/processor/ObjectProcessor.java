@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.github.aureliano.damihilogs.es.annotations.Indexable;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.Indexable;
 import com.github.aureliano.damihilogs.es.cache.CacheType;
 import com.github.aureliano.damihilogs.es.cache.MappingCache;
 import com.github.aureliano.damihilogs.es.jackson.JacksonElasticSearchModule;

@@ -1,23 +1,23 @@
-package com.github.aureliano.damihilogs.es.annotations;
+package com.github.aureliano.damihilogs.annotation.elasticsearch;
 
 /**
- * "norms.loading" field in mapping
+ * "include_in_all" field in mapping
  *
  * @see <a href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/mapping-core-types.html">Mapping Core Types</a>
  */
-public enum NormsLoadingEnum {
+public enum IncludeInAllEnum {
 	/**
 	 * Use default value in ElasticSearch
 	 */
 	NA,
 	
 	/**
-	 * Set "norms.loading" to "eager"
+	 * Set "include_in_all" to "true"
 	 */
-	EAGER,
+	TRUE,
 	
 	/**
-	 * Set "norms.loading" to "lazy"
+	 * Set "include_in_all" to "false"
 	 */
-	LAZY
+	FALSE
 }

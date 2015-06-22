@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperty;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperty;
 
 /**
  * Custom Data Deserializer use Joda to parse date

@@ -14,11 +14,11 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMember;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
-import com.github.aureliano.damihilogs.es.annotations.Indexable;
-import com.github.aureliano.damihilogs.es.annotations.IndexableComponent;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperties;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperty;
-import com.github.aureliano.damihilogs.es.annotations.TypeEnum;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.Indexable;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableComponent;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperties;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperty;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.TypeEnum;
 import com.github.aureliano.damihilogs.es.converter.DateDeserializer;
 import com.github.aureliano.damihilogs.es.converter.DateSerializer;
 import com.github.aureliano.damihilogs.es.converter.RawJsonDeSerializer;
@@ -65,17 +65,17 @@ public class ElasticSearchAnnotationIntrospector extends JacksonAnnotationIntros
 	@Override
 	public JsonInclude.Include findSerializationInclusion(Annotated a, JsonInclude.Include defValue) {
 		IndexableProperty property = a.getAnnotation(IndexableProperty.class);
-		if (property != null && property.jsonInclude() != com.github.aureliano.damihilogs.es.annotations.JsonInclude.DEFAULT) {
+		if (property != null && property.jsonInclude() != com.github.aureliano.damihilogs.annotation.elasticsearch.JsonInclude.DEFAULT) {
 			return JsonInclude.Include.valueOf(property.jsonInclude().toString());
 		}
 
 		IndexableComponent component = a.getAnnotation(IndexableComponent.class);
-		if (component != null && component.jsonInclude() != com.github.aureliano.damihilogs.es.annotations.JsonInclude.DEFAULT) {
+		if (component != null && component.jsonInclude() != com.github.aureliano.damihilogs.annotation.elasticsearch.JsonInclude.DEFAULT) {
 			return JsonInclude.Include.valueOf(component.jsonInclude().toString());
 		}
 
 		IndexableProperties properties = a.getAnnotation(IndexableProperties.class);
-		if (properties != null && properties.jsonInclude() != com.github.aureliano.damihilogs.es.annotations.JsonInclude.DEFAULT) {
+		if (properties != null && properties.jsonInclude() != com.github.aureliano.damihilogs.annotation.elasticsearch.JsonInclude.DEFAULT) {
 			return JsonInclude.Include.valueOf(properties.jsonInclude().toString());
 		}
 		return defValue;

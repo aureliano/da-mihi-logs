@@ -13,7 +13,7 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.reflections.ReflectionUtils;
 
-import com.github.aureliano.damihilogs.es.annotations.IndexableId;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableId;
 import com.github.aureliano.damihilogs.exception.DaMihiLogsException;
 
 public class ReflectionHelper {

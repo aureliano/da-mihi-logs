@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.introspect.AnnotatedField;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdScalarSerializer;
-import com.github.aureliano.damihilogs.es.annotations.IndexableProperty;
+import com.github.aureliano.damihilogs.annotation.elasticsearch.IndexableProperty;
 
 /**
  * Custom Data Serialize use Joda to parse date
