@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -133,6 +134,7 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	@NotEmpty
 	public String getConsumerKey() {
 		return this.consumerKey;
 	}
@@ -141,7 +143,8 @@ public class TwitterInputConfig implements IConfigInput {
 		this.consumerKey = consumerKey;
 		return this;
 	}
-	
+
+	@NotEmpty
 	public String getConsumerSecret() {
 		return this.consumerSecret;
 	}
@@ -150,7 +153,8 @@ public class TwitterInputConfig implements IConfigInput {
 		this.consumerSecret = consumerSecret;
 		return this;
 	}
-	
+
+	@NotEmpty
 	public String getOauthToken() {
 		return this.oauthToken;
 	}
@@ -159,7 +163,8 @@ public class TwitterInputConfig implements IConfigInput {
 		this.oauthToken = oauthToken;
 		return this;
 	}
-	
+
+	@NotEmpty
 	public String getOauthTokenSecret() {
 		return this.oauthTokenSecret;
 	}
