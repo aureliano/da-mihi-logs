@@ -130,6 +130,18 @@
         "sql": "select * from spanish where really_converted is false",
         "url": "jdbc:postgresql://127.0.0.1:5432/europe"
       }
+    },
+    {
+      "id": "in-twitter",
+      "type": "twitter",
+      "metadata": {
+        "philosopher": "Plato"
+      },
+      
+      "consumerKey": "consumer-key",
+      "consumerSecret": "consumer-secret",
+      "oauthToken": "oauth-token",
+      "oauthTokenSecret": "oauth-token-secret"
     }
   ],
 

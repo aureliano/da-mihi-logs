@@ -20,6 +20,7 @@ import com.github.aureliano.damihilogs.config.input.FileTailerInputConfig;
 import com.github.aureliano.damihilogs.config.input.IConfigInput;
 import com.github.aureliano.damihilogs.config.input.JdbcInputConfig;
 import com.github.aureliano.damihilogs.config.input.StandardInputConfig;
+import com.github.aureliano.damihilogs.config.input.TwitterInputConfig;
 import com.github.aureliano.damihilogs.config.input.UrlInputConfig;
 import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
 import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
@@ -138,6 +139,8 @@ public class ConfigHelperTest {
 				this._testInputUrl((UrlInputConfig) input);
 			} else if (input instanceof JdbcInputConfig) {
 				this._testInputJdbc((JdbcInputConfig) input);
+			} else if (input instanceof TwitterInputConfig) {
+				this._testInputTwitter((TwitterInputConfig) input);
 			}
 		}
 	}
@@ -233,6 +236,21 @@ public class ConfigHelperTest {
 		Assert.assertEquals("select * from spanish where really_converted is false", input.getConnection().getSql());
 		Assert.assertEquals("jdbc:postgresql://127.0.0.1:5432/europe", input.getConnection().getUrl());
 		Assert.assertEquals("tomas_torquemada", input.getConnection().getUser());
+	}
+
+	private void _testInputTwitter(TwitterInputConfig input) {
+		Assert.assertEquals("in-twitter", input.getConfigurationId());
+		Assert.assertNull(input.getMatcher());
+		Assert.assertFalse(input.isUseLastExecutionRecords());
+		Assert.assertTrue(input.getExceptionHandlers().isEmpty());
+		Assert.assertTrue(input.getDataReadingListeners().isEmpty());
+		Assert.assertTrue(input.getExecutionListeners().isEmpty());
+		Assert.assertEquals("Plato", input.getMetadata("philosopher"));
+		
+		Assert.assertEquals("consumer-key", input.getConsumerKey());
+		Assert.assertEquals("consumer-secret", input.getConsumerSecret());
+		Assert.assertEquals("oauth-token", input.getOauthToken());
+		Assert.assertEquals("oauth-token-secret", input.getOauthTokenSecret());
 	}
 	
 	private void _testOutputs(EventCollectorConfiguration configuration) {
