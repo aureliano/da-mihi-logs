@@ -10,7 +10,8 @@
       	{ "$ref": "file_tailer" },
       	{ "$ref": "standard" },
       	{ "$ref": "url" },
-      	{ "$ref": "jdbc" }
+      	{ "$ref": "jdbc" },
+      	{ "$ref": "twitter" }
       ]
     }
   }
