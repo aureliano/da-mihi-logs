@@ -27,6 +27,8 @@ public class InputConverterFactory {
 			return new UrlInputConverter();
 		} else if (InputConfigTypes.JDBC_INPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return new JdbcInputConverter();
+		} else if (InputConfigTypes.TWITTER_INPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
+			return new TwitterInputConverter();
 		} else {
 			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 			IConfigurationConverter<?> converter = service.createConverter(type);
