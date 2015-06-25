@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.converter.input;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,6 +27,7 @@ public class TwitterInputConverterTest {
 		data.put("consumerSecret", "consumer-secret");
 		data.put("oauthToken", "oauth-token");
 		data.put("oauthTokenSecret", "oauth-token-secret");
+		data.put("track", Arrays.asList("twitter"));
 		
 		data.put("type", InputConfigTypes.TWITTER_INPUT);
 		
@@ -39,6 +41,7 @@ public class TwitterInputConverterTest {
 		Assert.assertEquals("consumer-secret", conf.getConsumerSecret());
 		Assert.assertEquals("oauth-token", conf.getOauthToken());
 		Assert.assertEquals("oauth-token-secret", conf.getOauthTokenSecret());
+		Assert.assertEquals("twitter", conf.getTrack().get(0));
 	}
 	
 	@Test

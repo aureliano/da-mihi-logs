@@ -1,5 +1,6 @@
 package com.github.aureliano.damihilogs.converter.input;
 
+import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.damihilogs.config.input.InputConfigTypes;
@@ -17,6 +18,13 @@ public class TwitterInputConverter extends AbstractInputConverter<TwitterInputCo
 		TwitterInputConfig conf = new TwitterInputConfig();
 		
 		super.configureObject(conf, data);
+		
+		if (data.get("track") != null) {
+			List<String> track = (List<String>) data.get("track");
+			for (String item : track) {
+				conf.addTrack(item);
+			}
+		}
 		
 		return conf
 			.withConsumerKey(StringHelper.parse(data.get("consumerKey")))

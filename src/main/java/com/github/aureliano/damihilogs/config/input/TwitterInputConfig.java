@@ -25,6 +25,7 @@ public class TwitterInputConfig implements IConfigInput {
 	private String consumerSecret;
 	private String oauthToken;
 	private String oauthTokenSecret;
+	private List<String> track;
 	
 	public TwitterInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -33,6 +34,7 @@ public class TwitterInputConfig implements IConfigInput {
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
+		this.track = new ArrayList<String>();
 	}
 
 	@Override
@@ -174,6 +176,15 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public List<String> getTrack() {
+		return this.track;
+	}
+	
+	public TwitterInputConfig addTrack(String param) {
+		this.track.add(param);
+		return this;
+	}
+	
 	@Override
 	public TwitterInputConfig clone() {
 		return new TwitterInputConfig()
@@ -187,7 +198,8 @@ public class TwitterInputConfig implements IConfigInput {
 			.withMatcher(this.matcher)
 			.withExceptionHandlers(this.exceptionHandlers)
 			.withDataReadingListeners(this.dataReadingListeners)
-			.withExecutionListeners(this.inputExecutionListeners);
+			.withExecutionListeners(this.inputExecutionListeners)
+			.withTrack(this.track);
 	}
 	
 	protected TwitterInputConfig withMetadata(Properties properties) {
@@ -197,6 +209,11 @@ public class TwitterInputConfig implements IConfigInput {
 	
 	protected TwitterInputConfig withExceptionHandlers(List<IExceptionHandler> handlers) {
 		this.exceptionHandlers = handlers;
+		return this;
+	}
+	
+	protected TwitterInputConfig withTrack(List<String> track) {
+		this.track = track;
 		return this;
 	}
 }

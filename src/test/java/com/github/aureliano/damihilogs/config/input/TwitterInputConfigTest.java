@@ -49,7 +49,9 @@ public class TwitterInputConfigTest {
 			.putMetadata("test", "my test")
 			.addExceptionHandler(new IExceptionHandler() {
 				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
-			});
+			})
+			.addTrack("test1")
+			.addTrack("test2");
 		
 		TwitterInputConfig c2 = c1.clone();
 		
@@ -61,6 +63,7 @@ public class TwitterInputConfigTest {
 		Assert.assertEquals(c1.getOauthTokenSecret(), c2.getOauthTokenSecret());
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
+		Assert.assertEquals(c1.getTrack().size(), c2.getTrack().size());
 	}
 	
 	@Test
