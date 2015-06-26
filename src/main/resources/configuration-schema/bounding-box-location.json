@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Location (latitude/longitude) pair bounding box.",
+  "type": "object",
+  "properties": {
+    "fromLocation": {
+      "longitude": {
+        "type": "number",
+        "description": "Location longitude."
+      },
+      "latitude": {
+        "type": "number",
+        "description": "Location latitude."
+      }
+    },
+    "toLocation": {
+      "longitude": {
+        "type": "number",
+        "description": "Location longitude."
+      },
+      "latitude": {
+        "type": "number",
+        "description": "Location latitude."
+      }
+    }
+  },
+  "required": ["fromLocation","toLocation"]
+}

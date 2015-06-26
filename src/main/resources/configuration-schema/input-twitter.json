@@ -65,6 +65,9 @@
         "type": "string"
       },
       "description": "A list of phrases which will be used to determine what Tweets will be delivered on the stream. This array will be joint in a single comma-separeted string. By this model, you can think of commas as logical ORs, while spaces are equivalent to logical ANDs (e.g. 'the twitter' is the AND twitter, and 'the,twitter' is the OR twitter)."
+    },
+    "locations": {
+      "$ref": "boundingBoxLocation"
     }
   },
   "required": ["consumerKey", "consumerSecret", "oauthToken", "oauthTokenSecret"]

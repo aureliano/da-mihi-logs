@@ -52,6 +52,9 @@
     },
     "decompressionFile": {
       "id": "decompression-file.json"
+    },
+    "boundingBoxLocation": {
+      "id": "bounding-box-location.json"
     }
   },
   "output": {
