@@ -2,7 +2,6 @@ package com.github.aureliano.damihilogs.converter.input;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 
@@ -14,10 +13,12 @@ import com.github.aureliano.damihilogs.config.input.TwitterInputConfig;
 
 public class TwitterInputConverterTest {
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testConvert() {
 		Map<String, Object> data = new HashMap<String, Object>();
 		Properties metadata = new Properties();
+		Map<String, Object> boundingBox = new HashMap<String, Object>();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
@@ -28,7 +29,21 @@ public class TwitterInputConverterTest {
 		data.put("consumerSecret", "consumer-secret");
 		data.put("oauthToken", "oauth-token");
 		data.put("oauthTokenSecret", "oauth-token-secret");
-		data.put("track", new HashSet<String>(Arrays.asList("twitter")));
+		data.put("track", Arrays.asList("twitter"));
+		
+		Map<String, Object> fromLocation = new HashMap<String, Object>();
+		fromLocation.put("latitude", 63.9980);
+		fromLocation.put("longitude", 23.6310);
+		
+		Map<String, Object> toLocation = new HashMap<String, Object>();
+		toLocation.put("latitude", 63.9980);
+		toLocation.put("longitude", 23.6310);
+		
+		Map<String, Object> location = new HashMap<String, Object>();
+		location.put("fromLocation", fromLocation);
+		location.put("toLocation", toLocation);
+		boundingBox.put("boundingBoxLocation", location);
+		data.put("locations", Arrays.asList(boundingBox));
 		
 		data.put("type", InputConfigTypes.TWITTER_INPUT);
 		
