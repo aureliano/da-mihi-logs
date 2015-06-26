@@ -29,7 +29,7 @@ public class TwitterInputConfig implements IConfigInput {
 	private String oauthToken;
 	private String oauthTokenSecret;
 	private Set<String> track;
-	private Set<BoundingBoxLocation> boundinBoxLocation;
+	private Set<BoundingBoxLocation> boundingBoxLocation;
 	
 	public TwitterInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -39,7 +39,7 @@ public class TwitterInputConfig implements IConfigInput {
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
 		this.track = new LinkedHashSet<String>();
-		this.boundinBoxLocation = new LinkedHashSet<BoundingBoxLocation>();
+		this.boundingBoxLocation = new LinkedHashSet<BoundingBoxLocation>();
 	}
 
 	@Override
@@ -190,12 +190,12 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	public Set<BoundingBoxLocation> getBoundinBoxLocation() {
-		return this.boundinBoxLocation;
+	public Set<BoundingBoxLocation> getBoundingBoxLocation() {
+		return this.boundingBoxLocation;
 	}
 	
 	public TwitterInputConfig addBoundingBoxLocation(BoundingBoxLocation location) {
-		this.boundinBoxLocation.add(location);
+		this.boundingBoxLocation.add(location);
 		return this;
 	}
 	
@@ -214,7 +214,7 @@ public class TwitterInputConfig implements IConfigInput {
 			.withDataReadingListeners(this.dataReadingListeners)
 			.withExecutionListeners(this.inputExecutionListeners)
 			.withTrack(this.track)
-			.withBoundinBoxLocation(this.boundinBoxLocation);
+			.withBoundinBoxLocation(this.boundingBoxLocation);
 	}
 	
 	protected TwitterInputConfig withMetadata(Properties properties) {
@@ -233,7 +233,7 @@ public class TwitterInputConfig implements IConfigInput {
 	}
 	
 	protected TwitterInputConfig withBoundinBoxLocation(Set<BoundingBoxLocation> boundinBoxLocation) {
-		this.boundinBoxLocation = boundinBoxLocation;
+		this.boundingBoxLocation = boundinBoxLocation;
 		return this;
 	}
 }

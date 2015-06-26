@@ -66,7 +66,7 @@ public class TwitterInputConfigTest {
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 		Assert.assertEquals(c1.getTrack().size(), c2.getTrack().size());
-		Assert.assertEquals(c1.getBoundinBoxLocation().size(), c2.getBoundinBoxLocation().size());
+		Assert.assertEquals(c1.getBoundingBoxLocation().size(), c2.getBoundingBoxLocation().size());
 	}
 	
 	@Test
