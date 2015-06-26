@@ -29,7 +29,7 @@ public class FileInputConverter extends AbstractInputConverter<FileInputConfig> 
 		
 		value = StringHelper.parse(data.get("startPosition"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property startPosition was expected to match \\d+ pattern in input file configuration.");
 			}
 			conf.withStartPosition(Integer.parseInt(value));

@@ -34,7 +34,7 @@ public class FileTailerInputConverter extends AbstractInputConverter<FileTailerI
 		
 		value = StringHelper.parse(data.get("tailDelay"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property tailDelay was expected to match \\d+ pattern in input file configuration.");
 			}
 			conf.withTailDelay(Long.parseLong(value));
@@ -42,7 +42,7 @@ public class FileTailerInputConverter extends AbstractInputConverter<FileTailerI
 		
 		value = StringHelper.parse(data.get("tailInterval"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property tailInterval was expected to match \\d+ pattern in input file configuration.");
 			}
 			conf.withTailInterval(Long.parseLong(value));

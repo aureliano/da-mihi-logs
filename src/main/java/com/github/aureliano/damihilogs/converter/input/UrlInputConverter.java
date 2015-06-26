@@ -32,7 +32,7 @@ public class UrlInputConverter extends AbstractInputConverter<UrlInputConfig> {
 		
 		value = StringHelper.parse(data.get("port"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.toUpperCase().matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property port was expected to match \\d+ pattern in input url configuration.");
 			}
 			conf.withPort(Integer.parseInt(value));
@@ -40,7 +40,7 @@ public class UrlInputConverter extends AbstractInputConverter<UrlInputConfig> {
 		
 		value = StringHelper.parse(data.get("readTimeOut"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.toUpperCase().matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property readTimeOut was expected to match \\d+ pattern in input url configuration.");
 			}
 			conf.withReadTimeout(Long.parseLong(value));
@@ -48,7 +48,7 @@ public class UrlInputConverter extends AbstractInputConverter<UrlInputConfig> {
 		
 		value = StringHelper.parse(data.get("byteOffSet"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.toUpperCase().matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property byteOffSet was expected to match \\d+ pattern in input url configuration.");
 			}
 			conf.withByteOffSet(Integer.parseInt(value));
