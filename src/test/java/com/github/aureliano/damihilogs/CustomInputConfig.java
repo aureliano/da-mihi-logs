@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import com.github.aureliano.damihilogs.annotation.validation.AssertFalse;
 import com.github.aureliano.damihilogs.annotation.validation.AssertTrue;
+import com.github.aureliano.damihilogs.annotation.validation.Decimal;
 import com.github.aureliano.damihilogs.annotation.validation.Max;
 import com.github.aureliano.damihilogs.annotation.validation.Min;
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
@@ -33,6 +34,7 @@ public class CustomInputConfig implements IConfigInput {
 	private Integer myNewProperty;
 	private Boolean ok;
 	private Boolean notOk;
+	private Double myDoubleField;
 	
 	public CustomInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -127,6 +129,16 @@ public class CustomInputConfig implements IConfigInput {
 	
 	public CustomInputConfig withNotOk(Boolean value) {
 		this.notOk = value;
+		return this;
+	}
+	
+	@Decimal(min = 4.5, max = 9.2)
+	public Double getMyDoubleField() {
+		return myDoubleField;
+	}
+	
+	public CustomInputConfig withMyDoubleField(Double myDoubleField) {
+		this.myDoubleField = myDoubleField;
 		return this;
 	}
 

@@ -21,6 +21,6 @@ public class ObjectValidatorTest {
 		IConfiguration configuration = new CustomInputConfig().withConfigurationId(null);
 		Set<ConstraintViolation> violations = this.validator.validate(configuration);
 		
-		Assert.assertEquals(9, violations.size());
+		Assert.assertEquals(8, violations.size());
 	}
 }
