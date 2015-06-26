@@ -1,8 +1,10 @@
 package com.github.aureliano.damihilogs.config.input;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
@@ -25,7 +27,7 @@ public class TwitterInputConfig implements IConfigInput {
 	private String consumerSecret;
 	private String oauthToken;
 	private String oauthTokenSecret;
-	private List<String> track;
+	private Set<String> track;
 	
 	public TwitterInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -34,7 +36,7 @@ public class TwitterInputConfig implements IConfigInput {
 		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
-		this.track = new ArrayList<String>();
+		this.track = new LinkedHashSet<String>();
 	}
 
 	@Override
@@ -176,7 +178,7 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	public List<String> getTrack() {
+	public Set<String> getTrack() {
 		return this.track;
 	}
 	
@@ -212,7 +214,7 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
-	protected TwitterInputConfig withTrack(List<String> track) {
+	protected TwitterInputConfig withTrack(Set<String> track) {
 		this.track = track;
 		return this;
 	}
