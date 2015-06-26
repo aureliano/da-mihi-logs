@@ -67,7 +67,11 @@
       "description": "A list of phrases which will be used to determine what Tweets will be delivered on the stream. This array will be joint in a single comma-separeted string. By this model, you can think of commas as logical ORs, while spaces are equivalent to logical ANDs (e.g. 'the twitter' is the AND twitter, and 'the,twitter' is the OR twitter)."
     },
     "locations": {
-      "$ref": "boundingBoxLocation"
+      "type": "array",
+      "items": {
+        "$ref": "boundingBoxLocation"
+      },
+      "description": "A comma-separated list of longitude,latitude pairs specifying a set of bounding boxes to filter Tweets by. Only geolocated Tweets falling within the requested bounding boxes will be included—unlike the Search API, the user's location field is not used to filter tweets."
     }
   },
   "required": ["consumerKey", "consumerSecret", "oauthToken", "oauthTokenSecret"]
