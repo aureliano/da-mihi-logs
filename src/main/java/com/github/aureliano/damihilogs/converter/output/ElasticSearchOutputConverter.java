@@ -21,7 +21,7 @@ public class ElasticSearchOutputConverter extends AbstractOutputConverter<Elasti
 		
 		String value = StringHelper.parse(data.get("port"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.toUpperCase().matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property port was expected to match \\d+ pattern in output url configuration.");
 			}
 			conf.withPort(Integer.parseInt(value));

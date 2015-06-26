@@ -21,7 +21,7 @@ public class ExecutePeriodicallyAtSpecificTimeScheduleConverter implements IConf
 		
 		String value = StringHelper.parse(data.get("hour"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property hour was expected to match \\d+ pattern in scheduler configuration.");
 			}
 			scheduling.withHour(Integer.parseInt(value));
@@ -29,7 +29,7 @@ public class ExecutePeriodicallyAtSpecificTimeScheduleConverter implements IConf
 		
 		value = StringHelper.parse(data.get("minute"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property minute was expected to match \\d+ pattern in scheduler configuration.");
 			}
 			scheduling.withMinute(Integer.parseInt(value));
@@ -37,7 +37,7 @@ public class ExecutePeriodicallyAtSpecificTimeScheduleConverter implements IConf
 		
 		value = StringHelper.parse(data.get("second"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property second was expected to match \\d+ pattern in scheduler configuration.");
 			}
 			scheduling.withSecond(Integer.parseInt(value));

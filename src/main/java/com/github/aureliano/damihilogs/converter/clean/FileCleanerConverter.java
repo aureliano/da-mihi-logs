@@ -43,7 +43,7 @@ public class FileCleanerConverter implements IConfigurationConverter<ICleaner> {
 				Map<String, Object> removeConfig = (Map<String, Object>) data.get("removeFilesAfter");
 				String time = StringHelper.parse(removeConfig.get("value"));
 				
-				if (StringHelper.isEmpty(time) || !time.matches("\\d+")) {
+				if (StringHelper.isEmpty(time) || !StringHelper.isNumeric(time)) {
 					throw new DaMihiLogsException("Property removeFilesAfter => value was expected to match \\d+ pattern in cleaner configuration.");
 				}
 				

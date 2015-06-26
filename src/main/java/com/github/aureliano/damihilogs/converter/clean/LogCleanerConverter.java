@@ -52,7 +52,7 @@ public class LogCleanerConverter implements IConfigurationConverter<ICleaner> {
 			
 			String time = StringHelper.parse(data.get("value"));
 			
-			if (StringHelper.isEmpty(time) || !time.matches("\\d+")) {
+			if (StringHelper.isEmpty(time) || !StringHelper.isNumeric(time)) {
 				throw new DaMihiLogsException("Property " + method + " => value was expected to match \\d+ pattern in cleaner configuration.");
 			}
 			

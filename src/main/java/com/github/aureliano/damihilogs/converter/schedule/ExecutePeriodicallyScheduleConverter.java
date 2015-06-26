@@ -24,7 +24,7 @@ public class ExecutePeriodicallyScheduleConverter implements IConfigurationConve
 		
 		String value = StringHelper.parse(data.get("delay"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property delay was expected to match \\d+ pattern in scheduler configuration.");
 			}
 			scheduling.withDelay(Long.parseLong(value));
@@ -32,7 +32,7 @@ public class ExecutePeriodicallyScheduleConverter implements IConfigurationConve
 		
 		value = StringHelper.parse(data.get("period"));
 		if (!StringHelper.isEmpty(value)) {
-			if (!value.matches("\\d+")) {
+			if (!StringHelper.isNumeric(value)) {
 				throw new DaMihiLogsException("Property period was expected to match \\d+ pattern in scheduler configuration.");
 			}
 			scheduling.withPeriod(Long.parseLong(value));
