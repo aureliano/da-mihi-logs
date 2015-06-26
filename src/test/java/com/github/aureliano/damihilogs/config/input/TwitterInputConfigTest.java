@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+import com.github.aureliano.damihilogs.config.BoundingBoxLocation;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.validation.ConstraintViolation;
 import com.github.aureliano.damihilogs.validation.ObjectValidator;
@@ -51,7 +52,8 @@ public class TwitterInputConfigTest {
 				public void captureException(Runnable runnable, IConfigInput inputConfig, Throwable trowable) { }
 			})
 			.addTrack("test1")
-			.addTrack("test2");
+			.addTrack("test2")
+			.addBoundingBoxLocation(new BoundingBoxLocation());
 		
 		TwitterInputConfig c2 = c1.clone();
 		
@@ -64,6 +66,7 @@ public class TwitterInputConfigTest {
 		Assert.assertEquals(c1.getMetadata("test"), c2.getMetadata("test"));
 		Assert.assertEquals(c1.getExceptionHandlers().size(), c2.getExceptionHandlers().size());
 		Assert.assertEquals(c1.getTrack().size(), c2.getTrack().size());
+		Assert.assertEquals(c1.getBoundinBoxLocation().size(), c2.getBoundinBoxLocation().size());
 	}
 	
 	@Test

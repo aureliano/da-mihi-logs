@@ -7,6 +7,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.github.aureliano.damihilogs.annotation.validation.NotEmpty;
+import com.github.aureliano.damihilogs.config.BoundingBoxLocation;
 import com.github.aureliano.damihilogs.exception.IExceptionHandler;
 import com.github.aureliano.damihilogs.helper.DataHelper;
 import com.github.aureliano.damihilogs.listener.DataReadingListener;
@@ -28,6 +29,7 @@ public class TwitterInputConfig implements IConfigInput {
 	private String oauthToken;
 	private String oauthTokenSecret;
 	private Set<String> track;
+	private Set<BoundingBoxLocation> boundinBoxLocation;
 	
 	public TwitterInputConfig() {
 		this.useLastExecutionRecords = false;
@@ -37,6 +39,7 @@ public class TwitterInputConfig implements IConfigInput {
 		this.dataReadingListeners = new ArrayList<DataReadingListener>();
 		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
 		this.track = new LinkedHashSet<String>();
+		this.boundinBoxLocation = new LinkedHashSet<BoundingBoxLocation>();
 	}
 
 	@Override
@@ -187,6 +190,15 @@ public class TwitterInputConfig implements IConfigInput {
 		return this;
 	}
 	
+	public Set<BoundingBoxLocation> getBoundinBoxLocation() {
+		return this.boundinBoxLocation;
+	}
+	
+	public TwitterInputConfig addBoundingBoxLocation(BoundingBoxLocation location) {
+		this.boundinBoxLocation.add(location);
+		return this;
+	}
+	
 	@Override
 	public TwitterInputConfig clone() {
 		return new TwitterInputConfig()
@@ -201,7 +213,8 @@ public class TwitterInputConfig implements IConfigInput {
 			.withExceptionHandlers(this.exceptionHandlers)
 			.withDataReadingListeners(this.dataReadingListeners)
 			.withExecutionListeners(this.inputExecutionListeners)
-			.withTrack(this.track);
+			.withTrack(this.track)
+			.withBoundinBoxLocation(this.boundinBoxLocation);
 	}
 	
 	protected TwitterInputConfig withMetadata(Properties properties) {
@@ -216,6 +229,11 @@ public class TwitterInputConfig implements IConfigInput {
 	
 	protected TwitterInputConfig withTrack(Set<String> track) {
 		this.track = track;
+		return this;
+	}
+	
+	protected TwitterInputConfig withBoundinBoxLocation(Set<BoundingBoxLocation> boundinBoxLocation) {
+		this.boundinBoxLocation = boundinBoxLocation;
 		return this;
 	}
 }
