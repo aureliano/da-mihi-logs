@@ -47,10 +47,9 @@ public class TwitterInputConverter extends AbstractInputConverter<TwitterInputCo
 	
 	private BoundingBoxLocation convertBoundingBoxLocation(Map<String, Object> data) {
 		BoundingBoxLocation location = new BoundingBoxLocation();
-		Map<String, Object> box = DataHelper.getAsHash(data, "boundingBoxLocation");
 
-		GeoLocation fromLocation = this.convertGeoLocation(DataHelper.getAsHash(box, "fromLocation"));
-		GeoLocation toLocation = this.convertGeoLocation(DataHelper.getAsHash(box, "toLocation"));
+		GeoLocation fromLocation = this.convertGeoLocation(DataHelper.getAsHash(data, "fromLocation"));
+		GeoLocation toLocation = this.convertGeoLocation(DataHelper.getAsHash(data, "toLocation"));
 		
 		return location
 			.withFromLocation(fromLocation)

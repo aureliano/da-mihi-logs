@@ -1,6 +1,7 @@
 package com.github.aureliano.damihilogs.helper;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +13,7 @@ import org.junit.Test;
 import com.github.aureliano.damihilogs.clean.FileCleaner;
 import com.github.aureliano.damihilogs.clean.ICleaner;
 import com.github.aureliano.damihilogs.clean.LogCleaner;
+import com.github.aureliano.damihilogs.config.BoundingBoxLocation;
 import com.github.aureliano.damihilogs.config.EventCollectorConfiguration;
 import com.github.aureliano.damihilogs.config.input.ConnectionSchema;
 import com.github.aureliano.damihilogs.config.input.ExternalCommandInputConfig;
@@ -251,6 +253,19 @@ public class ConfigHelperTest {
 		Assert.assertEquals("consumer-secret", input.getConsumerSecret());
 		Assert.assertEquals("oauth-token", input.getOauthToken());
 		Assert.assertEquals("oauth-token-secret", input.getOauthTokenSecret());
+		
+		Assert.assertEquals(3, input.getTrack().size());
+		Iterator<String> track = input.getTrack().iterator();
+		Assert.assertEquals("my first tweet", track.next());
+		Assert.assertEquals("APVD AMICVS", track.next());
+		Assert.assertEquals("REX CAELESTIS", track.next());
+		
+		Assert.assertEquals(1, input.getBoundingBoxLocation().size());
+		BoundingBoxLocation box = input.getBoundingBoxLocation().iterator().next();
+		Assert.assertEquals(-19.9225, box.getFromLocation().getLatitude());
+		Assert.assertEquals(-43.9450, box.getFromLocation().getLongitude());
+		Assert.assertEquals(-20.000, box.getToLocation().getLatitude());
+		Assert.assertEquals(-44.0, box.getToLocation().getLongitude());
 	}
 	
 	private void _testOutputs(EventCollectorConfiguration configuration) {

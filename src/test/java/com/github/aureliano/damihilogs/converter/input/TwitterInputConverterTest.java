@@ -18,7 +18,6 @@ public class TwitterInputConverterTest {
 	public void testConvert() {
 		Map<String, Object> data = new HashMap<String, Object>();
 		Properties metadata = new Properties();
-		Map<String, Object> boundingBox = new HashMap<String, Object>();
 		
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
@@ -42,8 +41,7 @@ public class TwitterInputConverterTest {
 		Map<String, Object> location = new HashMap<String, Object>();
 		location.put("fromLocation", fromLocation);
 		location.put("toLocation", toLocation);
-		boundingBox.put("boundingBoxLocation", location);
-		data.put("locations", Arrays.asList(boundingBox));
+		data.put("locations", Arrays.asList(location));
 		
 		data.put("type", InputConfigTypes.TWITTER_INPUT);
 		

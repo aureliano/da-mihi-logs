@@ -141,7 +141,24 @@
       "consumerKey": "consumer-key",
       "consumerSecret": "consumer-secret",
       "oauthToken": "oauth-token",
-      "oauthTokenSecret": "oauth-token-secret"
+      "oauthTokenSecret": "oauth-token-secret",
+      "track": [
+        "my first tweet",
+        "APVD AMICVS",
+        "REX CAELESTIS"
+      ],
+      "locations": [
+        {
+          "fromLocation": {
+            "latitude": -19.9225,
+            "longitude": -43.9450
+          },
+          "toLocation": {
+            "latitude": -20.000,
+            "longitude": -44.0
+          }
+        }
+      ]
     }
   ],
 
