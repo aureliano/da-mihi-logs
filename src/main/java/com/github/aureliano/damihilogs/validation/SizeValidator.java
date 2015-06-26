@@ -22,7 +22,7 @@ public class SizeValidator implements IValidator {
 		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
 		
 		if (returnedValue == null) {
-			returnedValue = "";
+			return null;
 		}
 		
 		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
