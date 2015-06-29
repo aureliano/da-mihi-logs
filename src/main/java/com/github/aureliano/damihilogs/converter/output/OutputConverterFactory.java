@@ -23,6 +23,8 @@ public final class OutputConverterFactory {
 			return new StandardOutputConverter();
 		} else if (OutputConfigTypes.JDBC_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
 			return new JdbcOutputConverter();
+		} else if (OutputConfigTypes.TWITTER_OUTPUT.name().startsWith(StringHelper.toString(type).toUpperCase())) {
+			return new TwitterOutputConverter();
 		} else {
 			ApiServiceRegistrator service = ApiServiceRegistrator.instance();
 			IConfigurationConverter<?> converter = service.createConverter(type);
