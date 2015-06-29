@@ -50,6 +50,9 @@
     "jdbc": {
       "id": "input-jdbc.json"
     },
+    "twitter": {
+      "id": "input-twitter.json"
+    },
     "decompressionFile": {
       "id": "decompression-file.json"
     },
