@@ -73,6 +73,9 @@
     },
     "jdbc": {
       "id": "input-jdbc.json"
+    },
+    "twitter": {
+      "id": "output-twitter.json"
     }
   }
 }

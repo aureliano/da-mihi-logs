@@ -8,7 +8,8 @@
       	{ "$ref": "elastic_search" },
       	{ "$ref": "file" },
       	{ "$ref": "standard" },
-      	{ "$ref": "jdbc" }
+      	{ "$ref": "jdbc" },
+      	{ "$ref": "twitter" }
       ]
     }
   }
