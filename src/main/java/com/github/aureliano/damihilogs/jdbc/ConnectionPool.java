@@ -47,7 +47,7 @@ public class ConnectionPool {
 	}
 	
 	public synchronized void closeConnections() {
-		logger.info("Closing " + this.pool.size() + " JDBC connections in the pool.");
+		logger.info("Closing " + this.pool.size() + " JDBC connection(s) in the pool.");
 		
 		for (Connection connection : this.pool.values()) {
 			try {
