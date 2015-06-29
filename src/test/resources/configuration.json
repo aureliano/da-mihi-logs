@@ -212,6 +212,22 @@
         "sql": "select * from spanish where really_converted is false",
         "url": "jdbc:postgresql://127.0.0.1:5432/europe"
       }
+    },
+    {
+      "type": "twitter",
+      "parser": "com.github.aureliano.damihilogs.parser.PlainTextParser",
+      "filter": "com.github.aureliano.damihilogs.filter.DefaultEmptyFilter",
+      "formatter": "com.github.aureliano.damihilogs.formatter.PlainTextFormatter",
+      "dataWritingListeners": ["com.github.aureliano.damihilogs.listener.DefaultDataWritingListener"],
+      "metadata": {
+        "crusader": "Godefroy de Bouillon"
+      },
+      
+      "consumerKey": "consumer-key",
+      "consumerSecret": "consumer-secret",
+      "oauthToken": "oauth-token",
+      "oauthTokenSecret": "oauth-token-secret",
+      "tweet": "¡Viva Cristo Rey! ¡Viva la Virgen de Guadalupe!"
     }
   ]
 }

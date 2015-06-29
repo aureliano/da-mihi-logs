@@ -29,6 +29,7 @@ import com.github.aureliano.damihilogs.config.output.FileOutputConfig;
 import com.github.aureliano.damihilogs.config.output.IConfigOutput;
 import com.github.aureliano.damihilogs.config.output.JdbcOutputConfig;
 import com.github.aureliano.damihilogs.config.output.StandardOutputConfig;
+import com.github.aureliano.damihilogs.config.output.TwitterOutputConfig;
 import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
 import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
 import com.github.aureliano.damihilogs.inout.SupportedCompressionType;
@@ -279,6 +280,8 @@ public class ConfigHelperTest {
 				this._testOutputStandard((StandardOutputConfig) output);
 			} else if (output instanceof JdbcOutputConfig) {
 				this._testOutputJdbc((JdbcOutputConfig) output);
+			} else if (output instanceof TwitterOutputConfig) {
+				this._testOutputTwitter((TwitterOutputConfig) output);
 			}
 		}
 	}
@@ -329,5 +332,19 @@ public class ConfigHelperTest {
 		Assert.assertEquals("select * from spanish where really_converted is false", output.getConnection().getSql());
 		Assert.assertEquals("jdbc:postgresql://127.0.0.1:5432/europe", output.getConnection().getUrl());
 		Assert.assertEquals("tomas_torquemada", output.getConnection().getUser());
+	}
+
+	private void _testOutputTwitter(TwitterOutputConfig output) {
+		Assert.assertTrue(output.getParser() instanceof PlainTextParser);
+		Assert.assertTrue(output.getFilter() instanceof DefaultEmptyFilter);
+		Assert.assertTrue(output.getOutputFormatter() instanceof PlainTextFormatter);
+		Assert.assertTrue(output.getDataWritingListeners().size() == 1);
+		Assert.assertEquals("Godefroy de Bouillon", output.getMetadata("crusader"));
+		
+		Assert.assertEquals("consumer-key", output.getConsumerKey());
+		Assert.assertEquals("consumer-secret", output.getConsumerSecret());
+		Assert.assertEquals("oauth-token", output.getOauthToken());
+		Assert.assertEquals("oauth-token-secret", output.getOauthTokenSecret());
+		Assert.assertEquals("¡Viva Cristo Rey! ¡Viva la Virgen de Guadalupe!", output.getTweet());
 	}
 }
