@@ -81,6 +81,23 @@ public class ElasticSearchIndexer {
 	public HttpActionMetadata index(String source) {
 		return this.indexSource(source);
 	}
+	
+	public HttpActionMetadata delete(Object object) {
+		return this.deleteObject(object);
+	}
+	
+	public HttpActionMetadata delete(Map<?, ?> source) {
+		try {
+			String hash = ObjectMapperSingleton.instance().getObjectMapper().writeValueAsString(source);
+			return this.deleteSource(hash);
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
+	}
+	
+	public HttpActionMetadata delete(String source) {
+		return this.deleteSource(source);
+	}
 
 	public boolean indexExist() {
 		String url = UrlHelper.buildGetIndexUrl(this.configuration) + "/_mapping";
@@ -148,5 +165,32 @@ public class ElasticSearchIndexer {
 					.withMethod("PUT")
 					.withData(source.getBytes())
 					.putRequestProperty("Content-Type", "application/json"));
+	}
+	
+	private HttpActionMetadata deleteObject(Object object) {
+		Class<?> objectClass = object.getClass();
+		String typeName = MappingProcessor.getIndexTypeName(objectClass);
+		Object objectId = objectProcessor.getIdValue(object);
+		
+		if (objectId == null) {
+			throw new DaMihiLogsException("Unable to find object id");
+		}
+
+		String url = UrlHelper.buildDeleteDocumentUrl(this.configuration, typeName, objectId.toString());
+		
+		return ElasticSearchHelper.doRequest(
+			new HttpActionData()
+				.withUrl(url)
+				.withMethod("DELETE"));
+	}
+	
+	private HttpActionMetadata deleteSource(String source) {
+		String id = ElasticSearchHelper.getIdFromHash(source);
+		String url = UrlHelper.buildDeleteDocumentUrl(this.configuration, this.configuration.getMappingType(), id);
+		
+		return ElasticSearchHelper.doRequest(
+				new HttpActionData()
+					.withUrl(url)
+					.withMethod("DELETE"));
 	}
 }

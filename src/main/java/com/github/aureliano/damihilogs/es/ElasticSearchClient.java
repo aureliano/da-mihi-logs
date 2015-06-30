@@ -38,6 +38,21 @@ public class ElasticSearchClient {
 			this.indexIndexable(data);
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public void delete(Object data) {
+		if (data instanceof Map) {
+			this.deleteSource((Map<String, Object>) data);
+		} else if (data instanceof String) {
+			this.deleteSource(data.toString());
+		} else {
+			Indexable indexable = data.getClass().getAnnotation(Indexable.class);
+			if (indexable == null) {
+				throw new DaMihiLogsException("Don't know how to index object. Expected [java.util.Map, java.lang.String, com.github.kzwang.osem.annotations.@Indexable] but found " + data.getClass().getName());
+			}
+			this.deleteIndexable(data);
+		}
+	}
 	
 	private void indexIndexable(Object indexable) {
 		HttpActionMetadata response = this.indexer.index(indexable);
@@ -51,6 +66,21 @@ public class ElasticSearchClient {
 	
 	private void indexSource(String json) {
 		HttpActionMetadata response = this.indexer.index(json);
+		this.printIndexDocumentResponseLog(response);
+	}
+	
+	private void deleteIndexable(Object indexable) {
+		HttpActionMetadata response = this.indexer.delete(indexable);
+		this.printIndexDocumentResponseLog(response);
+	}
+	
+	private void deleteSource(Map<String, Object> data) {
+		HttpActionMetadata response = this.indexer.delete(data);
+		this.printIndexDocumentResponseLog(response);
+	}
+	
+	private void deleteSource(String json) {
+		HttpActionMetadata response = this.indexer.delete(json);
 		this.printIndexDocumentResponseLog(response);
 	}
 	
