@@ -144,6 +144,10 @@ public final class FileHelper {
 		return readFile(new File(path));
 	}
 	
+	public static String readFile(String path, String charset) {
+		return readFile(new File(path), charset);
+	}
+	
 	public static String readFile(File file) {
 		try {
 			return readFile(new FileInputStream(file));
@@ -152,11 +156,30 @@ public final class FileHelper {
 		}
 	}
 	
+	public static String readFile(File file, String charset) {
+		try {
+			return readFile(new FileInputStream(file), charset);
+		} catch (IOException ex) {
+			throw new DaMihiLogsException(ex);
+		}
+	}
+	
 	public static String readFile(InputStream stream) {
+		return readFile(stream, null);
+	}
+	
+	public static String readFile(InputStream stream, String charset) {
 		StringBuilder builder = new StringBuilder();
 		
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+			InputStreamReader inputReader;
+			if (StringHelper.isEmpty(charset)) {
+				inputReader = new InputStreamReader(stream);
+			} else {
+				inputReader = new InputStreamReader(stream, charset);
+			}
+		
+			BufferedReader reader = new BufferedReader(inputReader);
 			String line = null;
 			
 			while ((line = reader.readLine()) != null) {
