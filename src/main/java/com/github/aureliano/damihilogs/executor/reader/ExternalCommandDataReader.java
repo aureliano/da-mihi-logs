@@ -53,9 +53,13 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 			return;
 		}
 
-		if (this.process.exitValue() != 0) {
-			logger.warn("External command exited with no normal exit status.");
-			logger.warn(this.readError());
+		try {
+			if (this.process.waitFor() != 0) {
+				logger.warn("External command exited with no normal exit status.");
+				logger.warn(this.readError());
+			}
+		} catch (InterruptedException ex) {
+			throw new DaMihiLogsException(ex);
 		}
 		
 		this.process.destroy();
