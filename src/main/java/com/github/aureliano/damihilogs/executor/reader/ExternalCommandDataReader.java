@@ -40,7 +40,10 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 
 	@Override
 	public Map<String, Object> executionLog() {
-		return new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("input.config." + super.inputConfiguration.getConfigurationId() + ".last.line", super.lineCounter);
+		
+		return map;
 	}
 
 	@Override
