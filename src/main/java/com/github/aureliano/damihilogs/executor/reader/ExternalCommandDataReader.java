@@ -78,7 +78,7 @@ public class ExternalCommandDataReader extends AbstractDataReader {
 	private void initialize() {
 		this.externalCommandInput = (ExternalCommandInputConfig) super.inputConfiguration;
 		
-		logger.info("Execute command " + this.externalCommandInput.getCommand());
+		logger.info("Execute command: " + this.externalCommandInput.getCommand());
 		logger.info("With parameters: " + this.externalCommandInput.getParameters());
 		
 		String command = this.buildCommand();
