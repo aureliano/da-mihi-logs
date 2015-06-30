@@ -150,6 +150,14 @@ public final class UrlHelper {
 	}
 	
 	public static String buildPutDocumentUrl(IElasticSearchConfiguration configuration, String mappingType, String documentId) {
+		return buildDocumentUrl(configuration, mappingType, documentId);
+	}
+	
+	public static String buildDeleteDocumentUrl(IElasticSearchConfiguration configuration, String mappingType, String documentId) {
+		return buildDocumentUrl(configuration, mappingType, documentId);
+	}
+	
+	private static String buildDocumentUrl(IElasticSearchConfiguration configuration, String mappingType, String documentId) {
 		return new StringBuilder()
 			.append(buildGetIndexTypeUrl(configuration, mappingType))
 			.append("/")
