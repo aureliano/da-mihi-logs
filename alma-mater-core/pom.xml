@@ -11,10 +11,8 @@
 		<version>0.1.0</version>
 	</parent>
 
-	<groupId>com.github.aureliano</groupId>
 	<artifactId>alma-mater-core</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.0</version>
 	<name>alma-mater-core</name>
 	
 	<dependencies>
