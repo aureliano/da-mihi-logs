@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.github.aureliano.almamater.annotation.validation.NotNull;
+
 public class ConstraintViolationTest {
 
 	@Test
@@ -22,13 +24,13 @@ public class ConstraintViolationTest {
 		c2.withMessage("A test message.");
 		assertTrue(c1.equals(c2));
 		
-		/*c1.withValidator(NotNull.class);
+		c1.withValidator(NotNull.class);
 		assertFalse(c1.equals(c2));
 		
 		c2.withValidator(Override.class);
 		assertFalse(c1.equals(c2));
 		
 		c2.withValidator(NotNull.class);
-		assertTrue(c1.equals(c2));*/
+		assertTrue(c1.equals(c2));
 	}
 }
