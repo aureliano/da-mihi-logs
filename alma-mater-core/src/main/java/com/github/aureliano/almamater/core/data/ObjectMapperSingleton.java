@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.data;
+package com.github.aureliano.almamater.core.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

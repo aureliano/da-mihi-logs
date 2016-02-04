@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.config;
+package com.github.aureliano.almamater.core.config;
 
 import java.util.Properties;
 

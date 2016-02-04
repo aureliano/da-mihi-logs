@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.helper;
+package com.github.aureliano.almamater.core.helper;
 
 import junit.framework.Assert;
 

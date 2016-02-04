@@ -1,6 +1,6 @@
-package com.github.aureliano.damihilogs.executor;
+package com.github.aureliano.almamater.core.agent;
 
-import com.github.aureliano.damihilogs.config.IConfiguration;
+import com.github.aureliano.almamater.core.config.IConfiguration;
 
 public interface IAgent {
 

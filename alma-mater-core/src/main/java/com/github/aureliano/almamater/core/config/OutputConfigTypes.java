@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.config.output;
+package com.github.aureliano.almamater.core.config;
 
 public enum OutputConfigTypes {
 
