@@ -28,6 +28,7 @@
 
 	<modules>
 		<module>alma-mater-core</module>
+		<module>alma-mater-annotation</module>
 	</modules>
 	
 	<dependencyManagement>
