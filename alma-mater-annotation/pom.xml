@@ -17,6 +17,13 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>alma-mater-core</artifactId>
+			<version>0.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+	
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
