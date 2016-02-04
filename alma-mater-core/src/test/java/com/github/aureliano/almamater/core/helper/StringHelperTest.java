@@ -2,6 +2,10 @@ package com.github.aureliano.almamater.core.helper;
 
 import junit.framework.Assert;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 public class StringHelperTest {
@@ -15,40 +19,40 @@ public class StringHelperTest {
 	
 	@Test
 	public void testToString() {
-		Assert.assertEquals("null", StringHelper.toString(null));
-		Assert.assertEquals("text", StringHelper.toString("text"));
-		Assert.assertEquals("23", StringHelper.toString(23));
+		assertEquals("null", StringHelper.toString(null));
+		assertEquals("text", StringHelper.toString("text"));
+		assertEquals("23", StringHelper.toString(23));
 	}
 	
 	@Test
 	public void testParse() {
-		Assert.assertEquals("30", StringHelper.parse(30));
-		Assert.assertEquals("", StringHelper.parse(""));
-		Assert.assertNull(StringHelper.parse(null));
+		assertEquals("30", StringHelper.parse(30));
+		assertEquals("", StringHelper.parse(""));
+		assertNull(StringHelper.parse(null));
 	}
 	
 	@Test
 	public void testCapitalize() {
-		Assert.assertEquals("House", StringHelper.capitalize("house"));
-		Assert.assertEquals("House", StringHelper.capitalize("HOUSE"));
-		Assert.assertEquals("House", StringHelper.capitalize("HoUSE"));
-		Assert.assertEquals("House of torments", StringHelper.capitalize("house OF tormentS"));
+		assertEquals("House", StringHelper.capitalize("house"));
+		assertEquals("House", StringHelper.capitalize("HOUSE"));
+		assertEquals("House", StringHelper.capitalize("HoUSE"));
+		assertEquals("House of torments", StringHelper.capitalize("house OF tormentS"));
 	}
 	
 	@Test
 	public void testJoin() {
-		Assert.assertEquals("12345", StringHelper.join(new Object[] {1, 2, 3, 4, 5}));
-		Assert.assertEquals("1, 2, 3, 4, 5", StringHelper.join(new Object[] {1, 2, 3, 4, 5}, ", "));
+		assertEquals("12345", StringHelper.join(new Object[] {1, 2, 3, 4, 5}));
+		assertEquals("1, 2, 3, 4, 5", StringHelper.join(new Object[] {1, 2, 3, 4, 5}, ", "));
 	}
 	
 	@Test
 	public void testIsNumeric() {
-		Assert.assertTrue(StringHelper.isNumeric("1"));
-		Assert.assertTrue(StringHelper.isNumeric("45"));
-		Assert.assertTrue(StringHelper.isNumeric("-54"));
-		Assert.assertTrue(StringHelper.isNumeric("+54"));
-		Assert.assertTrue(StringHelper.isNumeric("25.97854"));
-		Assert.assertTrue(StringHelper.isNumeric("-3365.8787"));
-		Assert.assertTrue(StringHelper.isNumeric("+3365.8787"));
+		assertTrue(StringHelper.isNumeric("1"));
+		assertTrue(StringHelper.isNumeric("45"));
+		assertTrue(StringHelper.isNumeric("-54"));
+		assertTrue(StringHelper.isNumeric("+54"));
+		assertTrue(StringHelper.isNumeric("25.97854"));
+		assertTrue(StringHelper.isNumeric("-3365.8787"));
+		assertTrue(StringHelper.isNumeric("+3365.8787"));
 	}
 }
