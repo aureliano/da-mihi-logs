@@ -15,12 +15,20 @@ import com.github.aureliano.evtbridge.annotation.validation.Pattern;
 import com.github.aureliano.evtbridge.annotation.validation.Size;
 import com.github.aureliano.evtbridge.core.config.IConfigInput;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.exception.IExceptionHandler;
+import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
+import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
+import com.github.aureliano.evtbridge.core.matcher.IMatcher;
 
 public class CustomInputConfig implements IConfigInput {
 
 	private String id;
 	private Boolean useLastExecutionRecords;
 	private Properties metadata;
+	private List<IExceptionHandler> exceptionHandlers;
+	private IMatcher matcher;
+	private List<DataReadingListener> dataReadingListeners;
+	private List<ExecutionListener> inputExecutionListeners;
 	
 	private Integer myNewProperty;
 	private Boolean ok;
@@ -32,7 +40,10 @@ public class CustomInputConfig implements IConfigInput {
 	public CustomInputConfig() {
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
+		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
 		
+		this.dataReadingListeners = new ArrayList<DataReadingListener>();
+		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
 		this.data = new ArrayList<>();
 	}
 	
@@ -141,5 +152,61 @@ public class CustomInputConfig implements IConfigInput {
 	@Override
 	public String id() {
 		return "CUSTOM_INPUT_CONFIG";
+	}
+
+	@Override
+	public IMatcher getMatcher() {
+		return this.matcher;
+	}
+
+	@Override
+	public CustomInputConfig withMatcher(IMatcher matcher) {
+		this.matcher = matcher;
+		return this;
+	}
+
+	@Override
+	public IConfigInput addExceptionHandler(IExceptionHandler handler) {
+		this.exceptionHandlers.add(handler);
+		return this;
+	}
+
+	@Override
+	public List<IExceptionHandler> getExceptionHandlers() {
+		return this.exceptionHandlers;
+	}
+
+	@Override
+	public List<DataReadingListener> getDataReadingListeners() {
+		return this.dataReadingListeners;
+	}
+
+	@Override
+	public IConfigInput withDataReadingListeners(List<DataReadingListener> dataReadingListeners) {
+		this.dataReadingListeners = dataReadingListeners;
+		return this;
+	}
+
+	@Override
+	public IConfigInput addDataReadingListener(DataReadingListener listener) {
+		this.dataReadingListeners.add(listener);
+		return this;
+	}
+
+	@Override
+	public List<ExecutionListener> getExecutionListeners() {
+		return this.inputExecutionListeners;
+	}
+
+	@Override
+	public IConfigInput withExecutionListeners(List<ExecutionListener> inputExecutionListeners) {
+		this.inputExecutionListeners = inputExecutionListeners;
+		return this;
+	}
+
+	@Override
+	public IConfigInput addExecutionListener(ExecutionListener listener) {
+		this.inputExecutionListeners.add(listener);
+		return this;
 	}
 }
