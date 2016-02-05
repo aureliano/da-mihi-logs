@@ -14,5 +14,9 @@
 	<artifactId>evt-bridge-output</artifactId>
 	<packaging>pom</packaging>
 	<name>evt-bridge-output</name>
+
+	<modules>
+		<module>standard-output</module>
+	</modules>
 	
 </project>
