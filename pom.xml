@@ -30,6 +30,7 @@
 		<module>evt-bridge-core</module>
 		<module>evt-bridge-annotation</module>
 		<module>evt-bridge-input</module>
+		<module>evt-bridge-output</module>
 	</modules>
 	
 	<dependencyManagement>
