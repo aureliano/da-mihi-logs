@@ -7,13 +7,13 @@
 
 	<parent>
 		<groupId>com.github.aureliano</groupId>
-		<artifactId>alma-mater</artifactId>
+		<artifactId>evt-bridge</artifactId>
 		<version>0.1.0</version>
 	</parent>
 
-	<artifactId>alma-mater-core</artifactId>
+	<artifactId>evt-bridge-core</artifactId>
 	<packaging>jar</packaging>
-	<name>alma-mater-core</name>
+	<name>evt-bridge-core</name>
 	
 	<dependencies>
 		<dependency>
