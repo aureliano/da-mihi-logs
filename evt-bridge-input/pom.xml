@@ -14,4 +14,9 @@
 	<artifactId>evt-bridge-input</artifactId>
 	<packaging>pom</packaging>
 	<name>evt-bridge-input</name>
+
+	<modules>
+		<module>standard-input</module>
+	</modules>
+	
 </project>
