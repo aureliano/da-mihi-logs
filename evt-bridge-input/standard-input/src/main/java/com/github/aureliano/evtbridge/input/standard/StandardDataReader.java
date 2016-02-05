@@ -11,7 +11,6 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import com.github.aureliano.evtbridge.core.agent.AbstractDataReader;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public class StandardDataReader extends AbstractDataReader {
 
@@ -33,7 +32,7 @@ public class StandardDataReader extends AbstractDataReader {
 		try {
 			return this.bufferedReader.readLine();
 		} catch (IOException ex) {
-			throw new EventBridgeException(ex);
+			throw new StandardInputException(ex);
 		}
 	}
 
@@ -48,7 +47,7 @@ public class StandardDataReader extends AbstractDataReader {
 			this.bufferedReader.close();
 			this.bufferedReader = null;
 		} catch (IOException ex) {
-			throw new EventBridgeException(ex);
+			throw new StandardInputException(ex);
 		}
 	}
 
@@ -74,7 +73,7 @@ public class StandardDataReader extends AbstractDataReader {
 		try {
 			this.bufferedReader = new BufferedReader(new InputStreamReader(System.in, configuration.getEncoding()));
 		} catch (UnsupportedEncodingException ex) {
-			throw new EventBridgeException(ex);
+			throw new StandardInputException(ex);
 		}
 	}
 }
