@@ -1,8 +1,10 @@
-package com.github.aureliano.almamater.core.profile;
+package com.github.aureliano.evtbridge.core.profile;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.github.aureliano.evtbridge.core.profile.ProfileConstants;
 
 public class ProfileConstantsTest {
 

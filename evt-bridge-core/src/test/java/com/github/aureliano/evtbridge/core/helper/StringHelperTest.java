@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.helper;
+package com.github.aureliano.evtbridge.core.helper;
 
 import junit.framework.Assert;
 
@@ -7,6 +7,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.github.aureliano.evtbridge.core.helper.StringHelper;
 
 public class StringHelperTest {
 

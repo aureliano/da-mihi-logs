@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.helper;
+package com.github.aureliano.evtbridge.core.helper;
 
 import static org.reflections.ReflectionUtils.getAllFields;
 import static org.reflections.ReflectionUtils.withName;
@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.reflections.ReflectionUtils;
 
-import com.github.aureliano.almamater.core.exception.AlmaMaterException;
+import com.github.aureliano.evtbridge.core.exception.AlmaMaterException;
 
 public class ReflectionHelper {
 

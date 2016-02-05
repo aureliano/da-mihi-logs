@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.helper;
+package com.github.aureliano.evtbridge.core.helper;
 
 import java.util.List;
 

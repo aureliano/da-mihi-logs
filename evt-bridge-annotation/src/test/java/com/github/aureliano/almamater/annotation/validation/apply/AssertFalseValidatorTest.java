@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.github.aureliano.almamater.annotation.model.CustomInputConfig;
 import com.github.aureliano.almamater.annotation.validation.AssertFalse;
-import com.github.aureliano.almamater.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class AssertFalseValidatorTest {
 

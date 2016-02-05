@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.profile;
+package com.github.aureliano.evtbridge.core.profile;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

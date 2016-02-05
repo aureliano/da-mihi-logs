@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.exception;
+package com.github.aureliano.evtbridge.core.exception;
 
 public class AlmaMaterException extends RuntimeException {
 

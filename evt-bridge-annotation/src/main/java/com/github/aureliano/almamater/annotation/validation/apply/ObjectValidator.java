@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.almamater.annotation.validation.Constraint;
-import com.github.aureliano.almamater.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
 
 public final class ObjectValidator implements IValidator {
 

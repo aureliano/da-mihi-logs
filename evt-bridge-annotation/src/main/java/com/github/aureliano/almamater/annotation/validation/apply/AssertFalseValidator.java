@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.almamater.annotation.validation.AssertFalse;
-import com.github.aureliano.almamater.core.helper.ReflectionHelper;
-import com.github.aureliano.almamater.core.helper.StringHelper;
+import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.core.helper.StringHelper;
 
 public class AssertFalseValidator implements IValidator {
 

@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.config;
+package com.github.aureliano.evtbridge.core.config;
 
 public interface IConfigInput extends IConfiguration {
 

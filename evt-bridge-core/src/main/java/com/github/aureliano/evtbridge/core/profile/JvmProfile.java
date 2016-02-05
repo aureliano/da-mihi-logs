@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.profile;
+package com.github.aureliano.evtbridge.core.profile;
 
 import java.util.Date;
 import java.util.Properties;

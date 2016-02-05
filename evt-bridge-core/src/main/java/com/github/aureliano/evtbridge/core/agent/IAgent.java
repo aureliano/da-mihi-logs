@@ -1,6 +1,6 @@
-package com.github.aureliano.almamater.core.agent;
+package com.github.aureliano.evtbridge.core.agent;
 
-import com.github.aureliano.almamater.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public interface IAgent {
 

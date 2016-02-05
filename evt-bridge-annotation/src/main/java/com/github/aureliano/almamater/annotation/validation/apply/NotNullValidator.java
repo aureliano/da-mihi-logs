@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.almamater.annotation.validation.NotNull;
-import com.github.aureliano.almamater.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
 
 public class NotNullValidator implements IValidator {
 

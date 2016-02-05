@@ -13,8 +13,8 @@ import com.github.aureliano.almamater.annotation.validation.NotEmpty;
 import com.github.aureliano.almamater.annotation.validation.NotNull;
 import com.github.aureliano.almamater.annotation.validation.Pattern;
 import com.github.aureliano.almamater.annotation.validation.Size;
-import com.github.aureliano.almamater.core.config.IConfigInput;
-import com.github.aureliano.almamater.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfigInput;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class CustomInputConfig implements IConfigInput {
 

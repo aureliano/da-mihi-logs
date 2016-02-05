@@ -1,4 +1,4 @@
-package com.github.aureliano.almamater.core.data;
+package com.github.aureliano.evtbridge.core.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
