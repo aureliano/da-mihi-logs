@@ -6,10 +6,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.aureliano</groupId>
-	<artifactId>alma-mater</artifactId>
+	<artifactId>evt-bridge</artifactId>
 	<packaging>pom</packaging>
 	<version>0.1.0</version>
-	<name>alma-mater</name>
+	<name>evt-bridge</name>
 	
 	<build>
 		<plugins>
@@ -27,8 +27,8 @@
 	</build>
 
 	<modules>
-		<module>alma-mater-core</module>
-		<module>alma-mater-annotation</module>
+		<module>evt-bridge-core</module>
+		<module>evt-bridge-annotation</module>
 	</modules>
 	
 	<dependencyManagement>
