@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.reflections.ReflectionUtils;
 
-import com.github.aureliano.evtbridge.core.exception.AlmaMaterException;
+import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public class ReflectionHelper {
 
@@ -19,7 +19,7 @@ public class ReflectionHelper {
 	public static Field getField(Class<?> clazz, String fieldName) {
         Set<Field> fields = getAllFields(clazz, withName(fieldName));
         if (fields.size() != 1) {
-        	throw new AlmaMaterException(String.format("Unable to find field %s for class %s", fieldName, clazz.getSimpleName()));
+        	throw new EventBridgeException(String.format("Unable to find field %s for class %s", fieldName, clazz.getSimpleName()));
         }
         Field field = fields.iterator().next();
         field.setAccessible(true);
@@ -36,7 +36,7 @@ public class ReflectionHelper {
             field.setAccessible(true);
             return field.get(object);
         } catch (IllegalAccessException ex) {
-            throw new AlmaMaterException(ex);
+            throw new EventBridgeException(ex);
         }
     }
 
@@ -62,7 +62,7 @@ public class ReflectionHelper {
     		Method method = clazz.getMethod(methodName, parametersType);
     		return method.invoke(object, methodParameters);
     	} catch (Exception ex) {
-    		throw new AlmaMaterException(ex);
+    		throw new EventBridgeException(ex);
     	}
     }
     
@@ -70,7 +70,7 @@ public class ReflectionHelper {
     	try {
     		return clazz.newInstance();
     	} catch (Exception ex) {
-    		throw new AlmaMaterException(ex);
+    		throw new EventBridgeException(ex);
     	}
     }
     

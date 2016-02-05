@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.Decimal;
-import com.github.aureliano.evtbridge.core.exception.AlmaMaterException;
+import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
 
 public class DecimalValidator implements IValidator {
@@ -31,7 +31,7 @@ public class DecimalValidator implements IValidator {
 		double maxSize = decimalAnnotation.max();
 		
 		if (!((returnedValue instanceof Double) || (returnedValue instanceof Float))) {
-			throw new AlmaMaterException("Decimal validator supports only Double and Float values but got " +
+			throw new EventBridgeException("Decimal validator supports only Double and Float values but got " +
 					returnedValue.getClass().getName());
 		}
 		

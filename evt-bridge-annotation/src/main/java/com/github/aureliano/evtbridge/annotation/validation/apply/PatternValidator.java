@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.Pattern;
-import com.github.aureliano.evtbridge.core.exception.AlmaMaterException;
+import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
 
 public class PatternValidator implements IValidator {
@@ -25,7 +25,7 @@ public class PatternValidator implements IValidator {
 		}
 		
 		if (!(returnedValue instanceof String)) {
-			throw new AlmaMaterException(Pattern.class.getName() + " can be applyed only for " +
+			throw new EventBridgeException(Pattern.class.getName() + " can be applyed only for " +
 					String.class.getName() + " types.");
 		}
 		
