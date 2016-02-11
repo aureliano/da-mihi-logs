@@ -2,8 +2,13 @@ package com.github.aureliano.evtbridge.core.helper;
 
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
+
+import com.github.aureliano.evtbridge.core.data.ObjectMapperSingleton;
+import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public final class DataHelper {
 
@@ -35,5 +40,19 @@ public final class DataHelper {
 		}
 		
 		return properties;
+	}
+	
+	public static String propertiesToJson(Properties properties) {
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		
+		for (Object key : properties.keySet()) {
+			map.put(key.toString(), properties.get(key));
+		}
+		
+		try {
+			return ObjectMapperSingleton.instance().getObjectMapper().writeValueAsString(map);
+		} catch (Exception ex) {
+			throw new EventBridgeException(ex);
+		}
 	}
 }

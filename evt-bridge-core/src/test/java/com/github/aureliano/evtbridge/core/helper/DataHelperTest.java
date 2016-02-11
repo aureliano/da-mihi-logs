@@ -2,6 +2,7 @@ package com.github.aureliano.evtbridge.core.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Properties;
 
@@ -35,5 +36,20 @@ public class DataHelperTest {
 		for (byte i = 0; i < data.length; i++) {
 			assertEquals(names[i], data[i]);
 		}
+	}
+	
+	@Test
+	public void testPropertiesToJson() {
+		Properties p = new Properties();
+		
+		p.setProperty("Monteiro Lobato", "Brazil");
+		p.setProperty("Liev Tolstói", "Russia");
+		p.setProperty("Jules Verne", "France");
+		
+		String json = DataHelper.propertiesToJson(p);
+		
+		assertTrue(json.contains("\"Monteiro Lobato\":\"Brazil\""));
+		assertTrue(json.contains("\"Liev Tolstói\":\"Russia\""));
+		assertTrue(json.contains("\"Jules Verne\":\"France\""));
 	}
 }
