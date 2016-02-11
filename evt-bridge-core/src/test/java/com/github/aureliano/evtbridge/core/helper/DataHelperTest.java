@@ -19,4 +19,21 @@ public class DataHelperTest {
 		assertNotSame(p1, p2);
 		assertEquals(p1, p2);
 	}
+	
+	@Test
+	public void testSortProperties() {
+		Properties p = new Properties();
+		String[] names = new String[] {"Albert Camus", "Fiódor Dostoiévski", "Machado de Assis"};
+		
+		p.setProperty("Fiódor Dostoiévski", "Russia");
+		p.setProperty("Machado de Assis", "Brazil");
+		p.setProperty("Albert Camus", "France");
+		
+		p = DataHelper.sortProperties(p);
+		
+		Object[] data = p.keySet().toArray();
+		for (byte i = 0; i < data.length; i++) {
+			assertEquals(names[i], data[i]);
+		}
+	}
 }
