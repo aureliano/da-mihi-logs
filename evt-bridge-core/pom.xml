@@ -17,6 +17,11 @@
 	
 	<dependencies>
 		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>evt-bridge-annotation</artifactId>
+		</dependency>
+	
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
 		</dependency>
