@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.annotation.model;
+package com.github.aureliano.evtbridge.core.model;
 
 import java.util.ArrayList;
 import java.util.List;
