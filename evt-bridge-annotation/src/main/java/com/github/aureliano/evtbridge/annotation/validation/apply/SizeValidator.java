@@ -1,20 +1,21 @@
-package com.github.aureliano.evtbridge.core.validator;
+package com.github.aureliano.evtbridge.annotation.validation.apply;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.aureliano.evtbridge.annotation.validation.Decimal;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.annotation.validation.Size;
 import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.core.helper.StringHelper;
 
-public class DecimalValidator implements IValidator {
+public class SizeValidator implements IValidator {
 
-	public DecimalValidator() {
+	public SizeValidator() {
 		super();
 	}
-
+	
 	@Override
 	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
 		String property = ReflectionHelper.getSimpleAccessMethodName(method);
@@ -25,21 +26,24 @@ public class DecimalValidator implements IValidator {
 		}
 		
 		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
-		Decimal decimalAnnotation = (Decimal) annotation;
-		String message = decimalAnnotation.message();
-		double minSize = decimalAnnotation.min();
-		double maxSize = decimalAnnotation.max();
+		Size sizeAnnotation = (Size) annotation;
+		String message = sizeAnnotation.message();
+		int minSize = sizeAnnotation.min();
+		int maxSize = sizeAnnotation.max();
+		int objectSize;
 		
-		if (!((returnedValue instanceof Double) || (returnedValue instanceof Float))) {
-			throw new EventBridgeException("Decimal validator supports only Double and Float values but got " +
-					returnedValue.getClass().getName());
+		if (Collection.class.isAssignableFrom(returnedValue.getClass())) {
+			objectSize = ((Collection<?>) returnedValue).size();
+		} else if (!(returnedValue instanceof String) && StringHelper.isNumeric(returnedValue.toString())) {
+			Double d = Double.parseDouble(returnedValue.toString());
+			objectSize = d.intValue();
+		} else {
+			objectSize = returnedValue.toString().length();
 		}
-		
-		Double objectSize = Double.parseDouble(returnedValue.toString());
 		
 		if ((minSize > objectSize) || (maxSize < objectSize)) {
 			violations.add(new ConstraintViolation()
-				.withValidator(Decimal.class)
+				.withValidator(Size.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", property)
 					.replaceFirst("#\\{1\\}", String.valueOf(minSize))

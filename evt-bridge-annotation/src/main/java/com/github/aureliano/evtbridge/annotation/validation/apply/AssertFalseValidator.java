@@ -1,13 +1,12 @@
-package com.github.aureliano.evtbridge.core.validator;
+package com.github.aureliano.evtbridge.annotation.validation.apply;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.github.aureliano.evtbridge.annotation.helper.ValidationHelper;
 import com.github.aureliano.evtbridge.annotation.validation.AssertFalse;
-import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
-import com.github.aureliano.evtbridge.core.helper.StringHelper;
 
 public class AssertFalseValidator implements IValidator {
 
@@ -17,8 +16,8 @@ public class AssertFalseValidator implements IValidator {
 	
 	@Override
 	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
-		String property = ReflectionHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
+		String property = ValidationHelper.getSimpleAccessMethodName(method);
+		Object returnedValue = ValidationHelper.callMethod(object, method.getName(), null, null);
 		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		
 		String message = ((AssertFalse) annotation).message();
@@ -28,7 +27,7 @@ public class AssertFalseValidator implements IValidator {
 				.withValidator(AssertFalse.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", property)
-					.replaceFirst("#\\{1\\}", StringHelper.toString(returnedValue))));
+					.replaceFirst("#\\{1\\}", ValidationHelper.objectToString(returnedValue))));
 		}
 		
 		return violations;

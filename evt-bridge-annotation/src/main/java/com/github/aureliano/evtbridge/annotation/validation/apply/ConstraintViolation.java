@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.core.validator;
+package com.github.aureliano.evtbridge.annotation.validation.apply;
 
 import java.lang.annotation.Annotation;
 
