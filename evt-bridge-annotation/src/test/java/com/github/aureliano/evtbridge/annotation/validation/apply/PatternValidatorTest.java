@@ -7,11 +7,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.Pattern;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.annotation.validation.apply.PatternValidator;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class PatternValidatorTest {
 
@@ -23,7 +20,7 @@ public class PatternValidatorTest {
 	
 	@Test
 	public void testValidateWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("no");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("no");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Pattern.class);
 		 
@@ -36,14 +33,14 @@ public class PatternValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		CustomInputConfig configuration = new CustomInputConfig().withConfigurationId("_ok");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("_ok");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Pattern.class);
 		 
 		Set<ConstraintViolation> res = this.validator.validate(configuration, method, annotation);
 		Assert.assertTrue(res.isEmpty());
 		
-		configuration = new CustomInputConfig().withConfigurationId("yeah_");
+		configuration = new AnnotationModel().withConfigurationId("yeah_");
 		method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		annotation = method.getAnnotation(Pattern.class);
 		

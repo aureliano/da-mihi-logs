@@ -7,11 +7,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.Decimal;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.annotation.validation.apply.DecimalValidator;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class DecimalValidatorTest {
 
@@ -23,7 +20,7 @@ public class DecimalValidatorTest {
 	
 	@Test
 	public void testValidateWithMinError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withMyDoubleField(4.312145454);
+		AnnotationModel configuration = new AnnotationModel().withMyDoubleField(4.312145454);
 		Method method = configuration.getClass().getMethod("getMyDoubleField", new Class[] {});
 		Annotation annotation = method.getAnnotation(Decimal.class);
 		 
@@ -36,7 +33,7 @@ public class DecimalValidatorTest {
 	
 	@Test
 	public void testValidateWithMaxError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withMyDoubleField(9.20001);
+		AnnotationModel configuration = new AnnotationModel().withMyDoubleField(9.20001);
 		Method method = configuration.getClass().getMethod("getMyDoubleField", new Class[] {});
 		Annotation annotation = method.getAnnotation(Decimal.class);
 		 
@@ -49,7 +46,7 @@ public class DecimalValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		CustomInputConfig configuration = new CustomInputConfig().withMyDoubleField(4.50000001);
+		AnnotationModel configuration = new AnnotationModel().withMyDoubleField(4.50000001);
 		Method method = configuration.getClass().getMethod("getMyDoubleField", new Class[] {});
 		Annotation annotation = method.getAnnotation(Decimal.class);
 		 

@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.Pattern;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
-import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
 
 public class PatternValidator implements IValidator {
 

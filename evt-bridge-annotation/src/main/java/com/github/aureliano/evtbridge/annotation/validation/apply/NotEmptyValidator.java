@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
-import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
-import com.github.aureliano.evtbridge.core.helper.StringHelper;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.common.helper.StringHelper;
 
 public class NotEmptyValidator implements IValidator {
 

@@ -7,11 +7,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.NotNull;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.annotation.validation.apply.NotNullValidator;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class NotNullValidatorTest {
 
@@ -23,7 +20,7 @@ public class NotNullValidatorTest {
 	
 	@Test
 	public void testValidateWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId(null);
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId(null);
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(NotNull.class);
 		 
@@ -36,7 +33,7 @@ public class NotNullValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("custom-id");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("custom-id");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(NotNull.class);
 

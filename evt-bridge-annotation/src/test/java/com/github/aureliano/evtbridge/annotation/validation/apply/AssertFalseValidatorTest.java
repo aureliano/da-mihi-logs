@@ -7,11 +7,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.AssertFalse;
-import com.github.aureliano.evtbridge.annotation.validation.apply.AssertFalseValidator;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class AssertFalseValidatorTest {
 
@@ -23,7 +20,7 @@ public class AssertFalseValidatorTest {
 	
 	@Test
 	public void testValidateWithNullError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withNotOk(null);
+		AnnotationModel configuration = new AnnotationModel().withNotOk(null);
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 
@@ -36,7 +33,7 @@ public class AssertFalseValidatorTest {
 	
 	@Test
 	public void testValidateWithFalseError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withNotOk(true);
+		AnnotationModel configuration = new AnnotationModel().withNotOk(true);
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 
@@ -49,7 +46,7 @@ public class AssertFalseValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withNotOk(false);
+		AnnotationModel configuration = new AnnotationModel().withNotOk(false);
 		Method method = configuration.getClass().getMethod("isNotOk", new Class[] {});
 		Annotation annotation = method.getAnnotation(AssertFalse.class);
 		 

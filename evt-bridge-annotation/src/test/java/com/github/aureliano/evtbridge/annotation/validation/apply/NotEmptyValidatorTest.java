@@ -7,11 +7,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.annotation.validation.apply.NotEmptyValidator;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class NotEmptyValidatorTest {
 
@@ -23,7 +20,7 @@ public class NotEmptyValidatorTest {
 	
 	@Test
 	public void testValidateNullWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId(null);
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId(null);
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(NotEmpty.class);
 		 
@@ -36,7 +33,7 @@ public class NotEmptyValidatorTest {
 	
 	@Test
 	public void testValidateEmptyWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(NotEmpty.class);
 		 
@@ -49,7 +46,7 @@ public class NotEmptyValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("custom-id");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("custom-id");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(NotEmpty.class);
 		

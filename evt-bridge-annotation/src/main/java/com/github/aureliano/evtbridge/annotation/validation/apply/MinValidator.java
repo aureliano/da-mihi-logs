@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.Min;
-import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
-import com.github.aureliano.evtbridge.core.helper.StringHelper;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.common.helper.StringHelper;
 
 public class MinValidator implements IValidator {
 

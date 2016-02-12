@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.aureliano.evtbridge.annotation.exception.EventBridgeAnnotationException;
-import com.github.aureliano.evtbridge.annotation.helper.ValidationHelper;
 import com.github.aureliano.evtbridge.annotation.validation.Decimal;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
 
 public class DecimalValidator implements IValidator {
 
@@ -17,8 +17,8 @@ public class DecimalValidator implements IValidator {
 
 	@Override
 	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
-		String property = ValidationHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ValidationHelper.callMethod(object, method.getName(), null, null);
+		String property = ReflectionHelper.getSimpleAccessMethodName(method);
+		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
 		
 		if (returnedValue == null) {
 			return null;
@@ -31,7 +31,7 @@ public class DecimalValidator implements IValidator {
 		double maxSize = decimalAnnotation.max();
 		
 		if (!((returnedValue instanceof Double) || (returnedValue instanceof Float))) {
-			throw new EventBridgeAnnotationException("Decimal validator supports only Double and Float values but got " +
+			throw new EventBridgeException("Decimal validator supports only Double and Float values but got " +
 					returnedValue.getClass().getName());
 		}
 		

@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Set;
 
-import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
 
 public class ValidValidator implements IValidator {
 

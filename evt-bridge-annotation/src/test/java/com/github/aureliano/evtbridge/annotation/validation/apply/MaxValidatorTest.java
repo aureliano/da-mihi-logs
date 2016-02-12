@@ -8,11 +8,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.github.aureliano.evtbridge.annotation.model.CustomInputConfig;
+import com.github.aureliano.evtbridge.annotation.model.AnnotationModel;
 import com.github.aureliano.evtbridge.annotation.validation.Max;
-import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
-import com.github.aureliano.evtbridge.annotation.validation.apply.MaxValidator;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
 public class MaxValidatorTest {
 
@@ -24,7 +21,7 @@ public class MaxValidatorTest {
 	
 	@Test
 	public void testValidateStringWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("123456");
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("123456");
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Max.class);
 		 
@@ -37,7 +34,7 @@ public class MaxValidatorTest {
 	
 	@Test
 	public void testValidateCollectionWithError() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig()
+		AnnotationModel configuration = new AnnotationModel()
 			.withData(Arrays.asList(new Object(), new Object()));
 		Method method = configuration.getClass().getMethod("getData", new Class[] {});
 		Annotation annotation = method.getAnnotation(Max.class);
@@ -51,7 +48,7 @@ public class MaxValidatorTest {
 	
 	@Test
 	public void testValidate() throws SecurityException, NoSuchMethodException {
-		IConfiguration configuration = new CustomInputConfig().withConfigurationId("12345")
+		AnnotationModel configuration = new AnnotationModel().withConfigurationId("12345")
 				.withData(Arrays.asList(new Object()));
 		Method method = configuration.getClass().getMethod("getConfigurationId", new Class[] {});
 		Annotation annotation = method.getAnnotation(Max.class);

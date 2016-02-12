@@ -5,8 +5,9 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.github.aureliano.evtbridge.annotation.helper.ValidationHelper;
 import com.github.aureliano.evtbridge.annotation.validation.AssertTrue;
+import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
+import com.github.aureliano.evtbridge.common.helper.StringHelper;
 
 public class AssertTrueValidator implements IValidator {
 
@@ -16,8 +17,8 @@ public class AssertTrueValidator implements IValidator {
 	
 	@Override
 	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
-		String property = ValidationHelper.getSimpleAccessMethodName(method);
-		Object returnedValue = ValidationHelper.callMethod(object, method.getName(), null, null);
+		String property = ReflectionHelper.getSimpleAccessMethodName(method);
+		Object returnedValue = ReflectionHelper.callMethod(object, method.getName(), null, null);
 		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		
 		String message = ((AssertTrue) annotation).message();
@@ -27,7 +28,7 @@ public class AssertTrueValidator implements IValidator {
 				.withValidator(AssertTrue.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", property)
-					.replaceFirst("#\\{1\\}", ValidationHelper.objectToString(returnedValue))));
+					.replaceFirst("#\\{1\\}", StringHelper.toString(returnedValue))));
 		}
 		
 		return violations;
