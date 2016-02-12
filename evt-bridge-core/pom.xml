@@ -41,22 +41,6 @@
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
 			
-			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.reflections</groupId>
-				<artifactId>reflections</artifactId>
-				<exclusions>
-					<exclusion>
-						<groupId>com.google.guava</groupId>
-						<artifactId>guava</artifactId>  <!-- exclude old version of guava -->
-					</exclusion>
-				</exclusions>
-			</dependency>
-			
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
