@@ -36,11 +36,6 @@ public class CollectEventsCommand {
 	}
 	
 	public void execute() {
-		if (this.configuration == null) {
-			this.configuration = new EventCollectorConfiguration();
-			logger.info("Using default event collector configuration.");
-		}
-		
 		this.prepareExecution();
 		this.executeCollectors();
 	}
