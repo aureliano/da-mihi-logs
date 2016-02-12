@@ -11,9 +11,20 @@ import com.github.aureliano.evtbridge.core.formatter.IOutputFormatter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataWritingListener;
 import com.github.aureliano.evtbridge.core.parser.IParser;
+import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
+import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
 public class StandardOutputConfig implements IConfigOutput {
 
+	static {
+		ServiceRegistration registration = new ServiceRegistration()
+			.withId(OutputConfigTypes.STANDARD_OUTPUT.name())
+			.withAgent(StandardDataWriter.class)
+			.withConfiguration(StandardOutputConfig.class);
+		
+		ApiServiceRegistrator.instance().registrate(registration);
+	}
+	
 	private IParser<?> parser;
 	private IEventFielter filter;
 	private Properties metadata;
