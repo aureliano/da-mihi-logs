@@ -27,6 +27,7 @@
 	</build>
 
 	<modules>
+		<module>evt-bridge-common</module>
 		<module>evt-bridge-core</module>
 		<module>evt-bridge-annotation</module>
 		<module>evt-bridge-input</module>
