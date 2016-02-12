@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.agent.IAgent;
 import com.github.aureliano.evtbridge.core.command.CollectEventsCommand;
@@ -32,6 +33,11 @@ private static final Logger logger = Logger.getLogger(EventsCollector.class);
 	}
 	
 	public void execute() {
+		if (this.configuration == null) {
+			throw new EventBridgeException("The configuration model " +
+					EventCollectorConfiguration.class.getName() + " must be provided.");
+		}
+		
 		this._execute();
 	}
 	
