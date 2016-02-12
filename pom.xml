@@ -39,6 +39,12 @@
 		<dependencies>
 			<dependency>
 				<groupId>com.github.aureliano</groupId>
+				<artifactId>evt-bridge-common</artifactId>
+				<version>0.1.0</version>
+			</dependency>
+		
+			<dependency>
+				<groupId>com.github.aureliano</groupId>
 				<artifactId>evt-bridge-annotation</artifactId>
 				<version>0.1.0</version>
 			</dependency>

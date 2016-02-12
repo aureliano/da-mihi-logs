@@ -18,6 +18,11 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.github.aureliano</groupId>
+			<artifactId>evt-bridge-common</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
 			<artifactId>evt-bridge-annotation</artifactId>
 		</dependency>
 	
