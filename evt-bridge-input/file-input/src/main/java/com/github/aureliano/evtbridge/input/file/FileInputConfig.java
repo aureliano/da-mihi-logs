@@ -44,10 +44,10 @@ public class FileInputConfig implements IConfigInput {
 		this.encoding = "UTF-8";
 		this.useLastExecutionRecords = false;
 		this.metadata = new Properties();
-		this.exceptionHandlers = new ArrayList<IExceptionHandler>();
+		this.exceptionHandlers = new ArrayList<>();
 		
-		this.dataReadingListeners = new ArrayList<DataReadingListener>();
-		this.inputExecutionListeners = new ArrayList<ExecutionListener>();
+		this.dataReadingListeners = new ArrayList<>();
+		this.inputExecutionListeners = new ArrayList<>();
 	}
 	
 	@Override
