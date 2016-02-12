@@ -17,10 +17,10 @@ public class SingleLineMatcher implements IMatcher {
 	
 	public SingleLineMatcher(String prefixRegex) {
 		this.prefixRegex = prefixRegex;
-		this.suffixRegex = ".+$";
+		this.suffixRegex = ".*$";
 		
 		if (StringHelper.isEmpty(this.prefixRegex)) {
-			this.prefixRegex = "^(.+)";
+			this.prefixRegex = "^(.*)";
 			this.suffixRegex = "$";
 		}
 		
