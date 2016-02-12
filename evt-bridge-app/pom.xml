@@ -82,12 +82,6 @@
 		
 		<dependency>
 			<groupId>com.github.aureliano</groupId>
-			<artifactId>evt-bridge-annotation</artifactId>
-			<version>${event.bridge.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.github.aureliano</groupId>
 			<artifactId>standard-input</artifactId>
 			<version>${event.bridge.version}</version>
 		</dependency>
