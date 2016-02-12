@@ -12,9 +12,20 @@ import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
 import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
 import com.github.aureliano.evtbridge.core.matcher.IMatcher;
+import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
+import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
 public class ExternalCommandInputConfig implements IConfigInput {
 
+	static {
+		ServiceRegistration registration = new ServiceRegistration()
+			.withId(InputConfigTypes.EXTERNAL_COMMAND.name())
+			.withAgent(ExternalCommandDataReader.class)
+			.withConfiguration(ExternalCommandInputConfig.class);
+		
+		ApiServiceRegistrator.instance().registrate(registration);
+	}
+	
 	private String id;
 	private String command;
 	private List<String> parameters;
