@@ -1,6 +1,6 @@
 package com.github.aureliano.evtbridge.input.standard;
 
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
 public class StandardInputException extends EventBridgeException {
 
