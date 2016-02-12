@@ -5,10 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
+import com.github.aureliano.evtbridge.annotation.validation.apply.ObjectValidator;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
-import com.github.aureliano.evtbridge.core.validator.ConstraintViolation;
-import com.github.aureliano.evtbridge.core.validator.ObjectValidator;
 
 public final class ConfigHelper {
 	
