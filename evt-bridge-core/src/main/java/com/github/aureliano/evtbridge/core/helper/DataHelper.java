@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.data.ObjectMapperSingleton;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public final class DataHelper {
 

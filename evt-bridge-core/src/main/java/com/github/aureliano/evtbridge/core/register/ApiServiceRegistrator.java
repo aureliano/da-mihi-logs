@@ -3,10 +3,10 @@ package com.github.aureliano.evtbridge.core.register;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.agent.IAgent;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.helper.ReflectionHelper;
 
 public final class ApiServiceRegistrator {

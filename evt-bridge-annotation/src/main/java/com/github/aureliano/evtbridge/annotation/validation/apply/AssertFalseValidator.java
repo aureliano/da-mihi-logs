@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.helper.ValidationHelper;
 import com.github.aureliano.evtbridge.annotation.validation.AssertFalse;
+import com.github.aureliano.evtbridge.common.helper.StringHelper;
 
 public class AssertFalseValidator implements IValidator {
 
@@ -16,7 +17,7 @@ public class AssertFalseValidator implements IValidator {
 	
 	@Override
 	public Set<ConstraintViolation> validate(Object object, Method method, Annotation annotation) {
-		String property = ValidationHelper.getSimpleAccessMethodName(method);
+		String property = Stringhe.getSimpleAccessMethodName(method);
 		Object returnedValue = ValidationHelper.callMethod(object, method.getName(), null, null);
 		Set<ConstraintViolation> violations = new HashSet<ConstraintViolation>();
 		
@@ -27,7 +28,7 @@ public class AssertFalseValidator implements IValidator {
 				.withValidator(AssertFalse.class)
 				.withMessage(message
 					.replaceFirst("#\\{0\\}", property)
-					.replaceFirst("#\\{1\\}", ValidationHelper.objectToString(returnedValue))));
+					.replaceFirst("#\\{1\\}", StringHelper.toString(returnedValue))));
 		}
 		
 		return violations;

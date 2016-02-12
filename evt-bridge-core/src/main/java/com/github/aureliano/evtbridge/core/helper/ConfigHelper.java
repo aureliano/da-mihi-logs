@@ -7,8 +7,8 @@ import java.util.Set;
 
 import com.github.aureliano.evtbridge.annotation.validation.apply.ConstraintViolation;
 import com.github.aureliano.evtbridge.annotation.validation.apply.ObjectValidator;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public final class ConfigHelper {
 	

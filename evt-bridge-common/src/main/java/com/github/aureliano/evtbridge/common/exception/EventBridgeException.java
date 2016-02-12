@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.core.exception;
+package com.github.aureliano.evtbridge.common.exception;
 
 public class EventBridgeException extends RuntimeException {
 

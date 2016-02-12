@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.reflections.ReflectionUtils;
 
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
 public class ReflectionHelper {
 

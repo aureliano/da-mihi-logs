@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.core.exception.EventBridgeException;
 
 public final class FileHelper {
 	
