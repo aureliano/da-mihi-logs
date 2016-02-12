@@ -4,11 +4,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class DefaultEmptyFilterTest {
+public class EmptyFilterTest {
 
 	@Test
 	public void testAccept() {
-		IEventFielter filter = new DefaultEmptyFilter();
+		IEventFielter filter = new EmptyFilter();
 		
 		assertTrue(filter.accept(null));
 		assertTrue(filter.accept("whatever"));

@@ -1,8 +1,8 @@
 package com.github.aureliano.evtbridge.core.filter;
 
-public class DefaultEmptyFilter implements IEventFielter {
+public class EmptyFilter implements IEventFielter {
 
-	public DefaultEmptyFilter() {
+	public EmptyFilter() {
 		super();
 	}
 
