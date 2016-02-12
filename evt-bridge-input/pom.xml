@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>standard-input</module>
+		<module>file-input</module>
 	</modules>
 	
 </project>
