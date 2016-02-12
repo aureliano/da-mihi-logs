@@ -78,7 +78,7 @@ public class FileDataReader extends AbstractDataReader {
 		ConfigHelper.validateConfiguration(this.fileInputConfiguration);
 	}
 	
-	private void prepareReading() {		
+	private void prepareReading() {
 		while (this.fileInputConfiguration.getStartPosition() > super.lineCounter + 1) {
 			String line = super.readNextLine();
 			if (line == null) {
