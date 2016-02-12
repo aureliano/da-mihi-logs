@@ -11,9 +11,20 @@ import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
 import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
 import com.github.aureliano.evtbridge.core.matcher.IMatcher;
+import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
+import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
 public class StandardInputConfig implements IConfigInput {
 
+	static {
+		ServiceRegistration registration = new ServiceRegistration()
+			.withId(InputConfigTypes.STANDARD_INPUT.name())
+			.withAgent(StandardDataReader.class)
+			.withConfiguration(StandardInputConfig.class);
+		
+		ApiServiceRegistrator.instance().registrate(registration);
+	}
+	
 	private String encoding;
 	private String id;
 	private Boolean useLastExecutionRecords;
