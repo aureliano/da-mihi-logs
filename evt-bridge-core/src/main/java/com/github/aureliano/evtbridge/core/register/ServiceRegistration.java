@@ -31,11 +31,11 @@ public class ServiceRegistration {
 		return this;
 	}
 
-	public Class<? extends IAgent> getExecutor() {
+	public Class<? extends IAgent> getAgent() {
 		return agent;
 	}
 
-	public ServiceRegistration withExecutor(Class<? extends IAgent> executor) {
+	public ServiceRegistration withAgent(Class<? extends IAgent> executor) {
 		this.agent = executor;
 		return this;
 	}

@@ -39,11 +39,11 @@ public final class ApiServiceRegistrator {
 	public IAgent createExecutor(IConfiguration configuration) {
 		ServiceRegistration registration = this.registrations.get(configuration.id());
 		
-		if ((registration == null) || (registration.getExecutor() == null)) {
+		if ((registration == null) || (registration.getAgent() == null)) {
 			throw new EventBridgeException("There isn't an executor (reader/writer) registered with ID " + configuration.id());
 		}
 		
-		IAgent executor = (IAgent) ReflectionHelper.newInstance(registration.getExecutor());
+		IAgent executor = (IAgent) ReflectionHelper.newInstance(registration.getAgent());
 		return executor.withConfiguration(configuration);
 	}
 	
@@ -60,6 +60,6 @@ public final class ApiServiceRegistrator {
 		
 		return new ServiceRegistration()
 			.withConfiguration(configuration)
-			.withExecutor(executor);
+			.withAgent(executor);
 	}
 }
