@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>standard-output</module>
+		<module>file-output</module>
 	</modules>
 	
 </project>
