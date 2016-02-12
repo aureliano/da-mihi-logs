@@ -18,6 +18,7 @@
 	<modules>
 		<module>standard-input</module>
 		<module>file-input</module>
+		<module>file-tailer-input</module>
 		<module>external-command-input</module>
 	</modules>
 	
