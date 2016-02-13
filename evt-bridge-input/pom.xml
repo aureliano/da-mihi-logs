@@ -21,6 +21,7 @@
 		<module>file-tailer-input</module>
 		<module>external-command-input</module>
 		<module>jdbc-input</module>
+		<module>url-input</module>
 	</modules>
 	
 </project>
