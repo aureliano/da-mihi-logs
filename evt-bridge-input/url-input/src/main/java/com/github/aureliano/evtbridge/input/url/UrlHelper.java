@@ -12,7 +12,77 @@ public final class UrlHelper {
 	}
 	
 	private static final int RADIX = 16;
+	
+	private static final BitSet RESERVED = new BitSet(256);
 	private static final BitSet URLENCODER = new BitSet(256);
+	private static final BitSet UNRESERVED = new BitSet(256);
+	private static final BitSet PUNCT = new BitSet(256);
+	private static final BitSet USERINFO = new BitSet(256);
+	private static final BitSet PATHSAFE = new BitSet(256);
+	private static final BitSet URIC = new BitSet(256);
+
+	static {
+		for (int i = 'a'; i <= 'z'; i++) {
+			UNRESERVED.set(i);
+		}
+		
+		for (int i = 'A'; i <= 'Z'; i++) {
+			UNRESERVED.set(i);
+		}
+		
+		for (int i = '0'; i <= '9'; i++) {
+			UNRESERVED.set(i);
+		}
+
+		UNRESERVED.set('_');
+		UNRESERVED.set('-');
+		UNRESERVED.set('.');
+		UNRESERVED.set('*');
+		URLENCODER.or(UNRESERVED);
+		UNRESERVED.set('!');
+		UNRESERVED.set('~');
+		UNRESERVED.set('\'');
+		UNRESERVED.set('(');
+		UNRESERVED.set(')');
+		
+		PUNCT.set(',');
+		PUNCT.set(';');
+		PUNCT.set(':');
+		PUNCT.set('$');
+		PUNCT.set('&');
+		PUNCT.set('+');
+		PUNCT.set('=');
+		
+		USERINFO.or(UNRESERVED);
+		USERINFO.or(PUNCT);
+		
+		PATHSAFE.or(UNRESERVED);
+		PATHSAFE.set('/');
+		PATHSAFE.set(';');
+		PATHSAFE.set(':');
+		PATHSAFE.set('@');
+		PATHSAFE.set('&');
+		PATHSAFE.set('=');
+		PATHSAFE.set('+');
+		PATHSAFE.set('$');
+		PATHSAFE.set(',');
+		
+		RESERVED.set(';');
+		RESERVED.set('/');
+		RESERVED.set('?');
+		RESERVED.set(':');
+		RESERVED.set('@');
+		RESERVED.set('&');
+		RESERVED.set('=');
+		RESERVED.set('+');
+		RESERVED.set('$');
+		RESERVED.set(',');
+		RESERVED.set('[');
+		RESERVED.set(']');
+		
+		URIC.or(RESERVED);
+		URIC.or(UNRESERVED);
+	}
 	
 	public static String buildUrl(UrlInputConfig config) {
 		StringBuilder builder = new StringBuilder();
