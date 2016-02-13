@@ -20,6 +20,7 @@
 		<module>file-input</module>
 		<module>file-tailer-input</module>
 		<module>external-command-input</module>
+		<module>jdbc-input</module>
 	</modules>
 	
 </project>
