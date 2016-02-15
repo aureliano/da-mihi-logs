@@ -79,7 +79,8 @@ public class JdbcConnectionModel {
 			.withPassword(this.password)
 			.withSql(this.sql)
 			.withDriver(this.driver)
-			.withUrl(this.url);
+			.withUrl(this.url)
+			.withTable(this.table);
 	}
 
 	@Override
