@@ -67,7 +67,8 @@ public class ConnectionPool {
 			
 			Connection connection = null;
 			if (!StringHelper.isEmpty(schema.getUser())) {
-				logger.info("Connecting to " + schema.getUrl() + " with user " + schema.getUser() + " and password " + schema.getPassword());
+				logger.info("Connecting to " + schema.getUrl() + " with user " + schema.getUser() +
+						" and password " + StringHelper.maskPassword(schema.getPassword()));
 				connection = DriverManager.getConnection(
 					schema.getUrl(),
 					schema.getUser(),
