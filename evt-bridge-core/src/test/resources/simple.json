@@ -1,0 +1,8 @@
+{
+  "id": {
+    "type": "integer", "required": true
+  },
+  "name": {
+    "type": "string", "required": false
+  }
+}
