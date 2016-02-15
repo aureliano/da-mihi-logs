@@ -21,7 +21,7 @@ public class JdbcOutputConfig implements IConfigOutput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(OutputConfigTypes.STANDARD_OUTPUT.name())
+			.withId(OutputConfigTypes.JDBC_OUTPUT.name())
 			.withAgent(JdbcDataWriter.class)
 			.withConfiguration(JdbcOutputConfig.class);
 		
