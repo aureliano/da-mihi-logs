@@ -285,6 +285,7 @@ public class UrlDataReader extends AbstractDataReader {
 	
 	private IDataReader createFileDataReader() {
 		FileInputConfig config = new FileInputConfig()
+			.withFile(this.urlInputConfiguration.getOutputFile())
 			.withStartPosition(this.urlInputConfiguration.getFileStartPosition())
 			.withConfigurationId(this.urlInputConfiguration.getConfigurationId())
 			.withMatcher(this.urlInputConfiguration.getMatcher())
