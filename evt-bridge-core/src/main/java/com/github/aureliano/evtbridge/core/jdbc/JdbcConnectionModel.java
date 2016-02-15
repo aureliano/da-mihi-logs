@@ -9,6 +9,7 @@ public class JdbcConnectionModel {
 	private String driver;
 	private String sql;
 	private String url;
+	private String table;
 	
 	public JdbcConnectionModel() {
 		super();
@@ -59,6 +60,15 @@ public class JdbcConnectionModel {
 	
 	public JdbcConnectionModel withUrl(String url) {
 		this.url = url;
+		return this;
+	}
+	
+	public String getTable() {
+		return table;
+	}
+	
+	public JdbcConnectionModel withTable(String table) {
+		this.table = table;
 		return this;
 	}
 	
