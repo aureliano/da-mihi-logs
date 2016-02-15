@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.agent.AbstractDataWriter;
 import com.github.aureliano.evtbridge.core.jdbc.ConnectionPool;
 import com.github.aureliano.evtbridge.core.jdbc.JdbcConnectionModel;
@@ -38,6 +39,9 @@ public class JdbcDataWriter extends AbstractDataWriter {
 	
 	private void initialize() {
 		this.schemaConnection = ((JdbcOutputConfig) super.outputConfiguration).getConnection();
+		if (StringHelper.isEmpty(this.schemaConnection.getTable())) {
+			throw new JdbcOutputException("Table attribute must be provided. Found empty string.");
+		}
 		logger.info("Table for inserting: " + this.schemaConnection.getTable());
 	}
 	
