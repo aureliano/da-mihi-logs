@@ -18,6 +18,7 @@
 	<modules>
 		<module>standard-output</module>
 		<module>file-output</module>
+		<module>jdbc-output</module>
 	</modules>
 	
 </project>
