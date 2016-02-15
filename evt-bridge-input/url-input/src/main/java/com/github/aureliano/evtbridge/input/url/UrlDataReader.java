@@ -228,7 +228,7 @@ public class UrlDataReader extends AbstractDataReader {
 		}
 		
 		if (responseCode / 100 != 2) {
-			throw new RuntimeException("Response code not ok. Got " + responseCode + " when requesting from " + this.url);
+			throw new RuntimeException("Response code not ok. Got " + responseCode + " when requesting resource " + this.url);
 		}
 	}
 
