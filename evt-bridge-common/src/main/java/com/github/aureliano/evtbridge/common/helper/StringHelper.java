@@ -53,4 +53,8 @@ public final class StringHelper {
 	public static boolean isNumeric(String value) {
 		return (value == null) ? false : value.matches(NUMBER_REGEX);
 	}
+	
+	public static String maskPassword(String pass) {
+		return (StringHelper.isEmpty(pass)) ? "*****" : pass.replaceAll(".", "*");
+	}
 }

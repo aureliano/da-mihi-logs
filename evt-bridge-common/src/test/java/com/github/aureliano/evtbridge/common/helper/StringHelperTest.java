@@ -54,4 +54,13 @@ public class StringHelperTest {
 		assertTrue(StringHelper.isNumeric("-3365.8787"));
 		assertTrue(StringHelper.isNumeric("+3365.8787"));
 	}
+	
+	@Test
+	public void testMaskPassword() {
+		assertEquals("*****", StringHelper.maskPassword(null));
+		assertEquals("*****", StringHelper.maskPassword(""));
+		
+		assertEquals("***", StringHelper.maskPassword("123"));
+		assertEquals("********", StringHelper.maskPassword("12345678"));
+	}
 }
