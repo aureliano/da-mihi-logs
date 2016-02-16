@@ -126,7 +126,7 @@ public class UrlDataReader extends AbstractDataReader {
 			this.urlInputConfiguration = (UrlInputConfig) super.inputConfiguration;
 		}
 		
-		this.url = UrlHelper.buildUrl(this.urlInputConfiguration);
+		this.url = UrlInputHelper.buildUrl(this.urlInputConfiguration);
 		logger.info("Fetching data from " + url);
 		logger.debug("Read (download) timeout: " + this.urlInputConfiguration.getReadTimeout());
 		
