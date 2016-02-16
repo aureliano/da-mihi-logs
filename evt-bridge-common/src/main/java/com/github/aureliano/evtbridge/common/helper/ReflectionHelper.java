@@ -1,8 +1,10 @@
 package com.github.aureliano.evtbridge.common.helper;
 
 import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.withAnnotation;
 import static org.reflections.ReflectionUtils.withName;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -38,6 +40,14 @@ public class ReflectionHelper {
         } catch (IllegalAccessException ex) {
             throw new EventBridgeException(ex);
         }
+    }
+    
+	public static Field getIdField(Class<?> clazz, final Class<? extends Annotation> annotation) {
+        Set<Field> fields = getAllFields(clazz, withAnnotation(annotation));
+        if (fields.size() != 1) {
+        	throw new EventBridgeException(String.format("Unable to find id field for class %s", clazz.getSimpleName()));
+        }
+        return fields.iterator().next();
     }
     
     public static Method getMethod(Class<?> clazz, String methodName, Class<?>[] parameters) {
