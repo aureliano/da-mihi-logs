@@ -14,7 +14,7 @@ public class ExecuteOnceAtSpecificTimeScheduler extends StandardScheduler {
 	}
 	
 	@Override
-	public void prepareSchedulingForExecution(Runnable runnable) {
+	public void schedule(Runnable runnable) {
 		this.validation();
 		
 		long delay = this.startupTime.getTime() - System.currentTimeMillis();

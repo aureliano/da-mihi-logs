@@ -19,7 +19,7 @@ public class ExecutePeriodicallyAtSpecificTimeScheduler extends StandardSchedule
 	}
 	
 	@Override
-	public void prepareSchedulingForExecution(Runnable runnable) {
+	public void schedule(Runnable runnable) {
 		this.validation();
 		
 		if (this.second == null) {

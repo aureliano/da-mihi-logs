@@ -15,7 +15,7 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 	}
 	
 	@Override
-	public void prepareSchedulingForExecution(Runnable runnable) {
+	public void schedule(Runnable runnable) {
 		this.validation();
 		super.scheduledExecutorService.scheduleAtFixedRate(runnable, this.delay, this.period, this.timeUnit);
 	}
