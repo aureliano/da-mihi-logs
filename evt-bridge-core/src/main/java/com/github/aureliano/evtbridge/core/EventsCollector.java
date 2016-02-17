@@ -15,6 +15,7 @@ import com.github.aureliano.evtbridge.core.event.AfterCollectorsEvent;
 import com.github.aureliano.evtbridge.core.event.BeforeCollectorsEvent;
 import com.github.aureliano.evtbridge.core.helper.ConfigHelper;
 import com.github.aureliano.evtbridge.core.helper.LoggerHelper;
+import com.github.aureliano.evtbridge.core.jdbc.ConnectionPool;
 import com.github.aureliano.evtbridge.core.listener.EventsCollectorListener;
 import com.github.aureliano.evtbridge.core.profile.IProfile;
 import com.github.aureliano.evtbridge.core.profile.JvmProfile;
@@ -32,15 +33,35 @@ private static final Logger logger = Logger.getLogger(EventsCollector.class);
 	}
 	
 	public void execute() {
-		this._execute();
-	}
-	
-	private void _execute() {
 		if (this.configuration == null) {
 			this.configuration = new EventCollectorConfiguration();
 			logger.info("Using default event collector configuration.");
 		}
 		
+		if (this.configuration.getScheduler() == null) {
+			this._execute();
+			
+			if (ConnectionPool.isInitialized()) {
+				ConnectionPool.instance().closeConnections();
+			}
+			
+			return;
+		}
+		
+		this.configuration.getScheduler().schedule(new Runnable() {			
+			
+			@Override
+			public void run() {
+				try {
+					_execute();
+				} catch (Exception ex) {
+					logger.error(ex.getMessage(), ex);
+				}
+			}
+		});
+	}
+	
+	private void _execute() {
 		this.configureThreadName();
 		this.configureLogger();
 		
