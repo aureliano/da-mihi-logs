@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.github.aureliano.evtbridge.core.listener.EventsCollectorListener;
+import com.github.aureliano.evtbridge.core.schedule.IScheduler;
 
 public class EventCollectorConfiguration implements IConfiguration {
 
@@ -14,6 +15,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	private boolean persistExecutionLog;
 	private boolean multiThreadingEnabled;
 	private Properties metadata;
+	private IScheduler scheduler;
 	private List<EventsCollectorListener> eventsCollectorListeners;
 	
 	public EventCollectorConfiguration() {
@@ -76,6 +78,15 @@ public class EventCollectorConfiguration implements IConfiguration {
 	public EventCollectorConfiguration withMetadata(Properties properties) {
 		this.metadata = properties;
 		return this;
+	}
+	
+	public EventCollectorConfiguration withScheduler(IScheduler scheduler) {
+		this.scheduler = scheduler;
+		return this;
+	}
+	
+	public IScheduler getScheduler() {
+		return scheduler;
 	}
 	
 	public List<EventsCollectorListener> getEventsCollectorListeners() {
