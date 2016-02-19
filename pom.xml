@@ -32,6 +32,7 @@
 		<module>evt-bridge-annotation</module>
 		<module>evt-bridge-input</module>
 		<module>evt-bridge-output</module>
+		<module>evt-bridge-converter</module>
 		<module>evt-bridge-app</module>
 	</modules>
 	
