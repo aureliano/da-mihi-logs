@@ -11,6 +11,7 @@ import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
 import com.github.aureliano.evtbridge.core.config.IConfigInput;
 import com.github.aureliano.evtbridge.core.config.IConfigOutput;
+import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.EventsCollectorListener;
 import com.github.aureliano.evtbridge.core.schedule.IScheduler;

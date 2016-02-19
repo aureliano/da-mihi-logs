@@ -3,8 +3,8 @@ package com.github.aureliano.evtbridge.converter.input;
 import java.util.Arrays;
 
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.converter.IConfigurationConverter;
 import com.github.aureliano.evtbridge.converter.exception.ConfigurationConverterException;
+import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 
