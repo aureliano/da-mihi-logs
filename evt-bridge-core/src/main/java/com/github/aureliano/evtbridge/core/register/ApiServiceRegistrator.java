@@ -8,6 +8,7 @@ import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.agent.IAgent;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 
 public final class ApiServiceRegistrator {
 
@@ -45,6 +46,25 @@ public final class ApiServiceRegistrator {
 		
 		IAgent executor = (IAgent) ReflectionHelper.newInstance(registration.getAgent());
 		return executor.withConfiguration(configuration);
+	}
+	
+	public IConfigurationConverter<?> createConverter(String id) {
+		ServiceRegistration registration = this.registrations.get(id);
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		}
+		
+		registration = this.registrations.get(id.toUpperCase());
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		}
+		
+		registration = this.registrations.get(id.toLowerCase());
+		if (registration != null) {
+			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		}
+		
+		return null;
 	}
 	
 	public static ApiServiceRegistrator instance() {

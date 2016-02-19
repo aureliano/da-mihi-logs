@@ -2,12 +2,14 @@ package com.github.aureliano.evtbridge.core.register;
 
 import com.github.aureliano.evtbridge.core.agent.IAgent;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 
 public class ServiceRegistration {
 
 	private String id;
 	private Class<? extends IConfiguration> configuration;
 	private Class<? extends IAgent> agent;
+	private Class<? extends IConfigurationConverter<?>> converter;
 	
 	public ServiceRegistration() {
 		super();
@@ -37,6 +39,15 @@ public class ServiceRegistration {
 
 	public ServiceRegistration withAgent(Class<? extends IAgent> executor) {
 		this.agent = executor;
+		return this;
+	}
+
+	public Class<? extends IConfigurationConverter<?>> getConverter() {
+		return converter;
+	}
+
+	public ServiceRegistration withConverter(Class<? extends IConfigurationConverter<?>> converter) {
+		this.converter = converter;
 		return this;
 	}
 
