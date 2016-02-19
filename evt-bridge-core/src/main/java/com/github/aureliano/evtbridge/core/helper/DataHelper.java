@@ -55,4 +55,13 @@ public final class DataHelper {
 			throw new EventBridgeException(ex);
 		}
 	}
+	
+	public static Properties mapToProperties(Map<String, Object> map) {
+		Properties properties = new Properties();
+		for (String key : map.keySet()) {
+			properties.setProperty(key, map.get(key).toString());
+		}
+		
+		return properties;
+	}
 }

@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Test;
@@ -51,5 +53,17 @@ public class DataHelperTest {
 		assertTrue(json.contains("\"Monteiro Lobato\":\"Brazil\""));
 		assertTrue(json.contains("\"Liev Tolstói\":\"Russia\""));
 		assertTrue(json.contains("\"Jules Verne\":\"France\""));
+	}
+	
+	@Test
+	public void testMapToProperties() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("test", true);
+		map.put("host", "127.0.0.1");
+		
+		Properties properties = DataHelper.mapToProperties(map);
+		
+		assertEquals("true", properties.getProperty("test"));
+		assertEquals("127.0.0.1", properties.getProperty("host"));
 	}
 }
