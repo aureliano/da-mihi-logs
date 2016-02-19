@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.converter;
+package com.github.aureliano.evtbridge.core.config;
 
 import java.util.Map;
 
