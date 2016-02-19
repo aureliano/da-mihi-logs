@@ -132,7 +132,7 @@ public class CollectEventsCommand {
 	}
 	
 	private IDataReader createDataReader(IConfigInput inputConfig) {
-		IDataReader dataReader = (IDataReader) ApiServiceRegistrator.instance().createExecutor(inputConfig);
+		IDataReader dataReader = (IDataReader) ApiServiceRegistrator.instance().createAgent(inputConfig);
 		
 		if (inputConfig.getMatcher() == null) {
 			inputConfig.withMatcher(new SingleLineMatcher());
@@ -161,7 +161,7 @@ public class CollectEventsCommand {
 				outputConfig.withFilter(new EmptyFilter());
 			}
 			
-			IDataWriter dataWriter = (IDataWriter) ApiServiceRegistrator.instance().createExecutor(outputConfig);
+			IDataWriter dataWriter = (IDataWriter) ApiServiceRegistrator.instance().createAgent(outputConfig);
 			dataWriters.add(dataWriter);
 		}
 		

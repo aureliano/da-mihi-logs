@@ -37,7 +37,7 @@ public final class ApiServiceRegistrator {
 		this.registrations.put(registration.getId(), registration);
 	}
 	
-	public IAgent createExecutor(IConfiguration configuration) {
+	public IAgent createAgent(IConfiguration configuration) {
 		ServiceRegistration registration = this.registrations.get(configuration.id());
 		
 		if ((registration == null) || (registration.getAgent() == null)) {
