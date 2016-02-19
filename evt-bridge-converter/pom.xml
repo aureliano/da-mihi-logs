@@ -16,7 +16,9 @@
 	<name>evt-bridge-converter</name>
 
 	<dependencies>
-		<groupId>org.yaml</groupId>
-		<artifactId>snakeyaml</artifactId>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+		</dependency>
 	</dependencies>
 </project>
