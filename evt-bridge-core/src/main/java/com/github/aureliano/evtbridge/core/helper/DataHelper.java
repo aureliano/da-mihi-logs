@@ -64,4 +64,14 @@ public final class DataHelper {
 		
 		return properties;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public static Map<String, Object> getAsHash(Map<String, Object> data, String key) {
+		Object map = data.get(key);
+		if (map == null) {
+			return null;
+		}
+		
+		return (Map<String, Object>) map;
+	}
 }
