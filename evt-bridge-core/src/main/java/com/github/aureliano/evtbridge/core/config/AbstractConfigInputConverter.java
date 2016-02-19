@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.converter.input;
+package com.github.aureliano.evtbridge.core.config;
 
 import java.util.List;
 import java.util.Map;
@@ -6,15 +6,13 @@ import java.util.Properties;
 
 import com.github.aureliano.evtbridge.common.helper.ReflectionHelper;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.converter.IConfigurationConverter;
-import com.github.aureliano.evtbridge.core.config.IConfigInput;
 import com.github.aureliano.evtbridge.core.exception.IExceptionHandler;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
 import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
 import com.github.aureliano.evtbridge.core.matcher.IMatcher;
 
-public abstract class AbstractInputConverter<T> implements IConfigurationConverter<T> {
+public abstract class AbstractConfigInputConverter<T> implements IConfigurationConverter<T> {
 
 	@SuppressWarnings("unchecked")
 	protected void configureObject(IConfigInput conf, Map<String, Object> data) {
