@@ -21,7 +21,11 @@ public final class ApiServiceRegistrator {
 	}
 	
 	public void registrate(Class<? extends IConfiguration> configuration, Class<? extends IAgent> executor) {
-		this.registrate(this.createService(configuration, executor));
+		this.registrate(configuration, executor, null);
+	}
+	
+	public void registrate(Class<? extends IConfiguration> configuration, Class<? extends IAgent> executor, Class<? extends IConfigurationConverter<?>> converter) {
+		this.registrate(this.createService(configuration, executor, converter));
 	}
 	
 	public void registrate(ServiceRegistration registration) {
@@ -76,10 +80,11 @@ public final class ApiServiceRegistrator {
 	}
 	
 	private ServiceRegistration createService(Class<? extends IConfiguration> configuration,
-			Class<? extends IAgent> executor) {
+			Class<? extends IAgent> executor, Class<? extends IConfigurationConverter<?>> converter) {
 		
 		return new ServiceRegistration()
 			.withConfiguration(configuration)
-			.withAgent(executor);
+			.withAgent(executor)
+			.withConverter(converter);
 	}
 }
