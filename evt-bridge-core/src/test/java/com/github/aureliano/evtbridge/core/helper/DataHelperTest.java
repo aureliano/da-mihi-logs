@@ -2,9 +2,13 @@ package com.github.aureliano.evtbridge.core.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -65,5 +69,20 @@ public class DataHelperTest {
 		
 		assertEquals("true", properties.getProperty("test"));
 		assertEquals("127.0.0.1", properties.getProperty("host"));
+	}
+	
+	@Test
+	public void testEncapsulateIntoList() {
+		List<String> l = DataHelper.encapsulateIntoList("test");
+		assertTrue(l instanceof ArrayList);
+		assertTrue(l.size() == 1);
+		assertEquals("test", l.get(0));
+		
+		List<String> l2 = DataHelper.encapsulateIntoList(l);
+		assertSame(l, l2);
+		assertTrue(l2.size() == 1);
+		assertEquals("test", l2.get(0));
+		
+		assertNull(DataHelper.encapsulateIntoList(null));
 	}
 }
