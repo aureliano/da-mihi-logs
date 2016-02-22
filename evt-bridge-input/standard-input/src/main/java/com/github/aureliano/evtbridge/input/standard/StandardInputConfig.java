@@ -20,7 +20,8 @@ public class StandardInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.STANDARD_INPUT.name())
 			.withAgent(StandardDataReader.class)
-			.withConfiguration(StandardInputConfig.class);
+			.withConfiguration(StandardInputConfig.class)
+			.withConverter(StandardInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
