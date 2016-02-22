@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 
+import org.yaml.snakeyaml.Yaml;
+
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.data.ObjectMapperSingleton;
 
@@ -96,6 +98,15 @@ public final class DataHelper {
 	public static <T> T jsonStringToObject(String jsonString, Class<T> valueType) {
 		try {
 			return (T) ObjectMapperSingleton.instance().getObjectMapper().readValue(jsonString, valueType);
+		} catch (Exception ex) {
+			throw new EventBridgeException(ex);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T yamlStringToObject(String yamlString, Class<T> valueType) {
+		try {
+			return (T) new Yaml().load(yamlString);
 		} catch (Exception ex) {
 			throw new EventBridgeException(ex);
 		}

@@ -96,4 +96,15 @@ public class DataHelperTest {
 		assertEquals(map.get("Liev Tolstói"), "Russia");
 		assertEquals(map.get("Jules Verne"), "France");
 	}
+	
+	@Test
+	public void testYamlStringToObject() {
+		String hash = "{\"Monteiro Lobato\":\"Brazil\",\"Liev Tolstói\":\"Russia\",\"Jules Verne\":\"France\"}";
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = DataHelper.yamlStringToObject(hash, Map.class);
+		
+		assertEquals(map.get("Monteiro Lobato"), "Brazil");
+		assertEquals(map.get("Liev Tolstói"), "Russia");
+		assertEquals(map.get("Jules Verne"), "France");
+	}
 }
