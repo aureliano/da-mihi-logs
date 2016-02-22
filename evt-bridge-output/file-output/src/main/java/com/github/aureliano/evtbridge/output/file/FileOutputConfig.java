@@ -22,7 +22,8 @@ public class FileOutputConfig implements IConfigOutput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(OutputConfigTypes.FILE_OUTPUT.name())
 			.withAgent(FileDataWriter.class)
-			.withConfiguration(FileOutputConfig.class);
+			.withConfiguration(FileOutputConfig.class)
+			.withConverter(FileOutputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
