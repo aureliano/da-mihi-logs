@@ -23,7 +23,8 @@ public class FileTailerInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.FILE_TAILER.name())
 			.withAgent(FileTailerDataReader.class)
-			.withConfiguration(FileTailerInputConfig.class);
+			.withConfiguration(FileTailerInputConfig.class)
+			.withConverter(FileTailerInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
