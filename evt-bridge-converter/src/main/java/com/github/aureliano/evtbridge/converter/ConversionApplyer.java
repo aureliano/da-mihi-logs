@@ -14,7 +14,7 @@ public final class ConversionApplyer {
 	public static List<?> apply(ConverterType type, Map<String, Object> data) {
 		switch (type) {
 			case INPUT : return new InputConverter().convert(data);
-			//case OUTPUT : return new OutputConverter().convert(data);
+			case OUTPUT : return new OutputConverter().convert(data);
 			default : throw new ConfigurationConverterException("Unsupported converter type.");
 		}
 	}
