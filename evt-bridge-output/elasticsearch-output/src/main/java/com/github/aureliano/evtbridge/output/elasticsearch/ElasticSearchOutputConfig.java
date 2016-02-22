@@ -21,7 +21,8 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(OutputConfigTypes.ELASTIC_SEARCH.name())
 			.withAgent(ElasticSearchDataWriter.class)
-			.withConfiguration(ElasticSearchOutputConfig.class);
+			.withConfiguration(ElasticSearchOutputConfig.class)
+			.withConverter(ElasticSearchOutputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
