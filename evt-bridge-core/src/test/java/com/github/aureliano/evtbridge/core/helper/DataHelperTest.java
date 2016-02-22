@@ -85,4 +85,15 @@ public class DataHelperTest {
 		
 		assertNull(DataHelper.encapsulateIntoList(null));
 	}
+	
+	@Test
+	public void testJsonStringToObject() {
+		String hash = "{\"Monteiro Lobato\":\"Brazil\",\"Liev Tolstói\":\"Russia\",\"Jules Verne\":\"France\"}";
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = DataHelper.jsonStringToObject(hash, Map.class);
+		
+		assertEquals(map.get("Monteiro Lobato"), "Brazil");
+		assertEquals(map.get("Liev Tolstói"), "Russia");
+		assertEquals(map.get("Jules Verne"), "France");
+	}
 }

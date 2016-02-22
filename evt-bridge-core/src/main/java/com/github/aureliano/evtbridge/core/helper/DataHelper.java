@@ -92,4 +92,12 @@ public final class DataHelper {
 			return (T) list;
 		}
 	}
+	
+	public static <T> T jsonStringToObject(String jsonString, Class<T> valueType) {
+		try {
+			return (T) ObjectMapperSingleton.instance().getObjectMapper().readValue(jsonString, valueType);
+		} catch (Exception ex) {
+			throw new EventBridgeException(ex);
+		}
+	}
 }
