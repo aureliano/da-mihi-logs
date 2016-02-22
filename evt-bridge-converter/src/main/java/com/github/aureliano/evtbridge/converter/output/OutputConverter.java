@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.converter;
+package com.github.aureliano.evtbridge.converter.output;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.converter.output.OutputConverterFactory;
+import com.github.aureliano.evtbridge.converter.ConverterType;
 import com.github.aureliano.evtbridge.core.config.IConfigOutput;
 import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 
