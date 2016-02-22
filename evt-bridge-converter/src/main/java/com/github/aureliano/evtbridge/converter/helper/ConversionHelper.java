@@ -15,7 +15,7 @@ public final class ConversionHelper {
 	
 	public static EventCollectorConfiguration loadConfiguration(String path, ConfigurationSourceType type) {
 		switch (type) {
-			case YAML: return null;
+			case YAML: return convertFromYaml(path);
 			case JSON: return convertFromJson(path);
 			default: throw new ConfigurationConverterException("Configuration source type '" + type + "' not supported.");
 		}
@@ -25,6 +25,14 @@ public final class ConversionHelper {
 		String text = FileHelper.readFile(path);
 		@SuppressWarnings("unchecked")
 		Map<String, Object> data = DataHelper.jsonStringToObject(text, Map.class);
+		
+		return new ConfigurationConverter().convert(data);
+	}
+	
+	private static EventCollectorConfiguration convertFromYaml(String path) {
+		String text = FileHelper.readFile(path);
+		@SuppressWarnings("unchecked")
+		Map<String, Object> data = DataHelper.yamlStringToObject(text, Map.class);
 		
 		return new ConfigurationConverter().convert(data);
 	}
