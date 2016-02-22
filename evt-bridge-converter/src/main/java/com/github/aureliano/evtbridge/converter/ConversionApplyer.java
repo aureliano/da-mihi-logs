@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.evtbridge.converter.exception.ConfigurationConverterException;
+import com.github.aureliano.evtbridge.converter.input.InputConverter;
 import com.github.aureliano.evtbridge.converter.schedule.SchedulerConverter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 
