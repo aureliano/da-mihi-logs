@@ -23,7 +23,8 @@ public class JdbcInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.JDBC_INPUT.name())
 			.withAgent(JdbcDataReader.class)
-			.withConfiguration(JdbcInputConfig.class);
+			.withConfiguration(JdbcInputConfig.class)
+			.withConverter(JdbcInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
