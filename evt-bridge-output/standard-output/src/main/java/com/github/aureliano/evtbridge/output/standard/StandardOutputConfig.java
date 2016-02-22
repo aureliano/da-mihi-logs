@@ -20,7 +20,8 @@ public class StandardOutputConfig implements IConfigOutput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(OutputConfigTypes.STANDARD_OUTPUT.name())
 			.withAgent(StandardDataWriter.class)
-			.withConfiguration(StandardOutputConfig.class);
+			.withConfiguration(StandardOutputConfig.class)
+			.withConverter(StandardOutputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
