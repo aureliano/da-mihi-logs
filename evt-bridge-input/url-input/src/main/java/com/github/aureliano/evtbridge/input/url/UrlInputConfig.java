@@ -26,7 +26,8 @@ public class UrlInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.URL.name())
 			.withAgent(UrlDataReader.class)
-			.withConfiguration(UrlInputConfig.class);
+			.withConfiguration(UrlInputConfig.class)
+			.withConverter(UrlInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
