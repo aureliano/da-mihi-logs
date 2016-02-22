@@ -1,4 +1,4 @@
-package com.github.aureliano.damihilogs.converter.output;
+package com.github.aureliano.evtbridge.output.elasticsearch;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,13 +10,10 @@ import java.util.Properties;
 
 import org.junit.Test;
 
-import com.github.aureliano.damihilogs.config.output.ElasticSearchOutputConfig;
-import com.github.aureliano.damihilogs.config.output.OutputConfigTypes;
-import com.github.aureliano.damihilogs.filter.DefaultEmptyFilter;
-import com.github.aureliano.damihilogs.formatter.PlainTextFormatter;
-import com.github.aureliano.damihilogs.listener.DefaultDataWritingListener;
-import com.github.aureliano.damihilogs.parser.PlainTextParser;
+import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.filter.EmptyFilter;
+import com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter;
+import com.github.aureliano.evtbridge.core.parser.PlainTextParser;
 
 public class ElasticSearchOutputConverterTest {
 
@@ -28,11 +25,11 @@ public class ElasticSearchOutputConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		data.put("dataWritingListeners", Arrays.asList(DefaultDataWritingListener.class.getName()));
+		data.put("dataWritingListeners", Arrays.asList(ESOutputDataWritingListener.class.getName()));
 		data.put("metadata", metadata);
 		
 		data.put("parser", PlainTextParser.class.getName());
-		data.put("filter", DefaultEmptyFilter.class.getName());
+		data.put("filter", EmptyFilter.class.getName());
 		data.put("formatter", PlainTextFormatter.class.getName());
 		
 		data.put("host", "127.0.0.1");
