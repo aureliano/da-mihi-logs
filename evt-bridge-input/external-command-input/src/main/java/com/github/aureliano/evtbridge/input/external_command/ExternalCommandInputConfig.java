@@ -21,7 +21,8 @@ public class ExternalCommandInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.EXTERNAL_COMMAND.name())
 			.withAgent(ExternalCommandDataReader.class)
-			.withConfiguration(ExternalCommandInputConfig.class);
+			.withConfiguration(ExternalCommandInputConfig.class)
+			.withConverter(ExternalCommandInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
