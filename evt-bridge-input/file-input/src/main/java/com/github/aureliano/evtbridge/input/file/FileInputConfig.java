@@ -23,7 +23,8 @@ public class FileInputConfig implements IConfigInput {
 		ServiceRegistration registration = new ServiceRegistration()
 			.withId(InputConfigTypes.FILE_INPUT.name())
 			.withAgent(FileDataReader.class)
-			.withConfiguration(FileInputConfig.class);
+			.withConfiguration(FileInputConfig.class)
+			.withConverter(FileInputConverter.class);
 		
 		ApiServiceRegistrator.instance().registrate(registration);
 	}
