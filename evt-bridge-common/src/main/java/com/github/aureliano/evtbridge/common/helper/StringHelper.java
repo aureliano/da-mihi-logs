@@ -46,7 +46,7 @@ public final class StringHelper {
 		return builder.toString();
 	}
 	
-	public static String join(List<Object> objects, String separator) {
+	public static String join(List<?> objects, String separator) {
 		return join(objects.toArray(), separator);
 	}
 	
