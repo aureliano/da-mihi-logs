@@ -82,13 +82,73 @@
 		
 		<dependency>
 			<groupId>com.github.aureliano</groupId>
+			<artifactId>evt-bridge-annotation</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>evt-bridge-converter</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
 			<artifactId>standard-input</artifactId>
 			<version>${event.bridge.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.github.aureliano</groupId>
+			<artifactId>file-input</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>file-tailer-input</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>external-command-input</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>jdbc-input</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>url-input</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
 			<artifactId>standard-output</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>file-output</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>jdbc-output</artifactId>
+			<version>${event.bridge.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.github.aureliano</groupId>
+			<artifactId>elasticsearch-output</artifactId>
 			<version>${event.bridge.version}</version>
 		</dependency>
 	</dependencies>
