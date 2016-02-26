@@ -7,6 +7,7 @@ import java.util.List;
 import com.github.aureliano.evtbridge.app.command.Commands;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
+import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConfigurationSourceType;
@@ -56,18 +57,21 @@ public final class CliHelper {
 	protected static OptionParser parseOptions() {
 		OptionParser parser = new OptionParser();
 		
-		parser.accepts("help", "Show this message");
-		parser.accepts("version", "Show project version");
+		parser.accepts(Commands.HELP.getId(), "Show this message");
+		parser.accepts(Commands.VERSION.getId(), "Show project version");
+		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
 		parser.nonOptions().ofType(File.class);
 		
 		return parser;
 	}
 	
 	protected static ICommand buildCommand(String[] args, OptionSet options) {
-		if (options.has("help")) {
+		if (options.has(Commands.HELP.getId())) {
 			return new HelpCommand();
-		} else if (options.has("version")) {
+		} else if (options.has(Commands.VERSION.getId())) {
 			return new VersionCommand();
+		} else if (options.has(Commands.SCHEMATA.getId())) {
+			return new SchemataCommand();
 		}
 		
 		System.err.println("Don't know how to handle the command: " + StringHelper.join(args, " "));
@@ -79,16 +83,20 @@ public final class CliHelper {
 			return help(command);
 		} else if (Commands.VERSION.getId().equals(command.get(0))) {
 			return version(command);
+		} else if (Commands.SCHEMATA.getId().equals(command.get(0))) {
+			return schemata(command);
 		}
 		
 		return null;
 	}
 	
 	private static ICommand buildLooseCommands(OptionSet options) {
-		if (options.has("help")) {
+		if (options.has(Commands.HELP.getId())) {
 			return new HelpCommand();
-		} else if (options.has("version")) {
+		} else if (options.has(Commands.VERSION.getId())) {
 			return new VersionCommand();
+		} else if (options.has(Commands.SCHEMATA.getId())) {
+			return new SchemataCommand();
 		}
 		
 		return null;
@@ -110,5 +118,13 @@ public final class CliHelper {
 		}
 		
 		return new VersionCommand();
+	}
+	
+	private static ICommand schemata(List<String> command) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new SchemataCommand();
 	}
 }
