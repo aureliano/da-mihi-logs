@@ -10,6 +10,7 @@ import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
 
+import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 public class CliHelperTest {
@@ -30,24 +31,26 @@ public class CliHelperTest {
 	
 	@Test
 	public void testBuildCommand() {
-		OptionSet options = CliHelper.buildOptionSet(new String[0]);
+		OptionParser parser = CliHelper.parseOptions();
+		OptionSet options = parser.parse(new String[0]);
 		ICommand command = CliHelper.buildCommand(new String[0], options);
 		assertNull(command);
 		
-		options = CliHelper.buildOptionSet(new String[] { "-h" });
+		options = parser.parse(new String[] { "-h" });
 		command = CliHelper.buildCommand(new String[0], options);
 		assertTrue(command instanceof HelpCommand);
 		
-		options = CliHelper.buildOptionSet(new String[] { "-v" });
+		options = parser.parse(new String[] { "-v" });
 		command = CliHelper.buildCommand(new String[0], options);
 		assertTrue(command instanceof VersionCommand);
 	}
 	
 	private void _assertCliOption(String shortcut, String option) {
-		OptionSet options = CliHelper.buildOptionSet(new String[] { "-" + shortcut });
+		OptionParser parser = CliHelper.parseOptions();
+		OptionSet options = parser.parse(new String[] { "-" + shortcut });
 		assertTrue(options.has(option));
 		
-		options = CliHelper.buildOptionSet(new String[] { "--" + option });
+		options = parser.parse(new String[] { "--" + option });
 		assertTrue(options.has(option));
 	}
 }
