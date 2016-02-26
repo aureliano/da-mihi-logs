@@ -31,4 +31,13 @@ public class ConfigurationSchemaHelperTest {
 		assertTrue(schemata.contains("input"));
 		assertTrue(schemata.contains("output"));
 	}
+	
+	@Test
+	public void testFetchSchema() {
+		String schema = ConfigurationSchemaHelper.fetchSchema("input", null);
+		assertTrue(schema.contains("\"title\": \"Input configuration.\","));
+		
+		schema = ConfigurationSchemaHelper.fetchSchema("input", "standard");
+		assertTrue(schema.contains("\"title\": \"Input configuration for standard.\","));
+	}
 }
