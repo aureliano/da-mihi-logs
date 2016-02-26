@@ -22,7 +22,7 @@ public class EventBridgeMetadataTest {
 		assertEquals("https://github.com/aureliano/evt-bridge/wiki", metadata.getProperty("project.wiki"));
 		
 		assertEquals("1.7", metadata.getProperty("app.requirement.jvm"));
-		assertEquals("0.1.0", metadata.getProperty("app.version"));
+		assertEquals("0.1.0:BETA-01", metadata.getProperty("app.version"));
 		assertEquals("2016-02-25", metadata.getProperty("app.release.date"));
 	}
 }
