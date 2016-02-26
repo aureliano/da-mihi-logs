@@ -7,6 +7,7 @@ import java.util.List;
 import com.github.aureliano.evtbridge.app.command.Commands;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
+import com.github.aureliano.evtbridge.app.command.SchemaCommand;
 import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
@@ -69,6 +70,10 @@ public final class CliHelper {
 		parser.accepts(Commands.HELP.getId(), "Show this message");
 		parser.accepts(Commands.VERSION.getId(), "Show project version");
 		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
+		parser.accepts(Commands.SCHEMA.getId(), "Print a JSON schema configuration");
+		
+		parser.accepts("type").requiredIf(Commands.SCHEMA.getId()).withRequiredArg();
+		parser.accepts("name").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
 		
 		parser.nonOptions().ofType(File.class);
 		
@@ -82,18 +87,13 @@ public final class CliHelper {
 			return version(command);
 		} else if (Commands.SCHEMATA.getId().equals(command.get(0))) {
 			return schemata(command);
+		} else if (Commands.SCHEMA.getId().equals(command.get(0))) {
+			String type = StringHelper.parse(options.valueOf("type"));
+			String name = StringHelper.parse(options.valueOf("name"));
+			return schema(command, type, name);
 		}
 		
 		return null;
-	}
-	
-	private static String invalidOptionMessage(String[] args) {
-		return new StringBuilder()
-			.append(EventBridgeMetadata.instance().getProperty("app.binary.linux").replaceAll("\\.sh$", ""))
-			.append(": invalid option => ")
-			.append(StringHelper.join(args, " "))
-			.append("\n(-h --help) show valid options")
-			.toString();
 	}
 	
 	private static ICommand buildLooseCommands(OptionSet options) {
@@ -106,6 +106,15 @@ public final class CliHelper {
 		}
 		
 		return null;
+	}
+	
+	private static String invalidOptionMessage(String[] args) {
+		return new StringBuilder()
+			.append(EventBridgeMetadata.instance().getProperty("app.binary.linux").replaceAll("\\.sh$", ""))
+			.append(": invalid option => ")
+			.append(StringHelper.join(args, " "))
+			.append("\n(-h --help) show valid options")
+			.toString();
 	}
 	
 	private static ICommand help(List<String> command) {
@@ -132,5 +141,13 @@ public final class CliHelper {
 		}
 		
 		return new SchemataCommand();
+	}
+	
+	private static ICommand schema(List<String> command, String type, String name) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new SchemaCommand().withType(type).withName(name);
 	}
 }

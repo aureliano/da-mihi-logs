@@ -11,5 +11,6 @@ public class CommandsTest {
 		assertEquals(new HelpCommand().id(), Commands.HELP.getId());
 		assertEquals(new VersionCommand().id(), Commands.VERSION.getId());
 		assertEquals(new SchemataCommand().id(), Commands.SCHEMATA.getId());
+		assertEquals(new SchemaCommand().id(), Commands.SCHEMA.getId());
 	}
 }

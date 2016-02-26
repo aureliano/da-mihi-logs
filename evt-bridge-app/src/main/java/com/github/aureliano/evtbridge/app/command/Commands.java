@@ -4,7 +4,8 @@ public enum Commands {
 
 	HELP,
 	VERSION,
-	SCHEMATA;
+	SCHEMATA,
+	SCHEMA;
 	
 	public String getId() {
 		return this.name().toLowerCase();

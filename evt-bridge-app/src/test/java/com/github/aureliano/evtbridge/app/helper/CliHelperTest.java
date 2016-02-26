@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
+import com.github.aureliano.evtbridge.app.command.SchemaCommand;
 import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
 
@@ -30,7 +31,6 @@ public class CliHelperTest {
 	public void testBuildOptionSet() {
 		this._assertCliOption("h", "help");
 		this._assertCliOption("v", "version");
-		this._assertCliOption("s", "schemata");
 	}
 	
 	@Test
@@ -48,9 +48,13 @@ public class CliHelperTest {
 		command = CliHelper.buildAppCommand(options, Arrays.asList("version"));
 		assertTrue(command instanceof VersionCommand);
 		
-		options = parser.parse(new String[] { "-s" });
+		options = parser.parse(new String[] { "--schemata" });
 		command = CliHelper.buildAppCommand(options, Arrays.asList("schemata"));
 		assertTrue(command instanceof SchemataCommand);
+		
+		options = parser.parse(new String[] { "--schema", "-t", "input", "-n", "standard" });
+		command = CliHelper.buildAppCommand(options, Arrays.asList("schema"));
+		assertTrue(command instanceof SchemaCommand);
 	}
 	
 	private void _assertCliOption(String shortcut, String option) {
