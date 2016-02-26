@@ -65,20 +65,7 @@ public final class CliHelper {
 		return parser;
 	}
 	
-	protected static ICommand buildCommand(String[] args, OptionSet options) {
-		if (options.has(Commands.HELP.getId())) {
-			return new HelpCommand();
-		} else if (options.has(Commands.VERSION.getId())) {
-			return new VersionCommand();
-		} else if (options.has(Commands.SCHEMATA.getId())) {
-			return new SchemataCommand();
-		}
-		
-		System.err.println("Don't know how to handle the command: " + StringHelper.join(args, " "));
-		return null;
-	}
-	
-	private static ICommand buildAppCommand(OptionSet options, List<String> command) {
+	protected static ICommand buildAppCommand(OptionSet options, List<String> command) {
 		if (Commands.HELP.getId().equals(command.get(0))) {
 			return help(command);
 		} else if (Commands.VERSION.getId().equals(command.get(0))) {

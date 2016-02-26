@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
@@ -35,19 +37,19 @@ public class CliHelperTest {
 	public void testBuildCommand() {
 		OptionParser parser = CliHelper.parseOptions();
 		OptionSet options = parser.parse(new String[0]);
-		ICommand command = CliHelper.buildCommand(new String[0], options);
+		ICommand command = CliHelper.buildAppCommand(options, Arrays.asList(""));
 		assertNull(command);
 		
 		options = parser.parse(new String[] { "-h" });
-		command = CliHelper.buildCommand(new String[0], options);
+		command = CliHelper.buildAppCommand(options, Arrays.asList("help"));
 		assertTrue(command instanceof HelpCommand);
 		
 		options = parser.parse(new String[] { "-v" });
-		command = CliHelper.buildCommand(new String[0], options);
+		command = CliHelper.buildAppCommand(options, Arrays.asList("version"));
 		assertTrue(command instanceof VersionCommand);
 		
 		options = parser.parse(new String[] { "-s" });
-		command = CliHelper.buildCommand(new String[0], options);
+		command = CliHelper.buildAppCommand(options, Arrays.asList("schemata"));
 		assertTrue(command instanceof SchemataCommand);
 	}
 	
