@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.aureliano.evtbridge.app.command.Commands;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
@@ -37,19 +38,19 @@ public final class CliHelper {
 		OptionSet options = parser.parse(args);
 		
 		List<String> command = nonOptions.values(options);
+		ICommand commandExecutor = null;
 		
-		if ("help".equals(command.get(0))) {
-			return help(unknownCommand, command);
+		if (command.isEmpty()) {
+			commandExecutor = buildLooseCommands(options);
+		} else {
+			commandExecutor = buildAppCommand(options, command);
 		}
 		
-		if (options.has("help")) {
-			return new HelpCommand();
-		} else if (options.has("version")) {
-			return new VersionCommand();
+		if (commandExecutor == null) {
+			System.err.println(unknownCommand);
 		}
 		
-		System.err.println(unknownCommand);
-		return null;
+		return commandExecutor;
 	}
 	
 	protected static OptionParser parseOptions() {
@@ -73,11 +74,41 @@ public final class CliHelper {
 		return null;
 	}
 	
-	private static ICommand help(String unknownCommandMessage, List<String> command) {
+	private static ICommand buildAppCommand(OptionSet options, List<String> command) {
+		if (Commands.HELP.getId().equals(command.get(0))) {
+			return help(command);
+		} else if (Commands.VERSION.getId().equals(command.get(0))) {
+			return version(command);
+		}
+		
+		return null;
+	}
+	
+	private static ICommand buildLooseCommands(OptionSet options) {
+		if (options.has("help")) {
+			return new HelpCommand();
+		} else if (options.has("version")) {
+			return new VersionCommand();
+		}
+		
+		return null;
+	}
+	
+	private static ICommand help(List<String> command) {
 		if (command.size() > 2) {
-			System.err.println(unknownCommandMessage);
+			return null;
+		} else if (command.size() == 1) {
+			return new HelpCommand();
+		}
+		
+		return new HelpCommand().withCommand(command.get(1));
+	}
+	
+	private static ICommand version(List<String> command) {
+		if (command.size() > 1) {
 			return null;
 		}
-		return new HelpCommand().withCommand(command.get(1));
+		
+		return new VersionCommand();
 	}
 }
