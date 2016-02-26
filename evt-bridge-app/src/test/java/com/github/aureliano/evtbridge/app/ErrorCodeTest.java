@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.app.helper;
+package com.github.aureliano.evtbridge.app;
 
 import static org.junit.Assert.assertEquals;
 
