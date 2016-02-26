@@ -1,0 +1,51 @@
+{
+  "id": "event-collector-configuration.json",
+  "event_collection_scheduler": {
+    "id": "event-collection-schedule.json",
+    "execute_once_at_specific_time": {
+      "id": "execute-once-at-specific-time.json"
+    },
+    "execute_periodically_at_specific_time": {
+      "id": "execute-periodically-at-specific-time.json"
+    },
+    "execute_periodically": {
+      "id": "execute-periodically.json"
+    }
+  },
+  "input": {
+    "id": "input.json",
+    "external_command": {
+      "id": "input-external-command.json"
+    },
+    "file": {
+      "id": "input-file.json"
+    },
+    "file_tailer": {
+      "id": "input-file-tailer.json"
+    },
+    "standard": {
+      "id": "input-standard.json"
+    },
+    "url": {
+      "id": "input-url.json"
+    },
+    "jdbc": {
+      "id": "input-jdbc.json"
+    }
+  },
+  "output": {
+    "id": "output.json",
+    "elastic_search": {
+      "id": "output-elastic-search.json"
+    },
+    "file": {
+      "id": "output-file.json"
+    },
+    "standard": {
+      "id": "output-standard.json"
+    },
+    "jdbc": {
+      "id": "input-jdbc.json"
+    }
+  }
+}
