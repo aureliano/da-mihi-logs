@@ -24,5 +24,6 @@ public class EventBridgeMetadataTest {
 		assertEquals("1.7", metadata.getProperty("app.requirement.jvm"));
 		assertEquals("0.1.0:BETA-01", metadata.getProperty("app.version"));
 		assertEquals("2016-02-25", metadata.getProperty("app.release.date"));
+		assertEquals("evt-bridge.sh", metadata.getProperty("app.binary.linux"));
 	}
 }
