@@ -1,0 +1,17 @@
+Usage: ${app.binary.linux} [COMMAND] [ARGUMENTS]
+Required JVM ${app.requirement.jvm} or higher.
+
+${project.name} is a light weight Java project which provides some mechanisms in order to consume
+one or more data-sources as events and dispatch them to appropriate repositories.
+This application is an interface between configuration files and the ${project.name} API.
+Nevertheless you can develop your own application using that API which will guide you through
+the process of consume and save events. 
+
+Commands:
+   help - Show help description for a command
+
+Examples:
+   >>> PUT SOME EXAMPLES HERE!
+
+Report errors or suggestions to ${project.issues}
+Visit ${project.wiki} for more detailed insights.
