@@ -15,6 +15,10 @@ public class HelpCommand implements ICommand {
 		return (StringHelper.isEmpty(this.command)) ? this.generalHelp() : this.commandHelp();
 	}
 	
+	public String id() {
+		return Commands.HELP.getId();
+	}
+	
 	private ErrorCode generalHelp() {
 		EventBridgeMetadata metadata = EventBridgeMetadata.instance();
 		String help = FileHelper.readResource("app-help")

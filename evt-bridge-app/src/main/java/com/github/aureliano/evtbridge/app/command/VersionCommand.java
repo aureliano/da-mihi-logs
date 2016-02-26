@@ -19,4 +19,8 @@ public class VersionCommand implements ICommand {
 		System.out.println(versionMessage);
 		return null;
 	}
+	
+	public String id() {
+		return Commands.VERSION.getId();
+	}
 }
