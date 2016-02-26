@@ -11,7 +11,9 @@ import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConfigurationSourceType;
+import com.github.aureliano.evtbridge.core.EventBridgeMetadata;
 
+import joptsimple.OptionException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -32,11 +34,18 @@ public final class CliHelper {
 	}
 	
 	public static ICommand buildCommand(String[] args) {
-		final String unknownCommand = "Don't know how to handle the command: " + StringHelper.join(args, " ");
+		final String unknownCommand = invalidOptionMessage(args);
 		
 		OptionParser parser = parseOptions();
 		OptionSpec<String> nonOptions = parser.nonOptions().ofType(String.class);
-		OptionSet options = parser.parse(args);
+		OptionSet options = null;
+		
+		try {
+			options = parser.parse(args);
+		} catch (OptionException ex) {
+			System.err.println(unknownCommand);
+			return null;
+		}
 		
 		List<String> command = nonOptions.values(options);
 		ICommand commandExecutor = null;
@@ -60,6 +69,7 @@ public final class CliHelper {
 		parser.accepts(Commands.HELP.getId(), "Show this message");
 		parser.accepts(Commands.VERSION.getId(), "Show project version");
 		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
+		
 		parser.nonOptions().ofType(File.class);
 		
 		return parser;
@@ -75,6 +85,15 @@ public final class CliHelper {
 		}
 		
 		return null;
+	}
+	
+	private static String invalidOptionMessage(String[] args) {
+		return new StringBuilder()
+			.append(EventBridgeMetadata.instance().getProperty("app.binary.linux").replaceAll("\\.sh$", ""))
+			.append(": invalid option => ")
+			.append(StringHelper.join(args, " "))
+			.append("\n(-h --help) show valid options")
+			.toString();
 	}
 	
 	private static ICommand buildLooseCommands(OptionSet options) {
