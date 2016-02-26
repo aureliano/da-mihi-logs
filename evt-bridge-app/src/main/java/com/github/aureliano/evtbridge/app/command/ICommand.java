@@ -1,6 +1,8 @@
 package com.github.aureliano.evtbridge.app.command;
 
+import com.github.aureliano.evtbridge.app.ErrorCode;
+
 public interface ICommand {
 
-	public abstract void execute();
+	public abstract ErrorCode execute();
 }

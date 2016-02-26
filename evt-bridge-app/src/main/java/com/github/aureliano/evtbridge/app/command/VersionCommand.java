@@ -1,12 +1,13 @@
 package com.github.aureliano.evtbridge.app.command;
 
+import com.github.aureliano.evtbridge.app.ErrorCode;
 import com.github.aureliano.evtbridge.core.EventBridgeMetadata;
 
 public class VersionCommand implements ICommand {
 
 	public VersionCommand() {}
 	
-	public void execute() {
+	public ErrorCode execute() {
 		EventBridgeMetadata metadata = EventBridgeMetadata.instance();
 		
 		String versionMessage = String.format(
@@ -16,5 +17,6 @@ public class VersionCommand implements ICommand {
 		);
 		
 		System.out.println(versionMessage);
+		return null;
 	}
 }
