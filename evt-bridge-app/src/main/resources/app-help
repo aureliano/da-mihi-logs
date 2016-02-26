@@ -8,7 +8,9 @@ Nevertheless you can develop your own application using that API which will guid
 the process of consume and save events. 
 
 Commands:
-   help - Show help description for a command
+   help     - Show help description for a command
+   version  - Show application version number
+   schemata - List all configuration schema names
 
 Examples:
    >>> PUT SOME EXAMPLES HERE!
