@@ -2,14 +2,34 @@ package com.github.aureliano.evtbridge.core.doc;
 
 import java.util.Map;
 
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
-public class JsonSchemaBuilder implements ISchemaBuilder {
+public class JsonSchemaBuilder extends SchemaBuilder {
 
 	public JsonSchemaBuilder() {}
 
 	@Override
-	public Map<String, ?> build(SchemaTypes schemaType) {
-		return null;
+	public Map<String, Object> build(SchemaTypes schemaType) {
+		switch (schemaType) {
+		case ROOT:
+			return buildRootSchema();
+		default:
+			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
+		}
+	}
+
+	private Map<String, Object> buildRootSchema() {
+		if (super.schema != null) {
+			super.schema.clear();
+		}
+		
+		Class<? extends IConfiguration> configuration = EventCollectorConfiguration.class;
+		super.configureSchemaHeader(configuration);
+		super.configureSchemaProperties(configuration);
+		
+		return super.schema;
 	}
 }
