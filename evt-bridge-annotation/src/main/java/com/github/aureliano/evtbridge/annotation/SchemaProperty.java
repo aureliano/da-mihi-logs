@@ -9,6 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface SchemaProperty {
 
+	public abstract String property();
 	public abstract String type();
 	public abstract String description();
 	public abstract String defaultValue() default "";
