@@ -11,7 +11,7 @@ public final class SchemaBuilderFactory {
 		switch (sourceType) {
 			case JSON : return new JsonSchemaBuilder();
 			case YAML : return new YamlSchemaBuilder();
-			default : throw new EventBridgeException("Unsupported schema type '" + schemaType + "'.");
+			default : throw new EventBridgeException("Unsupported source type '" + sourceType + "'.");
 		}
 	}
 }
