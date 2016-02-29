@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface SchemaConfiguration {
 
-	public abstract String schema() default com.github.aureliano.evtbridge.common.doc.SchemaConfiguration.SCHEMA_DRAFT;
+	public abstract String schema() default "http://json-schema.org/draft-04/schema#";
 	public abstract String title();
-	public abstract String type() default com.github.aureliano.evtbridge.common.doc.SchemaConfiguration.SCHEMA_TYPE;
+	public abstract String type() default "Events collector configuration schema.";
 }
