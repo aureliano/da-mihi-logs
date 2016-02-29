@@ -4,11 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.github.aureliano.evtbridge.annotation.SchemaProperty;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.core.listener.EventsCollectorListener;
 import com.github.aureliano.evtbridge.core.schedule.IScheduler;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Events collector configuration schema.",
+	type = "object"
+)
 public class EventCollectorConfiguration implements IConfiguration {
 
 	private String collectorId;
@@ -32,6 +38,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 
 	@SchemaProperty(
+		property = "inputConfigs",
 		type = "array",
 		description = "Input configurations.",
 		reference = InputConfigTypes.class
@@ -51,6 +58,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 
 	@SchemaProperty(
+		property = "outputConfigs",
 		type = "array",
 		description = "Output configurations.",
 		reference = OutputConfigTypes.class
@@ -70,6 +78,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 	
 	@SchemaProperty(
+		property = "persistExecutionLog",
 		type = "boolean",
 		description = "Whether it has to persist to disk log execution or not.",
 		defaultValue = "false"
@@ -84,6 +93,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 	
 	@SchemaProperty(
+		property = "multiThreadingEnabled",
 		type = "boolean",
 		description = "Whether it has to enable multi-threading. That means: for each input a new thread will be created.",
 		defaultValue = "false"
@@ -108,6 +118,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 
 	@SchemaProperty(
+		property = "scheduler",
 		type = "object",
 		description = "Schedule events collector for execution.",
 		reference = SchedulerTypes.class
@@ -117,6 +128,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 
 	@SchemaProperty(
+		property = "eventsCollectorListeners",
 		type = "array",
 		description = "Register listeners."
 	)
@@ -147,6 +159,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	@Override
 	@SchemaProperty(
+		property = "metadata",
 		type = "object",
 		description = "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
 	)
@@ -160,6 +173,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 	
 	@SchemaProperty(
+		property = "collectorId",
 		type = "string",
 		description = "Event collector id.",
 		defaultValue = "Auto-generated id."
