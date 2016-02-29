@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.evtbridge.annotation.SchemaProperty;
 import com.github.aureliano.evtbridge.core.listener.EventsCollectorListener;
 import com.github.aureliano.evtbridge.core.schedule.IScheduler;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class EventCollectorConfiguration implements IConfiguration {
 
@@ -29,6 +31,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.eventsCollectorListeners = new ArrayList<EventsCollectorListener>();
 	}
 
+	@SchemaProperty(
+		type = "array",
+		description = "Input configurations.",
+		reference = InputConfigTypes.class
+	)
 	public List<IConfigInput> getInputConfigs() {
 		return inputConfigs;
 	}
@@ -42,7 +49,12 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.inputConfigs.add(inputConfig);
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		type = "array",
+		description = "Output configurations.",
+		reference = OutputConfigTypes.class
+	)
 	public List<IConfigOutput> getOutputConfigs() {
 		return outputConfigs;
 	}
@@ -57,6 +69,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 		return this;
 	}
 	
+	@SchemaProperty(
+		type = "boolean",
+		description = "Whether it has to persist to disk log execution or not.",
+		defaultValue = "false"
+	)
 	public boolean isPersistExecutionLog() {
 		return persistExecutionLog;
 	}
@@ -66,6 +83,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 		return this;
 	}
 	
+	@SchemaProperty(
+		type = "boolean",
+		description = "Whether it has to enable multi-threading. That means: for each input a new thread will be created.",
+		defaultValue = "false"
+	)
 	public boolean isMultiThreadingEnabled() {
 		return multiThreadingEnabled;
 	}
@@ -84,11 +106,20 @@ public class EventCollectorConfiguration implements IConfiguration {
 		this.scheduler = scheduler;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		type = "object",
+		description = "Schedule events collector for execution.",
+		reference = SchedulerTypes.class
+	)
 	public IScheduler getScheduler() {
 		return scheduler;
 	}
-	
+
+	@SchemaProperty(
+		type = "array",
+		description = "Register listeners."
+	)
 	public List<EventsCollectorListener> getEventsCollectorListeners() {
 		return eventsCollectorListeners;
 	}
@@ -115,6 +146,10 @@ public class EventCollectorConfiguration implements IConfiguration {
 	}
 	
 	@Override
+	@SchemaProperty(
+		type = "object",
+		description = "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
+	)
 	public Properties getMetadata() {
 		return this.metadata;
 	}
@@ -124,6 +159,11 @@ public class EventCollectorConfiguration implements IConfiguration {
 		throw new UnsupportedOperationException("Unsupported clone operation.");
 	}
 	
+	@SchemaProperty(
+		type = "string",
+		description = "Event collector id.",
+		defaultValue = "Auto-generated id."
+	)
 	public String getCollectorId() {
 		return collectorId;
 	}
