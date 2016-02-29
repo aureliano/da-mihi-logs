@@ -4,12 +4,12 @@ import java.util.Map;
 
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 
-public class YamlSchemaBuilder implements ISchemaBuilder {
+public class YamlSchemaBuilder extends SchemaBuilder {
 
 	public YamlSchemaBuilder() {}
 
 	@Override
-	public Map<String, ?> build(SchemaTypes schemaType) {
+	public Map<String, Object> build(SchemaTypes schemaType) {
 		return null;
 	}
 }
