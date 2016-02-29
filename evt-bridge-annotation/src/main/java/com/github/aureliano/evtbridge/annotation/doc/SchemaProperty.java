@@ -1,4 +1,4 @@
-package com.github.aureliano.evtbridge.annotation;
+package com.github.aureliano.evtbridge.annotation.doc;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
