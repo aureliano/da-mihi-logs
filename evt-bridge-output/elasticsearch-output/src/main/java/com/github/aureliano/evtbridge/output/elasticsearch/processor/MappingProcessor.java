@@ -539,14 +539,14 @@ public class MappingProcessor {
 
 		if (indexableProperty.similarity() != SimilarityEnum.NA) {
 			switch (indexableProperty.similarity()) {
-				case DEFAULT:
-					fieldMap.put("similarity", indexableProperty.postingsFormat().toString().toLowerCase());
-					break;
-				case BM25: // BM25 should be uppercase
-					fieldMap.put("similarity", indexableProperty.postingsFormat().toString().toUpperCase());
-					break;
-				default:
-					break;
+			case DEFAULT:
+				fieldMap.put("similarity", indexableProperty.postingsFormat().toString().toLowerCase());
+				break;
+			case BM25: // BM25 should be uppercase
+				fieldMap.put("similarity", indexableProperty.postingsFormat().toString().toUpperCase());
+				break;
+			default:
+				break;
 			}
 		}
 
