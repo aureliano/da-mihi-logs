@@ -21,6 +21,6 @@ public class StandardOutputConverter extends AbstractConfigOutputConverter<Stand
 	
 	@Override
 	public String id() {
-		return OutputConfigTypes.STANDARD_OUTPUT.name();
+		return OutputConfigTypes.STANDARD.name();
 	}
 }
