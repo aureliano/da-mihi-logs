@@ -64,4 +64,22 @@ public class JsonSchemaBuilderTest {
 		assertTrue(json.contains("\"url\""));
 		assertTrue(json.contains("\"jdbc\""));
 	}
+
+	@Test
+	public void testBuildOutput() {
+		String json = new JsonSchemaBuilder().build(SchemaTypes.OUTPUT);
+
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Output configuration."));
+		assertTrue(json.contains("object"));
+		
+		assertTrue(json.contains("  \"properties\" : {"));
+		
+		assertTrue(json.contains("    \"type\" : {"));
+		assertTrue(json.contains("      \"anyOf\" : ["));
+		assertTrue(json.contains("\"file\""));
+		assertTrue(json.contains("\"standard\""));
+		assertTrue(json.contains("\"jdbc\""));
+		assertTrue(json.contains("\"elastic_search\""));
+	}
 }
