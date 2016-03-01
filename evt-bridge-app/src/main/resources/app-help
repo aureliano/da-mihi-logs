@@ -11,6 +11,7 @@ Commands:
    help     - Show help description for a command
    version  - Show application version number
    schemata - List all configuration schema names
+   schema   - Print a schema configuration
 
 Examples:
    >>> PUT SOME EXAMPLES HERE!
