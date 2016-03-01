@@ -27,4 +27,21 @@ public class JsonSchemaBuilderTest {
 		assertTrue(json.contains("\"outputConfigs\" : {"));
 		assertTrue(json.contains("\"inputConfigs\" : {"));
 	}
+
+	@Test
+	public void testBuildScheduler() {
+		String json = new JsonSchemaBuilder().build(SchemaTypes.SCHEDULER);
+
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Scheduling execution configuration."));
+		assertTrue(json.contains("object"));
+		
+		assertTrue(json.contains("  \"properties\" : {"));
+		
+		assertTrue(json.contains("    \"type\" : {"));
+		assertTrue(json.contains("      \"anyOf\" : ["));
+		assertTrue(json.contains("\"execute_once_at_specific_time\""));
+		assertTrue(json.contains("\"execute_periodically_at_specific_time\""));
+		assertTrue(json.contains("\"execute_periodically\""));
+	}
 }

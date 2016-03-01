@@ -18,12 +18,7 @@ public class JsonSchemaBuilder extends SchemaBuilder<String> {
 
 	@Override
 	public String build(SchemaTypes schemaType) {
-		switch (schemaType) {
-		case ROOT:
-			return this.convertMapToJson(this.builder.build(schemaType));
-		default:
-			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
-		}
+		return this.convertMapToJson(this.builder.build(schemaType));
 	}
 	
 	private String convertMapToJson(Map<String, Object> map) {
