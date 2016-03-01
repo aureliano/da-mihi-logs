@@ -63,4 +63,21 @@ public class YamlSchemaBuilderTest {
 		assertTrue(yaml.contains("url"));
 		assertTrue(yaml.contains("jdbc"));
 	}
+
+	@Test
+	public void testBuildOutput() {
+		String yaml = new YamlSchemaBuilder().build(SchemaTypes.OUTPUT);
+
+		assertTrue(yaml.contains("Output configuration."));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  type:"));
+		assertTrue(yaml.contains("    anyOf:"));
+		assertTrue(yaml.contains("file"));
+		assertTrue(yaml.contains("elastic_search"));
+		assertTrue(yaml.contains("standard"));
+		assertTrue(yaml.contains("jdbc"));
+	}
 }
