@@ -20,7 +20,7 @@ public class FileOutputConfig implements IConfigOutput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(OutputConfigTypes.FILE_OUTPUT.name())
+			.withId(OutputConfigTypes.FILE.name())
 			.withAgent(FileDataWriter.class)
 			.withConfiguration(FileOutputConfig.class)
 			.withConverter(FileOutputConverter.class);
@@ -48,7 +48,7 @@ public class FileOutputConfig implements IConfigOutput {
 
 	@Override
 	public String id() {
-		return OutputConfigTypes.FILE_OUTPUT.name();
+		return OutputConfigTypes.FILE.name();
 	}
 
 	@NotNull

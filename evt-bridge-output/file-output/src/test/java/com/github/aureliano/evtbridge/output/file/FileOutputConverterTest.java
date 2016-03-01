@@ -57,6 +57,6 @@ public class FileOutputConverterTest {
 	
 	@Test
 	public void testId() {
-		assertEquals(OutputConfigTypes.FILE_OUTPUT.name(), new FileOutputConverter().id());
+		assertEquals(OutputConfigTypes.FILE.name(), new FileOutputConverter().id());
 	}
 }
