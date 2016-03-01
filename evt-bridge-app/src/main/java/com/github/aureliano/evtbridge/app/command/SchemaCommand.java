@@ -9,15 +9,19 @@ import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
 
 public class SchemaCommand implements ICommand {
 
+	private static final String DEFAULT_FORMAT = "json";
+	
 	private String type;
 	private String name;
 	private String format;
 	
-	public SchemaCommand() {
-		this.format = "json";
-	}
+	public SchemaCommand() {}
 
 	public ErrorCode execute() {
+		if (StringHelper.isEmpty(this.format)) {
+			this.format = DEFAULT_FORMAT;
+		}
+		
 		ErrorCode errorCode = this.validate();
 		if (errorCode == null) {
 			System.out.println(ConfigurationSchemaHelper.fetchSchema(this.type, this.name, this.format));
