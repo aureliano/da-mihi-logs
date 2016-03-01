@@ -9,15 +9,18 @@ public class SchemaCommand implements ICommand {
 
 	private String type;
 	private String name;
+	private String format;
 	
-	public SchemaCommand() {}
+	public SchemaCommand() {
+		this.format = "json";
+	}
 
 	public ErrorCode execute() {
 		if (StringHelper.isEmpty(this.type)) {
 			throw new EventBridgeException("Parameter (-t --type) is required.");
 		}
 		
-		System.out.println(ConfigurationSchemaHelper.fetchSchema(this.type, this.name));
+		System.out.println(ConfigurationSchemaHelper.fetchSchema(this.type, this.name, this.format));
 		return null;
 	}
 
@@ -40,6 +43,15 @@ public class SchemaCommand implements ICommand {
 
 	public SchemaCommand withName(String name) {
 		this.name = name;
+		return this;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public SchemaCommand withFormat(String format) {
+		this.format = format;
 		return this;
 	}
 }
