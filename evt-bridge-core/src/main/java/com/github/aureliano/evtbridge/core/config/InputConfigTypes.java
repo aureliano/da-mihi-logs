@@ -7,6 +7,5 @@ public enum InputConfigTypes {
 	FILE_TAILER,
 	STANDARD_INPUT,
 	URL,
-	JDBC_INPUT,
-	TWITTER_INPUT;
+	JDBC_INPUT;
 }
