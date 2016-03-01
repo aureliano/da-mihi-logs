@@ -29,7 +29,7 @@ public class JdbcOutputConverterTest {
 		data.put("metadata", metadata);
 		data.put("connection", connection);
 		
-		data.put("type", OutputConfigTypes.JDBC_OUTPUT);
+		data.put("type", OutputConfigTypes.JDBC);
 		
 		JdbcOutputConfig conf = new JdbcOutputConverter().convert(data);
 		
@@ -45,6 +45,6 @@ public class JdbcOutputConverterTest {
 	
 	@Test
 	public void testId() {
-		Assert.assertEquals(OutputConfigTypes.JDBC_OUTPUT.name(), new JdbcOutputConverter().id());
+		Assert.assertEquals(OutputConfigTypes.JDBC.name(), new JdbcOutputConverter().id());
 	}
 }

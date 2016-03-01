@@ -21,7 +21,7 @@ public class JdbcOutputConfig implements IConfigOutput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(OutputConfigTypes.JDBC_OUTPUT.name())
+			.withId(OutputConfigTypes.JDBC.name())
 			.withAgent(JdbcDataWriter.class)
 			.withConfiguration(JdbcOutputConfig.class);
 		
@@ -58,7 +58,7 @@ public class JdbcOutputConfig implements IConfigOutput {
 
 	@Override
 	public String id() {
-		return OutputConfigTypes.JDBC_OUTPUT.name();
+		return OutputConfigTypes.JDBC.name();
 	}
 
 	@Override
