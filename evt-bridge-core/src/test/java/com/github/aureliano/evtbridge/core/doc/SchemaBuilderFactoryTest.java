@@ -8,7 +8,7 @@ public class SchemaBuilderFactoryTest {
 
 	@Test
 	public void testCreateBuilder() {
-		ISchemaBuilder builder = SchemaBuilderFactory.createBuilder(DocumentationSourceTypes.JSON, null);
+		ISchemaBuilder<?> builder = SchemaBuilderFactory.createBuilder(DocumentationSourceTypes.JSON, null);
 		assertTrue(builder instanceof JsonSchemaBuilder);
 		
 		builder = SchemaBuilderFactory.createBuilder(DocumentationSourceTypes.YAML, null);
