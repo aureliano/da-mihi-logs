@@ -15,23 +15,7 @@ public final class ConfigurationSchemaHelper {
 		final SchemaTypes schemaType = SchemaTypes.valueOf(type.toUpperCase());
 		final DocumentationSourceTypes sourceType = DocumentationSourceTypes.valueOf(format.toUpperCase());
 		
-		if (SchemaTypes.ROOT.equals(schemaType)) {
-			return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(schemaType);
-		}
-		
-		throw new EventBridgeException("Not supported yet.");
-		
-		/*if ("root".equals(type)) {
-			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, rootSchema.get("id").toString());
-		} else {
-			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, findSchemaId(rootSchema, type, name));
-		}
-		
-		try {
-			return FileHelper.readResource(schemaPath);
-		} catch (Exception ex) {
-			throw new EventBridgeException(ex, "Could not load schema file " + schemaPath);
-		}*/
+		return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(schemaType);
 	}
 	
 	private static ISchemaBuilder<String> getSchemaBuilder(DocumentationSourceTypes sourceType) {
