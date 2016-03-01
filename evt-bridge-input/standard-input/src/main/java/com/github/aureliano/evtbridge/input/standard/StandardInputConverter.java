@@ -22,6 +22,6 @@ public class StandardInputConverter extends AbstractConfigInputConverter<IConfig
 	
 	@Override
 	public String id() {
-		return InputConfigTypes.STANDARD_INPUT.name();
+		return InputConfigTypes.STANDARD.name();
 	}
 }
