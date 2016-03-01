@@ -13,6 +13,8 @@ Commands:
    schemata - List all configuration schema names
    schema   - Print a schema configuration
 
+See '${app.binary.linux} help <command>' for more information on a specific command.
+
 Examples:
    >>> PUT SOME EXAMPLES HERE!
 

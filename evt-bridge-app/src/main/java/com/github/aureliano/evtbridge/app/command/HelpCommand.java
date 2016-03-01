@@ -21,7 +21,7 @@ public class HelpCommand implements ICommand {
 	
 	private ErrorCode generalHelp() {
 		EventBridgeMetadata metadata = EventBridgeMetadata.instance();
-		String help = FileHelper.readResource("app-help")
+		String help = FileHelper.readResource("help/app.help")
 			.replaceAll("\\$\\{app.binary.linux\\}", metadata.getProperty("app.binary.linux"))
 			.replaceAll("\\$\\{app.requirement.jvm\\}", metadata.getProperty("app.requirement.jvm"))
 			.replaceAll("\\$\\{project.name\\}", metadata.getProperty("project.name"))
