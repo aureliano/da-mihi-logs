@@ -5,7 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.junit.Test;
+
+import com.github.aureliano.evtbridge.common.model.CommonTypes;
 
 public class StringHelperTest {
 
@@ -42,6 +46,13 @@ public class StringHelperTest {
 	public void testJoin() {
 		assertEquals("12345", StringHelper.join(new Object[] {1, 2, 3, 4, 5}));
 		assertEquals("1, 2, 3, 4, 5", StringHelper.join(new Object[] {1, 2, 3, 4, 5}, ", "));
+		
+		assertEquals("1, 2, 3, 4, 5", StringHelper.join(Arrays.asList(1, 2, 3, 4, 5), ", "));
+		
+		assertEquals(
+			"SARUMAN, GANDALF, RADAGAST, ALATAR, PALLANDO",
+			StringHelper.join(CommonTypes.values(), ", ")
+		);
 	}
 	
 	@Test

@@ -1,6 +1,9 @@
 package com.github.aureliano.evtbridge.common.helper;
 
+import java.lang.reflect.Method;
 import java.util.List;
+
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
 public final class StringHelper {
 
@@ -48,6 +51,16 @@ public final class StringHelper {
 	
 	public static String join(List<?> objects, String separator) {
 		return join(objects.toArray(), separator);
+	}
+	
+	public static String join(Class<? extends Enum<?>> e, String separator) {
+		Method method = ReflectionHelper.getMethod(e, "values", new Class<?>[0]);
+		try {
+			Object[] values = (Object[]) method.invoke(null, new Object[0]);
+			return join(values, separator);
+		} catch (Exception ex) {
+			throw new EventBridgeException(ex);
+		}
 	}
 	
 	public static boolean isNumeric(String value) {
