@@ -17,12 +17,18 @@ public final class TimeHelper {
 	
 	public static long convertToMilliseconds(TimeUnit timeUnit, long seed) {
 		switch (timeUnit) {
-			case MILLISECONDS : return seed;
-			case SECONDS : return fromSeconds(seed);
-			case MINUTES : return fromMinutes(seed);
-			case HOURS : return fromHours(seed);
-			case DAYS : return fromDays(seed);
-			default : throw new IllegalArgumentException(
+		case MILLISECONDS:
+			return seed;
+		case SECONDS:
+			return fromSeconds(seed);
+		case MINUTES:
+			return fromMinutes(seed);
+		case HOURS:
+			return fromHours(seed);
+		case DAYS:
+			return fromDays(seed);
+		default:
+			throw new IllegalArgumentException(
 				"Unsupported time unit. The smallest time unit supported is " +
 					TimeUnit.MILLISECONDS + " but got " + timeUnit);
 		}
