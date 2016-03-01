@@ -2,7 +2,8 @@ package com.github.aureliano.evtbridge.app;
 
 public enum ErrorCode {
 
-	COMMAND_NOT_FOUND(100);
+	COMMAND_NOT_FOUND(100),
+	SCHEMA_PARAM_ERROR(200);
 	
 	private int code;
 	
