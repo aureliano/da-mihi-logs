@@ -28,4 +28,20 @@ public class YamlSchemaBuilderTest {
 		assertTrue(yaml.contains("  outputConfigs:"));
 		assertTrue(yaml.contains("  inputConfigs:"));
 	}
+
+	@Test
+	public void testBuildScheduler() {
+		String yaml = new YamlSchemaBuilder().build(SchemaTypes.SCHEDULER);
+
+		assertTrue(yaml.contains("Scheduling execution configuration."));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  type:"));
+		assertTrue(yaml.contains("    anyOf:"));
+		assertTrue(yaml.contains("execute_once_at_specific_time"));
+		assertTrue(yaml.contains("execute_periodically_at_specific_time"));
+		assertTrue(yaml.contains("execute_periodically"));
+	}
 }

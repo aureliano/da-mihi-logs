@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
 
-import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 
 public class YamlSchemaBuilder extends SchemaBuilder<String> {
@@ -17,12 +16,7 @@ public class YamlSchemaBuilder extends SchemaBuilder<String> {
 
 	@Override
 	public String build(SchemaTypes schemaType) {
-		switch (schemaType) {
-		case ROOT:
-			return this.convertMapToYaml(this.builder.build(schemaType));
-		default:
-			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
-		}
+		return this.convertMapToYaml(this.builder.build(schemaType));
 	}
 
 	private String convertMapToYaml(Map<String, Object> map) {
