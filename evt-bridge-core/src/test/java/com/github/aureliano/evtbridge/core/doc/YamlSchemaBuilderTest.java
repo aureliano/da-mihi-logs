@@ -44,4 +44,23 @@ public class YamlSchemaBuilderTest {
 		assertTrue(yaml.contains("execute_periodically_at_specific_time"));
 		assertTrue(yaml.contains("execute_periodically"));
 	}
+
+	@Test
+	public void testBuildInput() {
+		String yaml = new YamlSchemaBuilder().build(SchemaTypes.INPUT);
+
+		assertTrue(yaml.contains("Input configuration."));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  type:"));
+		assertTrue(yaml.contains("    anyOf:"));
+		assertTrue(yaml.contains("external_command"));
+		assertTrue(yaml.contains("file"));
+		assertTrue(yaml.contains("file_tailer"));
+		assertTrue(yaml.contains("standard"));
+		assertTrue(yaml.contains("url"));
+		assertTrue(yaml.contains("jdbc"));
+	}
 }
