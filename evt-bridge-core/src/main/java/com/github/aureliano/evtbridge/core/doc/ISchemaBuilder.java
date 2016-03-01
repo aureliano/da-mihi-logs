@@ -1,10 +1,8 @@
 package com.github.aureliano.evtbridge.core.doc;
 
-import java.util.Map;
-
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 
-public interface ISchemaBuilder {
+public interface ISchemaBuilder<T> {
 
-	public abstract Map<String, Object> build(SchemaTypes schemaType);
+	public abstract T build(SchemaTypes schemaType);
 }

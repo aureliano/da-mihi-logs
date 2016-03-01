@@ -7,15 +7,15 @@ import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
 
-public class JsonSchemaBuilder extends SchemaBuilder {
+public class JsonSchemaBuilder extends SchemaBuilder<String> {
 
 	public JsonSchemaBuilder() {}
 
 	@Override
-	public Map<String, Object> build(SchemaTypes schemaType) {
+	public String build(SchemaTypes schemaType) {
 		switch (schemaType) {
 		case ROOT:
-			return buildRootSchema();
+			return buildRootSchema().toString();
 		default:
 			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
 		}

@@ -13,7 +13,7 @@ import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
-public abstract class SchemaBuilder implements ISchemaBuilder {
+public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 
 	protected Map<String, Object> schema;
 	

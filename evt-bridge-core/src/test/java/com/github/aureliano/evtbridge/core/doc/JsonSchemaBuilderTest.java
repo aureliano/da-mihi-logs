@@ -1,9 +1,6 @@
 package com.github.aureliano.evtbridge.core.doc;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Map;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -14,23 +11,21 @@ public class JsonSchemaBuilderTest {
 
 	@Test
 	public void testBuildRoot() throws JsonProcessingException {
-		Map<String, Object> map = new JsonSchemaBuilder().build(SchemaTypes.ROOT);
+		String json = new JsonSchemaBuilder().build(SchemaTypes.ROOT);
 		
-		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
-		assertEquals("Events collector configuration schema.", map.get("title"));
-		assertEquals("object", map.get("type"));
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Events collector configuration schema."));
+		assertTrue(json.contains("object"));
 		
-		@SuppressWarnings("unchecked")
-		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
-		assertEquals(8, properties.size());
+		assertTrue(json.contains("properties"));
 		
-		assertNotNull(properties.get("collectorId"));
-		assertNotNull(properties.get("metadata"));
-		assertNotNull(properties.get("eventsCollectorListeners"));
-		assertNotNull(properties.get("scheduler"));
-		assertNotNull(properties.get("multiThreadingEnabled"));
-		assertNotNull(properties.get("persistExecutionLog"));
-		assertNotNull(properties.get("outputConfigs"));
-		assertNotNull(properties.get("inputConfigs"));
+		assertTrue(json.contains("collectorId"));
+		assertTrue(json.contains("metadata"));
+		assertTrue(json.contains("eventsCollectorListeners"));
+		assertTrue(json.contains("scheduler"));
+		assertTrue(json.contains("multiThreadingEnabled"));
+		assertTrue(json.contains("persistExecutionLog"));
+		assertTrue(json.contains("outputConfigs"));
+		assertTrue(json.contains("inputConfigs"));
 	}
 }
