@@ -21,7 +21,7 @@ public class FileInputConfig implements IConfigInput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(InputConfigTypes.FILE_INPUT.name())
+			.withId(InputConfigTypes.FILE.name())
 			.withAgent(FileDataReader.class)
 			.withConfiguration(FileInputConfig.class)
 			.withConverter(FileInputConverter.class);
@@ -201,6 +201,6 @@ public class FileInputConfig implements IConfigInput {
 
 	@Override
 	public String id() {
-		return InputConfigTypes.FILE_INPUT.name();
+		return InputConfigTypes.FILE.name();
 	}
 }
