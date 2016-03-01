@@ -65,4 +65,20 @@ public class MapSchemaBuilderTest {
 		
 		assertEquals(6, anyOf.size());
 	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testBuildOutput() {
+		Map<String, Object> map = new MapSchemaBuilder().build(SchemaTypes.OUTPUT);
+		
+		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
+		assertEquals("Output configuration.", map.get("title"));
+		assertEquals("object", map.get("type"));
+		
+		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+		Map<String, Object> type = (Map<String, Object>) properties.get("type");
+		List<Map<String, Object>> anyOf = (List<Map<String, Object>>) type.get("anyOf");
+		
+		assertEquals(4, anyOf.size());
+	}
 }

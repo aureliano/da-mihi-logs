@@ -10,6 +10,7 @@ import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
 import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
+import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
@@ -25,9 +26,15 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 			return this.buildSchedulerSchema();
 		case INPUT:
 			return this.buildInputSchema();
+		case OUTPUT:
+			return this.buildOutputSchema();
 		default:
 			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
 		}
+	}
+
+	private Map<String, Object> buildOutputSchema() {
+		return this.buildAggregationSchema("Output configuration.", OutputConfigTypes.values());
 	}
 
 	private Map<String, Object> buildInputSchema() {
