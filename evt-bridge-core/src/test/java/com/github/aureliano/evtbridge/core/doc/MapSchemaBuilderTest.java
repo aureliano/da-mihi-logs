@@ -3,6 +3,7 @@ package com.github.aureliano.evtbridge.core.doc;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
@@ -31,5 +32,21 @@ public class MapSchemaBuilderTest {
 		assertNotNull(properties.get("persistExecutionLog"));
 		assertNotNull(properties.get("outputConfigs"));
 		assertNotNull(properties.get("inputConfigs"));
+	}
+
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testBuildScheduler() {
+		Map<String, Object> map = new MapSchemaBuilder().build(SchemaTypes.SCHEDULER);
+		
+		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
+		assertEquals("Scheduling execution configuration.", map.get("title"));
+		assertEquals("object", map.get("type"));
+		
+		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+		Map<String, Object> type = (Map<String, Object>) properties.get("type");
+		List<Map<String, Object>> anyOf = (List<Map<String, Object>>) type.get("anyOf");
+		
+		assertEquals(3, anyOf.size());
 	}
 }
