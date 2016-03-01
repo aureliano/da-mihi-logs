@@ -1,0 +1,17 @@
+NAME
+   schemata - List all configuration schema names
+
+SYNOPSIS
+   ${app.binary.linux} schemata
+
+DESCRIPTION
+   This command is used to list all configuration schema names.
+   It is useful when you want to create your configuration files and don't know how to do it.
+   After you'll probably want to use the schema command.
+
+   ${app.binary.linux} schemata
+   
+   That command will print all available schema names.
+
+OPTIONS
+   None
