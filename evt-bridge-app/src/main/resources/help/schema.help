@@ -1,0 +1,25 @@
+NAME
+   schema - Print a schema configuration
+
+SYNOPSIS
+   ${app.binary.linux} schema <options>...
+
+DESCRIPTION
+   This command is used to print a schema configuration.
+   A schema shows the structure of a configuration that you'll need to know in order to execute collection events routines.
+
+   ${app.binary.linux} schema -t [type]
+   
+   That command will print the schema of type [type].
+
+OPTIONS
+   -t, --type
+      The schema type. Execute the <schemata> command in order to see those available types.
+   
+   -n, --name
+      The name of an input/output agent or even a scheduler.
+   
+   -f, --format
+      Give the output in the provided format.
+      Available: [${format.types}].
+      Default: json
