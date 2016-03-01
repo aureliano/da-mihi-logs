@@ -4,13 +4,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 
 public class JsonSchemaBuilderTest {
 
 	@Test
-	public void testBuildRoot() throws JsonProcessingException {
+	public void testBuildRoot() {
 		String json = new JsonSchemaBuilder().build(SchemaTypes.ROOT);
 		
 		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
