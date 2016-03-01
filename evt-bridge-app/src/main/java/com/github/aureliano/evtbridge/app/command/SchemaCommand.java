@@ -2,7 +2,6 @@ package com.github.aureliano.evtbridge.app.command;
 
 import com.github.aureliano.evtbridge.app.ErrorCode;
 import com.github.aureliano.evtbridge.app.helper.ConfigurationSchemaHelper;
-import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
@@ -31,21 +30,17 @@ public class SchemaCommand implements ICommand {
 	}
 	
 	private ErrorCode validate() {
-		if (StringHelper.isEmpty(this.type)) {
-			throw new EventBridgeException("Parameter (-t --type) is required.");
-		}
-		
 		try {
 			SchemaTypes.valueOf(this.type.toUpperCase());
-		} catch (IllegalArgumentException ex) {
-			System.err.println("Invalid schema type parameter [" + this.type + "]");
+		} catch (Exception ex) {
+			System.err.println("Invalid schema type (-t --type) parameter [" + this.type + "]");
 			return ErrorCode.SCHEMA_PARAM_ERROR;
 		}
 		
 		try {
 			DocumentationSourceTypes.valueOf(this.format.toUpperCase());
 		} catch (IllegalArgumentException ex) {
-			System.err.println("Invalid schema format parameter [" + this.format+ "]");
+			System.err.println("Invalid schema format (-f --format) parameter [" + this.format+ "]");
 			return ErrorCode.SCHEMA_PARAM_ERROR;
 		}
 		
