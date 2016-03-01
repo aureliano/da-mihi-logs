@@ -52,7 +52,7 @@ public class CliHelperTest {
 		command = CliHelper.buildAppCommand(options, Arrays.asList("schemata"));
 		assertTrue(command instanceof SchemataCommand);
 		
-		options = parser.parse(new String[] { "--schema", "-t", "input", "-n", "standard" });
+		options = parser.parse(new String[] { "--schema", "-t", "input", "-n", "standard", "-f", "json" });
 		command = CliHelper.buildAppCommand(options, Arrays.asList("schema"));
 		assertTrue(command instanceof SchemaCommand);
 	}

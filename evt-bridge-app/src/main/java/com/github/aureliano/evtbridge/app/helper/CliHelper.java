@@ -74,6 +74,7 @@ public final class CliHelper {
 		
 		parser.accepts("type").requiredIf(Commands.SCHEMA.getId()).withRequiredArg();
 		parser.accepts("name").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
+		parser.accepts("format").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
 		
 		parser.nonOptions().ofType(File.class);
 		
@@ -90,7 +91,9 @@ public final class CliHelper {
 		} else if (Commands.SCHEMA.getId().equals(command.get(0))) {
 			String type = StringHelper.parse(options.valueOf("type"));
 			String name = StringHelper.parse(options.valueOf("name"));
-			return schema(command, type, name);
+			String format = StringHelper.parse(options.valueOf("format"));
+			
+			return schema(command, type, name, format);
 		}
 		
 		return null;
@@ -143,11 +146,11 @@ public final class CliHelper {
 		return new SchemataCommand();
 	}
 	
-	private static ICommand schema(List<String> command, String type, String name) {
+	private static ICommand schema(List<String> command, String type, String name, String format) {
 		if (command.size() > 1) {
 			return null;
 		}
 		
-		return new SchemaCommand().withType(type).withName(name);
+		return new SchemaCommand().withType(type).withName(name).withFormat(format);
 	}
 }
