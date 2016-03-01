@@ -7,7 +7,7 @@ public final class SchemaBuilderFactory {
 
 	private SchemaBuilderFactory() {}
 	
-	public static ISchemaBuilder createBuilder(DocumentationSourceTypes sourceType, SchemaTypes schemaType) {
+	public static ISchemaBuilder<?> createBuilder(DocumentationSourceTypes sourceType, SchemaTypes schemaType) {
 		switch (sourceType) {
 			case JSON : return new JsonSchemaBuilder();
 			case YAML : return new YamlSchemaBuilder();
