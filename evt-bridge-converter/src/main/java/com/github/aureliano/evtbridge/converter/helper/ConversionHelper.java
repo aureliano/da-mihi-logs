@@ -15,9 +15,12 @@ public final class ConversionHelper {
 	
 	public static EventCollectorConfiguration loadConfiguration(String path, ConfigurationSourceType type) {
 		switch (type) {
-			case YAML: return convertFromYaml(path);
-			case JSON: return convertFromJson(path);
-			default: throw new ConfigurationConverterException("Configuration source type '" + type + "' not supported.");
+		case YAML:
+			return convertFromYaml(path);
+		case JSON:
+			return convertFromJson(path);
+		default:
+			throw new ConfigurationConverterException("Configuration source type '" + type + "' not supported.");
 		}
 	}
 	
