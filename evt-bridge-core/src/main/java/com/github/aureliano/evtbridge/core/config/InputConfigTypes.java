@@ -7,5 +7,5 @@ public enum InputConfigTypes {
 	FILE_TAILER,
 	STANDARD,
 	URL,
-	JDBC_INPUT;
+	JDBC;
 }

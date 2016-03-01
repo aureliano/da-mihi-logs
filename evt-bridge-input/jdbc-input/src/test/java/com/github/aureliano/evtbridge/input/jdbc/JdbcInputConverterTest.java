@@ -30,7 +30,7 @@ public class JdbcInputConverterTest {
 		data.put("metadata", metadata);
 		data.put("connection", connection);
 		
-		data.put("type", InputConfigTypes.JDBC_INPUT);
+		data.put("type", InputConfigTypes.JDBC);
 		
 		JdbcInputConfig conf = new JdbcInputConverter().convert(data);
 		
@@ -47,6 +47,6 @@ public class JdbcInputConverterTest {
 	
 	@Test
 	public void testId() {
-		Assert.assertEquals(InputConfigTypes.JDBC_INPUT.name(), new JdbcInputConverter().id());
+		Assert.assertEquals(InputConfigTypes.JDBC.name(), new JdbcInputConverter().id());
 	}
 }

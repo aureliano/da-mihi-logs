@@ -55,6 +55,6 @@ public class JdbcInputConverter extends AbstractConfigInputConverter<JdbcInputCo
 
 	@Override
 	public String id() {
-		return InputConfigTypes.JDBC_INPUT.name();
+		return InputConfigTypes.JDBC.name();
 	}
 }

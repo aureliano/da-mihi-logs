@@ -22,7 +22,7 @@ public class JdbcInputConfigTest {
 	
 	@Test
 	public void testInputType() {
-		assertEquals(InputConfigTypes.JDBC_INPUT.name(), new JdbcInputConfig().id());
+		assertEquals(InputConfigTypes.JDBC.name(), new JdbcInputConfig().id());
 	}
 	
 	@Test
