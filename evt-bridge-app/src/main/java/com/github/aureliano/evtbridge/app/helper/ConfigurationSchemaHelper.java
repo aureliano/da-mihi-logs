@@ -1,52 +1,27 @@
 package com.github.aureliano.evtbridge.app.helper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
-import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.core.helper.DataHelper;
-import com.github.aureliano.evtbridge.core.helper.FileHelper;
+import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
+import com.github.aureliano.evtbridge.core.doc.ISchemaBuilder;
+import com.github.aureliano.evtbridge.core.doc.JsonSchemaBuilder;
+import com.github.aureliano.evtbridge.core.doc.YamlSchemaBuilder;
 
 public final class ConfigurationSchemaHelper {
-
-	private static final String CONFIGURATION_SCHEMA_DIR = "configuration-schema";
-	private static final String ROOT_SCHEMA = "root-schema.json";
 	
 	private ConfigurationSchemaHelper() {}
 	
-	@SuppressWarnings("unchecked")
-	public static Map<String, Object> loadRootSchema() {
-		String path = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, ROOT_SCHEMA);
-		String jsonString = FileHelper.readResource(path);
+	public static String fetchSchema(String type, String name, String format) {
+		final SchemaTypes schemaType = SchemaTypes.valueOf(type.toUpperCase());
+		final DocumentationSourceTypes sourceType = DocumentationSourceTypes.valueOf(format.toUpperCase());
 		
-		return DataHelper.jsonStringToObject(jsonString, Map.class);
-	}
-	
-	public static List<String> fetchSchemaNames() {
-		Map<String, Object> map = ConfigurationSchemaHelper.loadRootSchema();
-		List<String> names = new ArrayList<String>();
-		names.add("root");
-		
-		for (String key : map.keySet()) {
-			if (key.equals("id")) {
-				continue;
-			}
-			
-			if (map.get(key) instanceof Map) {
-				names.add(key);
-			}
+		if (SchemaTypes.ROOT.equals(schemaType)) {
+			return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(schemaType);
 		}
 		
-		return names;
-	}
-	
-	public static String fetchSchema(String type, String name) {
-		Map<String, Object> rootSchema = loadRootSchema();
-		String schemaPath = null;
+		throw new EventBridgeException("Not supported yet.");
 		
-		if ("root".equals(type)) {
+		/*if ("root".equals(type)) {
 			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, rootSchema.get("id").toString());
 		} else {
 			schemaPath = FileHelper.buildPath(CONFIGURATION_SCHEMA_DIR, findSchemaId(rootSchema, type, name));
@@ -56,24 +31,16 @@ public final class ConfigurationSchemaHelper {
 			return FileHelper.readResource(schemaPath);
 		} catch (Exception ex) {
 			throw new EventBridgeException(ex, "Could not load schema file " + schemaPath);
-		}
+		}*/
 	}
 	
-	private static String findSchemaId(Map<String, Object> rootSchema, String type, String name) {
-		Map<String, Object> map = DataHelper.getAsHash(rootSchema, type);
-		if (map == null) {
-			throw new EventBridgeException("Could not load schema of type " + type);
+	private static ISchemaBuilder<String> getSchemaBuilder(DocumentationSourceTypes sourceType) {
+		if (DocumentationSourceTypes.JSON.equals(sourceType)) {
+			return new JsonSchemaBuilder();
+		} else if (DocumentationSourceTypes.YAML.equals(sourceType)) {
+			return new YamlSchemaBuilder();
+		} else {
+			throw new EventBridgeException("Unsupported source type '" + sourceType + "'.");
 		}
-		
-		if (StringHelper.isEmpty(name)) {
-			return map.get("id").toString();
-		}
-		
-		map = DataHelper.getAsHash(map, name);
-		if (map == null) {
-			throw new EventBridgeException("Could not load schema of type '" + type + "' and name '" + name + "'");
-		}
-		
-		return map.get("id").toString();
 	}
 }
