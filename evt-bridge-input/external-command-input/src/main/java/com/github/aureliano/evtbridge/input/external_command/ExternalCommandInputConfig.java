@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
 import com.github.aureliano.evtbridge.core.config.IConfigInput;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
@@ -15,6 +17,11 @@ import com.github.aureliano.evtbridge.core.matcher.IMatcher;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Input configuration to consume from external command output.",
+	type = "object"
+)
 public class ExternalCommandInputConfig implements IConfigInput {
 
 	static {
@@ -45,7 +52,13 @@ public class ExternalCommandInputConfig implements IConfigInput {
 		this.dataReadingListeners = new ArrayList<>();
 		this.inputExecutionListeners = new ArrayList<>();
 	}
-	
+
+	@SchemaProperty(
+		property = "matcher",
+		types = "string",
+		description = "Fully qualified name of class matcher used to get text from input.",
+		required = false
+	)
 	public IMatcher getMatcher() {
 		return matcher;
 	}
@@ -56,6 +69,12 @@ public class ExternalCommandInputConfig implements IConfigInput {
 	}
 	
 	@Override
+	@SchemaProperty(
+		property = "useLastExecutionLog",
+		types = "boolean",
+		description = "Whether to use data from earlier execution or not.",
+		defaultValue = "false"
+	)
 	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
@@ -66,6 +85,13 @@ public class ExternalCommandInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@Override
+	@SchemaProperty(
+		property = "dataReadingListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after a log event is read.",
+		required = false
+	)
 	public List<DataReadingListener> getDataReadingListeners() {
 		return dataReadingListeners;
 	}
@@ -94,6 +120,13 @@ public class ExternalCommandInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "configurationId",
+		types = "string",
+		description = "Input configuration id.",
+		defaultValue = "Auto-generated id.",
+		required = false
+	)
 	public String getConfigurationId() {
 		return this.id;
 	}
@@ -105,6 +138,12 @@ public class ExternalCommandInputConfig implements IConfigInput {
 	}
 	
 	@NotEmpty
+	@SchemaProperty(
+		property = "command",
+		types = "string",
+		description = "The external command which output will be read.",
+		required = true
+	)
 	public String getCommand() {
 		return command;
 	}
@@ -113,7 +152,13 @@ public class ExternalCommandInputConfig implements IConfigInput {
 		this.command = command;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "parameters",
+		types = "array",
+		description = "External command's parameters.",
+		required = false
+	)
 	public List<String> getParameters() {
 		return parameters;
 	}
@@ -150,6 +195,12 @@ public class ExternalCommandInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "metadata",
+		types = "object",
+		description = "A key-value pair (hash <string, string>) which provides a mechanism to exchange metadata between configurations (main, inputs and outputs).",
+		required = false
+	)
 	public Properties getMetadata() {
 		return this.metadata;
 	}
@@ -161,11 +212,23 @@ public class ExternalCommandInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "exceptionHandlers",
+		types = "array",
+		description = "Fully qualified name of the class that will handle exceptions.",
+		required = false
+	)
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "executionListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after data reading execution.",
+		required = false
+	)
 	public List<ExecutionListener> getExecutionListeners() {
 		return this.inputExecutionListeners;
 	}
