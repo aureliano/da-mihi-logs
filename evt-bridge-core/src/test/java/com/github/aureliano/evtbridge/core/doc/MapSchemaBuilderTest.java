@@ -67,6 +67,21 @@ public class MapSchemaBuilderTest {
 		assertNotNull(properties.get("period"));
 		assertNotNull(properties.get("timeUnit"));
 	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testExecuteOnceAtSpecificTimeScheduler() {
+		Map<String, Object> map = new MapSchemaBuilder().build(SchedulerTypes.EXECUTE_ONCE_AT_SPECIFIC_TIME);
+		
+		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
+		assertEquals("Schedule a task to a exute at specified date time.", map.get("title"));
+		assertEquals("object", map.get("type"));
+		
+		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+		assertEquals(1, properties.size());
+		
+		assertNotNull(properties.get("startupTime"));
+	}
 
 	@Test
 	@SuppressWarnings("unchecked")
