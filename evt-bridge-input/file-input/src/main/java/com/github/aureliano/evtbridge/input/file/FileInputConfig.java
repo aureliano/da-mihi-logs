@@ -79,7 +79,7 @@ public class FileInputConfig implements IConfigInput {
 	@SchemaProperty(
 		property = "matcher",
 		types = "string",
-		description = "Full qualified name of class matcher used to get text from input.",
+		description = "Fully qualified name of class matcher used to get text from input.",
 		required = false
 	)
 	public IMatcher getMatcher() {
@@ -240,7 +240,7 @@ public class FileInputConfig implements IConfigInput {
 	@SchemaProperty(
 		property = "exceptionHandlers",
 		types = "array",
-		description = "Full qualified name of the class that will handle exceptions.",
+		description = "Fully qualified name of the class that will handle exceptions.",
 		required = false
 	)
 	public List<IExceptionHandler> getExceptionHandlers() {
