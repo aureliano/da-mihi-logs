@@ -1,7 +1,13 @@
 package com.github.aureliano.evtbridge.core.jdbc;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
 
+@SchemaConfiguration(
+	title = "Java Database Connection model.",
+	type = "object"
+)
 public class JdbcConnectionModel {
 
 	private String user;
@@ -16,6 +22,12 @@ public class JdbcConnectionModel {
 	}
 	
 	@NotEmpty
+	@SchemaProperty(
+		property = "user",
+		types = "string",
+		description = "User name for database connection.",
+		required = true
+	)
 	public String getUser() {
 		return user;
 	}
@@ -25,6 +37,12 @@ public class JdbcConnectionModel {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "password",
+		types = "string",
+		description = "User password for database connection.",
+		required = false
+	)
 	public String getPassword() {
 		return password;
 	}
@@ -33,7 +51,12 @@ public class JdbcConnectionModel {
 		this.password = password;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "sql",
+		types = "string",
+		description = "SQL command to be executed in order to get data. Required when reading."
+	)
 	public String getSql() {
 		return sql;
 	}
@@ -44,6 +67,12 @@ public class JdbcConnectionModel {
 	}
 	
 	@NotEmpty
+	@SchemaProperty(
+		property = "driver",
+		types = "string",
+		description = "Fully qualified DBMS driver class name.",
+		required = true
+	)
 	public String getDriver() {
 		return driver;
 	}
@@ -54,6 +83,12 @@ public class JdbcConnectionModel {
 	}
 	
 	@NotEmpty
+	@SchemaProperty(
+		property = "url",
+		types = "string",
+		description = "Connection URL: jdbc:<sgdb>://<server_host>:<port>/<database>",
+		required = true
+	)
 	public String getUrl() {
 		return url;
 	}
@@ -62,7 +97,12 @@ public class JdbcConnectionModel {
 		this.url = url;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "table",
+		types = "string",
+		description = "Target table name. Required when writing."
+	)
 	public String getTable() {
 		return table;
 	}
