@@ -91,15 +91,17 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 
 	private Map<String, Object> mapItems(Class<?> reference) {
 		Map<String, Object> items = new HashMap<>();
-		Map<String, Object> type = new HashMap<>();
 		
 		String ref = this.getReferenceLabel(reference);
 		if (!StringHelper.isEmpty(ref)) {
+			Map<String, Object> type = new HashMap<>();
+			
 			type.put("$ref", ref);
+			items.put("type", type);
 		} else {
-			type.put("type", "string");
+			items.put("type", "string");
 		}
-		items.put("type", type);
+		
 		
 		return items;
 	}
