@@ -10,6 +10,7 @@ import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
+import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.schedule.ExecuteOnceAtSpecificTimeScheduler;
 import com.github.aureliano.evtbridge.core.schedule.ExecutePeriodicallyAtSpecificTimeScheduler;
 import com.github.aureliano.evtbridge.core.schedule.ExecutePeriodicallyScheduler;
@@ -46,6 +47,18 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 			return this.buildSchema(ExecutePeriodicallyAtSpecificTimeScheduler.class);
 		default:
 			throw new EventBridgeException("Unsupported scheduler type '" + schedulerType + "'");
+		}
+	}
+	
+	@Override
+	public Map<String, Object> build(InputConfigTypes inputType) {
+		ApiServiceRegistrator services = ApiServiceRegistrator.instance();
+		
+		switch (inputType) {
+		case FILE:
+			return null;
+		default:
+			throw new EventBridgeException("Unsupported input type '" + inputType + "'");
 		}
 	}
 
