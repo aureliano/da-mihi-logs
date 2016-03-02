@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface SchemaProperty {
 
 	public abstract String property();
-	public abstract String type();
+	public abstract String[] types();
 	public abstract String description();
 	public abstract String defaultValue() default "";
 	public abstract Class<?> reference() default Class.class;
