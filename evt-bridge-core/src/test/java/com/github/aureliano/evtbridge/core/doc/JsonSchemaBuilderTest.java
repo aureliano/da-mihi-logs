@@ -75,6 +75,21 @@ public class JsonSchemaBuilderTest {
 	}
 
 	@Test
+	public void testExecutePeriodicallyAtSpecificTimeScheduler() {
+		String json = new JsonSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME);
+
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Schedule a task to execute periodically at specified time."));
+		assertTrue(json.contains("object"));
+		
+		assertTrue(json.contains("  \"properties\" : {"));
+		
+		assertTrue(json.contains("\"hour\""));
+		assertTrue(json.contains("\"minute\""));
+		assertTrue(json.contains("\"second\""));
+	}
+
+	@Test
 	public void testBuildInput() {
 		String json = new JsonSchemaBuilder().build(SchemaTypes.INPUT);
 
