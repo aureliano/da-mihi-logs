@@ -40,7 +40,8 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 	@SchemaProperty(
 		property = "delay",
 		types = "integer",
-		description = "The time to delay at first execution."
+		description = "The time to delay at first execution.",
+		required = true
 	)
 	public Long getDelay() {
 		return delay;
@@ -54,7 +55,8 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 	@SchemaProperty(
 		property = "period",
 		types = "integer",
-		description = "The period between successive executions."
+		description = "The period between successive executions.",
+		required = true
 	)
 	public Long getPeriod() {
 		return period;
@@ -68,7 +70,8 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 	@SchemaProperty(
 		property = "timeUnit",
 		types = { "days", "hours", "minutes", "seconds", "milliseconds", "microseconds", "nanoseconds" },
-		description = "The time unit of the delay and period parameters."
+		description = "The time unit of the delay and period parameters.",
+		required = true
 	)
 	public TimeUnit getTimeUnit() {
 		return timeUnit;
