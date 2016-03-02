@@ -97,7 +97,7 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		if (!StringHelper.isEmpty(ref)) {
 			type.put("$ref", ref);
 		} else {
-			type.put("$ref", "string");
+			type.put("type", "string");
 		}
 		items.put("type", type);
 		
