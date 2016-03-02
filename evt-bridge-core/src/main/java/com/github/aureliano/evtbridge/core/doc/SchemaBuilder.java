@@ -1,5 +1,6 @@
 package com.github.aureliano.evtbridge.core.doc;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -33,6 +34,11 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 	}
 	
 	protected void configureSchemaProperties(Class<?> configuration) {
+		Map<String, Object> properties = this.buildProperties(configuration);
+		this.schema.put("properties", properties);
+	}
+	
+	private Map<String, Object> buildProperties(Class<?> configuration) {
 		Map<String, Object> properties = new HashMap<>();
 		
 		for (Method method : configuration.getMethods()) {
@@ -46,7 +52,7 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 			properties.put(key, property.get(key));
 		}
 		
-		this.schema.put("properties", properties);
+		return properties;
 	}
 	
 	private Map<String, Object> buildProperty(SchemaProperty schemaProperty) {
@@ -61,19 +67,29 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		}
 		properties.put(schemaProperty.property(), property);
 		
-		configureReference(schemaProperty, properties, property);
+		configureReference(schemaProperty, property);
 		
 		return properties;
 	}
 
-	private void configureReference(SchemaProperty schemaProperty, Map<String, Object> properties,
-			Map<String, Object> property) {
+	private void configureReference(SchemaProperty schemaProperty, Map<String, Object> property) {
 		if ("array".equals(schemaProperty.types()[0])) {
 			property.put("items", this.mapItems(schemaProperty.reference()));
 		} else {
-			String ref = this.getReferenceLabel(schemaProperty.reference());
-			if (!StringHelper.isEmpty(ref)) {
-				property.put("$ref", ref);
+			Class<?> clazz = schemaProperty.reference();
+			if (clazz == null) {
+				return;
+			}
+			
+			Annotation annotation = clazz.getAnnotation(SchemaConfiguration.class);
+			if (annotation != null) {
+				Map<String, Object> properties = this.buildProperties(clazz);
+				property.put("properties", properties);
+			} else {
+				String ref = this.getReferenceLabel(schemaProperty.reference());
+				if (!StringHelper.isEmpty(ref)) {
+					property.put("$ref", ref);
+				}
 			}
 		}
 	}
