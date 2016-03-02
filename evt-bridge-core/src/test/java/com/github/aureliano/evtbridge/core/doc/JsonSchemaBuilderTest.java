@@ -62,6 +62,19 @@ public class JsonSchemaBuilderTest {
 	}
 
 	@Test
+	public void testExecuteOnceAtSpecificTimeScheduler() {
+		String json = new JsonSchemaBuilder().build(SchedulerTypes.EXECUTE_ONCE_AT_SPECIFIC_TIME);
+
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Schedule a task to a exute at specified date time."));
+		assertTrue(json.contains("object"));
+		
+		assertTrue(json.contains("  \"properties\" : {"));
+		
+		assertTrue(json.contains("\"startupTime\""));
+	}
+
+	@Test
 	public void testBuildInput() {
 		String json = new JsonSchemaBuilder().build(SchemaTypes.INPUT);
 
