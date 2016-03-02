@@ -3,8 +3,15 @@ package com.github.aureliano.evtbridge.core.schedule;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Schedule a task to a exute at specified date time.",
+	type = "object"
+)
 public class ExecuteOnceAtSpecificTimeScheduler extends StandardScheduler {
 
 	private Date startupTime;
@@ -34,7 +41,13 @@ public class ExecuteOnceAtSpecificTimeScheduler extends StandardScheduler {
 		this.startupTime = startupTime;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "startupTime",
+		types = "string",
+		description = "A string describing a date time following the pattern yyyy-MM-dd HH:mm:ss",
+		required = true
+	)
 	public Date getStartupTime() {
 		return startupTime;
 	}
