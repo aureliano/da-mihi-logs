@@ -4,8 +4,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Schedule a task to execute periodically at specified time.",
+	type = "object"
+)
 public class ExecutePeriodicallyAtSpecificTimeScheduler extends StandardScheduler {
 
 	private Integer hour;
@@ -50,6 +57,12 @@ public class ExecutePeriodicallyAtSpecificTimeScheduler extends StandardSchedule
 		}
 	}
 
+	@SchemaProperty(
+		property = "hour",
+		types = "integer",
+		description = "The hour which it has to execute: 0-23",
+		required = true
+	)
 	public Integer getHour() {
 		return hour;
 	}
@@ -59,6 +72,12 @@ public class ExecutePeriodicallyAtSpecificTimeScheduler extends StandardSchedule
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "minute",
+		types = "integer",
+		description = "The minute which it has to execute: 0-59",
+		required = true
+	)
 	public Integer getMinute() {
 		return minute;
 	}
@@ -68,6 +87,12 @@ public class ExecutePeriodicallyAtSpecificTimeScheduler extends StandardSchedule
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "second",
+		types = "integer",
+		description = "The second which it has to execute: 0-59",
+		required = true
+	)
 	public Integer getSecond() {
 		return second;
 	}

@@ -82,6 +82,23 @@ public class MapSchemaBuilderTest {
 		
 		assertNotNull(properties.get("startupTime"));
 	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testExecutePeriodicallyAtSpecificTimeScheduler() {
+		Map<String, Object> map = new MapSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME);
+		
+		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
+		assertEquals("Schedule a task to execute periodically at specified time.", map.get("title"));
+		assertEquals("object", map.get("type"));
+		
+		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+		assertEquals(3, properties.size());
+		
+		assertNotNull(properties.get("hour"));
+		assertNotNull(properties.get("minute"));
+		assertNotNull(properties.get("second"));
+	}
 
 	@Test
 	@SuppressWarnings("unchecked")

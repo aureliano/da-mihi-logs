@@ -11,6 +11,7 @@ import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.ExecuteOnceAtSpecificTimeScheduler;
+import com.github.aureliano.evtbridge.core.schedule.ExecutePeriodicallyAtSpecificTimeScheduler;
 import com.github.aureliano.evtbridge.core.schedule.ExecutePeriodicallyScheduler;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
@@ -41,6 +42,8 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 			return this.buildSchema(ExecutePeriodicallyScheduler.class);
 		case EXECUTE_ONCE_AT_SPECIFIC_TIME:
 			return this.buildSchema(ExecuteOnceAtSpecificTimeScheduler.class);
+		case EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME:
+			return this.buildSchema(ExecutePeriodicallyAtSpecificTimeScheduler.class);
 		default:
 			throw new EventBridgeException("Unsupported scheduler type '" + schedulerType + "'");
 		}
