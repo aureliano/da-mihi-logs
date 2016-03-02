@@ -23,6 +23,10 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 	protected void configureSchemaHeader(Class<?> configuration) {
 		SchemaConfiguration schemaConfiguration = configuration.getAnnotation(SchemaConfiguration.class);
 		
+		if (schemaConfiguration == null) {
+			return;
+		}
+		
 		this.schema.put("$schema", schemaConfiguration.schema());
 		this.schema.put("title", schemaConfiguration.title());
 		this.schema.put("type", schemaConfiguration.type());
@@ -49,7 +53,7 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		Map<String, Object> properties = new HashMap<>();
 		Map<String, Object> property = new HashMap<>();
 		
-		property.put("type", schemaProperty.type());
+		property.put("type", this.configureTypes(schemaProperty.types()));
 		property.put("description", schemaProperty.description());
 		properties.put(schemaProperty.property(), property);
 		if (!StringHelper.isEmpty(schemaProperty.defaultValue())) {
@@ -63,13 +67,24 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 
 	private void configureReference(SchemaProperty schemaProperty, Map<String, Object> properties,
 			Map<String, Object> property) {
-		if ("array".equals(schemaProperty.type())) {
+		if ("array".equals(schemaProperty.types()[0])) {
 			property.put("items", this.mapItems(schemaProperty.reference()));
 		} else {
 			String ref = this.getReferenceLabel(schemaProperty.reference());
 			if (!StringHelper.isEmpty(ref)) {
 				property.put("$ref", ref);
 			}
+		}
+	}
+	
+	private Object configureTypes(String[] types) {
+		if (types.length == 1) {
+			return types[0];
+		} else {
+			Map<String, Object> mtypes = new HashMap<>();
+			mtypes.put("anyOf", types);
+			
+			return mtypes;
 		}
 	}
 
