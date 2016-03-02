@@ -21,7 +21,7 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 	public Map<String, Object> build(SchemaTypes schemaType) {
 		switch (schemaType) {
 		case ROOT:
-			return this.buildRootSchema();
+			return this.buildSchema(EventCollectorConfiguration.class);
 		case SCHEDULER:
 			return this.buildSchedulerSchema();
 		case INPUT:
@@ -35,6 +35,15 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 	
 	@Override
 	public Map<String, Object> build(SchedulerTypes schedulerType) {
+		switch (schedulerType) {
+		case EXECUTE_PERIODICALLY:
+			
+			break;
+
+		default:
+			break;
+		}
+		
 		return null;
 	}
 
@@ -50,12 +59,11 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 		return this.buildAggregationSchema("Scheduling execution configuration.", SchedulerTypes.values());
 	}
 
-	private Map<String, Object> buildRootSchema() {
+	private Map<String, Object> buildSchema(Class<? extends IConfiguration> configuration) {
 		if (super.schema != null) {
 			super.schema.clear();
 		}
 		
-		Class<? extends IConfiguration> configuration = EventCollectorConfiguration.class;
 		super.configureSchemaHeader(configuration);
 		super.configureSchemaProperties(configuration);
 		
