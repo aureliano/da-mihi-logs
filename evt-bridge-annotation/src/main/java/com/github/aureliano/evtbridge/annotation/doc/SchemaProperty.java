@@ -12,6 +12,7 @@ public @interface SchemaProperty {
 	public abstract String property();
 	public abstract String[] types();
 	public abstract String description();
+	public abstract boolean required() default false;
 	public abstract String defaultValue() default "";
 	public abstract Class<?> reference() default Class.class;
 }
