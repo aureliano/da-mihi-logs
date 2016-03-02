@@ -1,8 +1,6 @@
 package com.github.aureliano.evtbridge.core.register;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
@@ -71,10 +69,6 @@ public final class ApiServiceRegistrator {
 		}
 		
 		return null;
-	}
-	
-	public List<String> registeredIds() {
-		return new ArrayList<>(this.registrations.keySet());
 	}
 	
 	public static ApiServiceRegistrator instance() {
