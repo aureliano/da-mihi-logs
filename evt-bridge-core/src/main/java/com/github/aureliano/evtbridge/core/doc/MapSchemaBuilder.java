@@ -55,6 +55,11 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 	public Map<String, Object> build(InputConfigTypes inputType) {
 		return this.buildSchema(inputType.name());
 	}
+	
+	@Override
+	public Map<String, Object> build(OutputConfigTypes outputType) {
+		return this.buildSchema(outputType.name());
+	}
 
 	private Map<String, Object> buildOutputSchema() {
 		return this.buildAggregationSchema("Output configuration.", OutputConfigTypes.values());

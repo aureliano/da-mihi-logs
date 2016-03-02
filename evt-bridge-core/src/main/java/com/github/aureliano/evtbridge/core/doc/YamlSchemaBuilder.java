@@ -6,6 +6,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
+import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class YamlSchemaBuilder extends SchemaBuilder<String> {
@@ -29,6 +30,11 @@ public class YamlSchemaBuilder extends SchemaBuilder<String> {
 	@Override
 	public String build(InputConfigTypes inputType) {
 		return this.convertMapToYaml(this.builder.build(inputType));
+	}
+	
+	@Override
+	public String build(OutputConfigTypes outputType) {
+		return this.convertMapToYaml(this.builder.build(outputType));
 	}
 
 	private String convertMapToYaml(Map<String, Object> map) {
