@@ -71,6 +71,15 @@ public final class ApiServiceRegistrator {
 		return null;
 	}
 	
+	public Class<? extends IConfiguration> getConfiguration(String id) {
+		ServiceRegistration registration = this.registrations.get(id.toUpperCase());
+		if (registration == null) {
+			return null;
+		}
+		
+		return registration.getConfiguration();
+	}
+	
 	public static ApiServiceRegistrator instance() {
 		if (instance == null) {
 			instance = new ApiServiceRegistrator();
