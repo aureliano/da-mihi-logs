@@ -55,10 +55,11 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		
 		property.put("type", this.configureTypes(schemaProperty.types()));
 		property.put("description", schemaProperty.description());
-		properties.put(schemaProperty.property(), property);
+		property.put("required", schemaProperty.required());
 		if (!StringHelper.isEmpty(schemaProperty.defaultValue())) {
 			property.put("default", schemaProperty.defaultValue());
 		}
+		properties.put(schemaProperty.property(), property);
 		
 		configureReference(schemaProperty, properties, property);
 		
