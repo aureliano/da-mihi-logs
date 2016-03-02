@@ -1,10 +1,14 @@
 package com.github.aureliano.evtbridge.app.command;
 
+import java.lang.reflect.Method;
+
 import com.github.aureliano.evtbridge.app.ErrorCode;
 import com.github.aureliano.evtbridge.app.helper.ConfigurationSchemaHelper;
+import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class SchemaCommand implements ICommand {
 
@@ -30,17 +34,49 @@ public class SchemaCommand implements ICommand {
 	}
 	
 	private ErrorCode validate() {
+		SchemaTypes schemaType = null;
+		
 		try {
-			SchemaTypes.valueOf(this.type.toUpperCase());
+			schemaType = SchemaTypes.valueOf(this.type.toUpperCase());
 		} catch (Exception ex) {
 			System.err.println("Invalid schema type (-t --type) parameter [" + this.type + "]");
 			return ErrorCode.SCHEMA_PARAM_ERROR;
 		}
 		
+		ErrorCode error = this.validateName(schemaType);
+		if (error != null) {
+			return error;
+		}
+		
 		try {
 			DocumentationSourceTypes.valueOf(this.format.toUpperCase());
 		} catch (IllegalArgumentException ex) {
-			System.err.println("Invalid schema format (-f --format) parameter [" + this.format+ "]");
+			System.err.println("Invalid schema format (-f --format) parameter [" + this.format + "]");
+			return ErrorCode.SCHEMA_PARAM_ERROR;
+		}
+		
+		return null;
+	}
+	
+	private ErrorCode validateName(SchemaTypes schemaType) {
+		if (!StringHelper.isEmpty(this.name)) {
+			switch (schemaType) {
+			case SCHEDULER:
+				return this.validateNameWithSchema(SchedulerTypes.class);
+			default:
+				throw new EventBridgeException("Unsupported schema type: [" + this.type + "]");
+			}
+		}
+		
+		return null;
+	}
+	
+	private ErrorCode validateNameWithSchema(Class<?> e) {
+		try {
+			Method method = e.getMethod("valueOf", new Class<?>[] { String.class });
+			method.invoke(null, this.name.toUpperCase());
+		} catch (Exception ex) {
+			System.err.println("Invalid schema name (-n --name) parameter [" + this.name + "]");
 			return ErrorCode.SCHEMA_PARAM_ERROR;
 		}
 		
