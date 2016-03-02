@@ -61,6 +61,18 @@ public class YamlSchemaBuilderTest {
 	}
 
 	@Test
+	public void testExecuteOnceAtSpecificTimeScheduler() {
+		String yaml = new YamlSchemaBuilder().build(SchedulerTypes.EXECUTE_ONCE_AT_SPECIFIC_TIME);
+
+		assertTrue(yaml.contains("Schedule a task to a exute at specified date time."));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  startupTime"));
+	}
+
+	@Test
 	public void testBuildInput() {
 		String yaml = new YamlSchemaBuilder().build(SchemaTypes.INPUT);
 
