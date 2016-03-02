@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
 import com.github.aureliano.evtbridge.annotation.validation.NotNull;
 import com.github.aureliano.evtbridge.core.config.ConnectionSchema;
@@ -20,6 +22,11 @@ import com.github.aureliano.evtbridge.core.matcher.IMatcher;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Input configuration to consume from downloaded plain text file.",
+	type = "object"
+)
 public class UrlInputConfig implements IConfigInput {
 
 	static {
@@ -78,6 +85,13 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@NotNull
+	@SchemaProperty(
+		property = "connectionSchema",
+		types = { "http", "https" },
+		description = "The HTTP connection schema.",
+		required = true,
+		defaultValue = "http"
+	)
 	public ConnectionSchema getConnectionSchema() {
 		return connectionSchema;
 	}
@@ -88,6 +102,12 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@NotEmpty
+	@SchemaProperty(
+		property = "host",
+		types = "string",
+		description = "The server host name to establish connection.",
+		required = true
+	)
 	public String getHost() {
 		return host;
 	}
@@ -96,7 +116,13 @@ public class UrlInputConfig implements IConfigInput {
 		this.host = host;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "port",
+		types = "integer",
+		description = "The port number.",
+		required = false
+	)
 	public int getPort() {
 		return port;
 	}
@@ -105,7 +131,14 @@ public class UrlInputConfig implements IConfigInput {
 		this.port = port;
 		return this;
 	}
-
+	
+	@NotEmpty
+	@SchemaProperty(
+		property = "path",
+		types = "string",
+		description = "The resource path . Example: foo/bar/download.log",
+		required = true
+	)
 	public String getPath() {
 		return path;
 	}
@@ -115,6 +148,12 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "parameters",
+		types = "object",
+		description = "URL parameters. A hash map with URL parameters where key is the parameter name and value is the value itself.",
+		required = false
+	)
 	public Map<String, String> getParameters() {
 		return parameters;
 	}
@@ -129,6 +168,13 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "readTimeout",
+		types = "integer",
+		description = "The time in milliseconds to wait for connection stablishment before quiting.",
+		required = false,
+		defaultValue = "30000"
+	)
 	public Long getReadTimeout() {
 		return readTimeout;
 	}
@@ -137,7 +183,14 @@ public class UrlInputConfig implements IConfigInput {
 		this.readTimeout = readTimeout;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "byteOffSet",
+		types = "integer",
+		description = "The byte off set to download. That means, download partial file.",
+		required = false,
+		defaultValue = "0"
+	)
 	public Integer getByteOffSet() {
 		return byteOffSet;
 	}
@@ -148,6 +201,12 @@ public class UrlInputConfig implements IConfigInput {
 	}
 	
 	@NotNull
+	@SchemaProperty(
+		property = "outputFile",
+		types = "string",
+		description = "The path where download data will be saved and read afterwards.",
+		required = true
+	)
 	public File getOutputFile() {
 		return outputFile;
 	}
@@ -161,7 +220,14 @@ public class UrlInputConfig implements IConfigInput {
 		this.outputFile = new File(outputFilePath);
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "appendIfOutputFileExist",
+		types = "boolean",
+		description = "Append downloaded bytes to file if already exists.",
+		required = false,
+		defaultValue = "false"
+	)
 	public Boolean isAppendIfOutputFileExist() {
 		return appendIfOutputFileExist;
 	}
@@ -170,7 +236,13 @@ public class UrlInputConfig implements IConfigInput {
 		this.appendIfOutputFileExist = appendIfOutputFileExist;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "fileStartPosition",
+		types = "integer",
+		description = "The line number of the file where reading will start from.",
+		required = false
+	)
 	public Integer getFileStartPosition() {
 		return fileStartPosition;
 	}
@@ -180,6 +252,12 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "user",
+		types = "string",
+		description = "The user name in order to authenticate on server.",
+		required = false
+	)
 	public String getUser() {
 		return user;
 	}
@@ -189,6 +267,12 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "password",
+		types = "string",
+		description = "The password in order to authenticate on server.",
+		required = false
+	)
 	public String getPassword() {
 		return password;
 	}
@@ -208,6 +292,13 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "configurationId",
+		types = "string",
+		description = "Input configuration id.",
+		defaultValue = "Auto-generated id.",
+		required = false
+	)
 	public String getConfigurationId() {
 		return id;
 	}
@@ -217,7 +308,14 @@ public class UrlInputConfig implements IConfigInput {
 		this.id = id;
 		return this;
 	}
-	
+
+	@Override
+	@SchemaProperty(
+		property = "matcher",
+		types = "string",
+		description = "Fully qualified name of class matcher used to get text from input.",
+		required = false
+	)
 	public IMatcher getMatcher() {
 		return matcher;
 	}
@@ -228,6 +326,12 @@ public class UrlInputConfig implements IConfigInput {
 	}
 	
 	@Override
+	@SchemaProperty(
+		property = "useLastExecutionLog",
+		types = "boolean",
+		description = "Whether to use data from earlier execution or not.",
+		defaultValue = "false"
+	)
 	public Boolean isUseLastExecutionRecords() {
 		return this.useLastExecutionRecords;
 	}
@@ -238,6 +342,13 @@ public class UrlInputConfig implements IConfigInput {
 		return this;
 	}
 
+	@Override
+	@SchemaProperty(
+		property = "dataReadingListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after a log event is read.",
+		required = false
+	)
 	public List<DataReadingListener> getDataReadingListeners() {
 		return dataReadingListeners;
 	}
@@ -298,6 +409,12 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "metadata",
+		types = "object",
+		description = "A key-value pair (hash <string, string>) which provides a mechanism to exchange metadata between configurations (main, inputs and outputs).",
+		required = false
+	)
 	public Properties getMetadata() {
 		return this.metadata;
 	}
@@ -309,11 +426,23 @@ public class UrlInputConfig implements IConfigInput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "exceptionHandlers",
+		types = "array",
+		description = "Fully qualified name of the class that will handle exceptions.",
+		required = false
+	)
 	public List<IExceptionHandler> getExceptionHandlers() {
 		return this.exceptionHandlers;
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "executionListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after data reading execution.",
+		required = false
+	)
 	public List<ExecutionListener> getExecutionListeners() {
 		return this.inputExecutionListeners;
 	}

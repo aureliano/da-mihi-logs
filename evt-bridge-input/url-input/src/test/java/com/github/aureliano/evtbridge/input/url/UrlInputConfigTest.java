@@ -140,7 +140,7 @@ public class UrlInputConfigTest {
 		UrlInputConfig c = new UrlInputConfig()
 			.withHost("localhost").withConnectionSchema(ConnectionSchema.HTTP);
 		Set<ConstraintViolation> violations = this.validator.validate(c);
-		assertTrue(violations.size() == 1);
+		assertTrue(violations.size() == 2);
 		assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
 	
@@ -155,6 +155,7 @@ public class UrlInputConfigTest {
 		return new UrlInputConfig()
 			.withConnectionSchema(ConnectionSchema.HTTP)
 			.withHost("localhost")
+			.withPath("file.log")
 			.withOutputFile("/path/to/file");
 	}
 }
