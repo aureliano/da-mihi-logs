@@ -53,22 +53,12 @@ public final class ApiServiceRegistrator {
 	}
 	
 	public IConfigurationConverter<?> createConverter(String id) {
-		ServiceRegistration registration = this.registrations.get(id);
-		if (registration != null) {
-			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
+		ServiceRegistration registration = this.registrations.get(id.toUpperCase());
+		if (registration == null) {
+			return null;
 		}
 		
-		registration = this.registrations.get(id.toUpperCase());
-		if (registration != null) {
-			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
-		}
-		
-		registration = this.registrations.get(id.toLowerCase());
-		if (registration != null) {
-			return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
-		}
-		
-		return null;
+		return (IConfigurationConverter<?>) ReflectionHelper.newInstance(registration.getConverter());
 	}
 	
 	public Class<? extends IConfiguration> getConfiguration(String id) {
