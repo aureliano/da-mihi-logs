@@ -8,7 +8,6 @@ import java.util.Map;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
@@ -59,7 +58,7 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 		return this.buildAggregationSchema("Scheduling execution configuration.", SchedulerTypes.values());
 	}
 
-	private Map<String, Object> buildSchema(Class<? extends IConfiguration> configuration) {
+	private Map<String, Object> buildSchema(Class<?> configuration) {
 		if (super.schema != null) {
 			super.schema.clear();
 		}

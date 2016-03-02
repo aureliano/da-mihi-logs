@@ -8,7 +8,6 @@ import java.util.Map;
 import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
 import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
-import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
@@ -21,7 +20,7 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		this.schema = new LinkedHashMap<>();
 	}
 	
-	protected void configureSchemaHeader(Class<? extends IConfiguration> configuration) {
+	protected void configureSchemaHeader(Class<?> configuration) {
 		SchemaConfiguration schemaConfiguration = configuration.getAnnotation(SchemaConfiguration.class);
 		
 		this.schema.put("$schema", schemaConfiguration.schema());
@@ -29,7 +28,7 @@ public abstract class SchemaBuilder<T> implements ISchemaBuilder<T> {
 		this.schema.put("type", schemaConfiguration.type());
 	}
 	
-	protected void configureSchemaProperties(Class<? extends IConfiguration> configuration) {
+	protected void configureSchemaProperties(Class<?> configuration) {
 		Map<String, Object> properties = new HashMap<>();
 		
 		for (Method method : configuration.getMethods()) {
