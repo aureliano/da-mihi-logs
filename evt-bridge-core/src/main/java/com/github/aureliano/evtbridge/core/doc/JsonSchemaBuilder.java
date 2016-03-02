@@ -24,7 +24,7 @@ public class JsonSchemaBuilder extends SchemaBuilder<String> {
 	
 	@Override
 	public String build(SchedulerTypes schedulerType) {
-		return null;
+		return this.convertMapToJson(this.builder.build(schedulerType));
 	}
 	
 	private String convertMapToJson(Map<String, Object> map) {

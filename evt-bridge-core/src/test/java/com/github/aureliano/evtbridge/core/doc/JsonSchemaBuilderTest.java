@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class JsonSchemaBuilderTest {
 
@@ -43,6 +44,21 @@ public class JsonSchemaBuilderTest {
 		assertTrue(json.contains("\"execute_once_at_specific_time\""));
 		assertTrue(json.contains("\"execute_periodically_at_specific_time\""));
 		assertTrue(json.contains("\"execute_periodically\""));
+	}
+
+	@Test
+	public void testExecutePeriodicallyScheduler() {
+		String json = new JsonSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY);
+
+		assertTrue(json.contains("http://json-schema.org/draft-04/schema#"));
+		assertTrue(json.contains("Schedule a task to execute periodically"));
+		assertTrue(json.contains("object"));
+		
+		assertTrue(json.contains("  \"properties\" : {"));
+		
+		assertTrue(json.contains("\"delay\""));
+		assertTrue(json.contains("\"period\""));
+		assertTrue(json.contains("\"timeUnit\""));
 	}
 
 	@Test
