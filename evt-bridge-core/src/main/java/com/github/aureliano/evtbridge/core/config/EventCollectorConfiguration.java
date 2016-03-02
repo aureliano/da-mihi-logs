@@ -39,7 +39,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 
 	@SchemaProperty(
 		property = "inputConfigs",
-		type = "array",
+		types = "array",
 		description = "Input configurations.",
 		reference = InputConfigTypes.class
 	)
@@ -59,7 +59,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 
 	@SchemaProperty(
 		property = "outputConfigs",
-		type = "array",
+		types = "array",
 		description = "Output configurations.",
 		reference = OutputConfigTypes.class
 	)
@@ -79,7 +79,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	@SchemaProperty(
 		property = "persistExecutionLog",
-		type = "boolean",
+		types = "boolean",
 		description = "Whether it has to persist to disk log execution or not.",
 		defaultValue = "false"
 	)
@@ -94,7 +94,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	@SchemaProperty(
 		property = "multiThreadingEnabled",
-		type = "boolean",
+		types = "boolean",
 		description = "Whether it has to enable multi-threading. That means: for each input a new thread will be created.",
 		defaultValue = "false"
 	)
@@ -119,7 +119,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 
 	@SchemaProperty(
 		property = "scheduler",
-		type = "object",
+		types = "object",
 		description = "Schedule events collector for execution.",
 		reference = SchedulerTypes.class
 	)
@@ -129,7 +129,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 
 	@SchemaProperty(
 		property = "eventsCollectorListeners",
-		type = "array",
+		types = "array",
 		description = "Register listeners."
 	)
 	public List<EventsCollectorListener> getEventsCollectorListeners() {
@@ -160,7 +160,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	@Override
 	@SchemaProperty(
 		property = "metadata",
-		type = "object",
+		types = "object",
 		description = "A key-value hash <string, string> in order to exchange metadata between configurations (main, inputs and outputs)."
 	)
 	public Properties getMetadata() {
@@ -174,7 +174,7 @@ public class EventCollectorConfiguration implements IConfiguration {
 	
 	@SchemaProperty(
 		property = "collectorId",
-		type = "string",
+		types = "string",
 		description = "Event collector id.",
 		defaultValue = "Auto-generated id."
 	)
