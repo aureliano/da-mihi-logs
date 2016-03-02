@@ -8,6 +8,7 @@ import java.util.Map;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.EventCollectorConfiguration;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
@@ -52,14 +53,7 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 	
 	@Override
 	public Map<String, Object> build(InputConfigTypes inputType) {
-		ApiServiceRegistrator services = ApiServiceRegistrator.instance();
-		
-		switch (inputType) {
-		case FILE:
-			return null;
-		default:
-			throw new EventBridgeException("Unsupported input type '" + inputType + "'");
-		}
+		return this.buildSchema(inputType.name());
 	}
 
 	private Map<String, Object> buildOutputSchema() {
@@ -72,6 +66,17 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 
 	private Map<String, Object> buildSchedulerSchema() {
 		return this.buildAggregationSchema("Scheduling execution configuration.", SchedulerTypes.values());
+	}
+	
+	private Map<String, Object> buildSchema(String configurationId) {
+		ApiServiceRegistrator services = ApiServiceRegistrator.instance();
+		Class<? extends IConfiguration> configuration = services.getConfiguration(configurationId);
+		
+		if (configuration == null) {
+			throw new EventBridgeException("Could not find any registered configuration with id " + configurationId);
+		}
+		
+		return this.buildSchema(configuration);
 	}
 
 	private Map<String, Object> buildSchema(Class<?> configuration) {
