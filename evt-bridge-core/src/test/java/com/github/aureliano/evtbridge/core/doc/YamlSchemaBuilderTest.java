@@ -73,6 +73,20 @@ public class YamlSchemaBuilderTest {
 	}
 
 	@Test
+	public void testExecutePeriodicallyAtSpecificTimeScheduler() {
+		String yaml = new YamlSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY_AT_SPECIFIC_TIME);
+
+		assertTrue(yaml.contains("Schedule a task to execute periodically at specified time."));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  hour"));
+		assertTrue(yaml.contains("  minute"));
+		assertTrue(yaml.contains("  second"));
+	}
+
+	@Test
 	public void testBuildInput() {
 		String yaml = new YamlSchemaBuilder().build(SchemaTypes.INPUT);
 
