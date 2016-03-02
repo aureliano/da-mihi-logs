@@ -22,7 +22,7 @@ public class YamlSchemaBuilder extends SchemaBuilder<String> {
 	
 	@Override
 	public String build(SchedulerTypes schedulerType) {
-		return null;
+		return this.convertMapToYaml(this.builder.build(schedulerType));
 	}
 
 	private String convertMapToYaml(Map<String, Object> map) {

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class YamlSchemaBuilderTest {
 
@@ -43,6 +44,20 @@ public class YamlSchemaBuilderTest {
 		assertTrue(yaml.contains("execute_once_at_specific_time"));
 		assertTrue(yaml.contains("execute_periodically_at_specific_time"));
 		assertTrue(yaml.contains("execute_periodically"));
+	}
+
+	@Test
+	public void testExecutePeriodicallyScheduler() {
+		String yaml = new YamlSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY);
+
+		assertTrue(yaml.contains("Schedule a task to execute periodically"));
+		assertTrue(yaml.contains("object"));
+		
+		assertTrue(yaml.contains("properties:"));
+		
+		assertTrue(yaml.contains("  delay"));
+		assertTrue(yaml.contains("  period"));
+		assertTrue(yaml.contains("  timeUnit"));
 	}
 
 	@Test
