@@ -32,6 +32,11 @@ public class MapSchemaBuilder extends SchemaBuilder<Map<String, Object>> {
 			throw new EventBridgeException("Unsupported schema type '" + schemaType + "'");
 		}
 	}
+	
+	@Override
+	public Map<String, Object> build(SchedulerTypes schedulerType) {
+		return null;
+	}
 
 	private Map<String, Object> buildOutputSchema() {
 		return this.buildAggregationSchema("Output configuration.", OutputConfigTypes.values());

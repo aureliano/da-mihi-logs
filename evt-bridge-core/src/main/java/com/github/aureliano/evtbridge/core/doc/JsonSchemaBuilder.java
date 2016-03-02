@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.data.ObjectMapperSingleton;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class JsonSchemaBuilder extends SchemaBuilder<String> {
 
@@ -19,6 +20,11 @@ public class JsonSchemaBuilder extends SchemaBuilder<String> {
 	@Override
 	public String build(SchemaTypes schemaType) {
 		return this.convertMapToJson(this.builder.build(schemaType));
+	}
+	
+	@Override
+	public String build(SchedulerTypes schedulerType) {
+		return null;
 	}
 	
 	private String convertMapToJson(Map<String, Object> map) {
