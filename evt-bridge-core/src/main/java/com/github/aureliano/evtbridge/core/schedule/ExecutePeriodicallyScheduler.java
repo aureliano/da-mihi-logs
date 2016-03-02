@@ -2,8 +2,15 @@ package com.github.aureliano.evtbridge.core.schedule;
 
 import java.util.concurrent.TimeUnit;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Schedule a task to execute periodically",
+	type = "object"
+)
 public class ExecutePeriodicallyScheduler extends StandardScheduler {
 
 	private Long delay;
@@ -30,6 +37,11 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 		}
 	}
 
+	@SchemaProperty(
+		property = "delay",
+		types = "integer",
+		description = "The time to delay at first execution."
+	)
 	public Long getDelay() {
 		return delay;
 	}
@@ -39,6 +51,11 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "period",
+		types = "integer",
+		description = "The period between successive executions."
+	)
 	public Long getPeriod() {
 		return period;
 	}
@@ -48,6 +65,11 @@ public class ExecutePeriodicallyScheduler extends StandardScheduler {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "timeUnit",
+		types = { "days", "hours", "minutes", "seconds", "milliseconds", "microseconds", "nanoseconds" },
+		description = "The time unit of the delay and period parameters."
+	)
 	public TimeUnit getTimeUnit() {
 		return timeUnit;
 	}

@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
 public class MapSchemaBuilderTest {
 
@@ -48,6 +49,23 @@ public class MapSchemaBuilderTest {
 		List<Map<String, Object>> anyOf = (List<Map<String, Object>>) type.get("anyOf");
 		
 		assertEquals(3, anyOf.size());
+	}
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void testExecutePeriodicallyScheduler() {
+		Map<String, Object> map = new MapSchemaBuilder().build(SchedulerTypes.EXECUTE_PERIODICALLY);
+		
+		assertEquals("http://json-schema.org/draft-04/schema#", map.get("$schema"));
+		assertEquals("Schedule a task to execute periodically", map.get("title"));
+		assertEquals("object", map.get("type"));
+		
+		Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+		assertEquals(3, properties.size());
+		
+		assertNotNull(properties.get("delay"));
+		assertNotNull(properties.get("period"));
+		assertNotNull(properties.get("timeUnit"));
 	}
 
 	@Test
