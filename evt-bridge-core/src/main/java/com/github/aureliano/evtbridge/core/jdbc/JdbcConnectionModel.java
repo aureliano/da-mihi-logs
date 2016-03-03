@@ -5,7 +5,7 @@ import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotEmpty;
 
 @SchemaConfiguration(
-	title = "Java Database Connection model.",
+	title = "Java Database Connectivity model.",
 	type = "object"
 )
 public class JdbcConnectionModel {
