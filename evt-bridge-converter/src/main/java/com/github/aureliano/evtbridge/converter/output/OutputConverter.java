@@ -2,10 +2,10 @@ package com.github.aureliano.evtbridge.converter.output;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConverterType;
 import com.github.aureliano.evtbridge.core.config.IConfigOutput;
 import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
@@ -19,7 +19,7 @@ public class OutputConverter implements IConfigurationConverter<List<IConfigOutp
 	@Override
 	public List<IConfigOutput> convert(Map<String, Object> data) {
 		@SuppressWarnings("unchecked")
-		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("outputs");
+		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("outputConfigs");
 		
 		if (list == null) {
 			return Collections.emptyList();
@@ -35,7 +35,9 @@ public class OutputConverter implements IConfigurationConverter<List<IConfigOutp
 	}
 
 	private IConfigOutput convertOutput(Map<String, Object> data) {
-		String type = StringHelper.parse(data.get("type"));
+		Iterator<String> keys = data.keySet().iterator();
+
+		String type = (keys.hasNext()) ? keys.next() : "";
 		return (IConfigOutput) OutputConverterFactory.createConverter(type).convert(data);
 	}
 	
