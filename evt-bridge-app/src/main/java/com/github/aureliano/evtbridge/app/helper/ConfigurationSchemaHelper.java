@@ -74,7 +74,7 @@ public final class ConfigurationSchemaHelper {
 		case EXTERNAL_COMMAND:
 			initializeClass(ExternalCommandInputConfig.class);
 			break;
-		case JDBC:
+		case JDBC_INPUT:
 			initializeClass(JdbcInputConfig.class);
 			break;
 		case URL:
