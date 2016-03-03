@@ -4,19 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotNull;
 import com.github.aureliano.evtbridge.annotation.validation.Valid;
 import com.github.aureliano.evtbridge.core.config.IConfigOutput;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
+import com.github.aureliano.evtbridge.core.filter.EmptyFilter;
 import com.github.aureliano.evtbridge.core.filter.IEventFielter;
 import com.github.aureliano.evtbridge.core.formatter.IOutputFormatter;
+import com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.jdbc.JdbcConnectionModel;
 import com.github.aureliano.evtbridge.core.listener.DataWritingListener;
 import com.github.aureliano.evtbridge.core.parser.IParser;
+import com.github.aureliano.evtbridge.core.parser.PlainTextParser;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Output configuration for Java Database Connectivity.",
+	type = "object"
+)
 public class JdbcOutputConfig implements IConfigOutput {
 
 	static {
@@ -38,6 +48,10 @@ public class JdbcOutputConfig implements IConfigOutput {
 	public JdbcOutputConfig() {
 		this.metadata = new Properties();
 		this.dataWritingListeners = new ArrayList<DataWritingListener>();
+		
+		this.parser = new PlainTextParser();
+		this.filter = new EmptyFilter();
+		this.outputFormatter = new PlainTextFormatter();
 	}
 
 	@Override
@@ -52,6 +66,12 @@ public class JdbcOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "metadata",
+		types = "object",
+		description = "A key-value pair (hash <string, string>) which provides a mechanism to exchange metadata between configurations (main, inputs and outputs).",
+		required = false
+	)
 	public Properties getMetadata() {
 		return this.metadata;
 	}
@@ -62,6 +82,13 @@ public class JdbcOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "parser",
+		types = "string",
+		description = "Fully qualified name of parser class used to convert an event into an business object.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.parser.PlainTextParser"
+	)
 	public IParser<?> getParser() {
 		return this.parser;
 	}
@@ -73,6 +100,13 @@ public class JdbcOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "filter",
+		types = "string",
+		description = "Fully qualified name of filter class used to filter events before writing.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.filter.EmptyFilter"
+	)
 	public IEventFielter getFilter() {
 		return this.filter;
 	}
@@ -84,11 +118,24 @@ public class JdbcOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "outputFormatter",
+		types = "string",
+		description = "Fully qualified name of formatter class used to format data output.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter"
+	)
 	public IOutputFormatter getOutputFormatter() {
 		return this.outputFormatter;
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "dataWritingListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after a log event is writen.",
+		required = false
+	)
 	public List<DataWritingListener> getDataWritingListeners() {
 		return this.dataWritingListeners;
 	}
@@ -113,6 +160,13 @@ public class JdbcOutputConfig implements IConfigOutput {
 	
 	@NotNull
 	@Valid
+	@SchemaProperty(
+		property = "connection",
+		types = "object",
+		description = "JDBC attributes.",
+		required = true,
+		reference = JdbcConnectionModel.class
+	)
 	public JdbcConnectionModel getConnection() {
 		return connection;
 	}
