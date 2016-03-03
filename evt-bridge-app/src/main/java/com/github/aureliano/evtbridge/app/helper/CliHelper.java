@@ -11,6 +11,7 @@ import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
 import com.github.aureliano.evtbridge.app.command.MatcherCommand;
 import com.github.aureliano.evtbridge.app.command.ParserCommand;
+import com.github.aureliano.evtbridge.app.command.RunCommand;
 import com.github.aureliano.evtbridge.app.command.SchemaCommand;
 import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
@@ -75,10 +76,13 @@ public final class CliHelper {
 		parser.accepts(Commands.VERSION.getId(), "Show project version");
 		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
 		parser.accepts(Commands.SCHEMA.getId(), "Print a JSON schema configuration");
+		parser.accepts(Commands.RUN.getId(), "Execute a collector which configuration is passed as a file");
 		
 		parser.accepts("type").requiredIf(Commands.SCHEMA.getId()).withRequiredArg();
 		parser.accepts("name").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
 		parser.accepts("format").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
+		
+		parser.accepts("configuration").requiredIf(Commands.RUN.getId()).withRequiredArg();
 		
 		parser.nonOptions().ofType(File.class);
 		
@@ -106,6 +110,9 @@ public final class CliHelper {
 			return filter(command);
 		} else if (Commands.FORMATTER.getId().equals(command.get(0))) {
 			return formatter(command);
+		} else if (Commands.RUN.getId().equals(command.get(0))) {
+			String configuration = StringHelper.parse(options.valueOf("configuration"));
+			return run(command, configuration);
 		}
 		
 		return null;
@@ -196,5 +203,13 @@ public final class CliHelper {
 		}
 		
 		return new FormatterCommand();
+	}
+	
+	private static ICommand run(List<String> command, String configuration) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new RunCommand().withConfigurationFilePath(configuration);
 	}
 }

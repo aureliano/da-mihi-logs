@@ -16,5 +16,6 @@ public class CommandsTest {
 		assertEquals(new ParserCommand().id(), Commands.PARSER.getId());
 		assertEquals(new FilterCommand().id(), Commands.FILTER.getId());
 		assertEquals(new FormatterCommand().id(), Commands.FORMATTER.getId());
+		assertEquals(new RunCommand().id(), Commands.RUN.getId());
 	}
 }

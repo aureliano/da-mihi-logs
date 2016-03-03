@@ -2,6 +2,7 @@ package com.github.aureliano.evtbridge.app.command;
 
 public enum Commands {
 
+	RUN,
 	HELP,
 	VERSION,
 	SCHEMATA,
