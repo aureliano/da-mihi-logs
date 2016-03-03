@@ -8,6 +8,7 @@ import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
+import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
 import com.github.aureliano.evtbridge.core.schedule.SchedulerTypes;
 
@@ -66,6 +67,8 @@ public class SchemaCommand implements ICommand {
 				return this.validateNameWithSchema(SchedulerTypes.class);
 			case INPUT:
 				return this.validateNameWithSchema(InputConfigTypes.class);
+			case OUTPUT:
+				return this.validateNameWithSchema(OutputConfigTypes.class);
 			default:
 				throw new EventBridgeException("Unsupported schema type: [" + this.type + "]");
 			}
