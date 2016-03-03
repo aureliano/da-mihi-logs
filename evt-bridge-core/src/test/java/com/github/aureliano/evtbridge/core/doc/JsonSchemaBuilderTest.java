@@ -102,11 +102,11 @@ public class JsonSchemaBuilderTest {
 		assertTrue(json.contains("    \"type\" : {"));
 		assertTrue(json.contains("      \"anyOf\" : ["));
 		assertTrue(json.contains("\"external_command\""));
-		assertTrue(json.contains("\"file\""));
+		assertTrue(json.contains("\"file_input\""));
 		assertTrue(json.contains("\"file_tailer\""));
-		assertTrue(json.contains("\"standard\""));
+		assertTrue(json.contains("\"standard_input\""));
 		assertTrue(json.contains("\"url\""));
-		assertTrue(json.contains("\"jdbc\""));
+		assertTrue(json.contains("\"jdbc_input\""));
 	}
 
 	@Test
@@ -121,9 +121,9 @@ public class JsonSchemaBuilderTest {
 		
 		assertTrue(json.contains("    \"type\" : {"));
 		assertTrue(json.contains("      \"anyOf\" : ["));
-		assertTrue(json.contains("\"file\""));
-		assertTrue(json.contains("\"standard\""));
-		assertTrue(json.contains("\"jdbc\""));
+		assertTrue(json.contains("\"file_output\""));
+		assertTrue(json.contains("\"standard_output\""));
+		assertTrue(json.contains("\"jdbc_output\""));
 		assertTrue(json.contains("\"elastic_search\""));
 	}
 }
