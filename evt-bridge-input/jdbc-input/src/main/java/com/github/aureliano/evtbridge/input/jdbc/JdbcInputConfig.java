@@ -29,7 +29,7 @@ public class JdbcInputConfig implements IConfigInput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(InputConfigTypes.JDBC.name())
+			.withId(InputConfigTypes.JDBC_INPUT.name())
 			.withAgent(JdbcDataReader.class)
 			.withConfiguration(JdbcInputConfig.class)
 			.withConverter(JdbcInputConverter.class);
@@ -80,7 +80,7 @@ public class JdbcInputConfig implements IConfigInput {
 
 	@Override
 	public String id() {
-		return InputConfigTypes.JDBC.name();
+		return InputConfigTypes.JDBC_INPUT.name();
 	}
 
 	@Override
