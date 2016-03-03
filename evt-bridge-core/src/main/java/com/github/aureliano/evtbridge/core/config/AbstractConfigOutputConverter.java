@@ -16,6 +16,10 @@ public abstract class AbstractConfigOutputConverter<T> implements IConfiguration
 
 	@SuppressWarnings("unchecked")
 	protected void configureObject(IConfigOutput conf, Map<String, Object> data) {
+		if (data == null) {
+			return;
+		}
+		
 		String value = StringHelper.parse(data.get("parser"));
 		if (!StringHelper.isEmpty(value)) {
 			conf.withParser((IParser<?>) ReflectionHelper.newInstance(value));

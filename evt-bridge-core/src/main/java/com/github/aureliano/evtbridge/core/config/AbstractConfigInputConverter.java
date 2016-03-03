@@ -16,6 +16,10 @@ public abstract class AbstractConfigInputConverter<T> implements IConfigurationC
 
 	@SuppressWarnings("unchecked")
 	protected void configureObject(IConfigInput conf, Map<String, Object> data) {
+		if (data == null) {
+			return;
+		}
+		
 		conf.withConfigurationId(StringHelper.parse(data.get("configurationId")));
 		
 		String value = StringHelper.parse(data.get("matcher"));
