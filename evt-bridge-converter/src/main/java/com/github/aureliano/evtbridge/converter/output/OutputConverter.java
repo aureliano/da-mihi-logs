@@ -34,10 +34,13 @@ public class OutputConverter implements IConfigurationConverter<List<IConfigOutp
 		return outputs;
 	}
 
-	private IConfigOutput convertOutput(Map<String, Object> data) {
-		Iterator<String> keys = data.keySet().iterator();
+	private IConfigOutput convertOutput(Map<String, Object> configuration) {
+		Iterator<String> keys = configuration.keySet().iterator();
 
 		String type = (keys.hasNext()) ? keys.next() : "";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> data = (Map<String, Object>) configuration.get(type);
+		
 		return (IConfigOutput) OutputConverterFactory.createConverter(type).convert(data);
 	}
 	
