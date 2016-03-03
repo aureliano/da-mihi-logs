@@ -29,49 +29,24 @@ public class HelpCommand implements ICommand {
 	
 	private ErrorCode commandHelp() {
 		if (Commands.SCHEMATA.name().equalsIgnoreCase(this.command)) {
-			this.printSchemataHelp();
+			this.printHelp("schemata");
 		} else if (Commands.SCHEMA.name().equalsIgnoreCase(this.command)) {
-			this.printSchemaHelp();
+			this.printHelp("schema");
 		} else if (Commands.MATCHER.name().equalsIgnoreCase(this.command)) {
-			this.printMatcherHelp();
+			this.printHelp("matcher");
 		} else if (Commands.PARSER.name().equalsIgnoreCase(this.command)) {
-			this.printParserHelp();
+			this.printHelp("parser");
 		} else if (Commands.FILTER.name().equalsIgnoreCase(this.command)) {
-			this.printFilterHelp();
+			this.printHelp("filter");
 		} else if (Commands.FORMATTER.name().equalsIgnoreCase(this.command)) {
-			this.printFormatterHelp();
+			this.printHelp("formatter");
 		}
 		
 		return null;
 	}
 	
-	private void printSchemataHelp() {
-		String help = FileHelper.readResource("help/schemata.help");
-		System.out.println(this.replaceProperties(help));
-	}
-	
-	private void printSchemaHelp() {
-		String help = FileHelper.readResource("help/schema.help");
-		System.out.println(this.replaceProperties(help));
-	}
-	
-	private void printMatcherHelp() {
-		String help = FileHelper.readResource("help/matcher.help");
-		System.out.println(this.replaceProperties(help));
-	}
-	
-	private void printParserHelp() {
-		String help = FileHelper.readResource("help/parser.help");
-		System.out.println(this.replaceProperties(help));
-	}
-	
-	private void printFilterHelp() {
-		String help = FileHelper.readResource("help/filter.help");
-		System.out.println(this.replaceProperties(help));
-	}
-	
-	private void printFormatterHelp() {
-		String help = FileHelper.readResource("help/formatter.help");
+	private void printHelp(String resourceName) {
+		String help = FileHelper.readResource("help/" + resourceName + ".help");
 		System.out.println(this.replaceProperties(help));
 	}
 	
