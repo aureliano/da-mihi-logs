@@ -7,6 +7,7 @@ import java.util.List;
 import com.github.aureliano.evtbridge.app.command.Commands;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
+import com.github.aureliano.evtbridge.app.command.MatcherCommand;
 import com.github.aureliano.evtbridge.app.command.SchemaCommand;
 import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
@@ -71,6 +72,7 @@ public final class CliHelper {
 		parser.accepts(Commands.VERSION.getId(), "Show project version");
 		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
 		parser.accepts(Commands.SCHEMA.getId(), "Print a JSON schema configuration");
+		parser.accepts(Commands.MATCHER.getId(), "List all available matchers");
 		
 		parser.accepts("type").requiredIf(Commands.SCHEMA.getId()).withRequiredArg();
 		parser.accepts("name").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();
@@ -106,6 +108,8 @@ public final class CliHelper {
 			return new VersionCommand();
 		} else if (options.has(Commands.SCHEMATA.getId())) {
 			return new SchemataCommand();
+		} else if (options.has(Commands.MATCHER.getId())) {
+			return new MatcherCommand();
 		}
 		
 		return null;
