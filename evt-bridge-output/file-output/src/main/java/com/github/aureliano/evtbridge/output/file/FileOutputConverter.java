@@ -42,6 +42,6 @@ public class FileOutputConverter extends AbstractConfigOutputConverter<FileOutpu
 	
 	@Override
 	public String id() {
-		return OutputConfigTypes.FILE.name();
+		return OutputConfigTypes.FILE_OUTPUT.name();
 	}
 }

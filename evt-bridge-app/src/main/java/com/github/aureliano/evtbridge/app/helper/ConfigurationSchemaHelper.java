@@ -87,7 +87,7 @@ public final class ConfigurationSchemaHelper {
 	
 	private static void initializeOutputConfig(OutputConfigTypes outputType) {
 		switch (outputType) {
-		case FILE:
+		case FILE_OUTPUT:
 			initializeClass(FileOutputConfig.class);
 			break;
 		case STANDARD:

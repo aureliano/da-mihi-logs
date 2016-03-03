@@ -3,7 +3,7 @@ package com.github.aureliano.evtbridge.core.config;
 public enum OutputConfigTypes {
 
 	ELASTIC_SEARCH,
-	FILE,
+	FILE_OUTPUT,
 	STANDARD,
 	JDBC;
 }

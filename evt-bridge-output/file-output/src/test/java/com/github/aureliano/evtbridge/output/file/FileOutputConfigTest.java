@@ -58,7 +58,7 @@ public class FileOutputConfigTest {
 	
 	@Test
 	public void testOutputType() {
-		assertEquals(OutputConfigTypes.FILE.name(), new FileOutputConfig().id());
+		assertEquals(OutputConfigTypes.FILE_OUTPUT.name(), new FileOutputConfig().id());
 	}
 	
 	@Test
