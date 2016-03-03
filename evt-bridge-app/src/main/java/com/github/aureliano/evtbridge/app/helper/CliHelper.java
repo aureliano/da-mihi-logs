@@ -76,6 +76,9 @@ public final class CliHelper {
 		parser.accepts(Commands.SCHEMATA.getId(), "List all configuration schema names");
 		parser.accepts(Commands.SCHEMA.getId(), "Print a JSON schema configuration");
 		parser.accepts(Commands.MATCHER.getId(), "List all available matchers");
+		parser.accepts(Commands.PARSER.getId(), "List all available parsers");
+		parser.accepts(Commands.FILTER.getId(), "List all available filters");
+		parser.accepts(Commands.FORMATTER.getId(), "List all available formatters");
 		
 		parser.accepts("type").requiredIf(Commands.SCHEMA.getId()).withRequiredArg();
 		parser.accepts("name").requiredIf(Commands.SCHEMA.getId()).withOptionalArg();

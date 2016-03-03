@@ -27,7 +27,7 @@ public class FormatterCommand implements ICommand {
 
 	@Override
 	public String id() {
-		return Commands.PARSER.getId();
+		return Commands.FORMATTER.getId();
 	}
 	
 	private String matchers() {

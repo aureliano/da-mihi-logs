@@ -27,7 +27,7 @@ public class FilterCommand implements ICommand {
 
 	@Override
 	public String id() {
-		return Commands.PARSER.getId();
+		return Commands.FILTER.getId();
 	}
 	
 	private String matchers() {
