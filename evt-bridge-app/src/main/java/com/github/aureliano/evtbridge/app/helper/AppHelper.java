@@ -12,11 +12,10 @@ public final class AppHelper {
 	public static void initializeResources() {
 		Reflections reflections = new Reflections("com.github.aureliano.evtbridge");
 		Class<?>[] classes = reflections.getSubTypesOf(IConfiguration.class).toArray(new Class<?>[0]);
-		System.out.println(classes.length);
+		
 		try {
 			for (Class<?> clazz : classes) {
 				Class.forName(clazz.getName());
-				System.out.println(clazz);
 			}
 		} catch (ClassNotFoundException ex) {
 			throw new EventBridgeException(ex);
