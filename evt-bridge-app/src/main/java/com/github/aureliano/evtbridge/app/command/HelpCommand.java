@@ -38,6 +38,8 @@ public class HelpCommand implements ICommand {
 			this.printParserHelp();
 		} else if (Commands.FILTER.name().equalsIgnoreCase(this.command)) {
 			this.printFilterHelp();
+		} else if (Commands.FORMATTER.name().equalsIgnoreCase(this.command)) {
+			this.printFormatterHelp();
 		}
 		
 		return null;
@@ -65,6 +67,11 @@ public class HelpCommand implements ICommand {
 	
 	private void printFilterHelp() {
 		String help = FileHelper.readResource("help/filter.help");
+		System.out.println(this.replaceProperties(help));
+	}
+	
+	private void printFormatterHelp() {
+		String help = FileHelper.readResource("help/formatter.help");
 		System.out.println(this.replaceProperties(help));
 	}
 	

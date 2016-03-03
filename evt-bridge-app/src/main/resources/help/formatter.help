@@ -1,0 +1,19 @@
+NAME
+   formatter - List all available formatters
+
+SYNOPSIS
+   ${app.binary.linux} formatter
+
+DESCRIPTION
+   This command is used to list all available core formatters.
+   A formatter is an object used to format an object to be printed as text. By default each output configuration uses plain text parser, which takes an event and treat it as text. Some output configurations like Standard and File have the plain text formatter as default. Although ElasticSearch has no default formatter. About ElasticSearch it may be a good idea to format output to JSON pattern.
+   
+   Only core formatters are listed with this command.
+   Although if you want to use your own formatter you can put the whole class name of it in the output configuration file.
+   
+   ${app.binary.linux} formatter
+   
+   That command will print all available core formatters.
+
+OPTIONS
+   None
