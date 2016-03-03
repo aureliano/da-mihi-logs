@@ -2,10 +2,10 @@ package com.github.aureliano.evtbridge.converter.input;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConverterType;
 import com.github.aureliano.evtbridge.core.config.IConfigInput;
 import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
@@ -40,7 +40,9 @@ public class InputConverter implements IConfigurationConverter<List<IConfigInput
 	}
 
 	private IConfigInput convertInput(Map<String, Object> data) {
-		String type = StringHelper.parse(data.get("type"));
+		Iterator<String> keys = data.keySet().iterator();
+
+		String type = (keys.hasNext()) ? keys.next() : "";
 		return (IConfigInput) InputConverterFactory.createConverter(type).convert(data);
 	}
 }
