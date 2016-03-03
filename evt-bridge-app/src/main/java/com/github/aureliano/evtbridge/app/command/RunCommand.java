@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.github.aureliano.evtbridge.app.ErrorCode;
+import com.github.aureliano.evtbridge.app.helper.AppHelper;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConfigurationSourceType;
 import com.github.aureliano.evtbridge.converter.helper.ConversionHelper;
@@ -26,6 +27,8 @@ public class RunCommand implements ICommand {
 		if (errorCode == null) {
 			ConfigurationSourceType sourceType = this.getConfigurationSourceType();
 			EventCollectorConfiguration configuration = ConversionHelper.loadConfiguration(this.configurationFilePath, sourceType);
+			
+			AppHelper.initializeResources();
 			
 			new EventsCollector()
 				.withConfiguration(configuration)
