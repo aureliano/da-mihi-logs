@@ -5,17 +5,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.github.aureliano.evtbridge.annotation.doc.SchemaConfiguration;
+import com.github.aureliano.evtbridge.annotation.doc.SchemaProperty;
 import com.github.aureliano.evtbridge.annotation.validation.NotNull;
 import com.github.aureliano.evtbridge.core.config.IConfigOutput;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
+import com.github.aureliano.evtbridge.core.filter.EmptyFilter;
 import com.github.aureliano.evtbridge.core.filter.IEventFielter;
 import com.github.aureliano.evtbridge.core.formatter.IOutputFormatter;
+import com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataWritingListener;
 import com.github.aureliano.evtbridge.core.parser.IParser;
+import com.github.aureliano.evtbridge.core.parser.PlainTextParser;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
+@SchemaConfiguration(
+	schema = "http://json-schema.org/draft-04/schema#",
+	title = "Output configuration where events will be writen as plain text file.",
+	type = "object"
+)
 public class FileOutputConfig implements IConfigOutput {
 
 	static {
@@ -44,6 +54,10 @@ public class FileOutputConfig implements IConfigOutput {
 		this.encoding = "UTF-8";
 		this.metadata = new Properties();
 		this.dataWritingListeners = new ArrayList<>();
+		
+		this.parser = new PlainTextParser();
+		this.filter = new EmptyFilter();
+		this.outputFormatter = new PlainTextFormatter();
 	}
 
 	@Override
@@ -52,6 +66,12 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@NotNull
+	@SchemaProperty(
+		property = "file",
+		types = "string",
+		description = "The output file path where data will be saved.",
+		required = true
+	)
 	public File getFile() {
 		return file;
 	}
@@ -66,6 +86,13 @@ public class FileOutputConfig implements IConfigOutput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "append",
+		types = "boolean",
+		description = "Whether to append content to output file or not.",
+		required = false,
+		defaultValue = "false"
+	)
 	public boolean isAppend() {
 		return append;
 	}
@@ -75,6 +102,13 @@ public class FileOutputConfig implements IConfigOutput {
 		return this;
 	}
 
+	@SchemaProperty(
+		property = "encoding",
+		types = "string",
+		description = "Force encoding for writing.",
+		required = false,
+		defaultValue = "UTF-8"
+	)
 	public String getEncoding() {
 		return encoding;
 	}
@@ -83,7 +117,14 @@ public class FileOutputConfig implements IConfigOutput {
 		this.encoding = encoding;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "useBuffer",
+		types = "boolean",
+		description = "Whether to use buffering in order to improve writing process. You might need some times to write data to file instantly though.",
+		required = false,
+		defaultValue = "true"
+	)
 	public boolean isUseBuffer() {
 		return useBuffer;
 	}
@@ -94,6 +135,13 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "parser",
+		types = "string",
+		description = "Fully qualified name of parser class used to convert an event into an business object.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.parser.PlainTextParser"
+	)
 	public IParser<?> getParser() {
 		return this.parser;
 	}
@@ -105,6 +153,13 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "filter",
+		types = "string",
+		description = "Fully qualified name of filter class used to filter events before writing.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.filter.EmptyFilter"
+	)
 	public IEventFielter getFilter() {
 		return this.filter;
 	}
@@ -116,6 +171,13 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "outputFormatter",
+		types = "string",
+		description = "Fully qualified name of formatter class used to format data output.",
+		required = false,
+		defaultValue = "com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter"
+	)
 	public IOutputFormatter getOutputFormatter() {
 		return outputFormatter;
 	}
@@ -125,7 +187,13 @@ public class FileOutputConfig implements IConfigOutput {
 		this.outputFormatter = outputFormatter;
 		return this;
 	}
-	
+
+	@SchemaProperty(
+		property = "dataWritingListeners",
+		types = "array",
+		description = "Fully qualified name of the class that will listen and fire an event before and after a log event is writen.",
+		required = false
+	)
 	public List<DataWritingListener> getDataWritingListeners() {
 		return dataWritingListeners;
 	}
@@ -170,6 +238,12 @@ public class FileOutputConfig implements IConfigOutput {
 	}
 
 	@Override
+	@SchemaProperty(
+		property = "metadata",
+		types = "object",
+		description = "A key-value pair (hash <string, string>) which provides a mechanism to exchange metadata between configurations (main, inputs and outputs).",
+		required = false
+	)
 	public Properties getMetadata() {
 		return this.metadata;
 	}
