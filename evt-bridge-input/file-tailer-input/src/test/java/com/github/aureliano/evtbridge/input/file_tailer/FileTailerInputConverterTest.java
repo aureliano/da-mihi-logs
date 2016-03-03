@@ -21,7 +21,7 @@ public class FileTailerInputConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		data.put("id", "test-123");
+		data.put("configurationId", "test-123");
 		data.put("matcher", SingleLineMatcher.class.getName());
 		data.put("exceptionHandlers", Arrays.asList(InputFileTailerExceptionHandler.class.getName(), InputFileTailerExceptionHandler.class.getName()));
 		data.put("dataReadingListeners", Arrays.asList(InputFileTailerDataReadingListener.class.getName()));
