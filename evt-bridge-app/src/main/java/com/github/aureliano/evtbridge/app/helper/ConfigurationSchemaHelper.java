@@ -1,8 +1,11 @@
 package com.github.aureliano.evtbridge.app.helper;
 
+import org.reflections.Reflections;
+
 import com.github.aureliano.evtbridge.common.exception.EventBridgeException;
 import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.core.SchemaTypes;
+import com.github.aureliano.evtbridge.core.config.IConfiguration;
 import com.github.aureliano.evtbridge.core.config.InputConfigTypes;
 import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.doc.DocumentationSourceTypes;
@@ -32,6 +35,7 @@ public final class ConfigurationSchemaHelper {
 		if (StringHelper.isEmpty(name)) {
 			return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(schemaType);
 		} else {
+			initializeResouces();
 			switch (schemaType) {
 			case SCHEDULER:
 				return ConfigurationSchemaHelper.getSchemaBuilder(sourceType)
@@ -48,65 +52,22 @@ public final class ConfigurationSchemaHelper {
 	
 	private static String buildInputSchema(DocumentationSourceTypes sourceType, String name) {
 		InputConfigTypes inputType = InputConfigTypes.valueOf(name.toUpperCase());
-		initializeInputConfig(inputType);
-		
 		return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(inputType);
 	}
 	
 	private static String buildOutputSchema(DocumentationSourceTypes sourceType, String name) {
 		OutputConfigTypes outputType = OutputConfigTypes.valueOf(name.toUpperCase());
-		initializeOutputConfig(outputType);
-		
 		return ConfigurationSchemaHelper.getSchemaBuilder(sourceType).build(outputType);
 	}
 	
-	private static void initializeInputConfig(InputConfigTypes inputType) {
-		switch (inputType) {
-		case FILE_INPUT:
-			initializeClass(FileInputConfig.class);
-			break;
-		case STANDARD_INPUT:
-			initializeClass(StandardInputConfig.class);
-			break;
-		case FILE_TAILER:
-			initializeClass(FileTailerInputConfig.class);
-			break;
-		case EXTERNAL_COMMAND:
-			initializeClass(ExternalCommandInputConfig.class);
-			break;
-		case JDBC_INPUT:
-			initializeClass(JdbcInputConfig.class);
-			break;
-		case URL:
-			initializeClass(UrlInputConfig.class);
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private static void initializeOutputConfig(OutputConfigTypes outputType) {
-		switch (outputType) {
-		case FILE_OUTPUT:
-			initializeClass(FileOutputConfig.class);
-			break;
-		case STANDARD_OUTPUT:
-			initializeClass(StandardOutputConfig.class);
-			break;
-		case ELASTIC_SEARCH:
-			initializeClass(ElasticSearchOutputConfig.class);
-			break;
-		case JDBC_OUTPUT:
-			initializeClass(JdbcOutputConfig.class);
-			break;
-		default:
-			break;
-		}
-	}
-	
-	private static void initializeClass(Class<?> clazz) {
+	private static void initializeResouces() {
+		Reflections reflections = new Reflections("com.github.aureliano.evtbridge");
+		Class<?>[] classes = reflections.getSubTypesOf(IConfiguration.class).toArray(new Class<?>[0]);
+		
 		try {
-			Class.forName(clazz.getName());
+			for (Class<?> clazz : classes) {
+				Class.forName(clazz.getName());
+			}
 		} catch (ClassNotFoundException ex) {
 			throw new EventBridgeException(ex);
 		}
