@@ -38,7 +38,7 @@ public class JdbcOutputConfigTest {
 	
 	@Test
 	public void testOutputType() {
-		Assert.assertEquals(OutputConfigTypes.JDBC.name(), new JdbcOutputConfig().id());
+		Assert.assertEquals(OutputConfigTypes.JDBC_OUTPUT.name(), new JdbcOutputConfig().id());
 	}
 	
 	@Test

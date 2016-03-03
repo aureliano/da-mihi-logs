@@ -96,7 +96,7 @@ public final class ConfigurationSchemaHelper {
 		case ELASTIC_SEARCH:
 			initializeClass(ElasticSearchOutputConfig.class);
 			break;
-		case JDBC:
+		case JDBC_OUTPUT:
 			initializeClass(JdbcOutputConfig.class);
 			break;
 		default:

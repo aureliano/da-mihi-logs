@@ -55,6 +55,6 @@ public class JdbcOutputConverter extends AbstractConfigOutputConverter<JdbcOutpu
 
 	@Override
 	public String id() {
-		return OutputConfigTypes.JDBC.name();
+		return OutputConfigTypes.JDBC_OUTPUT.name();
 	}
 }
