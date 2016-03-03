@@ -13,6 +13,7 @@ import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
 import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
 import com.github.aureliano.evtbridge.core.matcher.IMatcher;
+import com.github.aureliano.evtbridge.core.matcher.SingleLineMatcher;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
@@ -50,6 +51,7 @@ public class StandardInputConfig implements IConfigInput {
 		
 		this.dataReadingListeners = new ArrayList<>();
 		this.inputExecutionListeners = new ArrayList<>();
+		this.matcher = new SingleLineMatcher();
 	}
 	
 	public String getEncoding() {
@@ -83,7 +85,8 @@ public class StandardInputConfig implements IConfigInput {
 		property = "matcher",
 		types = "string",
 		description = "Fully qualified name of class matcher used to get text from input.",
-		required = false
+		required = false,
+		defaultValue = "SingleLineMatcher"
 	)
 	public IMatcher getMatcher() {
 		return matcher;

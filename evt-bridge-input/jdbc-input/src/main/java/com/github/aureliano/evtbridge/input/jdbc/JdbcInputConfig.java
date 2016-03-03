@@ -16,6 +16,7 @@ import com.github.aureliano.evtbridge.core.jdbc.JdbcConnectionModel;
 import com.github.aureliano.evtbridge.core.listener.DataReadingListener;
 import com.github.aureliano.evtbridge.core.listener.ExecutionListener;
 import com.github.aureliano.evtbridge.core.matcher.IMatcher;
+import com.github.aureliano.evtbridge.core.matcher.SingleLineMatcher;
 import com.github.aureliano.evtbridge.core.register.ApiServiceRegistrator;
 import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
@@ -52,6 +53,7 @@ public class JdbcInputConfig implements IConfigInput {
 		this.exceptionHandlers = new ArrayList<>();
 		this.dataReadingListeners = new ArrayList<>();
 		this.inputExecutionListeners = new ArrayList<>();
+		this.matcher = new SingleLineMatcher();
 	}
 
 	@Override
@@ -104,7 +106,8 @@ public class JdbcInputConfig implements IConfigInput {
 		property = "matcher",
 		types = "string",
 		description = "Fully qualified name of class matcher used to get text from input.",
-		required = false
+		required = false,
+		defaultValue = "SingleLineMatcher"
 	)
 	public IMatcher getMatcher() {
 		return matcher;
