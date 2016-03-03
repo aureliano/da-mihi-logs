@@ -8,6 +8,7 @@ import com.github.aureliano.evtbridge.app.command.Commands;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
 import com.github.aureliano.evtbridge.app.command.MatcherCommand;
+import com.github.aureliano.evtbridge.app.command.ParserCommand;
 import com.github.aureliano.evtbridge.app.command.SchemaCommand;
 import com.github.aureliano.evtbridge.app.command.SchemataCommand;
 import com.github.aureliano.evtbridge.app.command.VersionCommand;
@@ -98,6 +99,8 @@ public final class CliHelper {
 			return schema(command, type, name, format);
 		} else if (Commands.MATCHER.getId().equals(command.get(0))) {
 			return new MatcherCommand();
+		} else if (Commands.PARSER.getId().equals(command.get(0))) {
+			return new ParserCommand();
 		}
 		
 		return null;
