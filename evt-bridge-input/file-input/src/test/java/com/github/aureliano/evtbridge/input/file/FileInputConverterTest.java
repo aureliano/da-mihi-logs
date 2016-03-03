@@ -22,7 +22,7 @@ public class FileInputConverterTest {
 		metadata.setProperty("test", "test");
 		metadata.setProperty("goal", "CAM");
 		
-		data.put("id", "test-123");
+		data.put("configurationId", "test-123");
 		data.put("matcher", SingleLineMatcher.class.getName());
 		data.put("exceptionHandlers", Arrays.asList(InputFileExceptionHandler.class.getName(), InputFileExceptionHandler.class.getName()));
 		data.put("dataReadingListeners", Arrays.asList(InputFileDataReadingListener.class.getName()));
