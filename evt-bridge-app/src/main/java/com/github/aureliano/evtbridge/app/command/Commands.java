@@ -7,7 +7,8 @@ public enum Commands {
 	SCHEMATA,
 	SCHEMA,
 	MATCHER,
-	PARSER;
+	PARSER,
+	FILTER;
 	
 	public String getId() {
 		return this.name().toLowerCase();

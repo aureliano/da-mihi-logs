@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.github.aureliano.evtbridge.app.command.Commands;
+import com.github.aureliano.evtbridge.app.command.FilterCommand;
 import com.github.aureliano.evtbridge.app.command.HelpCommand;
 import com.github.aureliano.evtbridge.app.command.ICommand;
 import com.github.aureliano.evtbridge.app.command.MatcherCommand;
@@ -101,6 +102,8 @@ public final class CliHelper {
 			return new MatcherCommand();
 		} else if (Commands.PARSER.getId().equals(command.get(0))) {
 			return new ParserCommand();
+		} else if (Commands.FILTER.getId().equals(command.get(0))) {
+			return new FilterCommand();
 		}
 		
 		return null;
