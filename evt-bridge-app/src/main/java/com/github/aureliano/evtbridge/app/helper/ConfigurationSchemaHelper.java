@@ -65,7 +65,7 @@ public final class ConfigurationSchemaHelper {
 		case FILE_INPUT:
 			initializeClass(FileInputConfig.class);
 			break;
-		case STANDARD:
+		case STANDARD_INPUT:
 			initializeClass(StandardInputConfig.class);
 			break;
 		case FILE_TAILER:

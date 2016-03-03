@@ -26,7 +26,7 @@ public class StandardInputConfig implements IConfigInput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(InputConfigTypes.STANDARD.name())
+			.withId(InputConfigTypes.STANDARD_INPUT.name())
 			.withAgent(StandardDataReader.class)
 			.withConfiguration(StandardInputConfig.class)
 			.withConverter(StandardInputConverter.class);
@@ -220,6 +220,6 @@ public class StandardInputConfig implements IConfigInput {
 
 	@Override
 	public String id() {
-		return InputConfigTypes.STANDARD.name();
+		return InputConfigTypes.STANDARD_INPUT.name();
 	}
 }

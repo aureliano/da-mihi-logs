@@ -5,7 +5,7 @@ public enum InputConfigTypes {
 	EXTERNAL_COMMAND,
 	FILE_INPUT,
 	FILE_TAILER,
-	STANDARD,
+	STANDARD_INPUT,
 	URL,
 	JDBC;
 }
