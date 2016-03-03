@@ -162,7 +162,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		types = "string",
 		description = "Fully qualified name of parser class used to convert an event into an business object.",
 		required = false,
-		defaultValue = "com.github.aureliano.evtbridge.core.parser.PlainTextParser"
+		defaultValue = "PlainTextParser"
 	)
 	public IParser<?> getParser() {
 		return this.parser;
@@ -180,7 +180,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		types = "string",
 		description = "Fully qualified name of filter class used to filter events before writing.",
 		required = false,
-		defaultValue = "com.github.aureliano.evtbridge.core.filter.EmptyFilter"
+		defaultValue = "EmptyFilter"
 	)
 	public IEventFielter getFilter() {
 		return this.filter;
@@ -198,7 +198,7 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		types = "string",
 		description = "Fully qualified name of formatter class used to format data output.",
 		required = false,
-		defaultValue = "com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter"
+		defaultValue = "PlainTextFormatter"
 	)
 	public IOutputFormatter getOutputFormatter() {
 		return outputFormatter;
