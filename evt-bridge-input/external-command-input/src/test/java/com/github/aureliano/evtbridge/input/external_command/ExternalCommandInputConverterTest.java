@@ -16,7 +16,7 @@ public class ExternalCommandInputConverterTest {
 	public void testConvert() {
 		Map<String, Object> data = new HashMap<String, Object>();
 
-		data.put("id", "test-123");
+		data.put("configurationId", "test-123");
 		data.put("command", "ls");
 		data.put("parameters", Arrays.asList("-la"));
 		
