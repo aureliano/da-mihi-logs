@@ -13,6 +13,7 @@ Commands:
    schemata - List all configuration schema names
    schema   - Print a schema configuration
    matcher  - List all available matchers
+   parser   - List all available parsers
 
 See '${app.binary.linux} help <command>' for more information on a specific command.
 
