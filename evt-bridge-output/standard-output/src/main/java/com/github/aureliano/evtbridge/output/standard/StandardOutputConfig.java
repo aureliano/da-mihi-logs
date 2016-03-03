@@ -28,7 +28,7 @@ public class StandardOutputConfig implements IConfigOutput {
 
 	static {
 		ServiceRegistration registration = new ServiceRegistration()
-			.withId(OutputConfigTypes.STANDARD.name())
+			.withId(OutputConfigTypes.STANDARD_OUTPUT.name())
 			.withAgent(StandardDataWriter.class)
 			.withConfiguration(StandardOutputConfig.class)
 			.withConverter(StandardOutputConverter.class);
@@ -53,7 +53,7 @@ public class StandardOutputConfig implements IConfigOutput {
 
 	@Override
 	public String id() {
-		return OutputConfigTypes.STANDARD.name();
+		return OutputConfigTypes.STANDARD_OUTPUT.name();
 	}
 
 	@Override

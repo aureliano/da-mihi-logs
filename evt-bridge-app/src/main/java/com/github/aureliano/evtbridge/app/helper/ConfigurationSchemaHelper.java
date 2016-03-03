@@ -90,7 +90,7 @@ public final class ConfigurationSchemaHelper {
 		case FILE_OUTPUT:
 			initializeClass(FileOutputConfig.class);
 			break;
-		case STANDARD:
+		case STANDARD_OUTPUT:
 			initializeClass(StandardOutputConfig.class);
 			break;
 		case ELASTIC_SEARCH:

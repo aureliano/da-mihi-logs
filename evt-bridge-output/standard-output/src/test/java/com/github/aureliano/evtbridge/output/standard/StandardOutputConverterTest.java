@@ -30,7 +30,7 @@ public class StandardOutputConverterTest {
 		data.put("filter", EmptyFilter.class.getName());
 		data.put("formatter", PlainTextFormatter.class.getName());
 		
-		data.put("type", OutputConfigTypes.STANDARD);
+		data.put("type", OutputConfigTypes.STANDARD_OUTPUT);
 		
 		StandardOutputConfig conf = new StandardOutputConverter().convert(data);
 		Assert.assertEquals(1, conf.getDataWritingListeners().size());
@@ -44,6 +44,6 @@ public class StandardOutputConverterTest {
 	
 	@Test
 	public void testId() {
-		Assert.assertEquals(OutputConfigTypes.STANDARD.name(), new StandardOutputConverter().id());
+		Assert.assertEquals(OutputConfigTypes.STANDARD_OUTPUT.name(), new StandardOutputConverter().id());
 	}
 }

@@ -9,6 +9,6 @@ public class StandardOutputConfigTest {
 
 	@Test
 	public void testOutputType() {
-		Assert.assertEquals(OutputConfigTypes.STANDARD.name(), new StandardOutputConfig().id());
+		Assert.assertEquals(OutputConfigTypes.STANDARD_OUTPUT.name(), new StandardOutputConfig().id());
 	}
 }

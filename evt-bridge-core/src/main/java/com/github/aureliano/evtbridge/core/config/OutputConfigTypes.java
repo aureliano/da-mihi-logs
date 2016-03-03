@@ -4,6 +4,6 @@ public enum OutputConfigTypes {
 
 	ELASTIC_SEARCH,
 	FILE_OUTPUT,
-	STANDARD,
+	STANDARD_OUTPUT,
 	JDBC;
 }
