@@ -8,7 +8,8 @@ public enum Commands {
 	SCHEMA,
 	MATCHER,
 	PARSER,
-	FILTER;
+	FILTER,
+	FORMATTER;
 	
 	public String getId() {
 		return this.name().toLowerCase();
