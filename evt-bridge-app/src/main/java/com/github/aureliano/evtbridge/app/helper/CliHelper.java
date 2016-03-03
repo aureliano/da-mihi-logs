@@ -102,7 +102,7 @@ public final class CliHelper {
 		} else if (Commands.MATCHER.getId().equals(command.get(0))) {
 			return matcher(command);
 		} else if (Commands.PARSER.getId().equals(command.get(0))) {
-			return new ParserCommand();
+			return parser(command);
 		} else if (Commands.FILTER.getId().equals(command.get(0))) {
 			return new FilterCommand();
 		} else if (Commands.FORMATTER.getId().equals(command.get(0))) {
@@ -173,5 +173,13 @@ public final class CliHelper {
 		}
 		
 		return new MatcherCommand();
+	}
+	
+	private static ICommand parser(List<String> command) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new ParserCommand();
 	}
 }
