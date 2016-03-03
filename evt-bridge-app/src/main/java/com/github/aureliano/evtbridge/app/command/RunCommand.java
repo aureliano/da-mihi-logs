@@ -26,9 +26,8 @@ public class RunCommand implements ICommand {
 		ErrorCode errorCode = this.validate();
 		if (errorCode == null) {
 			ConfigurationSourceType sourceType = this.getConfigurationSourceType();
-			EventCollectorConfiguration configuration = ConversionHelper.loadConfiguration(this.configurationFilePath, sourceType);
-			
 			AppHelper.initializeResources();
+			EventCollectorConfiguration configuration = ConversionHelper.loadConfiguration(this.configurationFilePath, sourceType);
 			
 			new EventsCollector()
 				.withConfiguration(configuration)
