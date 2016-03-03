@@ -26,7 +26,7 @@ public class JdbcInputConverterTest {
 		connection.put("url", "jdbc:sgdb://host:1/test");
 		connection.put("sql", "select * from anywhere");
 		
-		data.put("id", "test-123");
+		data.put("configurationId", "test-123");
 		data.put("metadata", metadata);
 		data.put("connection", connection);
 		
