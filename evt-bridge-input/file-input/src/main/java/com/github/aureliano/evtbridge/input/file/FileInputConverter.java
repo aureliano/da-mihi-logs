@@ -41,6 +41,6 @@ public class FileInputConverter extends AbstractConfigInputConverter<FileInputCo
 	
 	@Override
 	public String id() {
-		return InputConfigTypes.FILE.name();
+		return InputConfigTypes.FILE_INPUT.name();
 	}
 }

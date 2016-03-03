@@ -62,7 +62,7 @@ public final class ConfigurationSchemaHelper {
 	
 	private static void initializeInputConfig(InputConfigTypes inputType) {
 		switch (inputType) {
-		case FILE:
+		case FILE_INPUT:
 			initializeClass(FileInputConfig.class);
 			break;
 		case STANDARD:

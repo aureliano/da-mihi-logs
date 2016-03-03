@@ -64,7 +64,7 @@ public class FileInputConfigTest {
 	
 	@Test
 	public void testInputType() {
-		assertEquals(InputConfigTypes.FILE.name(), new FileInputConfig().id());
+		assertEquals(InputConfigTypes.FILE_INPUT.name(), new FileInputConfig().id());
 	}
 	
 	@Test
