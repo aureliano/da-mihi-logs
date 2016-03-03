@@ -96,6 +96,8 @@ public final class CliHelper {
 			String format = StringHelper.parse(options.valueOf("format"));
 			
 			return schema(command, type, name, format);
+		} else if (Commands.MATCHER.getId().equals(command.get(0))) {
+			return new MatcherCommand();
 		}
 		
 		return null;
@@ -108,8 +110,6 @@ public final class CliHelper {
 			return new VersionCommand();
 		} else if (options.has(Commands.SCHEMATA.getId())) {
 			return new SchemataCommand();
-		} else if (options.has(Commands.MATCHER.getId())) {
-			return new MatcherCommand();
 		}
 		
 		return null;

@@ -1,0 +1,20 @@
+NAME
+   matcher - List all available matchers
+
+SYNOPSIS
+   ${app.binary.linux} matcher
+
+DESCRIPTION
+   This command is used to list all available core matchers.
+   A matcher is an object used to match an event into input data source. An event can be single or multi-line.
+   By default each input configuration uses the single line matcher. So if you don't set a matcher every line from input resource will be matched.
+   
+   Only core matchers are listed with this command.
+   Although if you want to use your own matcher you can put the whole class name of it in the input configuration file.
+   
+   ${app.binary.linux} matcher
+   
+   That command will print all available core matchers.
+
+OPTIONS
+   None

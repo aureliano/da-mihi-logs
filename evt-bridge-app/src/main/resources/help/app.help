@@ -12,6 +12,7 @@ Commands:
    version  - Show application version number
    schemata - List all configuration schema names
    schema   - Print a schema configuration
+   matcher  - List all available matchers
 
 See '${app.binary.linux} help <command>' for more information on a specific command.
 

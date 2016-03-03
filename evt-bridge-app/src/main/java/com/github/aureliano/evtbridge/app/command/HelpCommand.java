@@ -32,6 +32,8 @@ public class HelpCommand implements ICommand {
 			this.printSchemataHelp();
 		} else if (Commands.SCHEMA.name().equalsIgnoreCase(this.command)) {
 			this.printSchemaHelp();
+		} else if (Commands.MATCHER.name().equalsIgnoreCase(this.command)) {
+			this.printMatcherHelp();
 		}
 		
 		return null;
@@ -44,6 +46,11 @@ public class HelpCommand implements ICommand {
 	
 	private void printSchemaHelp() {
 		String help = FileHelper.readResource("help/schema.help");
+		System.out.println(this.replaceProperties(help));
+	}
+	
+	private void printMatcherHelp() {
+		String help = FileHelper.readResource("help/matcher.help");
 		System.out.println(this.replaceProperties(help));
 	}
 	
