@@ -19,7 +19,7 @@ public class InputConverter implements IConfigurationConverter<List<IConfigInput
 	@Override
 	public List<IConfigInput> convert(Map<String, Object> data) {
 		@SuppressWarnings("unchecked")
-		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("inputs");
+		List<Map<String, Object>> list = (List<Map<String, Object>>) data.get("inputConfigs");
 		
 		if (list == null) {
 			return Collections.emptyList();
