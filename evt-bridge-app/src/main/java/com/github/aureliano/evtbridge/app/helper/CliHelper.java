@@ -104,9 +104,9 @@ public final class CliHelper {
 		} else if (Commands.PARSER.getId().equals(command.get(0))) {
 			return parser(command);
 		} else if (Commands.FILTER.getId().equals(command.get(0))) {
-			return new FilterCommand();
+			return filter(command);
 		} else if (Commands.FORMATTER.getId().equals(command.get(0))) {
-			return new FormatterCommand();
+			return formatter(command);
 		}
 		
 		return null;
@@ -181,5 +181,21 @@ public final class CliHelper {
 		}
 		
 		return new ParserCommand();
+	}
+	
+	private static ICommand filter(List<String> command) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new FilterCommand();
+	}
+	
+	private static ICommand formatter(List<String> command) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new FormatterCommand();
 	}
 }
