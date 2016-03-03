@@ -100,7 +100,7 @@ public final class CliHelper {
 			
 			return schema(command, type, name, format);
 		} else if (Commands.MATCHER.getId().equals(command.get(0))) {
-			return new MatcherCommand();
+			return matcher(command);
 		} else if (Commands.PARSER.getId().equals(command.get(0))) {
 			return new ParserCommand();
 		} else if (Commands.FILTER.getId().equals(command.get(0))) {
@@ -165,5 +165,13 @@ public final class CliHelper {
 		}
 		
 		return new SchemaCommand().withType(type).withName(name).withFormat(format);
+	}
+	
+	private static ICommand matcher(List<String> command) {
+		if (command.size() > 1) {
+			return null;
+		}
+		
+		return new MatcherCommand();
 	}
 }
