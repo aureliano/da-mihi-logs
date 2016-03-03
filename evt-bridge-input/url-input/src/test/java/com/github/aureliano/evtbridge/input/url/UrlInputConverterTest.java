@@ -26,7 +26,7 @@ public class UrlInputConverterTest {
 		decompress.put("outputFilePath", "path/to/extraction");
 		data.put("decompressFile", decompress);
 
-		data.put("id", "test-123");
+		data.put("configurationId", "test-123");
 		data.put("metadata", metadata);
 		data.put("connectionSchema", "http");
 		data.put("host", "localhost");
