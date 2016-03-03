@@ -29,7 +29,7 @@ public class ConfigurationConverterTest {
 	private Map<String, Object> createConfigurationMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("id", "xpto-collector");
+		map.put("collectorId", "xpto-collector");
 		map.put("persistExecutionLog", false);
 		map.put("multiThreadingEnabled", "true");
 		map.put("metadata", this.createMetadata());

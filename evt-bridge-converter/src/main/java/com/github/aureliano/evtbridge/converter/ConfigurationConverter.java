@@ -26,7 +26,7 @@ public class ConfigurationConverter implements IConfigurationConverter<EventColl
 	@Override
 	public EventCollectorConfiguration convert(Map<String, Object> data) {
 		EventCollectorConfiguration configuration = new EventCollectorConfiguration()
-			.withCollectorId(StringHelper.parse(data.get("id")));
+			.withCollectorId(StringHelper.parse(data.get("collectorId")));
 		
 		String value = StringHelper.parse(data.get("persistExecutionLog"));
 		if (!StringHelper.isEmpty(value)) {
