@@ -21,7 +21,7 @@ import com.github.aureliano.evtbridge.core.register.ServiceRegistration;
 
 @SchemaConfiguration(
 	schema = "http://json-schema.org/draft-04/schema#",
-	title = "Input configuration to consume from Java Database Connection.",
+	title = "Input configuration to consume from Java Database Connectivity.",
 	type = "object"
 )
 public class JdbcInputConfig implements IConfigInput {
