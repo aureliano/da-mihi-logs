@@ -11,7 +11,7 @@ For those that wants to use business objects to work with ElasticSearch there is
 There is also support for scheduling execution. So you can configure it to execute tasks at specific time or periodically. Beyond, there's more features like report generation, directory cleaning and so forth.
 
 ### Documentation
-Visit the Wiki page in order to get access to documentation. https://github.com/aureliano/da-mihi-logs/wiki
+Visit the Wiki page in order to get access to documentation. https://github.com/aureliano/evt-bridge/wiki
 
 ### Installation
 Unfortunately this API is not available at Maven Central Repository yet. So at this point you have to install it manually.
@@ -42,7 +42,7 @@ As an example you may consider an application that consume logs from standard in
 ```
 
 ### Command line
-In order to comply with those who want a basic usage - not to get involved with Java coding - or just testing there is a command line interface available on $PROJECT_HOME/target/application path after installation. Read more at [doc page](https://github.com/aureliano/da-mihi-logs/wiki/Command-line-application).
+In order to comply with those who want a basic usage - not to get involved with Java coding - or just testing there is a command line interface available on $PROJECT_HOME/target/application path after installation. Read more at [doc page](https://github.com/aureliano/evt-bridge/wiki/Command-line-application).
 
 =======
 License - [MIT](https://github.com/aureliano/evt-bridge/blob/master/LICENSE)
