@@ -1,0 +1,20 @@
+NAME
+   run - Run an events collector process
+
+SYNOPSIS
+   ${app.binary.linux} run [options]...
+
+DESCRIPTION
+   This command executes an events collector. It takes a configuration file in order to build a process that will start collecting events.
+
+   ${app.binary.linux} run -c [configuration]
+   
+   ${app.binary.linux} run -c relative/path/to/configuration.json
+   ${app.binary.linux} run -c /absolute/path/to/configuration.json
+   ${app.binary.linux} run -c /absolute/path/to/configuration.yaml
+   
+   That command will start a process by creating an events collector with the configuration file's directives.
+
+OPTIONS
+   -c, --configuration
+      The configuration file describing a collector. You can choose JSON or YAML model to create the configuration file.

@@ -40,6 +40,8 @@ public class HelpCommand implements ICommand {
 			this.printHelp("filter");
 		} else if (Commands.FORMATTER.name().equalsIgnoreCase(this.command)) {
 			this.printHelp("formatter");
+		} else if (Commands.RUN.name().equalsIgnoreCase(this.command)) {
+			this.printHelp("run");
 		}
 		
 		return null;
