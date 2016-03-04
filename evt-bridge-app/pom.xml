@@ -4,7 +4,7 @@
 
 	<groupId>com.github.aureliano</groupId>
 	<artifactId>evt-bridge-app</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.0.BETA-01</version>
 	<packaging>jar</packaging>
 	<name>evt-bridge-app</name>
 	

@@ -72,4 +72,4 @@ fi
 export JAVACMD
 export JAVA_OPTS
 
-echo $JAVACMD $JAVA_OPTS -jar $EVT_BRIDGE_HOME/lib/evt-bridge-0.1.0.jar
+echo $JAVACMD $JAVA_OPTS -jar $EVT_BRIDGE_HOME/lib/evt-bridge-0.1.0.BETA-01.jar
