@@ -1,8 +1,8 @@
 package com.github.aureliano.evtbridge.converter.schedule;
 
+import java.util.Iterator;
 import java.util.Map;
 
-import com.github.aureliano.evtbridge.common.helper.StringHelper;
 import com.github.aureliano.evtbridge.converter.ConverterType;
 import com.github.aureliano.evtbridge.core.config.IConfigurationConverter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
@@ -15,14 +15,18 @@ public class SchedulerConverter implements IConfigurationConverter<IScheduler> {
 	}
 
 	@Override
-	public IScheduler convert(Map<String, Object> data) {
-		Map<String, Object> map = DataHelper.getAsHash(data, "scheduler");
-		if (map == null) {
+	public IScheduler convert(Map<String, Object> map) {
+		Map<String, Object> configuration = DataHelper.getAsHash(map, "scheduler");
+		if (configuration == null) {
 			return null;
 		}
+		Iterator<String> keys = configuration.keySet().iterator();
+
+		String type = (keys.hasNext()) ? keys.next() : "";
+		@SuppressWarnings("unchecked")
+		Map<String, Object> data = (Map<String, Object>) configuration.get(type);
 		
-		String type = StringHelper.parse(map.get("type"));
-		return SchedulerConverterFactory.createConverter(type).convert(map);
+		return SchedulerConverterFactory.createConverter(type).convert(data);
 	}
 	
 	@Override
