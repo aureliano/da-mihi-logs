@@ -100,8 +100,30 @@
 							<outputDirectory>${project.build.directory}/application/lib</outputDirectory>
 							<resources>
 								<resource>
-									<includes><include>*.jar</include></includes>
+									<includes>
+										<include>*.jar</include>
+									</includes>
 									<directory>${project.build.directory}</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-metada</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${project.build.directory}/application</outputDirectory>
+							<resources>
+								<resource>
+									<includes>
+										<include>LICENSE</include>
+										<include>README.md</include>
+									</includes>
+									<directory>${basedir}/../</directory>
 								</resource>
 							</resources>
 						</configuration>
