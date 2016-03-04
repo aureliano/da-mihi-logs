@@ -1,0 +1,75 @@
+#!/bin/sh
+#
+# Execute event-bridge command line application.
+#
+# Usage:
+#   bin/evt-bridge <command> [options]
+#
+# See 'bin/evt-bridge help' for a list of commands.
+#
+# Supported environment variables:
+#   EVT_BRIDGE_HEAP_SIZE="xxx" size for the -Xmx${EVT_BRIDGE_HEAP_SIZE} maximum Java heap size option, default is "500m"
+#   EVT_BRIDGE_USE_GC_LOGGING save Garbage collections log to $EVT_BRIDGE_HOME/log
+#   EVT_BRIDGE_JAVA_OPTS="xxx" to append extra options to the defaults JAVA_OPTS provided by evt-bridge
+#   JAVA_OPTS="xxx" to *completely override* the defauls set of JAVA_OPTS provided by evt-bridge
+
+# Defaults you can override with environment variables
+EVT_BRIDGE_HEAP_SIZE="${EVT_BRIDGE_HEAP_SIZE:=500m}"
+
+EVT_BRIDGE_HOME=$(cd `dirname $0`/..; pwd)
+export EVT_BRIDGE_HOME
+
+if [ -z "$JAVACMD" ] ; then
+  if [ -n "$JAVA_HOME" ] ; then
+    JAVACMD="$JAVA_HOME/bin/java"
+  else
+    JAVACMD="java"
+  fi
+fi
+
+# Resolve full path to the java command.
+if [ ! -f "$JAVACMD" ] ; then
+  JAVACMD=$(which $JAVACMD 2>/dev/null)
+fi
+
+if [ ! -x "$JAVACMD" ] ; then
+  echo "Could not find any executable java binary. Please install java in your PATH or set JAVA_HOME." 1>&2
+  exit 1
+fi
+
+if [ "$JAVA_OPTS" ] ; then
+  echo "WARNING: Default JAVA_OPTS will be overridden by the JAVA_OPTS defined in the environment. Environment JAVA_OPTS are $JAVA_OPTS"  1>&2
+else
+  # There are no JAVA_OPTS set from the client, we set a predefined
+  # set of options that think are good in general
+  JAVA_OPTS="-XX:+UseParNewGC"
+  JAVA_OPTS="$JAVA_OPTS -XX:+UseConcMarkSweepGC"
+  JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true"
+
+  JAVA_OPTS="$JAVA_OPTS -XX:CMSInitiatingOccupancyFraction=75"
+  JAVA_OPTS="$JAVA_OPTS -XX:+UseCMSInitiatingOccupancyOnly"
+fi
+
+if [ "$EVT_BRIDGE_JAVA_OPTS" ] ; then
+  # The client set the variable EVT_BRIDGE_JAVA_OPTS, choosing his own set of java opts.
+  JAVA_OPTS="$JAVA_OPTS $EVT_BRIDGE_JAVA_OPTS"
+fi
+
+if [ "$EVT_BRIDGE_HEAP_SIZE" ] ; then
+  JAVA_OPTS="$JAVA_OPTS -Xmx${EVT_BRIDGE_HEAP_SIZE}"
+fi
+
+if [ "$EVT_BRIDGE_USE_GC_LOGGING" ] ; then
+  JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCDetails"
+  JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCTimeStamps"
+  JAVA_OPTS="$JAVA_OPTS -XX:+PrintClassHistogram"
+  JAVA_OPTS="$JAVA_OPTS -XX:+PrintTenuringDistribution"
+  JAVA_OPTS="$JAVA_OPTS -XX:+PrintGCApplicationStoppedTime"
+  JAVA_OPTS="$JAVA_OPTS -Xloggc:$EVT_BRIDGE_HOME/log/evt-bridge-gc.log"
+  echo "Writing garbage collection logs to $EVT_BRIDGE_HOME/log/evt-bridge-gc.log"
+fi
+
+export JAVACMD
+export JAVA_OPTS
+
+echo $JAVACMD $JAVA_OPTS -jar $EVT_BRIDGE_HOME/lib/evt-bridge-0.1.0.jar
