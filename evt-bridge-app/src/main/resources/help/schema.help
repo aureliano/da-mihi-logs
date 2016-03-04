@@ -2,7 +2,7 @@ NAME
    schema - Print a schema configuration
 
 SYNOPSIS
-   ${app.binary.linux} schema <options>...
+   ${app.binary.linux} schema [options]...
 
 DESCRIPTION
    This command is used to print a schema configuration.

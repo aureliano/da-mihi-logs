@@ -1,4 +1,4 @@
-Usage: ${app.binary.linux} <command> [arguments]
+Usage: ${app.binary.linux} <command> [options]
 Required JVM ${app.requirement.jvm} or higher.
 
 ${project.name} is a light weight Java project which provides some mechanisms in order to consume
