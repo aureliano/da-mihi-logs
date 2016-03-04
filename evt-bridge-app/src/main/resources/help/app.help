@@ -20,7 +20,9 @@ Commands:
 See '${app.binary.linux} help <command>' for more information on a specific command.
 
 Examples:
-   >>> PUT SOME EXAMPLES HERE!
+   ${app.binary.linux} run -c relative/path/to/configuration.json
+   ${app.binary.linux} run -c /absolute/path/to/configuration.json
+   ${app.binary.linux} run -c /absolute/path/to/configuration.yaml
 
 Report errors or suggestions to ${project.issues}
 Visit ${project.wiki} for more detailed insights.
