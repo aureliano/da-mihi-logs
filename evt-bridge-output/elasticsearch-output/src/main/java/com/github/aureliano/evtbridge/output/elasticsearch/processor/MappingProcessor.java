@@ -198,7 +198,7 @@ public class MappingProcessor {
 		}
 
 		// handle _id
-		Field indexableIdField = ReflectionHelper.getIdField(clazz, Indexable.class);
+		Field indexableIdField = ReflectionHelper.getIdField(clazz, IndexableId.class);
 		Map<String, Object> idMap = getIndexableIdMap(indexableIdField);
 		if (!idMap.isEmpty()) {
 			objectMap.put("_id", idMap);
