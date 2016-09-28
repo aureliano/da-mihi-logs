@@ -8,7 +8,7 @@ Despite you can use it as an application for collecting and sending log events, 
 
 For those that wants to use business objects to work with ElasticSearch there is an implementation that provides annotations for serializing and sending them to ElasticSearch. For more details take a look at [ElasticSearch OSEM](https://github.com/kzwang/elasticsearch-osem) (ElasticSearch object search engine mapping).
 
-There is also support for scheduling execution. So you can configure it to execute tasks at specific time or periodically. Beyond, there's more features like report generation, directory cleaning and so forth.
+There is also support for scheduling execution. So you can configure it to execute tasks at specific time or periodically.
 
 ### Documentation
 Visit the Wiki page in order to get access to documentation. https://github.com/aureliano/evt-bridge/wiki
