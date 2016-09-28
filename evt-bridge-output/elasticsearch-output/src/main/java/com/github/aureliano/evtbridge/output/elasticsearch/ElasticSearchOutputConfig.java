@@ -12,7 +12,6 @@ import com.github.aureliano.evtbridge.core.config.OutputConfigTypes;
 import com.github.aureliano.evtbridge.core.filter.EmptyFilter;
 import com.github.aureliano.evtbridge.core.filter.IEventFielter;
 import com.github.aureliano.evtbridge.core.formatter.IOutputFormatter;
-import com.github.aureliano.evtbridge.core.formatter.PlainTextFormatter;
 import com.github.aureliano.evtbridge.core.helper.DataHelper;
 import com.github.aureliano.evtbridge.core.listener.DataWritingListener;
 import com.github.aureliano.evtbridge.core.parser.IParser;
@@ -58,7 +57,6 @@ public class ElasticSearchOutputConfig implements IConfigOutput, IElasticSearchC
 		
 		this.parser = new PlainTextParser();
 		this.filter = new EmptyFilter();
-		this.outputFormatter = new PlainTextFormatter();
 	}
 
 	@Override
