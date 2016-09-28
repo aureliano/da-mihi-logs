@@ -224,6 +224,7 @@ public class UrlDataReader extends AbstractDataReader {
 			this.connection.connect();
 			responseCode = ((HttpURLConnection) this.connection).getResponseCode();
 		} catch (IOException ex) {
+			logger.warn("Failed to open connection to " + this.urlInputConfiguration.getHost());
 			throw new UrlInputException(ex);
 		}
 		
