@@ -138,9 +138,10 @@ public class UrlInputConfigTest {
 	
 	private void _testValidateOutputFile() {
 		UrlInputConfig c = new UrlInputConfig()
-			.withHost("localhost").withConnectionSchema(ConnectionSchema.HTTP);
+			.withHost("localhost").withConnectionSchema(ConnectionSchema.HTTP)
+			.withPath("some/path");
 		Set<ConstraintViolation> violations = this.validator.validate(c);
-		assertTrue(violations.size() == 2);
+		assertTrue(violations.size() == 1);
 		assertEquals(NotNull.class, violations.iterator().next().getValidator());
 	}
 	
