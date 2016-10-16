@@ -66,6 +66,9 @@ public abstract class AbstractDataReader implements IDataReader {
 		
 		while (logEvent == null) {
 			line = this.readNextLine();
+			if (line == null) {
+				break;
+			}
 			buffer.append("\n").append(line);
 			
 			for (DataReadingListener listener : this.inputConfiguration.getDataReadingListeners()) {
